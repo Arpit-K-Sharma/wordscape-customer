@@ -31,6 +31,12 @@ export default {
       fontSize: {
         'title': '9rem'
       },
+      fontFamily:{
+        'archivo': ['Archivo', 'sans-serif'],
+      },
+      fontWeight:{
+        'thick': '600'
+      },
       colors: {
         c1: "#007ace",
       },

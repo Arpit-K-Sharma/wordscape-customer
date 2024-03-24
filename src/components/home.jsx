@@ -7,13 +7,13 @@ function HomePage() {
         {" "}
         wordscape{" "}
       </h1>
-      <h3 className="text-title mb-5">
+      <h3 className="mb-5 antialiased text-title font-archivo font-thick underline-offset-8">
             Third Heading
         </h3>
       <div className="md:flex h-4 w-full">
-        <p className="text-base"> Hello </p>
+        <p className="mb-5 text-4xl font-thick underline underline-offset-8"> Hello </p>
       </div>
-      <p className="mb-5 top-[400px]"> World </p>
+      <p className="mb-2 top-[400px]"> World </p>
     </div>
   );
 }
