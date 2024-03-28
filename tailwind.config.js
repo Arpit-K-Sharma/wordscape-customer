@@ -28,6 +28,9 @@ export default {
       '10': "2.5rem",
     },
     extend: {
+      margin:{
+        '1': '10px'
+      },
       fontSize: {
         'title': '9rem'
       },
@@ -42,5 +45,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
