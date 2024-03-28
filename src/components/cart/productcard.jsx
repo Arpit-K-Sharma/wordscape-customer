@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../redux/productSlice";
 
-/// Action Increment
+
 export default function ProductCard() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
