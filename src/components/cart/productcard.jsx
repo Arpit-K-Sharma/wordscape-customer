@@ -7,6 +7,7 @@ import { fetchProducts } from "../redux/productSlice";
 /// Action Increment
 export default function ProductCard() {
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.data);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -20,10 +21,10 @@ export default function ProductCard() {
         </h1>
       </div>
       <div className="flex">
-        {(
+        {products && products.length > 0 ? (
           products.map((product, index) => (
             <div
-              key={index}
+              key={product.product.id || index} // Use product ID (if available) for better key
               className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 max-w-sm mx-auto
           mx-4 shadow-sm bg-white dark:bg-zinc-900 dark:text-zinc-100 "
             >
@@ -38,16 +39,22 @@ export default function ProductCard() {
                 width="240"
                 alt="Product Image"
               />
-              <h2 className="font-bold text-lg mb-2 mt-6">{product.title}</h2>
+              <h2 className="font-bold text-lg mb-2 mt-6">
+                {product.product.title}
+              </h2>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-3 mt-1">
-                {product.description}
+                {product.product.description}
               </p>
               <div className="flex justify-between items-center mb-4">
-                <span className="text-xl font-bold mt-6">${product.price}</span>
+                <span className="text-xl font-bold mt-6">
+                  ${product.product.price}
+                </span>
                 <button className="btn btn-neutral mt-10">Add to Cart</button>
               </div>
             </div>
           ))
+        ) : (
+          <p>No products found.</p>
         )}
       </div>
     </>

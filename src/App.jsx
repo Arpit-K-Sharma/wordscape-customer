@@ -7,8 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Route
 import Dashboard from "./components/dashboard/dashboard";
 import ProductCard from "./components/cart/productcard";
 import Cart from "./components/cart/cart";
-import store from "./components/redux/store";
-import { Provider } from "react-redux";
+
 
 function App() {
   return (
