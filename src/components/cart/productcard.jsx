@@ -5,20 +5,22 @@ import { useEffect } from "react";
 import { fetchProducts } from "../redux/productSlice";
 import { addToCart } from "../redux/cartSlice";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 export default function ProductCard() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
+  const [showToast, setShowToast] = useState(false);
 
   const cart = useSelector((state) => state.cart.data);
   useEffect(() => {
     console.log(cart);
   }, [cart]);
-    
-  
+
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
-  } 
+    setShowToast(true);
+  };
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -30,7 +32,9 @@ export default function ProductCard() {
         <h1 className="text-6xl font-bold text-center mt-6 mb-6 text-archivo">
           Products
         </h1>
-        <NavLink to="/cart" className="btn btn-neutral">Go to Cart</NavLink>
+        <NavLink to="/cart" className="btn btn-neutral">
+          Go to Cart
+        </NavLink>
       </div>
       <div className="flex">
         {products && products.length > 0 ? (
@@ -60,8 +64,20 @@ export default function ProductCard() {
               <div className="flex justify-between items-center mb-4">
                 <span className="text-xl font-bold mt-6">
                   ${product.product.price}
+                  {showToast && (
+                    <div className="toast">
+                      <div className="alert alert-info top-0 bg-green-800">
+                        <span className="text-white">Product has been added to cart.</span>
+                      </div>
+                    </div>
+                  )}
                 </span>
-                <button className="btn btn-neutral mt-10" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                <button
+                  className="btn bg-green-300 mt-10 text-black hover:bg-gray-500"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))

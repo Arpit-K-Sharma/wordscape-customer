@@ -43,6 +43,8 @@ export default {
       colors: {
         c1: "#007ace",
       },
+      
+
     },
   },
   plugins: [require("daisyui")],

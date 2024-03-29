@@ -18,9 +18,7 @@ const cartSlice = createSlice({
         removeFromCart: (state, action) => {
             state.data.pop(action.payload);
         },
-
     },
-
 });
 
 
