@@ -12,7 +12,7 @@ const sliceProduct = createSlice({
       state.isLoading = false;
       state.data = action.payload;
     });
-    builder.addCase(fetchProducts.pending, (state, action) => {
+    builder.addCase(fetchProducts.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
@@ -41,4 +41,5 @@ export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
 //       return state;
 //   }
 // };
+
 export default sliceProduct.reducer;

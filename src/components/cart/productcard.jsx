@@ -3,11 +3,22 @@ import placeholder from "../cart/image/placeholder.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../redux/productSlice";
-
+import { addToCart } from "../redux/cartSlice";
+import { NavLink } from "react-router-dom";
 
 export default function ProductCard() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
+
+  const cart = useSelector((state) => state.cart.data);
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+    
+  
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  } 
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -19,6 +30,7 @@ export default function ProductCard() {
         <h1 className="text-6xl font-bold text-center mt-6 mb-6 text-archivo">
           Products
         </h1>
+        <NavLink to="/cart" className="btn btn-neutral">Go to Cart</NavLink>
       </div>
       <div className="flex">
         {products && products.length > 0 ? (
@@ -49,7 +61,7 @@ export default function ProductCard() {
                 <span className="text-xl font-bold mt-6">
                   ${product.product.price}
                 </span>
-                <button className="btn btn-neutral mt-10">Add to Cart</button>
+                <button className="btn btn-neutral mt-10" onClick={() => handleAddToCart(product)}>Add to Cart</button>
               </div>
             </div>
           ))
