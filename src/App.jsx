@@ -7,13 +7,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Route
 import Dashboard from "./components/dashboard/dashboard";
 import ProductCard from "./components/cart/productcard";
 import Cart from "./components/cart/cart";
+import MobileLanding from "./components/mobile-landing/mobilelanding";
 
 
 function App() {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<MobileLanding />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/product" element={<ProductCard />} />
