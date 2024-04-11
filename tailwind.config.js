@@ -42,6 +42,7 @@ export default {
       },
       colors: {
         c1: "#007ace",
+        m1: ""
       },
       
 
