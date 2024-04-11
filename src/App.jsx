@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboard/dashboard";
 import ProductCard from "./components/cart/productcard";
 import Cart from "./components/cart/cart";
 import MobileLanding from "./components/mobile-landing/mobilelanding";
+import WebLanding from "./components/landing/landing";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MobileLanding />} />
+          <Route path="/web" element={<WebLanding />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/dashboard" element={<Dashboard />} />

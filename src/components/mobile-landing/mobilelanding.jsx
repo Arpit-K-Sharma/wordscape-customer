@@ -4,10 +4,58 @@ import "./cssforicons.css";
 function MobileLanding() {
   return (
     <div className="bg-zinc-900 h-[100vh]">
+      <div className="navbar bg-base-100 max-sm:hidden">
+        <div className="navbar-start">
+          <div className="dropdown">
+            
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a>Dashboard</a>
+              </li>
+              <li>
+                <a>Parent</a>
+                <ul className="p-2">
+                  <li>
+                    <a>Submenu 1</a>
+                  </li>
+                  <li>
+                    <a>Submenu 2</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a>Item 3</a>
+              </li>
+            </ul>
+          </div>
+          <a className="btn btn-ghost text-xl">WordScape</a>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <li>
+              <a>Dashboard</a>
+            </li>
+            <li>
+              <a></a>
+            </li>
+            
+            <li>
+              <a>Item 3</a>
+            </li>
+          </ul>
+        </div>
+        <div className="navbar-end">
+          <a className="btn">Logout</a>
+        </div>
+      </div>
+
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button ">
+          <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button lg:hidden ">
             <img
               width="26"
               height="26"
@@ -24,7 +72,8 @@ function MobileLanding() {
                 alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
                 className="mx-auto my-1"
               />{" "}
-              Welcome to WordScape's mobile app
+              Welcome to WordScape's mobile{" "}
+              <p className="max-sm:hidden lg:block">app</p>
             </h1>
             <h3 className="text-center my-3 text-xl">
               Hit the menu icon to browse through
