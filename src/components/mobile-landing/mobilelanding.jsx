@@ -3,32 +3,32 @@ import "./cssforicons.css";
 
 function MobileLanding() {
   return (
-    <div>
+    <div className="bg-zinc-900 h-[100vh]">
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button ">
             <img
-              width="30"
-              height="30"
+              width="26"
+              height="26"
               src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
               alt="menu--v1"
             />
           </label>
-          <div>
+          <div className="p-7">
             <h1 className="text-center text-3xl mt-5 font-archivo p-8 leading-10 my-5 font-semibold">
-            <img
-              width="64"
-              height="64"
-              src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
-              alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
-              className="mx-auto my-1"
-            />
-              {" "}
+              <img
+                width="64"
+                height="64"
+                src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
+                alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
+                className="mx-auto my-1"
+              />{" "}
               Welcome to WordScape's mobile app
             </h1>
-            <h3 className="text-center my-3 text-xl">Hit the menu icon to browse through</h3>
-            
+            <h3 className="text-center my-3 text-xl">
+              Hit the menu icon to browse through
+            </h3>
           </div>
         </div>
         <div className="drawer-side font-archivo">
