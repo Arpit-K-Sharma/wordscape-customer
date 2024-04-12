@@ -48,7 +48,7 @@ function MobileNavbar() {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-80 min-h-full bg-zinc-700 text-base-content text-white">
+          <ul className="menu p-4 w-80 min-h-full bg-zinc-800 text-white">
             {/* Sidebar content here */}
             <li className="mt-[40px]">
             <img

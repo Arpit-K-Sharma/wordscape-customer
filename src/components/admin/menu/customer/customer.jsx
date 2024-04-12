@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import AdminDrawer from "../AdminDrawer";
 
 const customerData = [
   {
@@ -9,7 +10,7 @@ const customerData = [
     email: "john.doe@example.com",
     password: "hashed_password", // Assuming password is stored securely hashed
     phone_number: "(555) 555-1234",
-    status: "Active",
+    status: true,
   },
   {
     s_n: 2,
@@ -18,7 +19,7 @@ const customerData = [
     email: "jane.smith@example.com",
     password: "hashed_password",
     phone_number: "(555) 555-5678",
-    status: "Inactive",
+    status: false,
   },
 ];
 
@@ -61,11 +62,9 @@ function AdminCustomer() {
                     <td>{customer.name}</td>
                     <td>{customer.address}</td>
                     <td>{customer.email}</td>
-                    {/* Avoid displaying actual password */}
                     <td>{"*".repeat(customer.password.length)}</td>{" "}
-                    {/* Placeholder for password */}
                     <td>{customer.phone_number}</td>
-                    <td>{customer.status}</td>
+                    <td className="text-wrap">{customer.status ? "Active" : "Inactive"}</td>
                     <td>
                         <button className="btn btn-ghost">
                             Edit
@@ -78,50 +77,7 @@ function AdminCustomer() {
           </div>
         </div>
       </div>
-      <div className="drawer-side font-archivo">
-        <label
-          htmlFor="my-drawer"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-zinc-700 text-white">
-          {/* Sidebar content here */}
-          <li className="mt-[40px]">
-            <img
-              width="120"
-              height="120"
-              src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
-              alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
-              className="mx-auto my-1 mb-5"
-            />
-          </li>
-          <li>
-            <NavLink to="/admin/dashboard">
-              <p className="text-xl font-light">Main Dashboard</p>
-            </NavLink>
-          </li>
-          <br></br>
-          <li>
-            <NavLink to="/admin/paper">
-              <p className="text-xl mb-3 font-light">Paper</p>
-            </NavLink>
-          </li>
-          <li>
-            <p className="text-xl mb-3 font-light">Binding</p>
-          </li>
-          <li>
-            <p className="text-xl mb-3 font-light">Lamination</p>
-          </li>
-          <li>
-            <NavLink to="/admin/customer">
-              <p className="text-xl mb-3 font-light">Customer</p>
-            </NavLink>
-          </li>
-          <li>
-            <p className="text-xl mb-3 font-light">Order</p>
-          </li>
-        </ul>
-      </div>
+      <AdminDrawer/>
     </div>
   );
 }
