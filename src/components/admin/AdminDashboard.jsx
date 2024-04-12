@@ -37,11 +37,14 @@ function AdminDashboard() {
           </li>
           <li>
             <NavLink to="/admin/dashboard">
-            <p className="text-2xl mb-3 font-light">Main Dashboard</p>
+              <p className="text-2xl font-light">Main Dashboard</p>
             </NavLink>
           </li>
+          <br></br>
           <li>
-            <p className="text-xl mb-3 mt-5 font-light">Paper</p>
+            <NavLink to="/admin/paper">
+              <p className="text-xl mb-3 mt-5 font-light">Paper</p>
+            </NavLink>
           </li>
           <li>
             <p className="text-xl mb-3 font-light">Binding</p>
@@ -51,7 +54,7 @@ function AdminDashboard() {
           </li>
           <li>
             <NavLink to="/admin/customer">
-            <p className="text-xl mb-3 font-light">Customer</p>
+              <p className="text-xl mb-3 font-light">Customer</p>
             </NavLink>
           </li>
           <li>

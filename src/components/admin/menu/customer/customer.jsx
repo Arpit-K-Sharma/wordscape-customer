@@ -1,6 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+const customerData = [
+  {
+    s_n: 1,
+    name: "John Doe",
+    address: "123 Main Street, Anytown, CA 12345",
+    email: "john.doe@example.com",
+    password: "hashed_password", // Assuming password is stored securely hashed
+    phone_number: "(555) 555-1234",
+    status: "Active",
+  },
+  {
+    s_n: 2,
+    name: "Jane Smith",
+    address: "456 Elm Street, Anytown, CA 98765",
+    email: "jane.smith@example.com",
+    password: "hashed_password",
+    phone_number: "(555) 555-5678",
+    status: "Inactive",
+  },
+];
+
 function AdminCustomer() {
   return (
     <div className="drawer">
@@ -18,7 +39,6 @@ function AdminCustomer() {
           <h1 className="text-center mx-auto text-5xl text-archivo">
             Customers
           </h1>
-
           <div className="overflow-x-auto mt-[80px]">
             <table className="table">
               {/* head */}
@@ -31,30 +51,28 @@ function AdminCustomer() {
                   <th>Password</th>
                   <th>Phone Number</th>
                   <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Purple</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Red</td>
-                </tr>
+                {customerData.map((customer) => (
+                  <tr key={customer.s_n}>
+                    <td>{customer.s_n}</td>
+                    <td>{customer.name}</td>
+                    <td>{customer.address}</td>
+                    <td>{customer.email}</td>
+                    {/* Avoid displaying actual password */}
+                    <td>{"*".repeat(customer.password.length)}</td>{" "}
+                    {/* Placeholder for password */}
+                    <td>{customer.phone_number}</td>
+                    <td>{customer.status}</td>
+                    <td>
+                        <button className="btn btn-ghost">
+                            Edit
+                        </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -79,11 +97,14 @@ function AdminCustomer() {
           </li>
           <li>
             <NavLink to="/admin/dashboard">
-              <p className="text-xl mb-3 font-light">Main Dashboard</p>
+              <p className="text-xl font-light">Main Dashboard</p>
             </NavLink>
           </li>
+          <br></br>
           <li>
-            <p className="text-xl mb-3 mt-5 font-light">Paper</p>
+            <NavLink to="/admin/paper">
+              <p className="text-xl mb-3 font-light">Paper</p>
+            </NavLink>
           </li>
           <li>
             <p className="text-xl mb-3 font-light">Binding</p>

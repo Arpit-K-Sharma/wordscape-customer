@@ -1,6 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+const paperData = [
+  {
+    s_n: "1",
+    paper_type: "Art Paper",
+    rate: "50",
+  },
+  {
+    s_n: "2",
+    paper_type: "Art Board",
+    rate: "100",
+  },
+  {
+    s_n: "3",
+    paper_type: "Ivory",
+    rate: "400",
+  },
+];
+
 function Paper() {
   return (
     <div className="drawer">
@@ -19,38 +37,26 @@ function Paper() {
             Paper Types
           </h1>
           <div className="overflow-x-auto mt-[80px]">
-            <table className="table w-[700px] mx-auto my-auto">
-              {/* head */}
+            <table className="table w-2/3 mx-auto my-auto">
               <thead>
                 <tr className="bg-base-200">
-                  <th>S.N</th>
-                  <th>Paper Type</th>
-                  <th>Rate</th>
-                  <th>Actions</th>
+                  <th className="w-[50px]">S.N</th>
+                  <th className="w-[100px]">Paper Type</th>
+                  <th className="w-[80px]">Rate</th>
+                  <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Edit</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Edit</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Edit </td>
-                </tr>
+                {paperData.map((row) => (
+                  <tr key={row.s_n}>
+                    <td className="text-wrap">{row.s_n}</td>
+                    <td className="text-wrap">{row.paper_type}</td>
+                    <td className="text-wrap">{row.rate}</td>
+                    <td>
+                      <button className="btn btn-neutral">Edit</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -75,11 +81,14 @@ function Paper() {
           </li>
           <li>
             <NavLink to="/admin/dashboard">
-              <p className="text-xl mb-3 font-light">Main Dashboard</p>
+              <p className="text-xl font-light">Main Dashboard</p>
             </NavLink>
           </li>
+          <br></br>
           <li>
-            <p className="text-xl mb-3 mt-5 font-light">Paper</p>
+            <NavLink to="/admin/paper">
+              <p className="text-xl mb-3 font-light">Paper</p>
+            </NavLink>
           </li>
           <li>
             <p className="text-xl mb-3 font-light">Binding</p>
