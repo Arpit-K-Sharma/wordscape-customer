@@ -1,6 +1,8 @@
 import React from 'react'
 import config from "../../../config.json"
 import { NavLink } from 'react-router-dom'
+import logo from "../images/logo/LogoOnly.png";
+
 
 function Navbar() {
   return (
@@ -9,8 +11,8 @@ function Navbar() {
         <img
                 width="32"
                 height="32"
-                src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
-                alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
+                src={logo}
+                alt="Small Logo"
                 className="ml-2"
               />
           <a className="btn btn-ghost text-xl">{config.config.firmname}</a>

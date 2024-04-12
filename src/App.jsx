@@ -13,6 +13,7 @@ import SignUp from "./components/login/signup";
 import AdminLogin from "./components/login/adminlogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminCustomer from "./components/admin/menu/customer/customer";
+import Paper from "./components/admin/menu/paper/paper";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/customer" element={<AdminCustomer />} />
+          <Route path="/admin/paper" element={<Paper/>}/>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/product" element={<ProductCard />} />
           <Route path="/cart" element={<Cart />} />

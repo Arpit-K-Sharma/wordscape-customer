@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function AdminCustomer() {
+function Paper() {
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -16,21 +16,17 @@ function AdminCustomer() {
         </label>
         <div className="p-7 text-slate-200">
           <h1 className="text-center mx-auto text-5xl text-archivo">
-            Customers
+            Paper Types
           </h1>
-
           <div className="overflow-x-auto mt-[80px]">
-            <table className="table">
+            <table className="table w-[700px] mx-auto my-auto">
               {/* head */}
               <thead>
                 <tr className="bg-base-200">
                   <th>S.N</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Email</th>
-                  <th>Password</th>
-                  <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Paper Type</th>
+                  <th>Rate</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,21 +35,21 @@ function AdminCustomer() {
                   <th>1</th>
                   <td>Cy Ganderton</td>
                   <td>Quality Control Specialist</td>
-                  <td>Blue</td>
+                  <td>Edit</td>
                 </tr>
                 {/* row 2 */}
                 <tr>
                   <th>2</th>
                   <td>Hart Hagerty</td>
                   <td>Desktop Support Technician</td>
-                  <td>Purple</td>
+                  <td>Edit</td>
                 </tr>
                 {/* row 3 */}
                 <tr>
                   <th>3</th>
                   <td>Brice Swyre</td>
                   <td>Tax Accountant</td>
-                  <td>Red</td>
+                  <td>Edit </td>
                 </tr>
               </tbody>
             </table>
@@ -105,4 +101,4 @@ function AdminCustomer() {
   );
 }
 
-export default AdminCustomer;
+export default Paper;

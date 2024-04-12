@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "../images/logo/Logo.jpg";
 
 export default function WebLanding() {
   return (

@@ -1,5 +1,7 @@
 import React from "react";
 import config from "../../../config.json";
+import logo from "../images/logo/LogoOnly.png";
+import textlogo from "../images/logo/TextOnly.png";
 
 function MobileNavbar() {
   return (
@@ -18,17 +20,24 @@ function MobileNavbar() {
             /> 
           </label>
           <div className="p-7 text-slate-200">
-            <h1 className="text-center text-3xl mt-5 font-archivo p-8 leading-10 my-5 font-semibold">
-              <img
-                width="150"
-                height="150"
-                src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
-                alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
-                className="mx-auto my-1"
+          <img
+                width="350"
+                height="350"
+                src={logo}
+                alt="Logo"
+                className="mx-auto my-5"
               />{" "}
+              <img
+                width="350"
+                height="350"
+                src={textlogo}
+                alt="Logo"
+                className="mx-auto my-5"
+              />{" "}
+            {/* <h1 className="text-center text-3xl mt-5 font-archivo p-8 leading-10 my-5 font-semibold">
               Welcome to {config.config.firmname}
-            </h1>
-            <h3 className="text-center my-3 text-xl">
+            </h1> */}
+            <h3 className="text-center my-7 text-xl">
               {config.company.description}
             </h3>
           </div>
@@ -45,11 +54,11 @@ function MobileNavbar() {
             <img
                 width="120"
                 height="120"
-                src="https://img.icons8.com/external-photo3ideastudio-solid-photo3ideastudio/64/FFFFFF/external-knot-china-photo3ideastudio-solid-photo3ideastudio.png"
+                src={logo}
                 alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
                 className="mx-auto my-1 mb-5"
               />
-              <p className="text-2xl mb-[30px] font-semibold">Wordscape</p>
+              <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
             </li>
             <li>
               <p className="text-xl mb-3 font-light">Dashboard</p>
