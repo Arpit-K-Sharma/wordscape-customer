@@ -9,6 +9,10 @@ import ProductCard from "./components/cart/productcard";
 import Cart from "./components/cart/cart";
 import MobileLanding from "./components/mobile-landing/mobilelanding";
 import WebLanding from "./components/landing/landing";
+import SignUp from "./components/login/signup";
+import AdminLogin from "./components/login/adminlogin";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminCustomer from "./components/admin/menu/customer/customer";
 
 
 function App() {
@@ -19,6 +23,10 @@ function App() {
           <Route path="/web" element={<WebLanding />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/customer" element={<AdminCustomer />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/product" element={<ProductCard />} />
           <Route path="/cart" element={<Cart />} />

@@ -1,0 +1,14 @@
+{
+  "config": {
+    "firm": "",
+    "firmname": "WordScape",
+    "regno": "",
+    "active": true,
+    "pan": "",
+    "address": "",
+    "phone": ""
+  },
+  "company": {
+    "description": "WordScape is a company that provides in printing and publishing services."
+  }
+}

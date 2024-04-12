@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function SignIn() {
+function AdminLogin() {
   return (
     <div className="flex max-w bg-slate-500">
       <div className="w-1/2 h-auto">
@@ -13,15 +13,12 @@ function SignIn() {
       </div>
       <div className="w-1/2 mr-[100px]">
         <h1 className="w-80 text-left mb-4 mt-10 text-5xl font-archivo p-8 bg-slate-300 mx-0.5 text-slate-800 h-4">
-          Welcome to the login page
+          Administrator Login Page
         </h1>
-        <h2 className="mt-10 text-archivo text-2xl text-white">
-          Please put down your credentials
-        </h2>
         <label className="form-control w-full max-w-xs mt-5">
           <div className="label">
             <span className="label-text text-white">
-              What is your registered email?
+              Administrator Email
             </span>
           </div>
           <input
@@ -33,7 +30,7 @@ function SignIn() {
         <label className="form-control w-full max-w-xs mt-5">
           <div className="label">
             <span className="label-text text-white">
-              What is your password?
+              Administrator Password
             </span>
           </div>
           <input
@@ -41,18 +38,12 @@ function SignIn() {
             placeholder="Password"
             className="input input-bordered w-full max-w-xs"
           />
-          <div className="label">
-            <span className="label-text-alt text-slate-300">Forgot password?</span>
-          </div>
+          
         </label>
-
-        <button className="btn">Login</button>
-        <NavLink to="/signup">
-        <button className="btn btn-neutral mt-5 mx-5">Signup</button>
-        </NavLink>
+        <button className="btn mt-5">Login</button>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default AdminLogin;
