@@ -15,7 +15,7 @@ function Lamination() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);;
+  }, []);
 
   const handleRefresh = () => {
     window.location.reload();
