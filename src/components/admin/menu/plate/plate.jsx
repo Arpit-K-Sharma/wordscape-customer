@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
+import axios from "axios";
+import { useEffect } from "react";
 
 const initialPlateData = [
   {
@@ -13,19 +15,54 @@ const initialPlateData = [
     plate_id: "2",
     plate_size: "5 x 10",
     rate: 80,
-    ink_rate: 200
+    ink_rate: 200,
   },
   {
     plate_id: "3",
     plate_size: "20 x 30",
     rate: 400,
-    ink_rate: 50
+    ink_rate: 50,
   },
 ];
 
 function Plate() {
   const [editingData, setEditingData] = useState(null);
-  const [plateDataState, setplateDataState] = useState(initialPlateData);
+  const [plateDataState, setplateDataState] = useState([]);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/plates")
+      .then((response) => {
+        setplateDataState(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const handleAddPlates = (e) => {
+    e.preventDefault();
+    const plateSize = e.target.elements.plateSize.value;
+    const plateRate = parseFloat(e.target.elements.plateRate.value);
+    const inkRate = parseFloat(e.target.elements.inkRate.value);
+    axios
+      .post("http://localhost:8081/plates", {
+        plateSize,
+        plateRate,
+        inkRate,
+      })
+      .then((response) => {
+        setplateDataState((prevData) => [...prevData, response.data]);
+        console.log("Binding added successfully!");
+      })
+      .catch((error) => {
+        console.error("Error adding binding:", error);
+      });
+  };
 
   const handleEdit = (e, data) => {
     e.preventDefault();
@@ -72,43 +109,40 @@ function Plate() {
               </thead>
               <tbody>
                 {plateDataState.map((row) => (
-                  <tr key={row.plate_id}>
-                    <td className="text-wrap">{row.plate_id}</td>
+                  <tr key={row.plateId}>
+                    <td className="text-wrap">{row.plateId}</td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.plate_id === row.plate_id ? (
+                      {editingData && editingData.plateId === row.plateId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="text"
-                            name="plate_size"
+                            name="plateSize"
                             className="input input-bordered"
-                            defaultValue={row.plate_size}
+                            defaultValue={row.plateSize}
                             required
                           />
                         </form>
                       ) : (
-                        <span>{row.plate_size}</span>
+                        <span>{row.plateSize}</span>
                       )}
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.plate_id === row.plate_id ? (
+                      {editingData && editingData.plateId === row.plateId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="text"
-                            name="plate_size"
+                            name="plateSize"
                             className="input input-bordered"
-                            defaultValue={row.ink_rate}
+                            defaultValue={row.inkRate}
                             required
                           />
                         </form>
                       ) : (
-                        <span>{row.ink_rate}</span>
+                        <span>{row.inkRate}</span>
                       )}
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.plate_id === row.plate_id ? (
+                      {editingData && editingData.plateId === row.plateId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="number"
@@ -122,15 +156,14 @@ function Plate() {
                         <span>
                           {
                             plateDataState.find(
-                              (item) => item.plate_id === row.plate_id
-                            )?.rate
+                              (item) => item.plateId === row.plateId
+                            )?.plateRate
                           }
                         </span>
                       )}
                     </td>
                     <td>
-                      {editingData &&
-                      editingData.plate_id === row.plate_id ? (
+                      {editingData && editingData.plateId === row.plateId ? (
                         <button className="btn btn-neutral" type="submit">
                           Save
                         </button>
@@ -147,13 +180,13 @@ function Plate() {
                 ))}
               </tbody>
             </table>
+            <br />
             {/* <button
               className="btn btn-success mx-[200px] bg-zinc-900 text-white border-0 hover:bg-blue-800"
               onClick={openForm}
             >
               Add Binding
             </button> */}
-
             <button
               className="btn mx-[200px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
@@ -163,31 +196,37 @@ function Plate() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
+                  <button
+                    className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]"
+                    onClick={handleRefresh}
+                  >
                     x
                   </button>
                 </form>
-                <h3 className="font-bold mt-5 mb-2 text-lg">
-                  Add Plate Size
-                </h3>
+                <h3 className="font-bold mt-5 mb-2 text-lg">Add Plate Size</h3>
                 <p className="py-4">
-                  <form>
+                  <form onSubmit={handleAddPlates}>
                     <input
                       type="text"
+                      name="plateSize"
                       placeholder="Plate Size"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
-                     <input
-                      type="number"
+                    <input
+                      type="float"
                       placeholder="Rate"
+                      name="plateRate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
-                      type="number"
+                      type="float"
                       placeholder="Ink Rate"
+                      name="inkRate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
-                    <button className="btn mt-5 btn-ghost mx-[115px]">Add</button>
+                    <button className="btn mt-5 btn-ghost mx-[115px]">
+                      Add
+                    </button>
                   </form>
                 </p>
               </div>

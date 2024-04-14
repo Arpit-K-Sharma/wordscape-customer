@@ -9,12 +9,7 @@ function Binding() {
   const [editingData, setEditingData] = useState(null);
   const [bindingDataState, setBindingDataState] = useState([]);
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
-  // Fetching binding data from the backend
-  useEffect(() => {
+  function getBinding(){
     axios
       .get("http://localhost:8081/bindings")
       .then((response) => {
@@ -23,6 +18,11 @@ function Binding() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  // Fetching binding data from the backend
+  useEffect(() => {
+    getBinding();
   }, []);
 
   const handleAddBinding = (e) => {
@@ -37,6 +37,9 @@ function Binding() {
       .then((response) => {
         setBindingDataState((prevData) => [...prevData, response.data]);
         console.log("Binding added successfully!");
+        return true;
+      }).then((status) => {
+        if (status) getBinding();
       })
       .catch((error) => {
         console.error("Error adding binding:", error);
@@ -155,7 +158,7 @@ function Binding() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]" onClick={handleRefresh}>
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
                     x
                   </button>
                 </form>

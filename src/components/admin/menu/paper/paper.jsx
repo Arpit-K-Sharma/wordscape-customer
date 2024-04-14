@@ -3,34 +3,11 @@ import AdminDrawer from "../AdminDrawer";
 import axios from "axios";
 import { useEffect } from "react";
 
-const initialPaperData = [
-  {
-    s_n: "1",
-    paper_type: "Art Paper",
-    rate: "50",
-  },
-  {
-    s_n: "2",
-    paper_type: "Art Board",
-    rate: "100",
-  },
-  {
-    s_n: "3",
-    paper_type: "Ivory",
-    rate: "400",
-  },
-];
-
 function Paper() {
   const [editingData, setEditingData] = useState(null);
   const [paperDataState, setPaperDataState] = useState([]);
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
-  // Fetching paper data from the backend
-  useEffect(() => {
+  function getPaper(){
     axios
       .get("http://localhost:8081/papers")
       .then((response) => {
@@ -39,6 +16,15 @@ function Paper() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  // Fetching paper data from the backend
+  useEffect(() => {
+    getPaper();
   }, []);
 
   const handleAddPaper = (e) => {
@@ -53,6 +39,10 @@ function Paper() {
       .then((response) => {
         setPaperDataState((prevData) => [...prevData, response.data]);
         console.log("Paper added successfully!");
+        return true;
+      })
+      .then((status) => { 
+        if (status) getPaper(); 
       })
       .catch((error) => {
         console.error("Error adding paper:", error);
@@ -162,7 +152,7 @@ function Paper() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]" onClick={handleRefresh}>
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
                     x
                   </button>
                 </form>

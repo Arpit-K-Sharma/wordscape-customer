@@ -6,7 +6,7 @@ import axios from "axios";
 function Lamination() {
   const [laminationData, setLaminations] = useState([]);
 
-  useEffect(() => {
+  function getLamination() {
     axios
       .get("http://localhost:8081/laminations")
       .then((response) => {
@@ -15,11 +15,11 @@ function Lamination() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
+  useEffect(() => {
+    getLamination();
+  }, []);
 
   const handleAddLamination = (e) => {
     e.preventDefault();
@@ -32,7 +32,12 @@ function Lamination() {
       })
       .then((response) => {
         setLaminations((prevData) => [...prevData, response.data]);
+        // getLamination();
         console.log("Binding added successfully!");
+        return true;
+      })
+      .then((status) => {
+        if (status) getLamination();
       })
       .catch((error) => {
         console.error("Error adding binding:", error);
@@ -88,10 +93,7 @@ function Lamination() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button
-                    className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]"
-                    onClick={handleRefresh}
-                  >
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
                     x
                   </button>
                 </form>
