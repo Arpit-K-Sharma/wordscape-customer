@@ -41,14 +41,6 @@ function Binding() {
     console.log("Data saved successfully!");
   };
 
-  const openForm = () => {
-    setShowForm(true);
-  };
-
-  const closeForm = () => {
-    setShowForm(false);
-  };
-
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
