@@ -4,7 +4,7 @@ import logo from "../../images/logo/LogoOnly.png";
 
 function AdminDrawer() {
   return (
-    <div className="drawer-side font-archivo">
+    <div className="drawer-side font-archivo z-10">
       <label
         htmlFor="my-drawer"
         aria-label="close sidebar"
