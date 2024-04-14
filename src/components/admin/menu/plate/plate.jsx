@@ -29,11 +29,7 @@ function Plate() {
   const [editingData, setEditingData] = useState(null);
   const [plateDataState, setplateDataState] = useState([]);
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
-  useEffect(() => {
+  function getPaper() {
     axios
       .get("http://localhost:8081/plates")
       .then((response) => {
@@ -42,6 +38,10 @@ function Plate() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  useEffect(() => {
+    getPaper();
   }, []);
 
   const handleAddPlates = (e) => {
@@ -58,6 +58,10 @@ function Plate() {
       .then((response) => {
         setplateDataState((prevData) => [...prevData, response.data]);
         console.log("Binding added successfully!");
+        return true;
+      })
+      .then((status) => {
+        if (status) getPaper();
       })
       .catch((error) => {
         console.error("Error adding binding:", error);
@@ -196,10 +200,7 @@ function Plate() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button
-                    className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]"
-                    onClick={handleRefresh}
-                  >
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
                     x
                   </button>
                 </form>

@@ -18,10 +18,6 @@ function Paper() {
       });
   }
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
   // Fetching paper data from the backend
   useEffect(() => {
     getPaper();
