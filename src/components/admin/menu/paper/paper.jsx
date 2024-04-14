@@ -7,7 +7,7 @@ function Paper() {
   const [editingData, setEditingData] = useState(null);
   const [paperDataState, setPaperDataState] = useState([]);
 
-  function getPaper(){
+  function getPaper() {
     axios
       .get("http://localhost:8081/papers")
       .then((response) => {
@@ -37,8 +37,8 @@ function Paper() {
         console.log("Paper added successfully!");
         return true;
       })
-      .then((status) => { 
-        if (status) getPaper(); 
+      .then((status) => {
+        if (status) getPaper();
       })
       .catch((error) => {
         console.error("Error adding paper:", error);
@@ -138,7 +138,7 @@ function Paper() {
                 ))}
               </tbody>
             </table>
-            <br/>
+            <br />
             <button
               className="btn mx-[200px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
@@ -152,9 +152,7 @@ function Paper() {
                     x
                   </button>
                 </form>
-                <h3 className="font-bold mt-5 mb-2 text-lg">
-                  Add Paper Type
-                </h3>
+                <h3 className="font-bold mt-5 mb-2 text-lg">Add Paper Type</h3>
                 <p className="py-4">
                   <form onSubmit={handleAddPaper}>
                     <input

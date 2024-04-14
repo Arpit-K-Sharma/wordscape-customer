@@ -1,38 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminDrawer from "../AdminDrawer";
-
-const userData = [
-  {
-    user_id: "1",
-    username: "niken101",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: true,
-  },
-  {
-    user_id: "2",
-    username: "sunil404",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: true,
-  },
-  {
-    user_id: "3",
-    username: "ram900",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: false,
-  },
-];
+import axios from "axios";
 
 function Users() {
   const [editingData, setEditingData] = useState(null);
-  const [userDataState, setUserDataState] = useState(userData);
+  const [userDataState, setUserDataState] = useState([]);
+
+  function getUsers() {
+    axios
+      .get("http://localhost:8081/users")
+      .then((response) => {
+        setUserDataState(response.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching data:", error);
+      });
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   const handleEdit = (e, data) => {
     e.preventDefault();
     const updatedData = userDataState.map((item) => {
-      if (item.user_id === data.user_id) {
+      if (item.userId === data.userId) {
         return {
           ...item,
           username: e.target.elements.username.value,
@@ -46,6 +38,31 @@ function Users() {
     setUserDataState(updatedData);
     setEditingData(null);
     console.log("Data saved successfully!");
+  };
+
+  const handleAddUser = (e) => {
+    e.preventDefault();
+    const username = e.target.elements.username.value;
+    const password = parseFloat(e.target.elements.password.value);
+    const email = e.target.elements.email.value;
+    // const status = e.target.elements.status.checked;
+    axios
+      .post("http://localhost:8081/users", {
+        username,
+        password,
+        email,
+      })
+      .then((response) => {
+        setUserDataState((prevData) => [...prevData, response.data]);
+        console.log("Paper added successfully!");
+        return true;
+      })
+      .then((status) => {
+        if (status) getUsers();
+      })
+      .catch((error) => {
+        console.error("Error adding paper:", error);
+      });
   };
 
   return (
@@ -76,11 +93,10 @@ function Users() {
               </thead>
               <tbody>
                 {userDataState.map((row) => (
-                  <tr key={row.user_id}>
-                    <td className="text-wrap">{row.user_id}</td>
+                  <tr key={row.userId}>
+                    <td className="text-wrap">{row.userId}</td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      {editingData && editingData.userId === row.userId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="text"
@@ -95,8 +111,7 @@ function Users() {
                       )}
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      {editingData && editingData.userId === row.userId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="email"
@@ -110,13 +125,13 @@ function Users() {
                         <span>{row.email}</span>
                       )}
                     </td>
-                    <td>{"*".repeat(row.password.length)}</td>
+                    <td>******</td>
                     <td className="text-wrap">
-                      {row.status ? "Active" : "Inactive"}
+                      {/* {row.status ? "Active" : "Inactive"} */}
+                      Active
                     </td>
                     <td>
-                      {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      {editingData && editingData.userId === row.userId ? (
                         <button className="btn btn-neutral" type="submit">
                           Save
                         </button>
@@ -135,10 +150,10 @@ function Users() {
             </table>
             <br></br>
             <button
-              className="btn mx-[70px]"
+              className="btn mx-[190px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
-              Add Binding
+              Add Users
             </button>
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
@@ -147,27 +162,30 @@ function Users() {
                     x
                   </button>
                 </form>
-                <h3 className="font-bold mt-5 mb-2 text-lg">
-                  Add Users
-                </h3>
+                <h3 className="font-bold mt-5 mb-2 text-lg">Add Users</h3>
                 <p className="py-4">
-                  <form>
+                  <form onSubmit={handleAddUser}>
                     <input
                       type="text"
                       placeholder="Username"
+                      name="username"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
                       type="email"
+                      name="email"
                       placeholder="Email"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
                       type="password"
+                      name="password"
                       placeholder="Password"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
-                    <button className="btn mt-5 btn-ghost mx-[115px]">Add</button>
+                    <button className="btn mt-5 btn-ghost mx-[115px]">
+                      Add
+                    </button>
                   </form>
                 </p>
               </div>
