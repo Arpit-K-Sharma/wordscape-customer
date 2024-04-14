@@ -42,6 +42,11 @@ function AdminDrawer() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/admin/plate">
+            <p className="text-xl mb-3 font-light">Plate</p>
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/admin/users">
             <p className="text-xl mb-3 font-light">User</p>
           </NavLink>

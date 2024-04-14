@@ -1,37 +1,56 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
+import axios from "axios";
+import { useEffect } from "react";
 
-const initialBindingData = [
-  {
-    binding_id: "1",
-    binding_type: "Art Paper",
-    rate: "50",
-  },
-  {
-    binding_id: "2",
-    binding_type: "Art Board",
-    rate: "100",
-  },
-  {
-    binding_id: "3",
-    binding_type: "Ivory",
-    rate: "400",
-  },
-];
 
 function Binding() {
   const [editingData, setEditingData] = useState(null);
-  const [bindingDataState, setBindingDataState] = useState(initialBindingData);
+  const [bindingDataState, setBindingDataState] = useState([]);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  // Fetching binding data from the backend
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/bindings")
+      .then((response) => {
+        setBindingDataState(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const handleAddBinding = (e) => {
+    e.preventDefault();
+    const bindingType = e.target.elements.bindingType.value;
+    const rate = parseFloat(e.target.elements.rate.value);
+    axios
+      .post("http://localhost:8081/bindings", {
+        bindingType,
+        rate,
+      })
+      .then((response) => {
+        setBindingDataState((prevData) => [...prevData, response.data]);
+        console.log("Binding added successfully!");
+      })
+      .catch((error) => {
+        console.error("Error adding binding:", error);
+      });
+  };
 
   const handleEdit = (e, data) => {
     e.preventDefault();
     const updatedData = bindingDataState.map((item) => {
-      if (item.binding_id === data.binding_id) {
+      if (item.bindingId === data.bindingId) {
         return {
           ...item,
           rate: e.target.elements.rate.value,
-          binding_type: e.target.elements.binding_type.value,
+          bindingType: e.target.elements.binding_type.value,
         };
       }
       return item;
@@ -67,27 +86,27 @@ function Binding() {
               </thead>
               <tbody>
                 {bindingDataState.map((row) => (
-                  <tr key={row.binding_id}>
-                    <td className="text-wrap">{row.binding_id}</td>
+                  <tr key={row.bindingId}>
+                    <td className="text-wrap">{row.bindingId}</td>
                     <td className="text-wrap">
                       {editingData &&
-                      editingData.binding_id === row.binding_id ? (
+                      editingData.bindingId === row.bindingId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="text"
                             name="binding_type"
                             className="input input-bordered"
-                            defaultValue={row.binding_type}
+                            defaultValue={row.bindingType}
                             required
                           />
                         </form>
                       ) : (
-                        <span>{row.binding_type}</span>
+                        <span>{row.bindingType}</span>
                       )}
                     </td>
                     <td className="text-wrap">
                       {editingData &&
-                      editingData.binding_id === row.binding_id ? (
+                      editingData.bindingId === row.bindingId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="number"
@@ -98,18 +117,12 @@ function Binding() {
                           />
                         </form>
                       ) : (
-                        <span>
-                          {
-                            bindingDataState.find(
-                              (item) => item.binding_id === row.binding_id
-                            )?.rate
-                          }
-                        </span>
+                        <span>{row.rate}</span>
                       )}
                     </td>
                     <td>
                       {editingData &&
-                      editingData.binding_id === row.binding_id ? (
+                      editingData.bindingId === row.bindingId ? (
                         <button className="btn btn-neutral" type="submit">
                           Save
                         </button>
@@ -132,9 +145,9 @@ function Binding() {
             >
               Add Binding
             </button> */}
-
+            <br></br>
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[170px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Binding
@@ -142,7 +155,7 @@ function Binding() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]" onClick={handleRefresh}>
                     x
                   </button>
                 </form>
@@ -150,18 +163,27 @@ function Binding() {
                   Add Binding Type
                 </h3>
                 <p className="py-4">
-                  <form>
+                  <form onSubmit={handleAddBinding}>
                     <input
                       type="text"
+                      name="bindingType"
                       placeholder="Binding Type"
                       className="mt-5 input input-bordered w-full max-w-xs"
+                      required
                     />
                     <input
                       type="number"
+                      name="rate"
                       placeholder="Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
+                      required
                     />
-                    <button className="btn mt-5 btn-ghost mx-[115px]">Add</button>
+                    <button
+                      type="submit"
+                      className="btn mt-5 btn-ghost mx-[115px]"
+                    >
+                      Add
+                    </button>
                   </form>
                 </p>
               </div>

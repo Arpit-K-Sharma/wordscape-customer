@@ -17,6 +17,7 @@ import Paper from "./components/admin/menu/paper/paper";
 import Users from "./components/admin/menu/users/users";
 import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
+import Plate from "./components/admin/menu/plate/plate";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
+        <Route path="/admin/plate" element={<Plate />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<ProductCard />} />

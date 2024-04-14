@@ -1,49 +1,46 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
 
-const userData = [
+const initialPlateData = [
   {
-    user_id: "1",
-    username: "niken101",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: true,
+    plate_id: "1",
+    plate_size: "10 x 20",
+    rate: 50,
+    ink_rate: 100,
   },
   {
-    user_id: "2",
-    username: "sunil404",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: true,
+    plate_id: "2",
+    plate_size: "5 x 10",
+    rate: 80,
+    ink_rate: 200
   },
   {
-    user_id: "3",
-    username: "ram900",
-    password: "hashed-password",
-    email: "niken@gmail.com",
-    status: false,
+    plate_id: "3",
+    plate_size: "20 x 30",
+    rate: 400,
+    ink_rate: 50
   },
 ];
 
-function Users() {
+function Plate() {
   const [editingData, setEditingData] = useState(null);
-  const [userDataState, setUserDataState] = useState(userData);
+  const [plateDataState, setplateDataState] = useState(initialPlateData);
 
   const handleEdit = (e, data) => {
     e.preventDefault();
-    const updatedData = userDataState.map((item) => {
-      if (item.user_id === data.user_id) {
+    const updatedData = plateDataState.map((item) => {
+      if (item.plate_id === data.plate_id) {
         return {
           ...item,
-          username: e.target.elements.username.value,
-          email: e.target.elements.email.value,
-          password: e.target.elements.password.value,
-          status: e.target.elements.status.checked,
+          rate: e.target.elements.rate.value,
+          inkrate: e.target.elements.inkrate.value,
+          plate_size: e.target.elements.plate_size.value,
         };
       }
       return item;
     });
-    setUserDataState(updatedData);
+    setplateDataState(updatedData);
     setEditingData(null);
     console.log("Data saved successfully!");
   };
@@ -61,62 +58,79 @@ function Users() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">Users</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo">Plate</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
                 <tr className="bg-base-200">
-                  <th className="w-[50px]">User ID</th>
-                  <th className="w-[100px]">Username</th>
-                  <th className="w-[80px]">Email</th>
-                  <th className="w-[80px]">Password</th>
-                  <th className="w-[80px]">Status</th>
+                  <th className="w-[50px]">S.N</th>
+                  <th className="w-[100px]">Plate Size</th>
+                  <th className="w-[80px]">Plate Rate</th>
+                  <th className="w-[80px]">Ink Rate</th>
                   <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {userDataState.map((row) => (
-                  <tr key={row.user_id}>
-                    <td className="text-wrap">{row.user_id}</td>
+                {plateDataState.map((row) => (
+                  <tr key={row.plate_id}>
+                    <td className="text-wrap">{row.plate_id}</td>
                     <td className="text-wrap">
                       {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      editingData.plate_id === row.plate_id ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
                             type="text"
-                            name="username"
+                            name="plate_size"
                             className="input input-bordered"
-                            defaultValue={row.username}
+                            defaultValue={row.plate_size}
                             required
                           />
                         </form>
                       ) : (
-                        <span>{row.username}</span>
+                        <span>{row.plate_size}</span>
                       )}
                     </td>
                     <td className="text-wrap">
                       {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      editingData.plate_id === row.plate_id ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
-                            type="email"
-                            name="email"
+                            type="text"
+                            name="plate_size"
                             className="input input-bordered"
-                            defaultValue={row.email}
+                            defaultValue={row.ink_rate}
                             required
                           />
                         </form>
                       ) : (
-                        <span>{row.email}</span>
+                        <span>{row.ink_rate}</span>
                       )}
                     </td>
-                    <td>{"*".repeat(row.password.length)}</td>
                     <td className="text-wrap">
-                      {row.status ? "Active" : "Inactive"}
+                      {editingData &&
+                      editingData.plate_id === row.plate_id ? (
+                        <form onSubmit={(e) => handleEdit(e, row)}>
+                          <input
+                            type="number"
+                            name="rate"
+                            className="input input-bordered"
+                            defaultValue={row.rate}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>
+                          {
+                            plateDataState.find(
+                              (item) => item.plate_id === row.plate_id
+                            )?.rate
+                          }
+                        </span>
+                      )}
                     </td>
                     <td>
                       {editingData &&
-                      editingData.user_id === row.user_id ? (
+                      editingData.plate_id === row.plate_id ? (
                         <button className="btn btn-neutral" type="submit">
                           Save
                         </button>
@@ -133,12 +147,18 @@ function Users() {
                 ))}
               </tbody>
             </table>
-            <br></br>
-            <button
-              className="btn mx-[70px]"
-              onClick={() => document.getElementById("my_modal_3").showModal()}
+            {/* <button
+              className="btn btn-success mx-[200px] bg-zinc-900 text-white border-0 hover:bg-blue-800"
+              onClick={openForm}
             >
               Add Binding
+            </button> */}
+
+            <button
+              className="btn mx-[200px]"
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+            >
+              Add Plate
             </button>
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
@@ -148,23 +168,23 @@ function Users() {
                   </button>
                 </form>
                 <h3 className="font-bold mt-5 mb-2 text-lg">
-                  Add Users
+                  Add Plate Size
                 </h3>
                 <p className="py-4">
                   <form>
                     <input
                       type="text"
-                      placeholder="Username"
+                      placeholder="Plate Size"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                     <input
+                      type="number"
+                      placeholder="Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
-                      type="email"
-                      placeholder="Email"
-                      className="mt-5 input input-bordered w-full max-w-xs"
-                    />
-                    <input
-                      type="password"
-                      placeholder="Password"
+                      type="number"
+                      placeholder="Ink Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <button className="btn mt-5 btn-ghost mx-[115px]">Add</button>
@@ -180,4 +200,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Plate;
