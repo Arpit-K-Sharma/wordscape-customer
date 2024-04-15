@@ -18,6 +18,7 @@ import Users from "./components/admin/menu/users/users";
 import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
+import CostCalculation from "./components/costcalculation/costcalculation";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+
+        <Route path="/cost" element={<CostCalculation/>}/>
 
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />

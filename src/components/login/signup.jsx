@@ -4,8 +4,9 @@ import { NavLink } from "react-router-dom";
 
 function SignUp() {
   return (
-    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800 my-auto">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-lg">
+    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:w-[600px]">
+      <NavLink to="/">
         <img
           className="mx-auto my-1 mb-5"
           src={logo}
@@ -13,6 +14,7 @@ function SignUp() {
           width="120"
           height="120"
         />
+        </NavLink>
         <h1 className="text-3xl font-semibold text-center text-gray-700">
           Sign Up for WordScape
         </h1>
@@ -49,10 +51,10 @@ function SignUp() {
           </div>
           <div>
             <label className="label">
-              <span className="text-base label-text">Primary Phone Number</span>
+              <span className="text-base label-text ">Primary Phone Number</span>
             </label>
             <input
-              type="number"
+              type="white"
               placeholder="+977 98XXXXXXXX"
               className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
             />
@@ -77,12 +79,12 @@ function SignUp() {
               className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
             />
           </div>
-          <div className="flex">
-            <button className="btn btn-primary mt-5 ml-[280px] align-center text-white bg-[#0369a1] hover:bg-slate-600">
+          <div className="flex flex-col lg:flex-row lg:items-center">
+            <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#0369a1] hover:bg-slate-600">
               Sign Up
             </button>
             <NavLink to="/login">
-              <button className="btn btn-primary mt-5 ml-6 align-center text-white bg-[#312e81] hover:bg-slate-600">
+              <button className="btn btn-primary mt-5 lg:mt-0 lg:ml-2 text-white bg-[#0369a1] hover:bg-slate-600">
                 Login
               </button>
             </NavLink>
