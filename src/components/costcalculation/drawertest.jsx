@@ -26,7 +26,7 @@ const DrawerTest = ({
       <div className="drawer-content flex justify-center">
         <label
           htmlFor="my-drawer-4"
-          className="drawer-button btn btn-primary mx-auto relative bg-slate-300 text-black border-none hover:bg-slate-950 hover:text-white"
+          className="drawer-button btn btn-primary mx-auto relative font-archivo bg-slate-300 text-black border-none hover:bg-slate-950 hover:text-white"
         >
           Open Cost Breakdown
         </label>

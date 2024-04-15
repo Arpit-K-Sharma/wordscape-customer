@@ -19,6 +19,7 @@ import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
+import OrderPlacement from "./components/orderplacement/order-place";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/cost" element={<CostCalculation/>}/>
+        <Route path="/order" element={<OrderPlacement/>}/>
 
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />

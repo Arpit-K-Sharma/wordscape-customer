@@ -16,7 +16,9 @@ function Navbar() {
             className="ml-2"
           />
         </NavLink>
+        <NavLink to="/">
         <a className="btn btn-ghost text-xl">{config.config.firmname}</a>
+        </NavLink>
       </div>
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
@@ -25,7 +27,9 @@ function Navbar() {
               <a>Dashboard</a>
             </li>
             <li>
-              <a>Place an order</a>
+              <NavLink to="/order">
+                <a>Place an order</a>
+              </NavLink>
             </li>
             <li>
               <NavLink to="/cost">
@@ -36,7 +40,7 @@ function Navbar() {
               <a>Statement</a>
             </li>
             <li>
-              <a>Setting</a>
+              <a>Settings</a>
             </li>
           </ul>
         </div>

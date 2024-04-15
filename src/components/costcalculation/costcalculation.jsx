@@ -466,6 +466,7 @@ const CostCalculation = () => {
             <h1 className="heading-c">
               <b>Cost</b> Calculator
             </h1>
+            <br></br>
             <DrawerTest
               plateSize={plateSize}
               outerChangeCostPerKg={outerChangeCostPerKg}
@@ -496,16 +497,12 @@ const CostCalculation = () => {
                 reamCalc(selectedPaperThickness, changeCostPerKg)
               )}
             />
-
-            <br></br>
           </div>
           <div className="total-b"></div>
           <br></br>
-          <br></br>
-          <br></br>
           <div className="cost-main text-zinc-800">
             {/* <h2 className="c-heading">Calculate Specs</h2> */}
-            <br></br>
+            
             <h3>
               Total Estimate: Rs.<b>{totalCost}</b>
             </h3>
