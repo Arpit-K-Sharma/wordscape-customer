@@ -1,58 +1,62 @@
 import React from "react";
+import logo from ".././images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
 
-function SignIn() {
+function Login() {
   return (
-    <div className="flex max-w bg-slate-500">
-      <div className="w-1/2 h-auto">
+    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-lg">
         <img
-          className="h-auto"
-          src="https://placehold.co/500x1000"
-          alt="logo"
+          className="mx-auto my-1 mb-5"
+          src={logo}
+          alt="Logo"
+          width="120"
+          height="120"
         />
-      </div>
-      <div className="w-1/2 mr-[100px]">
-        <h1 className="w-80 text-left mb-4 mt-10 text-5xl font-archivo p-8 bg-slate-300 mx-0.5 text-slate-800 h-4">
-          Welcome to the login page
+        <h1 className="text-3xl font-semibold text-center text-gray-700">
+          Login to WordScape
         </h1>
-        <h2 className="mt-10 text-archivo text-2xl text-white">
-          Please put down your credentials
-        </h2>
-        <label className="form-control w-full max-w-xs mt-5">
-          <div className="label">
-            <span className="label-text text-white">
-              What is your registered email?
-            </span>
+        <form className="space-y-4">
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Email</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Email Address"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
           </div>
-          <input
-            type="text"
-            placeholder="Email"
-            className="input input-bordered w-full max-w-xs"
-          />
-        </label>
-        <label className="form-control w-full max-w-xs mt-5">
-          <div className="label">
-            <span className="label-text text-white">
-              What is your password?
-            </span>
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
           </div>
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-bordered w-full max-w-xs"
-          />
-          <div className="label">
-            <span className="label-text-alt text-slate-300">Forgot password?</span>
+          <a
+            href="#"
+            className="text-xs text-gray-600 hover:underline hover:text-blue-600"
+          >
+            Forget Password?
+          </a>
+          <div className="flex">
+            <button className="btn btn-primary mt-5 ml-[280px] align-center text-white bg-[#0369a1] hover:bg-slate-600">
+              Login
+            </button>
+            <NavLink to="/signup">
+              <button className="btn btn-primary mt-5 ml-6 align-center text-white bg-[#312e81] hover:bg-slate-600">
+                Sign Up
+              </button>
+            </NavLink>
           </div>
-        </label>
-
-        <button className="btn">Login</button>
-        <NavLink to="/signup">
-        <button className="btn btn-neutral mt-5 mx-5">Signup</button>
-        </NavLink>
+        </form>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default Login;

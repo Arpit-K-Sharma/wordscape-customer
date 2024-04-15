@@ -1,92 +1,93 @@
 import React from "react";
+import logo from ".././images/logo/LogoOnly.png";
+import { NavLink } from "react-router-dom";
 
 function SignUp() {
   return (
-    <div className="flex max-w bg-slate-500">
-      <div className="w-1/2 h-auto">
+    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800 my-auto">
+      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-lg">
         <img
-          className="h-auto"
-          src="https://placehold.co/500x1000"
-          alt="logo"
+          className="mx-auto my-1 mb-5"
+          src={logo}
+          alt="Logo"
+          width="120"
+          height="120"
         />
-      </div>
-      <div className="w-1/2 flex flex-col mr-[100px]">
-        <h1 className="w-80 text-left mb-4 mt-10 text-5xl font-archivo p-8 bg-slate-300 mx-0.5 text-slate-800 h-4">
-          Welcome to the sign up page
+        <h1 className="text-3xl font-semibold text-center text-gray-700">
+          Sign Up for WordScape
         </h1>
-        <div className="flex flex-row">
-          <div className="w-1/2 mr-5">
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">What is your name?</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Name"
-                className="input input-bordered w-full max-w-xs"
-              />
+        <form className="space-y-4">
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Name</span>
             </label>
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">What is your email?</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Email"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">What is your address?</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Email"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
           </div>
-          <div className="w-1/2">
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">
-                  What is your primary phone number?
-                </span>
-              </div>
-              <input
-                type="number"
-                placeholder="+977 98XXXXXXXX"
-                className="input input-bordered w-full max-w-xs"
-              />
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Email</span>
             </label>
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">
-                  What do you want to set your password?
-                </span>
-              </div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs mt-5">
-              <div className="label">
-                <span className="label-text text-white">Confirm Password</span>
-              </div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
+            <input
+              type="text"
+              placeholder="Email Address"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
           </div>
-        </div>
-        <div className="flex flex-row justify-end mt-10">
-          <button className="btn btn-neutral mx-5">Register</button>
-        </div>
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Address</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Address"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Primary Phone Number</span>
+            </label>
+            <input
+              type="number"
+              placeholder="+977 98XXXXXXXX"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="text-base label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+            />
+          </div>
+          <div className="flex">
+            <button className="btn btn-primary mt-5 ml-[280px] align-center text-white bg-[#0369a1] hover:bg-slate-600">
+              Sign Up
+            </button>
+            <NavLink to="/login">
+              <button className="btn btn-primary mt-5 ml-6 align-center text-white bg-[#312e81] hover:bg-slate-600">
+                Login
+              </button>
+            </NavLink>
+          </div>
+        </form>
       </div>
     </div>
   );
