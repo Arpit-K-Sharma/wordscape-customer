@@ -458,10 +458,10 @@ const CostCalculation = () => {
   return (
     <>
     <Navbar/>
-    <div className="cost-calc-container">
+    <div className="cost-calc-container bg-zinc-800">
       <div className="empty-box">
         <div className="test-box">
-          <div className="open-box">
+          <div className="open-box text-zinc-900">
             <br></br>
             <h1 className="heading-c">
               <b>Cost</b> Calculator
@@ -503,7 +503,7 @@ const CostCalculation = () => {
           <br></br>
           <br></br>
           <br></br>
-          <div className="cost-main">
+          <div className="cost-main text-zinc-800">
             {/* <h2 className="c-heading">Calculate Specs</h2> */}
             <br></br>
             <h3>

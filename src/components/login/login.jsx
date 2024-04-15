@@ -4,15 +4,13 @@ import { NavLink } from "react-router-dom";
 
 function Login() {
   return (
-    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-lg">
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-zinc-800">
+      <div className="w-full p-6 mx-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 sm:w-96 lg:w-[550px]">
         <NavLink to="/">
           <img
-            className="mx-auto my-1 mb-5"
+            className="mx-auto my-1 mb-5 w-24 h-24 sm:w-32 sm:h-32 lg:h-[150px]"
             src={logo}
             alt="Logo"
-            width="120"
-            height="120"
           />
         </NavLink>
         <h1 className="text-3xl font-semibold text-center text-gray-700">
@@ -26,7 +24,7 @@ function Login() {
             <input
               type="text"
               placeholder="Email Address"
-              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
             />
           </div>
           <div>
@@ -36,7 +34,7 @@ function Login() {
             <input
               type="password"
               placeholder="Enter Password"
-              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
             />
           </div>
           <a
@@ -46,11 +44,11 @@ function Login() {
             Forget Password?
           </a>
           <div className="flex flex-col lg:flex-row lg:items-center">
-            <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#0369a1] hover:bg-slate-600">
+          <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#0369a1] hover:bg-slate-600">
               Login
             </button>
             <NavLink to="/signup">
-              <button className="btn btn-primary mt-5 lg:mt-0 text-white bg-[#312e81] hover:bg-slate-600">
+              <button className="btn btn-primary mt-5 lg:mt-0 w-full lg:w-auto text-white bg-[#312e81] hover:bg-slate-600">
                 Sign Up
               </button>
             </NavLink>

@@ -4,16 +4,16 @@ import { NavLink } from "react-router-dom";
 
 function SignUp() {
   return (
-    <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-zinc-800">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:w-[600px]">
-      <NavLink to="/">
-        <img
-          className="mx-auto my-1 mb-5"
-          src={logo}
-          alt="Logo"
-          width="120"
-          height="120"
-        />
+    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-zinc-800">
+      <div className="w-full p-6 mx-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 sm:w-96 lg:w-[550px]">
+        <NavLink to="/">
+          <img
+            className="mx-auto my-1 mb-5 w-24 h-24 sm:w-32 sm:h-32"
+            src={logo}
+            alt="Logo"
+            width="120"
+            height="120"
+          />
         </NavLink>
         <h1 className="text-3xl font-semibold text-center text-gray-700">
           Sign Up for WordScape
@@ -26,7 +26,7 @@ function SignUp() {
             <input
               type="text"
               placeholder="Name"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div>
@@ -36,7 +36,7 @@ function SignUp() {
             <input
               type="text"
               placeholder="Email Address"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div>
@@ -46,17 +46,19 @@ function SignUp() {
             <input
               type="text"
               placeholder="Address"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div>
             <label className="label">
-              <span className="text-base label-text ">Primary Phone Number</span>
+              <span className="text-base label-text ">
+                Primary Phone Number
+              </span>
             </label>
             <input
               type="white"
               placeholder="+977 98XXXXXXXX"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div>
@@ -66,7 +68,7 @@ function SignUp() {
             <input
               type="password"
               placeholder="Enter Password"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div>
@@ -76,18 +78,16 @@ function SignUp() {
             <input
               type="password"
               placeholder="Confirm Password"
-              className="w-full input input-bordered bg-slate-100 text-zinc-500 placeholder:text-zinc-500"
+              className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center">
             <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#0369a1] hover:bg-slate-600">
               Sign Up
             </button>
-            <NavLink to="/login">
-              <button className="btn btn-primary mt-5 lg:mt-0 lg:ml-2 text-white bg-[#0369a1] hover:bg-slate-600">
+              <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#312e81] hover:bg-slate-600">
                 Login
               </button>
-            </NavLink>
           </div>
         </form>
       </div>

@@ -28,7 +28,7 @@ const DrawerTest = ({
           htmlFor="my-drawer-4"
           className="drawer-button btn btn-primary mx-auto relative bg-slate-300 text-black border-none hover:bg-slate-950 hover:text-white"
         >
-          Open drawer
+          Open Cost Breakdown
         </label>
       </div>
       <div className="drawer-side">
@@ -41,7 +41,7 @@ const DrawerTest = ({
         <ul className="menu p-4 w-80 min-h-full bg-gray-200 text-gray-800">
           {/* Sidebar content here */}
           <li>
-            <h1 className="text-3xl mb-4 font-bold">Cost Breakdown</h1>
+            <h1 className="text-3xl mb-4 font-bold mt-5 mb-5 text-archivo">Cost Breakdown</h1>
             <h3 className="text-xl font-semibold mb-2">Paper</h3>
             <p>
               Total Number of Pages: <b>{pages}</b>

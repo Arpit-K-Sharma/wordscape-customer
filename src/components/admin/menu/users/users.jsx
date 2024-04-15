@@ -150,7 +150,7 @@ function Users() {
             </table>
             <br></br>
             <button
-              className="btn mx-[190px]"
+              className="btn mx-[205px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Users

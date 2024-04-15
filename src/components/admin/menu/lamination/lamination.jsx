@@ -85,7 +85,7 @@ function Lamination() {
               <br />
             </table>
             <button
-              className="btn ml-[180px]"
+              className="btn ml-[200px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Lamination
