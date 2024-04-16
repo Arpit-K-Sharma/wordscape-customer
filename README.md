@@ -1,1 +1,2 @@
-# Finally caved in and learning Tailwind CSS
+# WordScape
+# ERP
