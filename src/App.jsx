@@ -4,7 +4,7 @@ import "./App.css";
 import HomePage from "./components/home";
 import SignIn from "./components/login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Route correctly
-import Dashboard from "./components/dashboard/dashboard";
+import Dashboard from "./components/dashboard/UserDrawer";
 import ProductCard from "./components/cart/productcard";
 import Cart from "./components/cart/cart";
 import MobileLanding from "./components/mobile-landing/mobilelanding";
@@ -19,7 +19,8 @@ import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
-import OrderPlacement from "./components/orderplacement/order-place";
+import OrderPlacement from "./components/orderplacement/PlaceOrder";
+import UserDashboard from "./components/dashboard/UserDashboard";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
         <Route path="/cost" element={<CostCalculation/>}/>
         <Route path="/order" element={<OrderPlacement/>}/>
 
+        <Route path="/user/dashboard" element={<UserDashboard />} /> 
+
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/customer" element={<AdminCustomer />} />
@@ -42,6 +45,7 @@ function App() {
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
         <Route path="/admin/plate" element={<Plate />} />
+
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<ProductCard />} />

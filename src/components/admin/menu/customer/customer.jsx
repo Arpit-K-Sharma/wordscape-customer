@@ -28,7 +28,7 @@ function AdminCustomer() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button">
+      <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
           <img
             width="26"
             height="26"

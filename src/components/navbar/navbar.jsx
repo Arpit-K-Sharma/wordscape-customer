@@ -17,14 +17,16 @@ function Navbar() {
           />
         </NavLink>
         <NavLink to="/">
-        <a className="btn btn-ghost text-xl">{config.config.firmname}</a>
+          <a className="btn btn-ghost text-xl">{config.config.firmname}</a>
         </NavLink>
       </div>
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
             <li>
-              <a>Dashboard</a>
+              <NavLink to="/user/dashboard">
+                <a>Dashboard</a>
+              </NavLink>
             </li>
             <li>
               <NavLink to="/order">

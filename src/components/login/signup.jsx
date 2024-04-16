@@ -81,13 +81,18 @@ function SignUp() {
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
             />
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-center">
-            <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#0369a1] hover:bg-slate-600">
-              Sign Up
+          <div className="flex flex-col">
+            <button className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600">
+              Signup
             </button>
-              <button className="btn btn-primary mt-5 lg:mt-0 lg:mr-[20px] text-white bg-[#312e81] hover:bg-slate-600">
+            <div className="flex flex-col w-full">
+              <div className="divider font-semibold">OR</div>
+            </div>
+            <NavLink to="/login">
+              <button className="btn btn-primary lg:mt-0 w-full lg:w-[500px] text-white bg-[#312e81] hover:bg-slate-600">
                 Login
               </button>
+            </NavLink>
           </div>
         </form>
       </div>

@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import AdminDrawer from "./menu/AdminDrawer";
+import UserDrawer from "./UserDrawer";
 
-function AdminDashboard() {
+function UserDashboard() {
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
-          <NavLink to="/admin/dashboard">
+          <NavLink to="/user/dashboard">
             <img
               width="26"
               height="26"
@@ -24,12 +24,12 @@ function AdminDashboard() {
           </div>
         </div> */}
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl">Admin Home</h1>
+          <h1 className="text-center mx-auto text-5xl">User Dashboard</h1>
         </div>
       </div>
-      <AdminDrawer />
+      <UserDrawer />
     </div>
   );
 }
 
-export default AdminDashboard;
+export default UserDashboard;

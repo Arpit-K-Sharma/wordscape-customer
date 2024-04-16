@@ -4,16 +4,19 @@ import AdminDrawer from "../AdminDrawer";
 import axios from "axios";
 import { useEffect } from "react";
 
-
 function Binding() {
   const [editingData, setEditingData] = useState(null);
   const [bindingDataState, setBindingDataState] = useState([]);
 
-  function getBinding(){
+  function getBinding() {
     axios
       .get("http://localhost:8081/bindings")
       .then((response) => {
-        setBindingDataState(response.data);
+        // Sort the data by bindingId in ascending order
+        const sortedData = response.data.sort(
+          (a, b) => a.bindingId - b.bindingId
+        );
+        setBindingDataState(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -38,7 +41,8 @@ function Binding() {
         setBindingDataState((prevData) => [...prevData, response.data]);
         console.log("Binding added successfully!");
         return true;
-      }).then((status) => {
+      })
+      .then((status) => {
         if (status) getBinding();
       })
       .catch((error) => {
@@ -46,28 +50,43 @@ function Binding() {
       });
   };
 
-  const handleEdit = (e, data) => {
-    e.preventDefault();
-    const updatedData = bindingDataState.map((item) => {
-      if (item.bindingId === data.bindingId) {
-        return {
-          ...item,
-          rate: e.target.elements.rate.value,
-          bindingType: e.target.elements.binding_type.value,
-        };
-      }
-      return item;
-    });
-    setBindingDataState(updatedData);
-    setEditingData(null);
-    console.log("Data saved successfully!");
+  const handleUpdate = (id, updatedData) => {
+    axios
+      .put(`http://localhost:8081/bindings/${id}`, {
+        bindingType: updatedData.bindingType,
+        rate: updatedData.rate,
+      })
+      .then((response) => {
+        console.log("Binding updated successfully:", response.data);
+        getBinding(); // Refresh binding data
+      })
+      .catch((error) => {
+        console.error("Error updating binding:", error);
+      });
+  };
+
+  const handleEdit = (data) => {
+    setEditingData(data);
+  };
+
+  const handleSave = (row) => {
+    const updatedData = {
+      bindingType: document.getElementById(`binding_type_${row.bindingId}`)
+        .value,
+      rate: parseFloat(document.getElementById(`rate_${row.bindingId}`).value),
+    };
+    handleUpdate(row.bindingId, updatedData);
+    setEditingData(null); // Reset editing state after save
   };
 
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <img
             width="26"
             height="26"
@@ -94,9 +113,10 @@ function Binding() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.bindingId === row.bindingId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                        <form onSubmit={(e) => handleSave(e, row)}>
                           <input
                             type="text"
+                            id={`binding_type_${row.bindingId}`}
                             name="binding_type"
                             className="input input-bordered"
                             defaultValue={row.bindingType}
@@ -110,9 +130,10 @@ function Binding() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.bindingId === row.bindingId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                        <form onSubmit={(e) => handleSave(e, row)}>
                           <input
                             type="number"
+                            id={`rate_${row.bindingId}`}
                             name="rate"
                             className="input input-bordered"
                             defaultValue={row.rate}
@@ -126,7 +147,10 @@ function Binding() {
                     <td>
                       {editingData &&
                       editingData.bindingId === row.bindingId ? (
-                        <button className="btn btn-neutral" type="submit">
+                        <button
+                          className="btn btn-neutral"
+                          onClick={() => handleSave(row)}
+                        >
                           Save
                         </button>
                       ) : (
@@ -150,7 +174,7 @@ function Binding() {
             </button> */}
             <br></br>
             <button
-              className="btn mx-[170px]"
+              className="btn mx-[230px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Binding
