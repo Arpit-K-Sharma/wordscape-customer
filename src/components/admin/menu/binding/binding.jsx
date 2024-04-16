@@ -95,7 +95,7 @@ function Binding() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">Binding</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Binding</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
@@ -174,7 +174,7 @@ function Binding() {
             </button> */}
             <br></br>
             <button
-              className="btn mx-[230px]"
+              className="btn mx-[200px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Binding

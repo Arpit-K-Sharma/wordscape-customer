@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminDrawer from "../AdminDrawer";
 import axios from "axios";
-import { useEffect } from "react";
 
 function Paper() {
   const [editingData, setEditingData] = useState(null);
@@ -11,7 +10,11 @@ function Paper() {
     axios
       .get("http://localhost:8081/papers")
       .then((response) => {
-        setPaperDataState(response.data);
+        // Sort the data by paperId in ascending order
+        const sortedData = response.data.sort(
+          (a, b) => a.paperId - b.paperId
+        );
+        setPaperDataState(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -45,28 +48,36 @@ function Paper() {
       });
   };
 
-  const handleEdit = (e, data) => {
-    e.preventDefault();
-    const updatedData = paperDataState.map((item) => {
-      if (item.s_n === data.s_n) {
-        return {
-          ...item,
-          rate: e.target.elements.rate.value,
-          paper_type: e.target.elements.paper_type.value,
-        };
-      }
-      return item;
-    });
-    setPaperDataState(updatedData);
-    setEditingData(null);
-    console.log("Data saved successfully!");
+  const handleUpdate = (id, updatedData) => {
+    axios
+      .put(`http://localhost:8081/papers/${id}`, updatedData)
+      .then((response) => {
+        console.log("Paper updated successfully:", response.data);
+        getPaper(); // Refresh paper data
+      })
+      .catch((error) => {
+        console.error("Error updating paper:", error);
+      });
+  };
+
+  const handleEdit = (data) => {
+    setEditingData(data);
+  };
+
+  const handleSave = (row) => {
+    const updatedData = {
+      paperType: document.getElementById(`paper_type_${row.paperId}`).value,
+      rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value)
+    };
+    handleUpdate(row.paperId, updatedData);
+    setEditingData(null); // Reset editing state after save
   };
 
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-      <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
           <img
             width="26"
             height="26"
@@ -75,7 +86,7 @@ function Paper() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">Papers</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Papers</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
@@ -92,12 +103,13 @@ function Paper() {
                     <td className="text-wrap">{row.paperId}</td>
                     <td className="text-wrap">
                       {editingData && editingData.paperId === row.paperId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                        <form onSubmit={(e) => handleSave(e, row)}>
                           <input
                             type="text"
+                            id={`paper_type_${row.paperId}`}
                             name="paper_type"
                             className="input input-bordered"
-                            defaultValue={row.paper_type}
+                            defaultValue={row.paperType}
                             required
                           />
                         </form>
@@ -106,10 +118,11 @@ function Paper() {
                       )}
                     </td>
                     <td className="text-wrap">
-                      {editingData && editingData.s_n === row.s_n ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                      {editingData && editingData.paperId === row.paperId ? (
+                        <form onSubmit={(e) => handleSave(e, row)}>
                           <input
-                            type="float"
+                            type="number"
+                            id={`rate_${row.paperId}`}
                             name="rate"
                             className="input input-bordered"
                             defaultValue={row.rate}
@@ -121,14 +134,17 @@ function Paper() {
                       )}
                     </td>
                     <td>
-                      {editingData && editingData.s_n === row.s_n ? (
-                        <button className="btn btn-neutral" type="submit">
+                      {editingData && editingData.paperId === row.paperId ? (
+                        <button
+                          className="btn btn-neutral"
+                          onClick={() => handleSave(row)}
+                        >
                           Save
                         </button>
                       ) : (
                         <button
                           className="btn btn-neutral"
-                          onClick={() => setEditingData(row)}
+                          onClick={() => handleEdit(row)}
                         >
                           Edit
                         </button>
@@ -162,7 +178,7 @@ function Paper() {
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
-                      type="float"
+                      type="number"
                       name="rate"
                       placeholder="Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"

@@ -1,39 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
 import axios from "axios";
-import { useEffect } from "react";
-
-const initialPlateData = [
-  {
-    plate_id: "1",
-    plate_size: "10 x 20",
-    rate: 50,
-    ink_rate: 100,
-  },
-  {
-    plate_id: "2",
-    plate_size: "5 x 10",
-    rate: 80,
-    ink_rate: 200,
-  },
-  {
-    plate_id: "3",
-    plate_size: "20 x 30",
-    rate: 400,
-    ink_rate: 50,
-  },
-];
 
 function Plate() {
   const [editingData, setEditingData] = useState(null);
-  const [plateDataState, setplateDataState] = useState([]);
+  const [plateDataState, setPlateDataState] = useState([]);
 
-  function getPaper() {
+  function getPlates() {
     axios
       .get("http://localhost:8081/plates")
       .then((response) => {
-        setplateDataState(response.data);
+        setPlateDataState(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -41,7 +19,7 @@ function Plate() {
   }
 
   useEffect(() => {
-    getPaper();
+    getPlates();
   }, []);
 
   const handleAddPlates = (e) => {
@@ -56,41 +34,60 @@ function Plate() {
         inkRate,
       })
       .then((response) => {
-        setplateDataState((prevData) => [...prevData, response.data]);
-        console.log("Binding added successfully!");
+        setPlateDataState((prevData) => [...prevData, response.data]);
+        console.log("Plate added successfully!");
         return true;
       })
       .then((status) => {
-        if (status) getPaper();
+        if (status) getPlates();
       })
       .catch((error) => {
-        console.error("Error adding binding:", error);
+        console.error("Error adding plate:", error);
       });
   };
 
-  const handleEdit = (e, data) => {
-    e.preventDefault();
-    const updatedData = plateDataState.map((item) => {
-      if (item.plate_id === data.plate_id) {
-        return {
-          ...item,
-          rate: e.target.elements.rate.value,
-          inkrate: e.target.elements.inkrate.value,
-          plate_size: e.target.elements.plate_size.value,
-        };
-      }
-      return item;
-    });
-    setplateDataState(updatedData);
-    setEditingData(null);
-    console.log("Data saved successfully!");
+  const handleUpdate = (id, updatedData) => {
+    axios
+      .put(`http://localhost:8081/plates/${id}`, updatedData)
+      .then((response) => {
+        console.log("Plate updated successfully:", response.data);
+        getPlates(); // Refresh plate data
+      })
+      .catch((error) => {
+        console.error("Error updating plate:", error);
+      });
+  };
+
+  const handleEdit = (data) => {
+    setEditingData(data);
+  };
+
+  const handleSave = (row) => {
+    const plateSizeInput = document.getElementById(`plateSize_${row.plateId}`);
+    const plateRateInput = document.getElementById(`plateRate_${row.plateId}`);
+    const inkRateInput = document.getElementById(`inkRate_${row.plateId}`);
+
+    if (plateSizeInput && plateRateInput && inkRateInput) {
+      const updatedData = {
+        plateSize: plateSizeInput.value,
+        plateRate: parseFloat(plateRateInput.value),
+        inkRate: parseFloat(inkRateInput.value),
+      };
+      handleUpdate(row.plateId, updatedData);
+      setEditingData(null); // Reset editing state after save
+    } else {
+      console.error("One or more input elements not found.");
+    }
   };
 
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-      <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <img
             width="26"
             height="26"
@@ -99,7 +96,9 @@ function Plate() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">Plate</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+            Plate
+          </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
@@ -117,9 +116,10 @@ function Plate() {
                     <td className="text-wrap">{row.plateId}</td>
                     <td className="text-wrap">
                       {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                        <form onSubmit={(e) => handleSave(row)}>
                           <input
                             type="text"
+                            id={`plateSize_${row.plateId}`}
                             name="plateSize"
                             className="input input-bordered"
                             defaultValue={row.plateSize}
@@ -132,10 +132,27 @@ function Plate() {
                     </td>
                     <td className="text-wrap">
                       {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
+                        <form onSubmit={(e) => handleSave(row)}>
                           <input
-                            type="text"
-                            name="plateSize"
+                            type="number"
+                            id={`plateRate_${row.plateId}`}
+                            name="plateRate"
+                            className="input input-bordered"
+                            defaultValue={row.plateRate}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>{row.plateRate}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData && editingData.plateId === row.plateId ? (
+                        <form onSubmit={(e) => handleSave(row)}>
+                          <input
+                            type="number"
+                            id={`inkRate_${row.plateId}`}
+                            name="inkRate"
                             className="input input-bordered"
                             defaultValue={row.inkRate}
                             required
@@ -145,36 +162,18 @@ function Plate() {
                         <span>{row.inkRate}</span>
                       )}
                     </td>
-                    <td className="text-wrap">
-                      {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <input
-                            type="number"
-                            name="rate"
-                            className="input input-bordered"
-                            defaultValue={row.rate}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>
-                          {
-                            plateDataState.find(
-                              (item) => item.plateId === row.plateId
-                            )?.plateRate
-                          }
-                        </span>
-                      )}
-                    </td>
                     <td>
                       {editingData && editingData.plateId === row.plateId ? (
-                        <button className="btn btn-neutral" type="submit">
+                        <button
+                          className="btn btn-neutral"
+                          onClick={() => handleSave(row)}
+                        >
                           Save
                         </button>
                       ) : (
                         <button
                           className="btn btn-neutral"
-                          onClick={() => setEditingData(row)}
+                          onClick={() => handleEdit(row)}
                         >
                           Edit
                         </button>
@@ -185,12 +184,6 @@ function Plate() {
               </tbody>
             </table>
             <br />
-            {/* <button
-              className="btn btn-success mx-[200px] bg-zinc-900 text-white border-0 hover:bg-blue-800"
-              onClick={openForm}
-            >
-              Add Binding
-            </button> */}
             <button
               className="btn mx-[200px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
@@ -214,15 +207,15 @@ function Plate() {
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
-                      type="float"
-                      placeholder="Rate"
+                      type="number"
                       name="plateRate"
+                      placeholder="Plate Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
-                      type="float"
-                      placeholder="Ink Rate"
+                      type="number"
                       name="inkRate"
+                      placeholder="Ink Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <button className="btn mt-5 btn-ghost mx-[115px]">

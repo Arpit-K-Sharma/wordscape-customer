@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
 import axios from "axios";
 
 function Lamination() {
+  const [editingData, setEditingData] = useState(null);
   const [laminationData, setLaminations] = useState([]);
 
   function getLamination() {
     axios
       .get("http://localhost:8081/laminations")
       .then((response) => {
-        setLaminations(response.data);
+        // Sort the data by laminationId in ascending order
+        const sortedData = response.data.sort(
+          (a, b) => a.laminationId - b.laminationId
+        );
+        setLaminations(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -32,23 +36,47 @@ function Lamination() {
       })
       .then((response) => {
         setLaminations((prevData) => [...prevData, response.data]);
-        // getLamination();
-        console.log("Binding added successfully!");
+        console.log("Lamination added successfully!");
         return true;
       })
       .then((status) => {
         if (status) getLamination();
       })
       .catch((error) => {
-        console.error("Error adding binding:", error);
+        console.error("Error adding lamination:", error);
       });
+  };
+
+  const handleUpdate = (id, updatedData) => {
+    axios
+      .put(`http://localhost:8081/laminations/${id}`, updatedData)
+      .then((response) => {
+        console.log("Lamination updated successfully:", response.data);
+        getLamination(); // Refresh lamination data
+      })
+      .catch((error) => {
+        console.error("Error updating lamination:", error);
+      });
+  };
+
+  const handleEdit = (data) => {
+    setEditingData(data);
+  };
+
+  const handleSave = (row) => {
+    const updatedData = {
+      laminationType: document.getElementById(`lamination_type_${row.laminationId}`).value,
+      rate: parseFloat(document.getElementById(`rate_${row.laminationId}`).value)
+    };
+    handleUpdate(row.laminationId, updatedData);
+    setEditingData(null); // Reset editing state after save
   };
 
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-      <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
           <img
             width="26"
             height="26"
@@ -57,7 +85,7 @@ function Lamination() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
             Laminations
           </h1>
           <div className="overflow-x-auto mt-[80px]">
@@ -74,10 +102,57 @@ function Lamination() {
                 {laminationData.map((row) => (
                   <tr key={row.laminationId}>
                     <td className="text-wrap">{row.laminationId}</td>
-                    <td className="text-wrap">{row.laminationType}</td>
-                    <td className="text-wrap">{row.rate}</td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.laminationId === row.laminationId ? (
+                        <form onSubmit={(e) => handleSave(e, row)}>
+                          <input
+                            type="text"
+                            id={`lamination_type_${row.laminationId}`}
+                            name="lamination_type"
+                            className="input input-bordered"
+                            defaultValue={row.laminationType}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>{row.laminationType}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.laminationId === row.laminationId ? (
+                        <form onSubmit={(e) => handleSave(e, row)}>
+                          <input
+                            type="number"
+                            id={`rate_${row.laminationId}`}
+                            name="rate"
+                            className="input input-bordered"
+                            defaultValue={row.rate}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>{row.rate}</span>
+                      )}
+                    </td>
                     <td>
-                      <button className="btn btn-neutral">Edit</button>
+                      {editingData &&
+                      editingData.laminationId === row.laminationId ? (
+                        <button
+                          className="btn btn-neutral"
+                          onClick={() => handleSave(row)}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-neutral"
+                          onClick={() => handleEdit(row)}
+                        >
+                          Edit
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -110,7 +185,7 @@ function Lamination() {
                       required
                     />
                     <input
-                      type="float"
+                      type="number"
                       name="rate"
                       placeholder="Rate"
                       className="mt-5 input input-bordered w-full max-w-xs"
