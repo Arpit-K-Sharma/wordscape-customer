@@ -111,76 +111,78 @@ function Plate() {
                 </tr>
               </thead>
               <tbody>
-                {plateDataState.map((row) => (
-                  <tr key={row.plateId}>
-                    <td className="text-wrap">{row.plateId}</td>
-                    <td className="text-wrap">
-                      {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleSave(row)}>
-                          <input
-                            type="text"
-                            id={`plateSize_${row.plateId}`}
-                            name="plateSize"
-                            className="input input-bordered"
-                            defaultValue={row.plateSize}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.plateSize}</span>
-                      )}
-                    </td>
-                    <td className="text-wrap">
-                      {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleSave(row)}>
-                          <input
-                            type="number"
-                            id={`plateRate_${row.plateId}`}
-                            name="plateRate"
-                            className="input input-bordered"
-                            defaultValue={row.plateRate}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.plateRate}</span>
-                      )}
-                    </td>
-                    <td className="text-wrap">
-                      {editingData && editingData.plateId === row.plateId ? (
-                        <form onSubmit={(e) => handleSave(row)}>
-                          <input
-                            type="number"
-                            id={`inkRate_${row.plateId}`}
-                            name="inkRate"
-                            className="input input-bordered"
-                            defaultValue={row.inkRate}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.inkRate}</span>
-                      )}
-                    </td>
-                    <td>
-                      {editingData && editingData.plateId === row.plateId ? (
-                        <button
-                          className="btn btn-neutral"
-                          onClick={() => handleSave(row)}
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-neutral"
-                          onClick={() => handleEdit(row)}
-                        >
-                          Edit
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                {plateDataState
+                  .sort((a, b) => a.plateId - b.plateId) // Sort the array by plateId
+                  .map((row) => (
+                    <tr key={row.plateId}>
+                      <td className="text-wrap">{row.plateId}</td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <form onSubmit={(e) => handleSave(row)}>
+                            <input
+                              type="text"
+                              id={`plateSize_${row.plateId}`}
+                              name="plateSize"
+                              className="input input-bordered"
+                              defaultValue={row.plateSize}
+                              required
+                            />
+                          </form>
+                        ) : (
+                          <span>{row.plateSize}</span>
+                        )}
+                      </td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <form onSubmit={(e) => handleSave(row)}>
+                            <input
+                              type="number"
+                              id={`plateRate_${row.plateId}`}
+                              name="plateRate"
+                              className="input input-bordered"
+                              defaultValue={row.plateRate}
+                              required
+                            />
+                          </form>
+                        ) : (
+                          <span>{row.plateRate}</span>
+                        )}
+                      </td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <form onSubmit={(e) => handleSave(row)}>
+                            <input
+                              type="number"
+                              id={`inkRate_${row.plateId}`}
+                              name="inkRate"
+                              className="input input-bordered"
+                              defaultValue={row.inkRate}
+                              required
+                            />
+                          </form>
+                        ) : (
+                          <span>{row.inkRate}</span>
+                        )}
+                      </td>
+                      <td>
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <button
+                            className="btn btn-neutral"
+                            onClick={() => handleSave(row)}
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-neutral"
+                            onClick={() => handleEdit(row)}
+                          >
+                            Edit
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
             <br />
