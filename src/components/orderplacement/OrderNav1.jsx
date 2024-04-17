@@ -10,7 +10,7 @@ function OrderNavbar1() {
           {/* <h1 className="text-center ml-[60px] text-4xl font-archivo mt-9">
             Place your order through WordScape
           </h1> */}
-          <ul className="steps steps-vertical ml-[300px] mt-[60px] lg:steps-horizontal sm:steps-vertical">
+          <ul className="steps steps-vertical ml-[240px] mt-[60px] lg:steps-horizontal sm:steps-vertical">
             <li className="step step-primary" data-content="●">
               Inner Paper
             </li>
