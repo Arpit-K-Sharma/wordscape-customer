@@ -27,7 +27,8 @@ import OrderPlacementSecond from "./components/orderplacement/PlaceOrder2";
 import OrderPlacementThird from "./components/orderplacement/PlaceOrder3";
 import FourthForm from "./components/orderplacement/Form4";
 import OrderPlacementFourth from "./components/orderplacement/PlaceOrder4";
-// import DashboardTasks from "./components/dashboard/DashboardTasks"; 
+import OrderPlacementFifth from "./components/orderplacement/PlaceOrder5";
+// import DashboardTasks from "./components/dashboard/DashboardTasks";
 
 function App() {
   return (
@@ -42,9 +43,10 @@ function App() {
         <Route path="/cost" element={<CostCalculation />} />
 
         <Route path="/order" element={<OrderPlacement />} />
-        <Route path="/order/2" element={<OrderPlacementSecond/>}/>
-        <Route path="/order/3" element={<OrderPlacementThird/>}/>
-        <Route path="/order/4" element={<OrderPlacementFourth/>}/>
+        <Route path="/order/2" element={<OrderPlacementSecond />} />
+        <Route path="/order/3" element={<OrderPlacementThird />} />
+        <Route path="/order/4" element={<OrderPlacementFourth />} />
+        <Route path="/order/5" element={<OrderPlacementFifth />} />
 
         <Route path="/user/dashboard" element={<UserDashboard />} />
 

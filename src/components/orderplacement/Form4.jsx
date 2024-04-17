@@ -55,7 +55,7 @@ const FourthForm = ({}) => {
         <br />
 
         <div className="form-control">
-        <h3>Color Type: </h3>
+        <h3 className="text-xl">Color Type: </h3>
           <label className="label cursor-pointer">
             <span className="label-text">RGB</span>
             <input

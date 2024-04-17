@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../navbar/navbar";
 
-function OrderNavbar4() {
+function OrderNavbar5() {
   return (
     <div>
       <Navbar />
@@ -14,9 +14,15 @@ function OrderNavbar4() {
             <li className="step step-primary" data-content="✓">
               Outer Paper
             </li>
-            <li className="step step-primary" data-content="✓">Quantity</li>
-            <li className="step step-primary" data-content="●">Extras</li>
-            <li className="step">Details & Confirmation</li>
+            <li className="step step-primary" data-content="✓">
+              Quantity
+            </li>
+            <li className="step step-primary" data-content="✓">
+              Extras
+            </li>
+            <li className="step step-primary" data-content="●">
+              Details & Confirmation
+            </li>
           </ul>
         </div>
       </div>
@@ -24,4 +30,4 @@ function OrderNavbar4() {
   );
 }
 
-export default OrderNavbar4;
+export default OrderNavbar5;
