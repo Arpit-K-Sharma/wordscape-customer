@@ -21,6 +21,10 @@ import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
 import OrderPlacement from "./components/orderplacement/PlaceOrder";
 import UserDashboard from "./components/dashboard/UserDashboard";
+import FirstForm from "./components/orderplacement/Form1";
+import SecondForm from "./components/orderplacement/Form2";
+import OrderPlacementSecond from "./components/orderplacement/PlaceOrder1";
+// import DashboardTasks from "./components/dashboard/DashboardTasks"; 
 
 function App() {
   return (
@@ -32,10 +36,12 @@ function App() {
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/cost" element={<CostCalculation/>}/>
-        <Route path="/order" element={<OrderPlacement/>}/>
+        <Route path="/cost" element={<CostCalculation />} />
 
-        <Route path="/user/dashboard" element={<UserDashboard />} /> 
+        <Route path="/order" element={<OrderPlacement />} />
+        <Route path="/order/2" element={<OrderPlacementSecond/>}/>
+
+        <Route path="/user/dashboard" element={<UserDashboard />} />
 
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -45,7 +51,6 @@ function App() {
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
         <Route path="/admin/plate" element={<Plate />} />
-
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/product" element={<ProductCard />} />

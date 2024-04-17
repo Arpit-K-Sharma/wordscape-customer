@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-const FirstForm = ({
-    paperTypes,
-    outerPaperGSM,
-    selectedThickness,
-    setSelectedThickness,
+const SecondForm = ({
+  paperTypes,
+  outerPaperGSM,
+  selectedThickness,
+  setSelectedThickness,
 }) => {
   return (
     <div className="ml-[31%] my-3 content-center p-4">
@@ -16,14 +17,9 @@ const FirstForm = ({
           <option disabled defaultValue>
             Pick one
           </option>
-          {paperTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.name}
-            </option>
-          ))}
         </select>
         <div className="label">
-          <span className="label-text-alt">Inner Paper Type</span>
+          <span className="label-text-alt">Outer Paper Type</span>
         </div>
         <select
           className="select select-bordered w-full max-w-xl mt-5"
@@ -33,19 +29,21 @@ const FirstForm = ({
           <option disabled defaultValue>
             Pick one
           </option>
-          {outerPaperGSM.map((gsm) => (
-            <option key={gsm.id} value={gsm.id}>
-              {gsm.thickness} GSM
-            </option>
-          ))}
         </select>
         <div className="label">
-          <span className="label-text-alt">Inner Paper Thickness</span>
+          <span className="label-text-alt">Outer Paper Thickness</span>
         </div>
-        <button className="btn btn-primary mt-5">Next</button>
+        <div className="flex">
+        <NavLink to="/order">
+          <button className="btn btn-primary w-[280px] mt-5 mr-5">Previous</button>
+        </NavLink>
+        <NavLink to="/order/3">
+          <button className="btn btn-primary w-[280px] mt-5">Next</button>
+        </NavLink>
+        </div>
       </label>
     </div>
   );
 };
 
-export default FirstForm;
+export default SecondForm;
