@@ -19,11 +19,14 @@ import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
-import OrderPlacement from "./components/orderplacement/PlaceOrder";
+import OrderPlacement from "./components/orderplacement/PlaceOrder1";
 import UserDashboard from "./components/dashboard/UserDashboard";
 import FirstForm from "./components/orderplacement/Form1";
 import SecondForm from "./components/orderplacement/Form2";
-import OrderPlacementSecond from "./components/orderplacement/PlaceOrder1";
+import OrderPlacementSecond from "./components/orderplacement/PlaceOrder2";
+import OrderPlacementThird from "./components/orderplacement/PlaceOrder3";
+import FourthForm from "./components/orderplacement/Form4";
+import OrderPlacementFourth from "./components/orderplacement/PlaceOrder4";
 // import DashboardTasks from "./components/dashboard/DashboardTasks"; 
 
 function App() {
@@ -40,6 +43,8 @@ function App() {
 
         <Route path="/order" element={<OrderPlacement />} />
         <Route path="/order/2" element={<OrderPlacementSecond/>}/>
+        <Route path="/order/3" element={<OrderPlacementThird/>}/>
+        <Route path="/order/4" element={<OrderPlacementFourth/>}/>
 
         <Route path="/user/dashboard" element={<UserDashboard />} />
 

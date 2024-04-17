@@ -5,41 +5,56 @@ const SecondForm = ({
   paperTypes,
   outerPaperGSM,
   selectedThickness,
+  outerPaperTypes,
   setSelectedThickness,
+  selectedPaperType,
+  setSelectedPaperType,
 }) => {
   return (
     <div className="ml-[31%] my-3 content-center p-4">
       <label className="form-control w-full max-w-xl">
+        <p className="text-2xl font-light">
+          What about the cover of your book that you would want to print on?
+        </p>
+        <br />
         <div className="label text-center content-center">
-          <span className="label-text">Choose your Paper Size</span>
+          <span className="label-text">Outer Paper Type</span>
         </div>
         <select className="select select-bordered">
           <option disabled defaultValue>
             Pick one
           </option>
+          {outerPaperTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.name}
+            </option>
+          ))}
         </select>
-        <div className="label">
-          <span className="label-text-alt">Outer Paper Type</span>
+        <br/>
+        <div className="label text-center content-center">
+          <span className="label-text">Outer Paper Thickness</span>
         </div>
-        <select
-          className="select select-bordered w-full max-w-xl mt-5"
-          value={selectedThickness}
-          onChange={(e) => setSelectedThickness(e.target.value)}
-        >
+        <select className="select select-bordered">
           <option disabled defaultValue>
             Pick one
           </option>
+          {outerPaperGSM.map((gsm) => (
+            <option key={gsm.id} value={gsm.id}>
+              {gsm.thickness} GSM
+            </option>
+          ))}
         </select>
-        <div className="label">
-          <span className="label-text-alt">Outer Paper Thickness</span>
-        </div>
+
+
         <div className="flex">
-        <NavLink to="/order">
-          <button className="btn btn-primary w-[280px] mt-5 mr-5">Previous</button>
-        </NavLink>
-        <NavLink to="/order/3">
-          <button className="btn btn-primary w-[280px] mt-5">Next</button>
-        </NavLink>
+          <NavLink to="/order">
+            <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+              Previous
+            </button>
+          </NavLink>
+          <NavLink to="/order/3">
+            <button className="btn btn-primary w-[280px] mt-5">Next</button>
+          </NavLink>
         </div>
       </label>
     </div>
