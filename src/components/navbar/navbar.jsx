@@ -47,7 +47,7 @@ function Navbar() {
           </ul>
         </div>
         <NavLink to="/login">
-          <a className="btn">Login</a>
+          <a className="btn mr-[25px] bg-zinc-500 text-white">Login</a>
         </NavLink>
       </div>
     </div>

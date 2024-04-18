@@ -1,5 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+
+function getPaper() {
+  axios
+    .get("http://localhost:8081/papers")
+    .then((response) => {
+      // Sort the data by paperId in ascending order
+      const sortedData = response.data.sort(
+        (a, b) => a.paperId - b.paperId
+      );
+      setPaperDataState(sortedData);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+}
+
+
+
 
 const FirstForm = ({
   paperTypes,

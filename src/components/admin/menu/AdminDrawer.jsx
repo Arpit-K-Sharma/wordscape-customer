@@ -20,66 +20,80 @@ function AdminDrawer() {
             className="mx-auto my-1 mb-5"
           />
         </li>
-        <li>
+        <li className="bg-zinc-700">
           <NavLink to="/admin/dashboard">
-            <p className="text-xl font-light">Admin Home</p>
+            <p className="text-2xl font-light text-center ml-[35px]">Home</p>
           </NavLink>
         </li>
-        <div className="dropdown dropdown-bottom font-archivo">
-          <div tabIndex={0} role="button" className="btn m-1">
-            Edit Product Details
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[180px]"
-          >
+        <br />
+        <details className="dropdown dropdown-bottom font-archivo ">
+          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white">
+            Edit Products
+          </summary>
+          <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px] ml-[6px]">
             <li>
-              <a>Item 1</a>
+              <NavLink to="/admin/paper">
+                <p className="text-xl mb-3 font-light">Paper</p>
+              </NavLink>
             </li>
             <li>
-              <a>Item 2</a>
+              <NavLink to="/admin/binding">
+                <p className="text-xl mb-3 font-light">Binding</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/lamination">
+                <p className="text-xl mb-3 font-light">Lamination</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/plate">
+                <p className="text-xl mb-3 font-light">Plate</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/users">
+                <p className="text-xl mb-3 font-light">User</p>
+              </NavLink>
             </li>
           </ul>
+        </details>
+
+        <details className="dropdown dropdown-bottom font-archivo">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
+            Edit Users
+          </summary>
+          <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
+            <li>
+              <NavLink to="/admin/users">
+                <p className="text-xl mb-3 font-light">Staffs</p>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/customer">
+                <p className="text-xl mb-3 font-light">Customers</p>
+              </NavLink>
+            </li>
+          </ul>
+        </details>
+
+        <details className="dropdown dropdown-bottom font-archivo">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
+            View Sales
+          </summary>
+          <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
+            <li> 
+              <p className="text-xl font-light">Order</p>
+            </li>
+          </ul>
+        </details>
+        <div className="mb-[130px]">
+
         </div>
 
-        <br></br>
-        <li>
-          <NavLink to="/admin/paper">
-            <p className="text-xl mb-3 font-light">Paper</p>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin/binding">
-            <p className="text-xl mb-3 font-light">Binding</p>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin/lamination">
-            <p className="text-xl mb-3 font-light">Lamination</p>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin/plate">
-            <p className="text-xl mb-3 font-light">Plate</p>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin/users">
-            <p className="text-xl mb-3 font-light">User</p>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin/customer">
-            <p className="text-xl mb-3 font-light">Customer</p>
-          </NavLink>
-        </li>
-        <li>
-          <p className="text-xl mb-[170px] font-light">Order</p>
-        </li>
-        <br></br>
-        <li>
+        <li className="bg-gray-900 text-white rounded-lg">
           <NavLink to="/">
-            <p className="text-xl mb-3 font-bold top-[50px]">Logout</p>
+            <p className="text-xl mb-3 font-light top-[50px]">Logout</p>
           </NavLink>
         </li>
       </ul>

@@ -81,7 +81,7 @@ function Users() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo">Users</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo">Staffs</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>

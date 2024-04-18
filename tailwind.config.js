@@ -28,6 +28,7 @@ export default {
       '10': "2.5rem",
     },
     extend: {
+      
       margin:{
         '1': '10px'
       },
@@ -45,7 +46,6 @@ export default {
         m1: ""
       },
       
-
     },
   },
   plugins: [require("daisyui")],
