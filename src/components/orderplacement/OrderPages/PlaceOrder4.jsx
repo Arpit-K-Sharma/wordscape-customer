@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../navbar/navbar";
 import { useState } from "react";
-import OrderNavbar4 from "./OrderNav4";
-import FourthForm from "./Form4";
+import OrderNavbar4 from "../Progressbar/Progress4";
+import FourthForm from "../Forms/Form4";
 
 function OrderPlacementFourth() {
 

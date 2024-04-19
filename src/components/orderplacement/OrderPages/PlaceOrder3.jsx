@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../navbar/navbar";
 import { useState } from "react";
-import ThirdForm from "./Form3";
-import OrderNavbar3 from "./OrderNav3";
+import ThirdForm from "../Forms/Form3";
+import OrderNavbar3 from "../Progressbar/Progress3";
 
 function OrderPlacementThird() {
   const [selectedPaperType, setSelectedPaperType] = useState(1);

@@ -11,7 +11,7 @@ const SecondForm = ({
   setSelectedPaperType,
 }) => {
   return (
-    <div className="ml-[31%] my-3 content-center p-4">
+    <div className="ml-[29%] my-3 content-center p-4">
       <label className="form-control w-full max-w-xl">
         <p className="text-2xl font-light">
           What about the cover of your book that you would want to print on?
@@ -30,7 +30,7 @@ const SecondForm = ({
             </option>
           ))}
         </select>
-        <br/>
+        <br />
         <div className="label text-center content-center">
           <span className="label-text">Outer Paper Thickness</span>
         </div>
@@ -44,7 +44,6 @@ const SecondForm = ({
             </option>
           ))}
         </select>
-
 
         <div className="flex">
           <NavLink to="/order">

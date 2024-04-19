@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
-import OrderNavbar from "./OrderNav1";
+import Navbar from "../../navbar/navbar";
+import Progress1 from "../Progressbar/Progress1";
 import { useState } from "react";
-import FirstForm from "./Form1";
+import FirstForm from "../Forms/Form1";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -56,7 +56,7 @@ function OrderPlacement() {
 
   return (
     <div>
-      <OrderNavbar />
+      <Progress1 />
       <div className="p-7 text-slate-200 mx-auto relative">
         <div className="mx-auto content-center text-center">
           <FirstForm

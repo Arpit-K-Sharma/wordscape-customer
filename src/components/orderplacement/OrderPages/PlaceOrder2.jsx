@@ -1,9 +1,8 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
-import OrderNavbar from "./OrderNav1";
+import Navbar from "../../navbar/navbar";
 import { useState } from "react";
-import SecondForm from "./Form2";
-import OrderNavbar1 from "./OrderNav2";
+import SecondForm from "../Forms/Form2";
+import Progress2 from "../Progressbar/Progress2";
 
 const outerPaperTypes = [
   { id: 1, name: "Art Paper" },
@@ -27,7 +26,7 @@ function OrderPlacementSecond() {
 
   return (
     <div>
-      <OrderNavbar1 />
+      <Progress2 />
       <div className="p-7 text-slate-200 mx-auto relative">
         <div className="mx-auto content-center text-center">
           <SecondForm

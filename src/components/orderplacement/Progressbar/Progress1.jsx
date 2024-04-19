@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../navbar/navbar";
 
-function OrderNavbar1() {
+function Progress1() {
   return (
     <div>
       <Navbar />
@@ -25,4 +25,4 @@ function OrderNavbar1() {
   );
 }
 
-export default OrderNavbar1;
+export default Progress1;

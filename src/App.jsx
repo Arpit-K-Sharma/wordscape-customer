@@ -19,15 +19,14 @@ import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
-import OrderPlacement from "./components/orderplacement/PlaceOrder1";
+import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder1";
 import UserDashboard from "./components/dashboard/UserDashboard";
-import FirstForm from "./components/orderplacement/Form1";
-import SecondForm from "./components/orderplacement/Form2";
-import OrderPlacementSecond from "./components/orderplacement/PlaceOrder2";
-import OrderPlacementThird from "./components/orderplacement/PlaceOrder3";
-import FourthForm from "./components/orderplacement/Form4";
-import OrderPlacementFourth from "./components/orderplacement/PlaceOrder4";
-import OrderPlacementFifth from "./components/orderplacement/PlaceOrder5";
+
+import OrderPlacementSecond from "./components/orderplacement/OrderPages/PlaceOrder2";
+import OrderPlacementThird from "./components/orderplacement/OrderPages/PlaceOrder3";
+
+import OrderPlacementFourth from "./components/orderplacement/OrderPages/PlaceOrder4";
+import OrderPlacementFifth from "./components/orderplacement/OrderPages/PlaceOrder5";
 import JobCard from "./components/jobcard/jobcard";
 import PrevJobCard from "./components/jobcard/previousjobcard/jobcard1";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
