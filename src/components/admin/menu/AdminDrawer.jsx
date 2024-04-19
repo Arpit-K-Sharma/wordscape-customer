@@ -27,8 +27,8 @@ function AdminDrawer() {
         </li>
         <br />
         <details className="dropdown dropdown-bottom font-archivo ">
-          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white">
-            Edit Products
+          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px]">
+            Catalogues
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px] ml-[6px]">
             <li>
@@ -61,7 +61,7 @@ function AdminDrawer() {
 
         <details className="dropdown dropdown-bottom font-archivo">
           <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
-            Edit Users
+            User Setup
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
             <li>
@@ -79,7 +79,7 @@ function AdminDrawer() {
 
         <details className="dropdown dropdown-bottom font-archivo">
           <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
-            View Sales
+            Statements
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
             <li> 
@@ -93,7 +93,7 @@ function AdminDrawer() {
 
         <li className="bg-gray-900 text-white rounded-lg">
           <NavLink to="/">
-            <p className="text-xl mb-3 font-light top-[50px]">Logout</p>
+            <p className="text-xl mb-3 font-light top-[50px] ml-[34px]">Logout</p>
           </NavLink>
         </li>
       </ul>

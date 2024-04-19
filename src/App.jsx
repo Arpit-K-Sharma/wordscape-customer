@@ -29,7 +29,9 @@ import FourthForm from "./components/orderplacement/Form4";
 import OrderPlacementFourth from "./components/orderplacement/PlaceOrder4";
 import OrderPlacementFifth from "./components/orderplacement/PlaceOrder5";
 import JobCard from "./components/jobcard/jobcard";
+import PrevJobCard from "./components/jobcard/previousjobcard/jobcard1";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
+import NJobCard from "./components/newjobcard/njobcard";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
 
         <Route path="/cost" element={<CostCalculation />} />
         <Route path="/jobcard" element={<JobCard />} />
+        <Route path="/pjobcard" element={<PrevJobCard />} />
+        <Route path="/ujobcard" element={<NJobCard />} />
 
         <Route path="/order" element={<OrderPlacement />} />
         <Route path="/order/2" element={<OrderPlacementSecond />} />

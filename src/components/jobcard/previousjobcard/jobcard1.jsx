@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { useState } from "react";
-import "./jobcard.css";
+import "./job-card.css";
+import Gap from "./gap";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import WGap from "./wgap";
 import axios from "axios";
 
 const options = {
@@ -35,7 +37,7 @@ const options = {
   ],
 };
 
-export default function JobCard() {
+export default function PrevJobCard() {
   const componentRef = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -86,13 +88,17 @@ export default function JobCard() {
   return (
     <div className="screenshot-main" ref={componentRef}>
       <div className="job-container">
-        <div className="hero ml-[190px] mb-[50px]">
+        <div className="hero">
           <h1>Job Card</h1>
         </div>
         <div className="job-f-container">
           <div className="left-side">
-            <section className="container mb-20px text-sm">
-              <form action="" className="form text-[11px]">
+            <section className="container">
+              <Gap />
+
+              <Gap />
+
+              <form action="" className="form">
                 <label htmlFor="fullName">
                   <b>Order </b>Date / <b>Time</b>{" "}
                 </label>
@@ -198,152 +204,153 @@ export default function JobCard() {
               </form>
               <br></br>
               <br></br>
-              <h2 className="text-2xl mr-9">
+              <h2 className="s-1">
                 <b>Pre-press</b> Unit
               </h2>
-              <form action="" className="form">
-                <label htmlFor="pre-press">
-                  <b>Pre-press</b> Unit
-                </label>
-                <select id="pre-press1">
-                  {options.prePress.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+              <section className="container">
+                <form action="" className="form">
+                  <label htmlFor="pre-press">
+                    <b>Pre-press</b> Unit
+                  </label>
+                  <select id="pre-press1">
+                    {options.prePress.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
 
-                <label htmlFor="materialReceived">
-                  <b>Material</b> Received
-                </label>
-                <select id="materialReceived">
-                  {options.materialReceived.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  <label htmlFor="materialReceived">
+                    <b>Material</b> Received
+                  </label>
+                  <select id="materialReceived">
+                    {options.materialReceived.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
 
-                <label htmlFor="flapSize">
-                  <b>Flap</b> Size
-                </label>
-                <select id="flapSize">
-                  {options.flapSize.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="ManualflapSize">
-                  <b>Manual</b> Flap Size
-                </label>
-                <input
-                  type="text"
-                  id="ManualflapSize"
-                  name="ManualflapSize"
-                  placeholder="Other"
-                />
+                  <label htmlFor="flapSize">
+                    <b>Flap</b> Size
+                  </label>
+                  <select id="flapSize">
+                    {options.flapSize.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="ManualflapSize">
+                    <b>Manual</b> Flap Size
+                  </label>
+                  <input
+                    type="text"
+                    id="ManualflapSize"
+                    name="ManualflapSize"
+                    placeholder="Other"
+                  />
 
-                <input
-                  type="text"
-                  id="paperSize"
-                  name="paperSize"
-                  placeholder="Paper Size"
-                />
-                <input
-                  type="text"
-                  id="gutterSize"
-                  name="gutterSize"
-                  placeholder="Gutter Size"
-                />
-                <input
-                  type="text"
-                  id="gripSize"
-                  name="gripSize"
-                  placeholder="Gripper Size"
-                />
-                <input
-                  type="text"
-                  id="coverPaperSize"
-                  name="coverPaperSize"
-                  placeholder="Cover Paper Size"
-                />
-                <input
-                  type="text"
-                  id="innerPaperSize"
-                  name="innerPaperSize"
-                  placeholder="Inner Paper Size"
-                />
+                  <input
+                    type="text"
+                    id="paperSize"
+                    name="paperSize"
+                    placeholder="Paper Size"
+                  />
+                  <input
+                    type="text"
+                    id="gutterSize"
+                    name="gutterSize"
+                    placeholder="Gutter Size"
+                  />
+                  <input
+                    type="text"
+                    id="gripSize"
+                    name="gripSize"
+                    placeholder="Gripper Size"
+                  />
+                  <input
+                    type="text"
+                    id="coverPaperSize"
+                    name="coverPaperSize"
+                    placeholder="Cover Paper Size"
+                  />
+                  <input
+                    type="text"
+                    id="innerPaperSize"
+                    name="innerPaperSize"
+                    placeholder="Inner Paper Size"
+                  />
 
-                <label htmlFor="folderName" />
-                <p>
-                  <b>Folder</b> Name
-                </p>
-                <input
-                  type="text"
-                  id="folderName"
-                  name="folderName"
-                  placeholder="Folder Name"
-                />
+                  <label htmlFor="folderName" />
+                  <p>
+                    <b>Folder</b> Name
+                  </p>
+                  <input
+                    type="text"
+                    id="folderName"
+                    name="folderName"
+                    placeholder="Folder Name"
+                  />
+                  <br></br>
+
+                  <label htmlFor="plateProcess" />
+                  <p>
+                    <b>Plate</b> Process
+                  </p>
+                  <input
+                    type="text"
+                    id="plateProcess"
+                    name="plateProcess"
+                    placeholder="Plate Process"
+                  />
+                  <br></br>
+
+                  <label htmlFor="plateScreentype" />
+                  <p>
+                    <b>Plate</b> Screen Type
+                  </p>
+                  <input
+                    type="text"
+                    id="plateScreentype"
+                    name="plateScreentype"
+                    placeholder="Plate Screen Type"
+                  />
+                </form>
+
+                <label htmlFor="plateDamage">
+                  <b>
+                    <h2 className="s-1">
+                      <b>Plate</b> Damage
+                    </h2>
+                  </b>
+                </label>
                 <br></br>
-
-                <label htmlFor="plateProcess" />
-                <p>
-                  <b>Plate</b> Process
-                </p>
                 <input
-                  type="text"
-                  id="plateProcess"
-                  name="plateProcess"
-                  placeholder="Plate Process"
+                  type="radio"
+                  id="plateDamageCTP"
+                  name="plateDamage"
+                  value="CTP"
                 />
+                <label htmlFor="plateDamageCTP"> On CTP</label>
                 <br></br>
-
-                <label htmlFor="plateScreentype" />
-                <p>
-                  <b>Plate</b> Screen Type
-                </p>
                 <input
-                  type="text"
-                  id="plateScreentype"
-                  name="plateScreentype"
-                  placeholder="Plate Screen Type"
+                  type="radio"
+                  id="plateDamagePress"
+                  name="plateDamage"
+                  value="Press"
                 />
-              </form>
+                <label htmlFor="plateDamagePress"> On Press</label>
+                <Gap />
 
-              <label htmlFor="plateDamage mt-5">
-                <b>
-                  <h2 className="s-1">
-                    <b>Plate</b> Damage
-                  </h2>
-                </b>
-              </label>
-              <br></br>
-              <input
-                type="radio"
-                id="plateDamageCTP"
-                name="plateDamage"
-                value="CTP"
-              />
-              <label htmlFor="plateDamageCTP"> On CTP</label>
-              <br></br>
-              <input
-                type="radio"
-                id="plateDamagePress"
-                name="plateDamage"
-                value="Press"
-              />
-              <label htmlFor="plateDamagePress" className="mb-20 mt-[50px]">
-                On Press
-              </label>
-
-              <label htmlFor="plate-remake">
-                <input
-                  type="text"
-                  id="plate-remake"
-                  placeholder="Plate Remake"
-                ></input>
-              </label>
+                <label htmlFor="plate-remake">
+                  <input
+                    type="text"
+                    id="plate-remake"
+                    placeholder="Plate Remake"
+                  ></input>
+                </label>
+              </section>
 
               <br></br>
               <table className="paper-table">
@@ -559,49 +566,55 @@ export default function JobCard() {
                   </tr>
                 </tbody>
               </table>
-
-              <div className="mt-[40px] ml-[40px]">
+              <Gap />
+              <div className="r-form-1">
                 <label htmlFor="type">Paper Ready By</label>
+                <WGap />
+                <Gap />
                 <input
                   type="text"
                   id="type"
                   name="type"
                   placeholder="Ready by"
-                  className="ml-5"
                 />
-              </div>
-              <div className="mt-5 ml-[50px]">
+                <WGap />
+                <Gap />
                 <label htmlFor="type">Date</label>
-                <input
-                  type="date"
-                  id="type"
-                  name="type"
-                  placeholder="Type"
-                  className="ml-[90px]"
-                />
-              </div>
-              <div className="mt-5 ml-[50px] w-[200px]">
+                <Gap />
+                <input type="date" id="type" name="type" placeholder="Type" />
+                <WGap />
+                <WGap />
+                <label htmlFor="time">Time</label>
+                <Gap />
                 <input type="text" id="type" name="type" placeholder="Time" />
+                <Gap />
               </div>
+              <Gap />
               <div className="r-form"></div>
               <form></form>
               <br></br>
             </section>
           </div>
-          <div className="right-side ml-6">
-            <section className="w-[200px]">
+          <div className="right-side">
+            <section className="right-container">
               <div className="r-form">
                 <label htmlFor="type">Type</label>
-
+                <Gap />
                 <input type="text" id="type" name="type" placeholder="Type" />
-
+                <Gap />
+                <Gap />
                 <label htmlFor="size" className="size-l">
                   Size
                 </label>
-
+                <Gap />
                 <input type="text" id="size" name="size" placeholder="Size" />
+                <Gap />
+                <Gap />
               </div>
-              <div className="r-container mt-5">
+              <Gap />
+              <div className="r-container">
+                <label htmlFor="number-page">No. of Page</label>
+                <Gap />
                 <input
                   type="number"
                   id="number-page"
@@ -609,23 +622,29 @@ export default function JobCard() {
                   placeholder="Number of Pages"
                 />
               </div>
+              <Gap />
               <label>
                 <input type="radio" name="side" value="single" /> Single Side
               </label>
               <label>
                 <input type="radio" name="side" value="both" /> Both Sides
               </label>
+              <Gap />
             </section>
-
+            <Gap />
             <div>
               <section className="right-container">
                 <div className="r-form">
                   <label htmlFor="type">Print Run</label>
-
+                  <Gap />
                   <input type="text" id="type" name="type" placeholder="Type" />
-                </div>
-              </section>
 
+                  <Gap />
+                </div>
+
+                <Gap />
+              </section>
+              <Gap />
               <section className="container-1">
                 <table className="paper-table">
                   <tbody>
@@ -704,108 +723,75 @@ export default function JobCard() {
                 </table>
               </section>
               <section className="b-container">
-                <h2 className="s-1 mt-4 text-2xl font-medium">
+                <Gap />
+                <Gap />
+                <h2 className="s-1">
                   <b>Bindery</b>
                 </h2>
-                <div className="grid grid-cols-2 gap-4 p-4 font-light">
-                  <label className="flex items-center ml-[100px]">
-                    <input
-                      type="radio"
-                      id="center-stitch"
-                      name="bindery-service"
-                      value="center-stitch"
-                      className="mr-7"
-                    />
-                    <p className="mr-2 font-light text-m">Center Stitch</p>
+                <Gap />
+                <div className="bindery-container-1">
+                  <Gap />
+                  <Gap />
+                  <label>
+                    <input type="radio" name="side" value="centerStitch" />{" "}
+                    <b>Center </b>
+                    Stitch
                   </label>
-                  <label className="flex items-center ml-[300px]">
-                    <input
-                      type="radio"
-                      id="perfect-bind"
-                      name="bindery-service"
-                      value="perfect-bind"
-                      className="mr-7"
-                    />
-                    <b className="mr-2">Perfect</b> Bind
+                  <Gap />
+                  <label>
+                    <input type="radio" name="side" value="perfect" />
+                    <b>Perfect</b>
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="juju"
-                      name="bindery-service"
-                      value="juju"
-                      className="mr-2"
-                    />
-                    <b className="mr-2">Juju</b>
+                  <Gap />
+                  <label>
+                    <input type="radio" name="side" value="juju" /> <b>Juju</b>
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="metal-foiling"
-                      name="bindery-service"
-                      value="metal-foiling"
-                      className="mr-2"
-                    />
-                    <b className="mr-2">Metal</b> Foiling
+                  <Gap />
+                  <label>
+                    <input type="radio" name="side" value="metalFoiling" />{" "}
+                    <b>Metal </b>
+                    Foiling
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="die-cutting"
-                      name="bindery-service"
-                      value="die-cutting"
-                      className="mr-2"
-                    />
-                    Die Cutting
+                  <Gap />
+                </div>
+                <div className="bindery-container-1">
+                  <label>
+                    <input type="radio" name="side" value="metalFoiling" />{" "}
+                    Diecuting
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="perforation"
-                      name="bindery-service"
-                      value="perforation"
-                      className="mr-2"
-                    />
+                  <br></br>
+                  <label>
+                    <input type="radio" name="side" value="centerStitch" />{" "}
                     Perforation
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="padding"
-                      name="bindery-service"
-                      value="padding"
-                      className="mr-2"
-                    />
-                    Padding
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      id="spot-varnishing"
-                      name="bindery-service"
-                      value="spot-varnishing"
-                      className="mr-2"
-                    />
-                    Spot Varnishing
-                  </label>
-                </div>
 
+                  <label>
+                    <input type="radio" name="side" value="padding" /> Padding
+                  </label>
+                  <Gap />
+                  <label>
+                    <input type="radio" name="side" value="padding" /> Spot
+                    Varnishing
+                  </label>
+                  <Gap />
+                </div>
+                <Gap />
                 <div className="v-form">
                   <label htmlFor="type">
                     <b>Filled In</b> By
                   </label>
-
+                  <Gap />
                   <input
                     type="text"
                     id="type"
                     name="type"
                     placeholder="Filled In By"
                   />
-
+                  <Gap />
                   <label htmlFor="type">
                     <b>Approved</b> By
                   </label>
-
+                  <Gap />
                   <input
                     type="text"
                     id="type"
@@ -813,27 +799,35 @@ export default function JobCard() {
                     placeholder="Approved By"
                   />
                 </div>
+                <Gap />
+                <Gap />
               </section>
               <div className="r-form">
-                <h3 className="text-xl">Press Unit</h3>
+                <Gap />
+                <h3>Press Unit</h3>
+                <Gap />
                 <input
                   type="text"
                   id="type"
                   name="type"
                   placeholder="Total Set"
                 />
+                <Gap />
               </div>
-
-              <div className="bindery-container-last"></div>
+              <Gap />
+              <Gap />
+              <div className="bindery-container-last">
+                <Gap />
+              </div>
               <input type="text" id="type" name="type" placeholder="Forma" />
-
+              <Gap />
               <input
                 type="text"
                 id="type"
                 name="type"
                 placeholder="Work & Turn"
               />
-
+              <Gap /> <Gap />
               <table className="paper-table">
                 <thead>
                   <tr>
@@ -1046,6 +1040,7 @@ export default function JobCard() {
         </button>
         <div className="upload-a">
           <h3>Upload Screenshot to the Database</h3>
+          <Gap />
         </div>
         <label htmlFor="upload-input">
           <input
