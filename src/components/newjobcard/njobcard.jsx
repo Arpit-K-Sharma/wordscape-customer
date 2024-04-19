@@ -5,10 +5,11 @@ function NJobCard() {
     <div>
       <div className="grid h-screen grid-cols-2 font-archivo">
         <div className="">
-          <h1 className="text-center mt-[90px] text-5xl font-extrabold">Job Card</h1>
-          <h1 className="text-center mt-[50px] text-xl">
-            Retrieve Order Details
+          <h1 className="text-center mt-[90px] text-5xl font-extrabold">
+            Job Card
           </h1>
+          <h1 className="text-center mt-[50px] text-xl">Order Details</h1>
+          <h1 className="text-center mt-4 text-l">TO DO: Pull Order DB Here</h1>
           <button
             className="btn mx-auto ml-[240px] mt-9 w-[150px]"
             onClick={() => document.getElementById("my_modal_5").showModal()}
@@ -249,6 +250,167 @@ function NJobCard() {
                     />
                   </label>
                 </form>
+              </p>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+
+          <button
+            className="btn mx-auto ml-[240px] mt-9 w-[150px]"
+            onClick={() => document.getElementById("my_modal_8").showModal()}
+          >
+            Paper Details
+          </button>
+          <dialog
+            id="my_modal_8"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Paper Details</h3>
+              <p className="py-4">
+                <form className="items-center mt-3">
+                  <label className="form-control w-full">
+                    <div className="label mt-1">
+                      <span className="label-text">Paper Size</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Paper Size"
+                      className="input input-bordered w-full"
+                    />
+                  </label>
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Gutter Size</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Gutter Size"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Gripper Size</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Gutter Size"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Cover Paper Size</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Cover Paper Size"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Inner Paper Size</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Inner Paper Size"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Folder Name</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Folder Name"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+
+                  <label className="form-control w-full">
+                    <div className="label mt-6">
+                      <span className="label-text">Plate Process By</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Plate Process By"
+                      className="input input-bordered w-full "
+                    />
+                  </label>
+                </form>
+              </p>
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+
+          <button
+            className="btn mx-auto ml-[240px] mt-9 w-[150px]"
+            onClick={() => document.getElementById("my_modal_9").showModal()}
+          >
+            Plate Details
+          </button>
+          <dialog
+            id="my_modal_9"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Plate Details</h3>
+              <p className="py-4">
+                <form className="items-center mt-3">
+                  <label className="form-control w-full">
+                    <div className="label mt-1">
+                      <span className="label-text">Screen Type</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Screen Type"
+                      className="input input-bordered w-full"
+                    />
+                  </label>
+                </form>
+
+                <div className="overflow-x-auto">
+                  <table className="table mt-5">
+                    {/* head */}
+                    <thead>
+                      <tr className="bg-base-200">
+                        <th>Size</th>
+                        <th>1 color</th>
+                        <th>2 color</th>
+                        <th>3 color</th>
+                        <th>4 color</th>
+                        <th>Special</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                    
+                      {/* row 1 */}
+                      
+                      {/* row 2 */}
+                  
+                      {/* row 3 */}
+                      
+                    </tbody>
+                  </table>
+                </div>
               </p>
               <div className="modal-action">
                 <form method="dialog">

@@ -609,6 +609,7 @@ export default function JobCard() {
                   placeholder="Number of Pages"
                 />
               </div>
+
               <label>
                 <input type="radio" name="side" value="single" /> Single Side
               </label>
