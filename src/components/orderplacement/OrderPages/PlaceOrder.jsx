@@ -82,7 +82,7 @@ function OrderPlacement() {
     {/* <MobileMenu/> */}
       <Progress step={step} />
       <div className="text-slate-200 mx-auto relative">
-        <div className="flex justify-center content-center text-center sm:justify-center max-sm:justify-center max-sm:p-10">
+        <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
           {step == 1 ? (
             <FirstForm
               paperTypes={paperTypes}

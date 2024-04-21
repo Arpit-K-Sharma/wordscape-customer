@@ -17,14 +17,14 @@ const bindingTypes = [
 
 const FourthForm = ({}) => {
   return (
-    <div className="ml-[29%] my-3 content-center p-4">
+    <div className="lg:mt-6 lg:mb-6">
       <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           What lamination and binding would you want to choose from?
         </p>
         <br />
 
-        <div className="label text-center content-center">
+        <div className="label text-center">
           <span className="label-text">Lamination Types</span>
         </div>
         <select className="select select-bordered">
@@ -82,7 +82,7 @@ const FourthForm = ({}) => {
           </div>
         </div>
 
-        <div className="flex">
+        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/2">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
