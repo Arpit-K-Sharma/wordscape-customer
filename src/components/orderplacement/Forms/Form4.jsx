@@ -17,7 +17,7 @@ const bindingTypes = [
 
 const FourthForm = ({}) => {
   return (
-    <div className="lg:mt-6 lg:mb-6">
+    <div className="lg:mt-6 lg:mb-6 lg:px-[240px] max-sm:px-10 lg:flex lg:justify-center">
       <label className="form-control w-full max-w-xl">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           What lamination and binding would you want to choose from?

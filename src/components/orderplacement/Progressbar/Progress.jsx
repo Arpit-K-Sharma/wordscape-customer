@@ -38,7 +38,7 @@ function Progress({ step }) {
               className={step >= 5 ? `step step-primary` : `step`}
               data-content={step > 5 ? `✓` : `●`}
             >
-              {step == 5 && "Confirmation & Order"}
+              {step == 5 && "Confirm Order"}
             </li>
           </ul>
         </div>

@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 
 const FifthForm = ({}) => {
   return (
-    <div className="ml-[29%] my-3 content-center p-4">
-      <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light">
+    <div className="lg:mt-6 lg:mb-6 lg:px-[240px] max-sm:px-10 max-sm:mt-[-60px] max-sm:mb-[50px]">
+      <label className="form-control  max-sm:mr-5">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           Fill in the details and confirm your order!
         </p>
         <br />
-        <div className="ml-[5%] grid grid-cols-2">
+        <div className="grid grid-cols-2 max-sm:flex max-sm:flex-col">
           <label className="form-control w-full max-w-xs">
             <div className="label">
               <span className="label-text-alt">What is your name?</span>
@@ -22,7 +22,7 @@ const FifthForm = ({}) => {
             <div className="label"></div>
           </label>
 
-          <label className="form-control w-full max-w-xs ml-[20px]">
+          <label className="form-control w-full max-w-xs lg:ml-[20px]">
             <div className="label">
               <span className="label-text-alt">
                 For which company is this for?
@@ -47,7 +47,7 @@ const FifthForm = ({}) => {
             <div className="label"></div>
           </label>
 
-          <label className="form-control w-full max-w-xs ml-[20px]">
+          <label className="form-control w-full max-w-xs lg:ml-[20px]">
             <div className="label">
               <span className="label-text-alt">
                 What is the delivery address for the order?
@@ -62,10 +62,15 @@ const FifthForm = ({}) => {
             <br />
           </label>
         </div>
-        <h1 className="text-m font-bold">Upload the PDF file for Printing here</h1>
-        <input type="file" className="file-input w-full max-w-xs mx-auto mt-5" />
+        <h1 className="text-m font-bold">
+          Upload the PDF file for Printing here
+        </h1>
+        <input
+          type="file"
+          className="file-input w-full max-w-xs mx-auto mt-5"
+        />
 
-        <div className="flex">
+        <div className="flex max-sm:flex max-sm:flex-col">
           <NavLink to="/order/4">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
