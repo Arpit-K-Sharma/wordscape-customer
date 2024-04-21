@@ -17,8 +17,8 @@ const bindingTypes = [
 
 const FourthForm = ({}) => {
   return (
-    <div className="lg:mt-6 lg:mb-6 lg:px-[240px] max-sm:px-10 lg:flex lg:justify-center">
-      <label className="form-control w-full max-w-xl">
+    <div className="lg:mt-6 lg:mb-6">
+          <label className="form-control w-full max-w-xl">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           What lamination and binding would you want to choose from?
         </p>
@@ -55,8 +55,8 @@ const FourthForm = ({}) => {
         <br />
 
         <div>
-          <h3 className="text-xl">Color Type: </h3>
-          <div className="flex justify-center">
+          <h3 className="text-xl font-archivo">Color Type: </h3>
+          <div className="flex justify-center max-sm:mt-5">
             <div className="form-control">
               <label className="label cursor-pointer">
                 <span className="label-text block mr-5">RGB</span>
@@ -81,7 +81,6 @@ const FourthForm = ({}) => {
             </div>
           </div>
         </div>
-
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/2">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">

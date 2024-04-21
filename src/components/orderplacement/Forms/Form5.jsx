@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 
 const FifthForm = ({}) => {
   return (
-    <div className="lg:mt-6 lg:mb-6 lg:px-[240px] max-sm:px-10 max-sm:mt-[-60px] max-sm:mb-[50px]">
-      <label className="form-control  max-sm:mr-5">
+    <div className="lg:mt-6 lg:mb-6">
+          <label className="form-control  max-sm:mr-5">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           Fill in the details and confirm your order!
         </p>
@@ -70,7 +70,7 @@ const FifthForm = ({}) => {
           className="file-input w-full max-w-xs mx-auto mt-5"
         />
 
-        <div className="flex max-sm:flex max-sm:flex-col">
+        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/4">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous

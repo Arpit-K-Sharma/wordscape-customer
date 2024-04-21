@@ -108,13 +108,14 @@ function OrderPlacement() {
           ) : (
             <></>
           )}
-          </div>
+          
 
           {step == 3 ? <ThirdForm /> : <></>}
 
           {step == 4 ? <FourthForm /> : <></>}
 
           {step == 5 ? <FifthForm /> : <></>}
+          </div>
         </div>
       </div>
   );
