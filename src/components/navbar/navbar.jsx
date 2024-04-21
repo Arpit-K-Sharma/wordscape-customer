@@ -29,7 +29,7 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/order">
+              <NavLink to="/order/1">
                 <a>Place an order</a>
               </NavLink>
             </li>

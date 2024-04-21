@@ -46,7 +46,7 @@ const SecondForm = ({
         </select>
 
         <div className="flex">
-          <NavLink to="/order">
+          <NavLink to="/order/1">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>

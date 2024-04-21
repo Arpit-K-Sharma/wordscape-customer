@@ -19,14 +19,8 @@ import Binding from "./components/admin/menu/binding/binding";
 import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
-import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder1";
+import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder";
 import UserDashboard from "./components/dashboard/UserDashboard";
-
-import OrderPlacementSecond from "./components/orderplacement/OrderPages/PlaceOrder2";
-import OrderPlacementThird from "./components/orderplacement/OrderPages/PlaceOrder3";
-
-import OrderPlacementFourth from "./components/orderplacement/OrderPages/PlaceOrder4";
-import OrderPlacementFifth from "./components/orderplacement/OrderPages/PlaceOrder5";
 import JobCard from "./components/jobcard/jobcard";
 import PrevJobCard from "./components/jobcard/previousjobcard/jobcard1";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
@@ -43,15 +37,15 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/cost" element={<CostCalculation />} />
-        <Route path="/jobcard" element={<JobCard />} />
-        <Route path="/pjobcard" element={<PrevJobCard />} />
-        <Route path="/ujobcard" element={<NJobCard />} />
+        {/* <Route path="/jobcard" element={<JobCard />} />
+        <Route path="/pjobcard" element={<PrevJobCard />} /> */}
+        <Route path="/jobcard" element={<NJobCard />} />
 
-        <Route path="/order" element={<OrderPlacement />} />
-        <Route path="/order/2" element={<OrderPlacementSecond />} />
+        <Route path="/order/:step" element={<OrderPlacement />} />
+        {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
         <Route path="/order/3" element={<OrderPlacementThird />} />
         <Route path="/order/4" element={<OrderPlacementFourth />} />
-        <Route path="/order/5" element={<OrderPlacementFifth />} />
+        <Route path="/order/5" element={<OrderPlacementFifth />} /> */}
 
         <Route path="/user/dashboard" element={<UserDashboard />} />
 

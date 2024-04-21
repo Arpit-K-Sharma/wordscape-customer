@@ -1,21 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-
-function getPaper() {
-  axios
-    .get("http://localhost:8081/papers")
-    .then((response) => {
-      // Sort the data by paperId in ascending order
-      const sortedData = response.data.sort(
-        (a, b) => a.paperId - b.paperId
-      );
-      setPaperDataState(sortedData);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { increment } from "../../redux/progressSlice";
 
 const FirstForm = ({
   paperTypes,
@@ -24,16 +11,22 @@ const FirstForm = ({
   selectedThickness,
   setSelectedThickness,
 }) => {
+
+  const dispatch = useDispatch();
+
+  function addStep(){
+    dispatch(increment());
+  }
+
   return (
-    <div className="ml-[29%] my-3 content-center p-4">
-      <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light">
-          Start placing your order with the paper size, type
-          and its thickness
+    <div className="mx-auto sm:w-full p-4">
+      <label className="form-control">
+        <p className="text-lg sm:text-xl font-light text-center">
+          Start placing your order with the paper size, type, and its thickness
         </p>
         <br />
 
-        <div className="label text-center content-center">
+        <div className="label text-center">
           <span className="label-text">Paper Size</span>
         </div>
         <select className="select select-bordered">
@@ -45,9 +38,10 @@ const FirstForm = ({
               {type.size}
             </option>
           ))}
-        </select><br/>
-      
-        <div className="label text-center content-center">
+        </select>
+        <br />
+
+        <div className="label text-center">
           <span className="label-text">Cover Paper Type</span>
         </div>
         <select className="select select-bordered">
@@ -59,8 +53,10 @@ const FirstForm = ({
               {type.name}
             </option>
           ))}
-        </select><br/>
-        <div className="label text-center content-center">
+        </select>
+        <br />
+
+        <div className="label text-center">
           <span className="label-text">Cover Paper Thickness</span>
         </div>
         <select className="select select-bordered">
@@ -72,9 +68,11 @@ const FirstForm = ({
               {gsm.thickness} GSM
             </option>
           ))}
-        </select><br/>
+        </select>
+        <br />
+
         <NavLink to="/order/2">
-          <button className="btn btn-primary mt-5 w-[500px]">Next</button>
+          <button className="btn btn-primary mt-5 w-full" onClick={addStep} >Next</button>
         </NavLink>
       </label>
     </div>
