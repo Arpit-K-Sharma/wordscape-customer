@@ -54,28 +54,32 @@ const FourthForm = ({}) => {
         </select>
         <br />
 
-        <div className="form-control">
-        <h3 className="text-xl">Color Type: </h3>
-          <label className="label cursor-pointer">
-            <span className="label-text">RGB</span>
-            <input
-              type="radio"
-              name="radio-10"
-              className="radio checked:bg-red-500"
-              checked
-            />
-          </label>
-        </div>
-        <div className="form-control">
-          <label className="label cursor-pointer">
-            <span className="label-text">CMYK</span>
-            <input
-              type="radio"
-              name="radio-10"
-              className="radio checked:bg-blue-500"
-              checked
-            />
-          </label>
+        <div>
+          <h3 className="text-xl">Color Type: </h3>
+          <div className="flex justify-center">
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text block mr-5">RGB</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio checked:bg-red-500"
+                  checked
+                />
+              </label>
+            </div>
+            <div className="form-control ml-[3rem]">
+              <label className="label cursor-pointer">
+                <span className="label-text block mr-5">CMYK</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio checked:bg-blue-500"
+                  checked
+                />
+              </label>
+            </div>
+          </div>
         </div>
 
         <div className="flex">

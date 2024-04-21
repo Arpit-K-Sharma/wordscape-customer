@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 
 const ThirdForm = ({}) => {
   return (
-    <div className="ml-[29%] my-3 content-center p-4">
-      <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light">
+    <div>
+      <label className="form-control">
+        <p className="text-2xl font-light max-sm:text-[24px]">
           How many quantites and pages do you want to print?
         </p>
         <br />

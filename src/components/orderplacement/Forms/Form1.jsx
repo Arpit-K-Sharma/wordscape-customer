@@ -19,13 +19,12 @@ const FirstForm = ({
   }
 
   return (
-    <div className="mx-auto sm:w-full p-4">
+    <div>
       <label className="form-control">
-        <p className="text-lg sm:text-xl font-light text-center">
+        <p className="text-2xl font-light max-sm:text-[24px]">
           Start placing your order with the paper size, type, and its thickness
         </p>
         <br />
-
         <div className="label text-center">
           <span className="label-text">Paper Size</span>
         </div>
@@ -70,7 +69,6 @@ const FirstForm = ({
           ))}
         </select>
         <br />
-
         <NavLink to="/order/2">
           <button className="btn btn-primary mt-5 w-full" onClick={addStep} >Next</button>
         </NavLink>

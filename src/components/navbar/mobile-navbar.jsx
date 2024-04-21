@@ -33,10 +33,7 @@ function MobileNavbar() {
                 src={textlogo}
                 alt="Logo"
                 className="mx-auto my-5"
-              />{" "}
-            {/* <h1 className="text-center text-3xl mt-5 font-archivo p-8 leading-10 my-5 font-semibold">
-              Welcome to {config.config.firmname}
-            </h1> */}
+              />{" "} 
             <h3 className="text-center my-7 text-xl">
               {config.company.description}
             </h3>

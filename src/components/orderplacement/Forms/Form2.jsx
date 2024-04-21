@@ -11,50 +11,51 @@ const SecondForm = ({
   setSelectedPaperType,
 }) => {
   return (
-    <div className="ml-[29%] my-3 content-center p-4">
-      <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light">
+    <div className="max-sm:justify-center max-sm:p-10">
+      <label className="form-control">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           What about the cover of your book that you would want to print on?
         </p>
         <br />
-        <div className="label text-center content-center">
-          <span className="label-text">Outer Paper Type</span>
-        </div>
-        <select className="select select-bordered">
-          <option disabled defaultValue>
-            Pick one
-          </option>
-          {outerPaperTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.name}
+        
+          <div className="label text-center">
+            <span className="label-text">Outer Paper Type</span>
+          </div>
+          <select className="select select-bordered">
+            <option disabled defaultValue>
+              Pick one
             </option>
-          ))}
-        </select>
-        <br />
-        <div className="label text-center content-center">
-          <span className="label-text">Outer Paper Thickness</span>
-        </div>
-        <select className="select select-bordered">
-          <option disabled defaultValue>
-            Pick one
-          </option>
-          {outerPaperGSM.map((gsm) => (
-            <option key={gsm.id} value={gsm.id}>
-              {gsm.thickness} GSM
+            {outerPaperTypes.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
+            ))}
+          </select>
+          <br />
+          <div className="label text-center">
+            <span className="label-text">Outer Paper Thickness</span>
+          </div>
+          <select className="select select-bordered">
+            <option disabled defaultValue>
+              Pick one
             </option>
-          ))}
-        </select>
-
-        <div className="flex">
-          <NavLink to="/order/1">
-            <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
-              Previous
-            </button>
-          </NavLink>
-          <NavLink to="/order/3">
-            <button className="btn btn-primary w-[280px] mt-5">Next</button>
-          </NavLink>
-        </div>
+            {outerPaperGSM.map((gsm) => (
+              <option key={gsm.id} value={gsm.id}>
+                {gsm.thickness} GSM
+              </option>
+            ))}
+          </select>
+          <br />
+          <div className="flex max-sm:flex-col">
+            <NavLink to="/order/1">
+              <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+                Previous
+              </button>
+            </NavLink>
+            <NavLink to="/order/3">
+              <button className="btn btn-primary w-[280px] mt-5">Next</button>
+            </NavLink>
+          </div>
       </label>
     </div>
   );

@@ -15,6 +15,8 @@ import FourthForm from "../Forms/Form4";
 import FifthForm from "../Forms/Form5";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+import MobileNavbar from "../../navbar/mobile-navbar";
+import MobileMenu from "../../navbar/mobile-menu";
 
 const innerPaperGSM = [
   { id: 1, thickness: 100 },
@@ -77,9 +79,10 @@ function OrderPlacement() {
 
   return (
     <div>
+    {/* <MobileMenu/> */}
       <Progress step={step} />
-      <div className="p-7 text-slate-200 mx-auto relative">
-        <div className="mx-auto content-center text-center sm:justify-center">
+      <div className="text-slate-200 mx-auto relative">
+        <div className="flex justify-center content-center text-center sm:justify-center max-sm:justify-center max-sm:p-10">
           {step == 1 ? (
             <FirstForm
               paperTypes={paperTypes}
@@ -105,6 +108,7 @@ function OrderPlacement() {
           ) : (
             <></>
           )}
+          </div>
 
           {step == 3 ? <ThirdForm /> : <></>}
 
@@ -113,7 +117,6 @@ function OrderPlacement() {
           {step == 5 ? <FifthForm /> : <></>}
         </div>
       </div>
-    </div>
   );
 }
 
