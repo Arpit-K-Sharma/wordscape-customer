@@ -12,20 +12,33 @@ function Progress({ step }) {
           </h1> */}
           <ul className="steps steps-horizontal">
             <li
-              className={step == 1 ? `step step-primary` : `step`}
-              data-content="●"
+              className={step >= 1 ? `step step-primary` : `step`}
+              data-content={step > 1 ? `✓` : `●`}
             >
               Inner Paper
             </li>
             <li
-              className={step == 2 ? `step step-primary` : `step`}
-              data-content="●"
+              className={step >= 2 ? `step step-primary` : `step`}
+              data-content={step > 2 ? `✓` : `●`}
             >
               Outer Paper
             </li>
-            <li className={step == 3 ? `step step-primary` : `step`}>Quantity</li>
-            <li className={step == 4 ? `step step-primary` : `step`}>Extras</li>
-            <li className={step == 5 ? `step step-primary` : `step`}>
+            <li
+              className={step >= 3 ? `step step-primary` : `step`}
+              data-content={step > 3 ? `✓` : `●`}
+            >
+              Quantity
+            </li>
+            <li
+              className={step >= 4 ? `step step-primary` : `step`}
+              data-content={step > 4 ? `✓` : `●`}
+            >
+              Extras
+            </li>
+            <li
+              className={step >= 5 ? `step step-primary` : `step`}
+              data-content={step > 5 ? `✓` : `●`}
+            >
               Details & Confirmation
             </li>
           </ul>
