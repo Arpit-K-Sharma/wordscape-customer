@@ -39,6 +39,11 @@ function AdminDrawer() {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/papersize">
+                <p className="text-xl mb-3 font-light">Paper Size</p>
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/admin/binding">
                 <p className="text-xl mb-3 font-light">Binding</p>
               </NavLink>
