@@ -26,6 +26,7 @@ import PrevJobCard from "./components/jobcard/previousjobcard/jobcard1";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
 import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
+import PaperThickness from "./components/admin/menu/paperthickness/paperthickness.jsx";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
         <Route path="/admin/customer" element={<AdminCustomer />} />
         <Route path="/admin/paper" element={<Paper />} />
         <Route path="/admin/papersize" element={<PaperSize />} />
+        <Route path="/admin/paperthickness" element={<PaperThickness />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
