@@ -86,7 +86,7 @@ const FourthForm = () => {
           <div className="flex justify-center max-sm:mt-5">
             <div className="form-control">
               <label className="label cursor-pointer">
-                <span className="label-text block mr-5">RGB</span>
+                <span className="label-text block mr-5">CMYK</span>
                 <input
                   type="radio"
                   name="radio-10"
@@ -97,11 +97,11 @@ const FourthForm = () => {
             </div>
             <div className="form-control ml-[3rem]">
               <label className="label cursor-pointer">
-                <span className="label-text block mr-5">CMYK</span>
+                <span className="label-text block mr-5">B/W</span>
                 <input
                   type="radio"
                   name="radio-10"
-                  className="radio checked:bg-blue-500"
+                  className="radio checked:bg-white"
                   checked
                 />
               </label>

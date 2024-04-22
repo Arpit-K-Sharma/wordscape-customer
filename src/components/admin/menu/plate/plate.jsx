@@ -6,6 +6,19 @@ import axios from "axios";
 function Plate() {
   const [editingData, setEditingData] = useState(null);
   const [plateDataState, setPlateDataState] = useState([]);
+  const [inkDataState, setInkDataState] = useState([]);
+  const [editingInkData, setEditingInkData] = useState(null);
+
+  function getInks() {
+    axios
+      .get("http://localhost:8081/inks")
+      .then((response) => {
+        setInkDataState(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching ink data:", error);
+      });
+  }
 
   function getPlates() {
     axios
@@ -20,6 +33,7 @@ function Plate() {
 
   useEffect(() => {
     getPlates();
+    getInks();
   }, []);
 
   const handleAddPlates = (e) => {
@@ -27,6 +41,7 @@ function Plate() {
     const plateSize = e.target.elements.plateSize.value;
     const plateRate = parseFloat(e.target.elements.plateRate.value);
     const inkRate = parseFloat(e.target.elements.inkRate.value);
+
     axios
       .post("http://localhost:8081/plates", {
         plateSize,
@@ -46,6 +61,43 @@ function Plate() {
       });
   };
 
+  const handleEditInk = (data) => {
+    setEditingInkData(data);
+  };
+
+  const handleSaveInk = (row) => {
+    const inkTypeInput = document.getElementById(`inkType_${row.inkId}`);
+
+    if (inkTypeInput) {
+      const updatedData = { inkType: inkTypeInput.value };
+      handleUpdateInk(row.inkId, updatedData);
+      setEditingInkData(null); // Reset editing state after save
+    } else {
+      console.error("Input element not found.");
+    }
+  };
+
+  const handleAddInks = (e) => {
+    e.preventDefault();
+    const inkType = e.target.elements.inkType.value;
+
+    axios
+      .post("http://localhost:8081/inks", {
+        inkType,
+      })
+      .then((response) => {
+        setInkDataState((prevData) => [...prevData, response.data]);
+        console.log("Ink added successfully!");
+        return true;
+      })
+      .then((status) => {
+        if (status) getInks();
+      })
+      .catch((error) => {
+        console.error("Error adding ink:", error);
+      });
+  };
+
   const handleUpdate = (id, updatedData) => {
     axios
       .put(`http://localhost:8081/plates/${id}`, updatedData)
@@ -60,6 +112,18 @@ function Plate() {
 
   const handleEdit = (data) => {
     setEditingData(data);
+  };
+
+  const handleUpdateInk = (id, updatedData) => {
+    axios
+      .put(`http://localhost:8081/inks/${id}`, updatedData)
+      .then((response) => {
+        console.log("Ink updated successfully:", response.data);
+        getInks(); // Refresh ink data
+      })
+      .catch((error) => {
+        console.error("Error updating ink:", error);
+      });
   };
 
   const handleSave = (row) => {
@@ -228,6 +292,91 @@ function Plate() {
               </div>
             </dialog>
           </div>
+          <div className="ink-class mt-9">
+            <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px] mt-5">
+              Ink Type
+            </h1>
+            <div className="overflow-x-auto mt-[80px]">
+              <table className="table w-2/3 mx-auto my-auto">
+                <thead>
+                  <tr className="bg-base-200">
+                    <th className="w-[50px]">S.N</th>
+                    <th className="w-[100px]">Ink Type</th>
+                    <th className="w-[100px]">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inkDataState.map((row, index) => (
+                    <tr key={row.inkId}>
+                      <td className="text-wrap">{index + 1}</td>
+                      <td className="text-wrap">
+                        {editingInkData &&
+                        editingInkData.inkId === row.inkId ? (
+                          <form onSubmit={(e) => handleSaveInk(row)}>
+                            <input
+                              type="text"
+                              id={`inkType_${row.inkId}`}
+                              name="inkType"
+                              className="input input-bordered"
+                              defaultValue={row.inkType}
+                              required
+                            />
+                          </form>
+                        ) : (
+                          <span>{row.inkType}</span>
+                        )}
+                      </td>
+                      <td>
+                        {editingInkData &&
+                        editingInkData.inkId === row.inkId ? (
+                          <button
+                            className="btn btn-neutral"
+                            onClick={() => handleSaveInk(row)}
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-neutral"
+                            onClick={() => handleEditInk(row)}
+                          >
+                            Edit
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <button
+            className="btn mx-[200px]"
+            onClick={() => document.getElementById("my_modal_4").showModal()}
+          >
+            Add Ink
+          </button>
+          <dialog id="my_modal_4" className="modal">
+            <div className="modal-box w-[340px]">
+              <form method="dialog">
+                <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
+                  x
+                </button>
+              </form>
+              <h3 className="font-bold mt-5 mb-2 text-lg">Add Ink Type</h3>
+              <p className="py-4">
+                <form onSubmit={handleAddInks}>
+                  <input
+                    type="text"
+                    name="inkType"
+                    placeholder="Ink Type"
+                    className="mt-5 input input-bordered w-full max-w-xs"
+                  />
+                  <button className="btn mt-5 btn-ghost mx-[115px]">Add</button>
+                </form>
+              </p>
+            </div>
+          </dialog>
         </div>
       </div>
       <AdminDrawer />

@@ -21,6 +21,7 @@ function Paper() {
       });
   }
 
+
   // Fetching paper data from the backend
   useEffect(() => {
     getPaper();
