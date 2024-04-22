@@ -1,24 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
-const laminationTypes = [
-  { id: 1, type: "Glossy" },
-  { id: 2, type: "Thermal Glossy" },
-  { id: 3, type: "Matte" },
-  { id: 4, type: "Thermal Matte" },
-];
+const FourthForm = () => {
+  const [loading, setLoading] = useState(true);
+  const [laminationTypes, setLaminationTypes] = useState([]);
+  const [bindingTypes, setBindingTypes] = useState([]);
 
-const bindingTypes = [
-  { id: 1, type: "Wiro Binding" },
-  { id: 2, type: "Spiral Binding" },
-  { id: 3, type: "Perfect Binding" },
-  { id: 4, type: "Juju" },
-];
+  const getLamination = () => {
+    axios
+      .get("http://localhost:8081/laminations")
+      .then((response) => {
+        const sortedData = response.data.sort((a, b) => a.laminationId - b.laminationId);
+        setLaminationTypes(sortedData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching lamination data:", error);
+      });
+  };
 
-const FourthForm = ({}) => {
+  const getBinding = () => {
+    axios
+      .get("http://localhost:8081/bindings")
+      .then((response) => {
+        const sortedData = response.data.sort((a, b) => a.bindingId - b.bindingId);
+        setBindingTypes(sortedData);
+      })
+      .catch((error) => {
+        console.error("Error fetching binding data:", error);
+      });
+  };
+
+  useEffect(() => {
+    getLamination();
+    getBinding();
+  }, []);
+
   return (
     <div className="lg:mt-6 lg:mb-6">
-          <label className="form-control w-full max-w-xl">
+      <label className="form-control w-full max-w-xl">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           What lamination and binding would you want to choose from?
         </p>
@@ -31,11 +52,17 @@ const FourthForm = ({}) => {
           <option disabled defaultValue>
             Pick one
           </option>
-          {laminationTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.type}
-            </option>
-          ))}
+          {loading
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <option key={index} value={index + 1}>
+                  Loading...
+                </option>
+              ))
+            : laminationTypes.map((type) => (
+                <option key={type.laminationId} value={type.laminationId}>
+                  {type.laminationType}
+                </option>
+              ))}
         </select>
         <br />
 
@@ -47,8 +74,8 @@ const FourthForm = ({}) => {
             Pick one
           </option>
           {bindingTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.type}
+            <option key={type.bindingId} value={type.bindingId}>
+              {type.bindingType}
             </option>
           ))}
         </select>

@@ -7,7 +7,8 @@ function Progress({ step }) {
   return (
     <div>
       <Navbar />
-      <div className="mt-7 text-slate-200 mx-auto relative w-full flex justify-center max-sm:max-w-[130px]">
+      <MobileMenu/>
+      <div className="mt-[-30px] max-sm:mt-[-50px] text-slate-200 mx-auto relative w-full flex justify-center max-sm:max-w-[130px]">
         <div>
           <ul className="steps steps-horizontal">
             <li

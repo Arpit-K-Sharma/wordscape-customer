@@ -12,13 +12,15 @@ function UserDrawer() {
       ></label>
       <ul className="menu p-4 w-80 min-h-full bg-zinc-700 text-white">
         <li className="mt-[40px]">
-          <img
-            width="120"
-            height="120"
-            src={logo}
-            alt="Logo"
-            className="mx-auto my-1 mb-5"
-          />
+          <NavLink to="/">
+            <img
+              width="120"
+              height="120"
+              src={logo}
+              alt="Logo"
+              className="mx-auto my-1 mb-5"
+            />
+          </NavLink>
         </li>
         <li>
           <NavLink to="/user/dashboard">

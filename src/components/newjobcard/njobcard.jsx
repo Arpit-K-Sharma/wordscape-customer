@@ -10,6 +10,7 @@ function NJobCard() {
           </h1>
           <h1 className="text-center mt-[50px] text-xl">Order Details</h1>
           <h1 className="text-center mt-4 text-l">TO DO: Pull Order DB Here</h1>
+          <div></div>
           <button
             className="btn mx-auto ml-[240px] mt-9 w-[150px]"
             onClick={() => document.getElementById("my_modal_5").showModal()}

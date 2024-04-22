@@ -33,7 +33,18 @@ const outerPaperTypes = [
   { id: 1, name: "Art Paper" },
   { id: 2, name: "Art Board" },
 ];
-
+const handleSubmit = (orderData) => {
+  // Make the API call with the orderData
+  axios.post("http://localhost:8081/orders", orderData)
+    .then((response) => {
+      console.log("Order placed successfully", response.data);
+      // Handle successful order placement
+    })
+    .catch((error) => {
+      console.error("Error placing order", error);
+      // Handle error in order placement
+    });
+};
 // const paperTypes = [
 //   { id: 1, name: "Art Paper" },
 //   { id: 2, name: "Art Board" },
@@ -44,6 +55,8 @@ const outerPaperGSM = [
   { id: 2, thickness: 200 },
   { id: 3, thickness: 300 },
 ];
+
+
 
 function OrderPlacement() {
   const [paperTypes, setPaperTypes] = useState([]);
@@ -75,11 +88,11 @@ function OrderPlacement() {
       });
   };
 
+
   const { step } = useParams();
 
   return (
     <div>
-    {/* <MobileMenu/> */}
       <Progress step={step} />
       <div className="text-slate-200 mx-auto relative">
         <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
@@ -109,8 +122,8 @@ function OrderPlacement() {
             <></>
           )}
           
-
-          {step == 3 ? <ThirdForm /> : <></>}
+            
+          {step == 3 ? (<ThirdForm />) : (<></>)}
 
           {step == 4 ? <FourthForm /> : <></>}
 

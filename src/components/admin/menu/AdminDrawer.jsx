@@ -12,13 +12,15 @@ function AdminDrawer() {
       ></label>
       <ul className="menu p-4 w-80 min-h-full bg-zinc-700 text-white">
         <li className="mt-[40px]">
-          <img
-            width="120"
-            height="120"
-            src={logo}
-            alt="Logo"
-            className="mx-auto my-1 mb-5"
-          />
+          <NavLink to="/">
+            <img
+              width="120"
+              height="120"
+              src={logo}
+              alt="Logo"
+              className="mx-auto my-1 mb-5"
+            />
+          </NavLink>
         </li>
         <li className="bg-zinc-700">
           <NavLink to="/admin/dashboard">
@@ -82,18 +84,18 @@ function AdminDrawer() {
             Statements
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
-            <li> 
+            <li>
               <p className="text-xl font-light">Order</p>
             </li>
           </ul>
         </details>
-        <div className="mb-[130px]">
-
-        </div>
+        <div className="mb-[130px]"></div>
 
         <li className="bg-gray-900 text-white rounded-lg">
           <NavLink to="/">
-            <p className="text-xl mb-3 font-light top-[50px] ml-[34px]">Logout</p>
+            <p className="text-xl mb-3 font-light top-[50px] ml-[34px]">
+              Logout
+            </p>
           </NavLink>
         </li>
       </ul>

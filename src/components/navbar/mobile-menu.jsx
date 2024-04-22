@@ -1,9 +1,10 @@
 import React from "react";
 import logo from "../images/logo/LogoOnly.png";
+import { NavLink } from "react-router-dom";
 
 function MobileMenu() {
   return (
-    <div className="drawer">
+    <div className="drawer z-10">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
@@ -41,7 +42,9 @@ function MobileMenu() {
             <p className="text-xl mb-3 font-light">Dashboard</p>
           </li>
           <li>
-            <p className="text-xl mb-3 font-light">Place an order</p>
+            <NavLink to="/order/1">
+              <p className="text-xl mb-3 font-light">Place an order</p>
+            </NavLink>
           </li>
           <li>
             <p className="text-xl mb-3 font-light">Cost Calculation</p>
@@ -50,7 +53,9 @@ function MobileMenu() {
             <p className="text-xl mb-3 font-light">Statement</p>
           </li>
           <li>
-            <p className="text-xl mb-3 font-light">Logout</p>
+            <NavLink to="/">
+              <p className="text-xl mb-3 font-light">Logout</p>
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -58,7 +58,14 @@ function MobileNavbar() {
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
           <li>
-            <p className="text-xl mb-3 font-light">Dashboard</p>
+            <NavLink to="/user/dashboard">
+              <p className="text-xl mb-3 font-light">Dashboard</p>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin/dashboard">
+              <p className="text-xl mb-3 font-light">Admin Dashboard</p>
+            </NavLink>
           </li>
           <li>
             <NavLink to="/order/1">
@@ -72,7 +79,9 @@ function MobileNavbar() {
             <p className="text-xl mb-3 font-light">Statement</p>
           </li>
           <li>
-            <p className="text-xl mb-3 font-light">Logout</p>
+            <NavLink to="/">
+              <p className="text-xl mb-3 font-light">Logout</p>
+            </NavLink>
           </li>
         </ul>
       </div>
