@@ -119,7 +119,7 @@ function Plate() {
       .put(`http://localhost:8081/inks/${id}`, updatedData)
       .then((response) => {
         console.log("Ink updated successfully:", response.data);
-        getInks(); // Refresh ink data
+        getInks();
       })
       .catch((error) => {
         console.error("Error updating ink:", error);
@@ -306,46 +306,48 @@ function Plate() {
                   </tr>
                 </thead>
                 <tbody>
-                  {inkDataState.map((row, index) => (
-                    <tr key={row.inkId}>
-                      <td className="text-wrap">{index + 1}</td>
-                      <td className="text-wrap">
-                        {editingInkData &&
-                        editingInkData.inkId === row.inkId ? (
-                          <form onSubmit={(e) => handleSaveInk(row)}>
-                            <input
-                              type="text"
-                              id={`inkType_${row.inkId}`}
-                              name="inkType"
-                              className="input input-bordered"
-                              defaultValue={row.inkType}
-                              required
-                            />
-                          </form>
-                        ) : (
-                          <span>{row.inkType}</span>
-                        )}
-                      </td>
-                      <td>
-                        {editingInkData &&
-                        editingInkData.inkId === row.inkId ? (
-                          <button
-                            className="btn btn-neutral"
-                            onClick={() => handleSaveInk(row)}
-                          >
-                            Save
-                          </button>
-                        ) : (
-                          <button
-                            className="btn btn-neutral"
-                            onClick={() => handleEditInk(row)}
-                          >
-                            Edit
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                  {inkDataState
+                    .sort((a, b) => a.inkId - b.inkId) // Sort the array by inkId
+                    .map((row, index) => (
+                      <tr key={row.inkId}>
+                        <td className="text-wrap">{index + 1}</td>
+                        <td className="text-wrap">
+                          {editingInkData &&
+                          editingInkData.inkId === row.inkId ? (
+                            <form onSubmit={(e) => handleSaveInk(row)}>
+                              <input
+                                type="text"
+                                id={`inkType_${row.inkId}`}
+                                name="inkType"
+                                className="input input-bordered"
+                                defaultValue={row.inkType}
+                                required
+                              />
+                            </form>
+                          ) : (
+                            <span>{row.inkType}</span>
+                          )}
+                        </td>
+                        <td>
+                          {editingInkData &&
+                          editingInkData.inkId === row.inkId ? (
+                            <button
+                              className="btn btn-neutral"
+                              onClick={() => handleSaveInk(row)}
+                            >
+                              Save
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-neutral"
+                              onClick={() => handleEditInk(row)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
