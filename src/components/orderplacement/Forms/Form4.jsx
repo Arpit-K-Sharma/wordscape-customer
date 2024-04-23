@@ -4,8 +4,31 @@ import axios from "axios";
 
 const FourthForm = () => {
   const [loading, setLoading] = useState(true);
+  const [inkTypes, setInkTypes] = useState([]);
+  const [selectedInk, setSelectedInk] = useState('');
   const [laminationTypes, setLaminationTypes] = useState([]);
   const [bindingTypes, setBindingTypes] = useState([]);
+
+  useEffect(() => {
+    getInks();
+    getLamination();
+    getBinding();
+  }, []);
+
+  const getInks = () => {
+    axios
+      .get("http://localhost:8081/inks")
+      .then((response) => {
+        const sortedData = response.data.sort(
+          (a, b) => a.inkId - b.inkId
+        );
+        setInkTypes(sortedData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching ink data:", error);
+      });
+  };
 
   const getLamination = () => {
     axios
@@ -32,10 +55,9 @@ const FourthForm = () => {
       });
   };
 
-  useEffect(() => {
-    getLamination();
-    getBinding();
-  }, []);
+  const handleInkChange = (event) => {
+    setSelectedInk(event.target.value);
+  };
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -84,30 +106,23 @@ const FourthForm = () => {
         <div>
           <h3 className="text-xl font-archivo">Color Type: </h3>
           <div className="flex justify-center max-sm:mt-5">
-            <div className="form-control">
-              <label className="label cursor-pointer">
-                <span className="label-text block mr-5">CMYK</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  className="radio checked:bg-red-500"
-                  checked
-                />
-              </label>
-            </div>
-            <div className="form-control ml-[3rem]">
-              <label className="label cursor-pointer">
-                <span className="label-text block mr-5">B/W</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  className="radio checked:bg-white"
-                  checked
-                />
-              </label>
-            </div>
+            <select
+              className="select select-bordered"
+              value={selectedInk}
+              onChange={handleInkChange}
+            >
+              <option disabled defaultValue>
+                Pick one
+              </option>
+              {inkTypes.map((type) => (
+                <option key={type.inkId} value={type.inkId}>
+                  {type.inkType}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/2">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">

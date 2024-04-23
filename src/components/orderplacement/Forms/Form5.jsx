@@ -1,10 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 const FifthForm = ({}) => {
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   return (
     <div className="lg:mt-6 lg:mb-6">
-          <label className="form-control  max-sm:mr-5">
+      <label className="form-control  max-sm:mr-5">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
           Fill in the details and confirm your order!
         </p>
@@ -18,6 +23,8 @@ const FifthForm = ({}) => {
               type="text"
               placeholder="Name"
               className="input input-bordered w-full max-w-xs"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <div className="label"></div>
           </label>
@@ -32,6 +39,8 @@ const FifthForm = ({}) => {
               type="text"
               placeholder="Company name"
               className="input input-bordered w-full max-w-xs"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
             />
             <div className="label"></div>
           </label>
@@ -43,6 +52,8 @@ const FifthForm = ({}) => {
               type="email"
               placeholder="Email"
               className="input input-bordered w-full max-w-xs"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <div className="label"></div>
           </label>
@@ -57,6 +68,8 @@ const FifthForm = ({}) => {
               type="text"
               placeholder="Delivery Address"
               className="input input-bordered w-full max-w-xs"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
             <div className="label"></div>
             <br />

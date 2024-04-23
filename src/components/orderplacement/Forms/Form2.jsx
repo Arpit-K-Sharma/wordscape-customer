@@ -4,9 +4,9 @@ import axios from "axios";
 
 const SecondForm = ({
   paperTypes,
-  outerPaperGSM,
   selectedThickness,
   outerPaperTypes,
+  paperThicknessData,
   setSelectedThickness,
   selectedPaperType,
   setSelectedPaperType,
@@ -61,7 +61,7 @@ const SecondForm = ({
           <option disabled defaultValue>
             Pick one
           </option>
-          {outerPaperGSM.map((gsm) => (
+          {paperThicknessData.map((gsm) => (
             <option key={gsm.id} value={gsm.id}>
               {gsm.thickness} GSM
             </option>

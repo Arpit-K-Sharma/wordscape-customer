@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const ThirdForm = ({ onSubmitPagesQuantity }) => {
-  const [pages, setPages] = useState(50);
-  const [quantity, setQuantity] = useState(100);
+  const [pages, setPages] = useState([]);
+  const [quantity, setQuantity] = useState([]);
 
   const handleNext = () => {
     onSubmitPagesQuantity({ pages, quantity });

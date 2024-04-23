@@ -5,8 +5,6 @@ import HomePage from "./components/home";
 import SignIn from "./components/login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Route correctly
 import Dashboard from "./components/dashboard/UserDrawer";
-import ProductCard from "./components/cart/productcard";
-import Cart from "./components/cart/cart";
 import MobileLanding from "./components/mobile-landing/mobilelanding";
 import WebLanding from "./components/landing/landing";
 import SignUp from "./components/login/signup";
@@ -63,8 +61,6 @@ function App() {
         <Route path="/admin/plate" element={<Plate />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/product" element={<ProductCard />} />
-        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );

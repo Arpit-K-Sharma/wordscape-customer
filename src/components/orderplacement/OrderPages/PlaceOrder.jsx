@@ -15,18 +15,12 @@ import FourthForm from "../Forms/Form4";
 import FifthForm from "../Forms/Form5";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import MobileNavbar from "../../navbar/mobile-navbar";
-import MobileMenu from "../../navbar/mobile-menu";
+
 
 const innerPaperGSM = [
   { id: 1, thickness: 100 },
   { id: 2, thickness: 200 },
   { id: 3, thickness: 300 },
-];
-
-const paperSize = [
-  { id: 1, size: "A4" },
-  { id: 2, size: "A5" },
 ];
 
 const outerPaperTypes = [
@@ -35,7 +29,8 @@ const outerPaperTypes = [
 ];
 const handleSubmit = (orderData) => {
   // Make the API call with the orderData
-  axios.post("http://localhost:8081/orders", orderData)
+  axios
+    .post("http://localhost:8081/orders", orderData)
     .then((response) => {
       console.log("Order placed successfully", response.data);
       // Handle successful order placement
@@ -56,17 +51,21 @@ const outerPaperGSM = [
   { id: 3, thickness: 300 },
 ];
 
-
-
 function OrderPlacement() {
   const [paperTypes, setPaperTypes] = useState([]);
+  const [paperSizeData, setPaperSizeData] = useState([]);
+
   const [selectedPaperType, setSelectedPaperType] = useState(1);
   const [selectedThickness, setSelectedThickness] = useState(1);
+  const [paperThicknessData, setPaperThicknessData] = useState([]);
+  const [fetchedPaperTypes, setFetchedPaperTypes] = useState([]);
 
   const steps = useSelector((state) => state.progress.step);
 
   useEffect(() => {
     getPaper();
+    getPaperSizes();
+    getPaperThicknesses();
   }, []);
 
   const getPaper = () => {
@@ -88,6 +87,35 @@ function OrderPlacement() {
       });
   };
 
+  const getPaperThicknesses = () => {
+    axios
+      .get("http://localhost:8081/paperThickness")
+      .then((response) => {
+        // Sort the data by thicknessId in ascending order
+        const sortedData = response.data.sort(
+          (a, b) => a.thicknessId - b.thicknessId
+        );
+        setPaperThicknessData(sortedData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  const getPaperSizes = () => {
+    axios
+      .get("http://localhost:8081/paperSizes")
+      .then((response) => {
+        const sortedData = response.data.sort(
+          (a, b) => a.paperSizeId - b.paperSizeId
+        );
+        setPaperSizeData(sortedData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
 
   const { step } = useParams();
 
@@ -102,7 +130,8 @@ function OrderPlacement() {
               innerPaperGSM={innerPaperGSM}
               selectedThickness={selectedPaperType}
               setSelectedThickness={setSelectedThickness}
-              paperSize={paperSize}
+              paperSizeData={paperSizeData}
+              paperThicknessData={paperThicknessData}
             />
           ) : (
             <></>
@@ -111,9 +140,10 @@ function OrderPlacement() {
           {step == 2 ? (
             <SecondForm
               outerPaperTypes={outerPaperTypes}
-              paperTypes={paperTypes}
+              paperTypes={fetchedPaperTypes}
               outerPaperGSM={outerPaperGSM}
               selectedThickness={selectedThickness}
+              paperThicknessData={paperThicknessData}
               setSelectedThickness={setSelectedThickness}
               selectedPaperType={selectedPaperType}
               setSelectedPaperType={setSelectedPaperType}
@@ -121,16 +151,15 @@ function OrderPlacement() {
           ) : (
             <></>
           )}
-          
-            
-          {step == 3 ? (<ThirdForm />) : (<></>)}
+
+          {step == 3 ? <ThirdForm /> : <></>}
 
           {step == 4 ? <FourthForm /> : <></>}
 
           {step == 5 ? <FifthForm /> : <></>}
-          </div>
         </div>
       </div>
+    </div>
   );
 }
 
