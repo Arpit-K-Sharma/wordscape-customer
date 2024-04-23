@@ -14,12 +14,9 @@ const FirstForm = ({
   paperSizeData,
   paperThicknessData, // Include paper thickness data as a prop
 }) => {
-  const dispatch = useDispatch();
-
   function addStep() {
     dispatch(increment());
   }
-
 
   return (
     <div className="lg:mt-6 lg:mb-6">

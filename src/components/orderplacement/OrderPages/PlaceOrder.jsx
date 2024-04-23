@@ -6,44 +6,11 @@ import FirstForm from "../Forms/Form1";
 import { useEffect } from "react";
 import axios from "axios";
 import SecondForm from "../Forms/Form2";
-// const paperTypes = [
-//   { id: 1, name: "Art Paper" },
-//   { id: 2, name: "Art Board" },
-// ];
 import ThirdForm from "../Forms/Form3";
 import FourthForm from "../Forms/Form4";
 import FifthForm from "../Forms/Form5";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-
-
-const innerPaperGSM = [
-  { id: 1, thickness: 100 },
-  { id: 2, thickness: 200 },
-  { id: 3, thickness: 300 },
-];
-
-const outerPaperTypes = [
-  { id: 1, name: "Art Paper" },
-  { id: 2, name: "Art Board" },
-];
-const handleSubmit = (orderData) => {
-  // Make the API call with the orderData
-  axios
-    .post("http://localhost:8081/orders", orderData)
-    .then((response) => {
-      console.log("Order placed successfully", response.data);
-      // Handle successful order placement
-    })
-    .catch((error) => {
-      console.error("Error placing order", error);
-      // Handle error in order placement
-    });
-};
-// const paperTypes = [
-//   { id: 1, name: "Art Paper" },
-//   { id: 2, name: "Art Board" },
-// ];
 
 const outerPaperGSM = [
   { id: 1, thickness: 100 },
@@ -54,6 +21,26 @@ const outerPaperGSM = [
 function OrderPlacement() {
   const [paperTypes, setPaperTypes] = useState([]);
   const [paperSizeData, setPaperSizeData] = useState([]);
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+
+  const [orderData, setOrderData] = useState({
+    name: "",
+    email: "",
+    address: "",
+    companyName: "",
+    innerPaperType: "",
+    innerPaperThickness: "",
+    outerPaperType: "",
+    outerPaperThickness: "",
+    selectedPaperType: "",
+    selectedThickness: "",
+    paperSize: "",
+    fetchedPaperTypes: [],
+    paperThicknessData: [],
+  });
 
   const [selectedPaperType, setSelectedPaperType] = useState(1);
   const [selectedThickness, setSelectedThickness] = useState(1);
@@ -116,8 +103,20 @@ function OrderPlacement() {
       });
   };
 
-
   const { step } = useParams();
+
+  const handleSubmit = () => {
+    // Make the API call with the orderData
+    axios
+      .post("http://localhost:8081/orders", orderData)
+      .then((response) => {
+        console.log("Order placed successfully", response.data);
+      })
+      .catch((error) => {
+        console.error("Error placing order", error);
+        // Handle error in order placement
+      });
+  };
 
   return (
     <div>
@@ -127,7 +126,6 @@ function OrderPlacement() {
           {step == 1 ? (
             <FirstForm
               paperTypes={paperTypes}
-              innerPaperGSM={innerPaperGSM}
               selectedThickness={selectedPaperType}
               setSelectedThickness={setSelectedThickness}
               paperSizeData={paperSizeData}
@@ -139,7 +137,6 @@ function OrderPlacement() {
 
           {step == 2 ? (
             <SecondForm
-              outerPaperTypes={outerPaperTypes}
               paperTypes={fetchedPaperTypes}
               outerPaperGSM={outerPaperGSM}
               selectedThickness={selectedThickness}
@@ -152,11 +149,46 @@ function OrderPlacement() {
             <></>
           )}
 
-          {step == 3 ? <ThirdForm /> : <></>}
+          {step == 3 ? (
+            <ThirdForm
+              paperTypes={paperTypes}
+              selectedThickness={selectedThickness}
+              setSelectedThickness={setSelectedThickness}
+              paperSizeData={paperSizeData}
+              paperThicknessData={paperThicknessData}
+            />
+          ) : (
+            <></>
+          )}
 
-          {step == 4 ? <FourthForm /> : <></>}
+          {step == 4 ? (
+            <FourthForm
+              paperTypes={paperTypes}
+              selectedThickness={selectedThickness}
+              setSelectedThickness={setSelectedThickness}
+              paperSizeData={paperSizeData}
+              paperThicknessData={paperThicknessData}
+            />
+          ) : (
+            <></>
+          )}
 
-          {step == 5 ? <FifthForm /> : <></>}
+          {step == 5 ? (
+            <FifthForm
+              paperTypes={paperTypes}
+              selectedThickness={selectedThickness}
+              setSelectedThickness={setSelectedThickness}
+              paperSizeData={paperSizeData}
+              paperThicknessData={paperThicknessData}
+              handleSubmit={handleSubmit}
+              setName={name}
+              setEmail={email}
+              setAddress={address}
+              setCompanyName={companyName}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

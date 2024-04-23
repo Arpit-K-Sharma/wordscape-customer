@@ -19,8 +19,6 @@ import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
 import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder";
 import UserDashboard from "./components/dashboard/UserDashboard";
-import JobCard from "./components/jobcard/jobcard";
-import PrevJobCard from "./components/jobcard/previousjobcard/jobcard1";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
 import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
@@ -59,7 +57,6 @@ function App() {
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
         <Route path="/admin/plate" element={<Plate />} />
-
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
