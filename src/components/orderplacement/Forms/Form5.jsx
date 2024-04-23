@@ -2,12 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-const FifthForm = ({}) => {
-  const [name, setName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  
+const FifthForm = ({ orderData, setOrderData }) => {
+  const { name, companyName, email, address } = orderData;
+
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control  max-sm:mr-5">

@@ -9,12 +9,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
-const outerPaperGSM = [
-  { id: 1, thickness: 100 },
-  { id: 2, thickness: 200 },
-  { id: 3, thickness: 300 },
-];
-
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
     name: "",
@@ -201,18 +195,7 @@ function OrderPlacement() {
           )}
 
           {step == 5 ? (
-            <FifthForm
-              paperTypes={orderData.fetchedPaperTypes}
-              selectedThickness={orderData.selectedThickness}
-              setSelectedThickness={setOrderData}
-              paperSizeData={orderData.paperSizeData}
-              paperThicknessData={orderData.paperThicknessData}
-              handleSubmit={handleSubmit}
-              setName={setOrderData}
-              setEmail={setOrderData}
-              setAddress={setOrderData}
-              setCompanyName={setOrderData}
-            />
+            <FifthForm orderData={orderData} setOrderData={setOrderData} />
           ) : (
             <></>
           )}
