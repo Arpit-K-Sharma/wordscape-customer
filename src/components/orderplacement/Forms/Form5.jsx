@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-const FifthForm = ({ orderData, setOrderData }) => {
+const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const { name, companyName, email, address } = orderData;
 
   return (
@@ -22,7 +22,9 @@ const FifthForm = ({ orderData, setOrderData }) => {
               placeholder="Name"
               className="input input-bordered w-full max-w-xs"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) =>
+                setOrderData({ ...orderData, name: e.target.value })
+              }
             />
             <div className="label"></div>
           </label>
@@ -38,7 +40,9 @@ const FifthForm = ({ orderData, setOrderData }) => {
               placeholder="Company name"
               className="input input-bordered w-full max-w-xs"
               value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
+              onChange={(e) =>
+                setOrderData({ ...orderData, companyName: e.target.value })
+              }
             />
             <div className="label"></div>
           </label>
@@ -51,8 +55,11 @@ const FifthForm = ({ orderData, setOrderData }) => {
               placeholder="Email"
               className="input input-bordered w-full max-w-xs"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                setOrderData({ ...orderData, email: e.target.value })
+              }
             />
+
             <div className="label"></div>
           </label>
 
@@ -67,7 +74,9 @@ const FifthForm = ({ orderData, setOrderData }) => {
               placeholder="Delivery Address"
               className="input input-bordered w-full max-w-xs"
               value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={(e) =>
+                setOrderData({ ...orderData, address: e.target.value })
+              }
             />
             <div className="label"></div>
             <br />
@@ -87,11 +96,13 @@ const FifthForm = ({ orderData, setOrderData }) => {
               Previous
             </button>
           </NavLink>
-          <NavLink to="/order/completion">
-            <button className="btn btn-primary w-[280px] mt-5 bg-green-700 border-none text-white hover:bg-blue-600">
-              Confirm Order
-            </button>
-          </NavLink>
+
+          <button
+            className="btn btn-primary w-[280px] mt-5 bg-green-700 border-none text-white hover:bg-blue-600"
+            onClick={handleSubmit}
+          >
+            Confirm Order
+          </button>
         </div>
       </label>
     </div>

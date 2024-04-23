@@ -25,6 +25,7 @@ function OrderPlacement() {
     paperSize: "",
     fetchedPaperTypes: [],
     paperSizeData: [],
+    selectedPaperSizeData: [],
     paperThicknessData: [],
     pages: "",
     quantity: "",
@@ -147,11 +148,12 @@ function OrderPlacement() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8081/orders",
-        orderData
-      );
-      console.log("Order placed successfully", response.data);
+      console.log("Test");
+      console.log(orderData);
+      // const response = await axios.post(
+      //   "http://localhost:8081/orders",
+      //   orderData
+      // console.log("Order placed successfully", response.data);
     } catch (error) {
       console.error("Error placing order", error);
     }
@@ -195,7 +197,11 @@ function OrderPlacement() {
           )}
 
           {step == 5 ? (
-            <FifthForm orderData={orderData} setOrderData={setOrderData} />
+            <FifthForm
+              orderData={orderData}
+              setOrderData={setOrderData}
+              handleSubmit={handleSubmit}
+            />
           ) : (
             <></>
           )}

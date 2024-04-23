@@ -24,7 +24,12 @@ const FirstForm = ({ orderData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Paper Size</span>
         </div>
-        <select className="select select-bordered">
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, paperSizeData: e.target.value })
+          }
+        >
           <option disabled defaultValue>
             Pick one
           </option>
@@ -63,9 +68,9 @@ const FirstForm = ({ orderData, setOrderData }) => {
           <option disabled defaultValue>
             Pick one
           </option>
-          {paperThicknessData.map((thickness) => (
-            <option key={thickness.id} value={thickness.id}>
-              {thickness.thickness}
+          {paperThicknessData.map((gsm) => (
+            <option key={gsm.id} value={gsm.id}>
+              {gsm.thickness}
             </option>
           ))}
         </select>
