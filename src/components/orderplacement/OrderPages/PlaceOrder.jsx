@@ -1,14 +1,11 @@
-import React from "react";
-import Navbar from "../../navbar/navbar";
+import React, { useState, useEffect } from "react";
 import Progress from "../Progressbar/Progress";
-import { useState } from "react";
 import FirstForm from "../Forms/Form1";
-import { useEffect } from "react";
-import axios from "axios";
 import SecondForm from "../Forms/Form2";
 import ThirdForm from "../Forms/Form3";
 import FourthForm from "../Forms/Form4";
 import FifthForm from "../Forms/Form5";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
@@ -19,15 +16,9 @@ const outerPaperGSM = [
 ];
 
 function OrderPlacement() {
-  const [paperTypes, setPaperTypes] = useState([]);
-  const [paperSizeData, setPaperSizeData] = useState([]);
-  const [name, setName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-
   const [orderData, setOrderData] = useState({
     name: "",
+    paperTypes: [],
     email: "",
     address: "",
     companyName: "",
@@ -39,23 +30,25 @@ function OrderPlacement() {
     selectedThickness: "",
     paperSize: "",
     fetchedPaperTypes: [],
+    paperSizeData: [],
     paperThicknessData: [],
+    pages: "",
+    quantity: "",
+    laminationTypes: [],
+    bindingType: [],
+    inkTypes: [],
   });
 
-  const [selectedPaperType, setSelectedPaperType] = useState(1);
-  const [selectedThickness, setSelectedThickness] = useState(1);
-  const [paperThicknessData, setPaperThicknessData] = useState([]);
-  const [fetchedPaperTypes, setFetchedPaperTypes] = useState([]);
-
-  const steps = useSelector((state) => state.progress.step);
-
   useEffect(() => {
-    getPaper();
+    getInnerPaperType();
     getPaperSizes();
+    getLamination();
+    getInks();
+    getBinding();
     getPaperThicknesses();
   }, []);
 
-  const getPaper = () => {
+  const getInnerPaperType = () => {
     axios
       .get("http://localhost:8081/papers")
       .then((response) => {
@@ -67,55 +60,107 @@ function OrderPlacement() {
           name: paper.paperType,
         }));
         // Set the paper types data as state
-        setPaperTypes(paperTypesData);
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          fetchedPaperTypes: paperTypesData,
+        }));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   };
 
-  const getPaperThicknesses = () => {
-    axios
-      .get("http://localhost:8081/paperThickness")
-      .then((response) => {
-        // Sort the data by thicknessId in ascending order
+  const getPaperThicknesses = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/paperThickness");
+      if (response) {
         const sortedData = response.data.sort(
           (a, b) => a.thicknessId - b.thicknessId
         );
-        setPaperThicknessData(sortedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          paperThicknessData: sortedData,
+        }));
+      }
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
   };
 
-  const getPaperSizes = () => {
-    axios
-      .get("http://localhost:8081/paperSizes")
-      .then((response) => {
-        const sortedData = response.data.sort(
-          (a, b) => a.paperSizeId - b.paperSizeId
-        );
-        setPaperSizeData(sortedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  const getPaperSizes = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/paperSizes");
+      if (response) {
+        const sortedData = response.data.sort((a, b) => a.sizeId - b.sizeId);
+        console.log("Sorted data");
+        console.log(sortedData);
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          paperSizeData: sortedData,
+        }));
+      }
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
+  const getInks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/inks");
+      if (response) {
+        const sortedData = response.data.sort((a, b) => a.inkId - b.inkId);
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          inkTypes: sortedData,
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching ink data:", error);
+    }
+  };
+
+  const getLamination = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/laminations");
+      const sortedData = response.data.sort(
+        (a, b) => a.laminationId - b.laminationId
+      );
+      setOrderData((prevOrderData) => ({
+        ...prevOrderData,
+        laminationTypes: sortedData,
+      }));
+    } catch (error) {
+      console.error("Error fetching lamination data:", error);
+    }
+  };
+
+  const getBinding = async () => {
+    try {
+      const response = await axios.get("http://localhost:8081/bindings");
+      const sortedData = response.data.sort(
+        (a, b) => a.bindingId - b.bindingId
+      );
+      setOrderData((prevOrderData) => ({
+        ...prevOrderData,
+        bindingType: sortedData,
+      }));
+    } catch (error) {
+      console.error("Error fetching binding data:", error);
+    }
   };
 
   const { step } = useParams();
 
-  const handleSubmit = () => {
-    // Make the API call with the orderData
-    axios
-      .post("http://localhost:8081/orders", orderData)
-      .then((response) => {
-        console.log("Order placed successfully", response.data);
-      })
-      .catch((error) => {
-        console.error("Error placing order", error);
-        // Handle error in order placement
-      });
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/orders",
+        orderData
+      );
+      console.log("Order placed successfully", response.data);
+    } catch (error) {
+      console.error("Error placing order", error);
+    }
   };
 
   return (
@@ -124,67 +169,49 @@ function OrderPlacement() {
       <div className="text-slate-200 mx-auto relative">
         <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
           {step == 1 ? (
-            <FirstForm
-              paperTypes={paperTypes}
-              selectedThickness={selectedPaperType}
-              setSelectedThickness={setSelectedThickness}
-              paperSizeData={paperSizeData}
-              paperThicknessData={paperThicknessData}
-            />
+            <FirstForm orderData={orderData} setOrderData={setOrderData} />
           ) : (
             <></>
           )}
 
           {step == 2 ? (
-            <SecondForm
-              paperTypes={fetchedPaperTypes}
-              outerPaperGSM={outerPaperGSM}
-              selectedThickness={selectedThickness}
-              paperThicknessData={paperThicknessData}
-              setSelectedThickness={setSelectedThickness}
-              selectedPaperType={selectedPaperType}
-              setSelectedPaperType={setSelectedPaperType}
-            />
+            <SecondForm orderData={orderData} setOrderData={setOrderData} />
           ) : (
             <></>
           )}
 
           {step == 3 ? (
             <ThirdForm
-              paperTypes={paperTypes}
-              selectedThickness={selectedThickness}
-              setSelectedThickness={setSelectedThickness}
-              paperSizeData={paperSizeData}
-              paperThicknessData={paperThicknessData}
+              orderData={orderData}
+              setOrderData={setOrderData}
+              // paperTypes={orderData.fetchedPaperTypes}
+              // selectedThickness={orderData.selectedThickness}
+              // setSelectedThickness={setOrderData}
+              // paperSizeData={orderData.paperSizeData}
+              // paperThicknessData={orderData.paperThicknessData}
             />
           ) : (
             <></>
           )}
 
           {step == 4 ? (
-            <FourthForm
-              paperTypes={paperTypes}
-              selectedThickness={selectedThickness}
-              setSelectedThickness={setSelectedThickness}
-              paperSizeData={paperSizeData}
-              paperThicknessData={paperThicknessData}
-            />
+            <FourthForm orderData={orderData} setOrderData={setOrderData} />
           ) : (
             <></>
           )}
 
           {step == 5 ? (
             <FifthForm
-              paperTypes={paperTypes}
-              selectedThickness={selectedThickness}
-              setSelectedThickness={setSelectedThickness}
-              paperSizeData={paperSizeData}
-              paperThicknessData={paperThicknessData}
+              paperTypes={orderData.fetchedPaperTypes}
+              selectedThickness={orderData.selectedThickness}
+              setSelectedThickness={setOrderData}
+              paperSizeData={orderData.paperSizeData}
+              paperThicknessData={orderData.paperThicknessData}
               handleSubmit={handleSubmit}
-              setName={name}
-              setEmail={email}
-              setAddress={address}
-              setCompanyName={companyName}
+              setName={setOrderData}
+              setEmail={setOrderData}
+              setAddress={setOrderData}
+              setCompanyName={setOrderData}
             />
           ) : (
             <></>

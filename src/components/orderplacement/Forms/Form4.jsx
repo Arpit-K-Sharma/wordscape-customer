@@ -2,62 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-const FourthForm = () => {
-  const [loading, setLoading] = useState(true);
-  const [inkTypes, setInkTypes] = useState([]);
-  const [selectedInk, setSelectedInk] = useState('');
-  const [laminationTypes, setLaminationTypes] = useState([]);
-  const [bindingTypes, setBindingTypes] = useState([]);
-
-  useEffect(() => {
-    getInks();
-    getLamination();
-    getBinding();
-  }, []);
-
-  const getInks = () => {
-    axios
-      .get("http://localhost:8081/inks")
-      .then((response) => {
-        const sortedData = response.data.sort(
-          (a, b) => a.inkId - b.inkId
-        );
-        setInkTypes(sortedData);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching ink data:", error);
-      });
-  };
-
-  const getLamination = () => {
-    axios
-      .get("http://localhost:8081/laminations")
-      .then((response) => {
-        const sortedData = response.data.sort((a, b) => a.laminationId - b.laminationId);
-        setLaminationTypes(sortedData);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching lamination data:", error);
-      });
-  };
-
-  const getBinding = () => {
-    axios
-      .get("http://localhost:8081/bindings")
-      .then((response) => {
-        const sortedData = response.data.sort((a, b) => a.bindingId - b.bindingId);
-        setBindingTypes(sortedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching binding data:", error);
-      });
-  };
-
-  const handleInkChange = (event) => {
-    setSelectedInk(event.target.value);
-  };
+const FourthForm = ({ orderData, setOrderData }) => {
+  const { laminationTypes, selectedInk, bindingType, inkTypes } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -74,17 +20,11 @@ const FourthForm = () => {
           <option disabled defaultValue>
             Pick one
           </option>
-          {loading
-            ? Array.from({ length: 4 }).map((_, index) => (
-                <option key={index} value={index + 1}>
-                  Loading...
-                </option>
-              ))
-            : laminationTypes.map((type) => (
-                <option key={type.laminationId} value={type.laminationId}>
-                  {type.laminationType}
-                </option>
-              ))}
+          {laminationTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.laminationType}
+            </option>
+          ))}
         </select>
         <br />
 
@@ -95,8 +35,8 @@ const FourthForm = () => {
           <option disabled defaultValue>
             Pick one
           </option>
-          {bindingTypes.map((type) => (
-            <option key={type.bindingId} value={type.bindingId}>
+          {bindingType.map((type) => (
+            <option key={type.id} value={type.id}>
               {type.bindingType}
             </option>
           ))}
@@ -109,7 +49,7 @@ const FourthForm = () => {
             <select
               className="select select-bordered"
               value={selectedInk}
-              onChange={handleInkChange}
+              onChange={(e) => setSelectedInk(e.target.value)}
             >
               <option disabled defaultValue>
                 Pick one

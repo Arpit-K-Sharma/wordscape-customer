@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const ThirdForm = ({ onSubmitPagesQuantity }) => {
-  const [pages, setPages] = useState([]);
-  const [quantity, setQuantity] = useState([]);
-
-  const handleNext = () => {
-    onSubmitPagesQuantity({ pages, quantity });
-    history.push("/order/4");
-  };
+const ThirdForm = ({ orderData, setOrderData }) => {
+  const { pages, quantity } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -24,7 +18,9 @@ const ThirdForm = ({ onSubmitPagesQuantity }) => {
           className="input input-bordered"
           type="number"
           value={pages}
-          onChange={(e) => setPages(parseInt(e.target.value))}
+          onChange={(e) =>
+            setOrderData({ ...orderData, pages: parseInt(e.target.value) })
+          }
         />
         <div className="label">
           <span className="label-text-alt">{""}</span>
@@ -40,7 +36,9 @@ const ThirdForm = ({ onSubmitPagesQuantity }) => {
           className="input input-bordered"
           type="number"
           value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          onChange={(e) =>
+            setOrderData({ ...orderData, quantity: parseInt(e.target.value) })
+          }
         />
         <div className="label">
           <span className="label-text-alt">{""}</span>
@@ -54,9 +52,7 @@ const ThirdForm = ({ onSubmitPagesQuantity }) => {
             </button>
           </NavLink>
           <NavLink to="/order/4">
-            <button className="btn btn-primary w-[280px] mt-5" onClick={handleNext}>
-              Next
-            </button>
+            <button className="btn btn-primary w-[280px] mt-5">Next</button>
           </NavLink>
         </div>
       </label>

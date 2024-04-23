@@ -2,36 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-const SecondForm = ({
-  paperTypes,
-  selectedThickness,
-  outerPaperTypes,
-  paperThicknessData,
-  setSelectedThickness,
-  selectedPaperType,
-  setSelectedPaperType,
-}) => {
-  const [fetchedPaperTypes, setFetchedPaperTypes] = useState([]);
-
-  useEffect(() => {
-    getPaper();
-  }, []);
-
-  const getPaper = () => {
-    axios
-      .get("http://localhost:8081/papers")
-      .then((response) => {
-        const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
-        const paperTypesData = sortedData.map((paper) => ({
-          id: paper.paperId,
-          name: paper.paperType,
-        }));
-        setFetchedPaperTypes(paperTypesData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+const SecondForm = ({ orderData, setOrderData }) => {
+  const { paperThicknessData, fetchedPaperTypes } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">

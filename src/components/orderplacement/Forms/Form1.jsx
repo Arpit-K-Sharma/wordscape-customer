@@ -5,18 +5,14 @@ import { useDispatch } from "react-redux";
 import { increment } from "../../redux/progressSlice";
 import { useEffect } from "react";
 
-const FirstForm = ({
-  paperTypes,
-  paperSize,
-  innerPaperGSM,
-  selectedThickness,
-  setSelectedThickness,
-  paperSizeData,
-  paperThicknessData, // Include paper thickness data as a prop
-}) => {
-  function addStep() {
-    dispatch(increment());
-  }
+const FirstForm = ({ orderData, setOrderData }) => {
+  console.log(orderData);
+  const {
+    paperSizeData,
+    fetchedPaperTypes,
+    paperThicknessData,
+    selectedThickness,
+  } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -32,11 +28,12 @@ const FirstForm = ({
           <option disabled defaultValue>
             Pick one
           </option>
-          {paperSizeData.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.paperSize}
-            </option>
-          ))}
+          {paperSizeData &&
+            paperSizeData.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.paperSize}
+              </option>
+            ))}
         </select>
         <br />
 
@@ -47,7 +44,7 @@ const FirstForm = ({
           <option disabled defaultValue>
             Pick one
           </option>
-          {paperTypes.map((type) => (
+          {fetchedPaperTypes.map((type) => (
             <option key={type.id} value={type.id}>
               {type.name}
             </option>
@@ -61,7 +58,7 @@ const FirstForm = ({
         <select
           className="select select-bordered"
           value={selectedThickness}
-          onChange={(e) => setSelectedThickness(e.target.value)}
+          onChange={(e) => e.target.value}
         >
           <option disabled defaultValue>
             Pick one
@@ -74,9 +71,7 @@ const FirstForm = ({
         </select>
         <br />
         <NavLink to="/order/2">
-          <button className="btn btn-primary mt-5 w-full" onClick={addStep}>
-            Next
-          </button>
+          <button className="btn btn-primary mt-5 w-full">Next</button>
         </NavLink>
       </label>
     </div>
