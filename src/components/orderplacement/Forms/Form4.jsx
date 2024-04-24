@@ -53,7 +53,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         <select
           className="select select-bordered"
           onChange={(e) =>
-            setOrderData({ ...orderData, coverTreatment: e.target.value })
+            setOrderData({ ...orderData, coverTreatmentType: e.target.value })
           }
         >
           {coverTreatment.map((type) => (

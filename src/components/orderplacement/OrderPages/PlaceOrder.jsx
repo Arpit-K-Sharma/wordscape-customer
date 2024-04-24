@@ -25,7 +25,8 @@ function OrderPlacement() {
     bindingType: "Center Stitch",
     inkType: "Black and White",
     laminationType: "Normal Glossy",
-    coverTreatment: "",
+    coverTreatmentType: "Die Cutting",
+    date: Date.now(),
   });
 
   useEffect(() => {
