@@ -39,12 +39,12 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <br />
 
         <div className="label text-center">
-          <span className="label-text">Cover Paper Type</span>
+          <span className="label-text">Inner Paper Type</span>
         </div>
         <select
           className="select select-bordered"
           onChange={(e) =>
-            setOrderData({ ...orderData, paperType: e.target.value })
+            setOrderData({ ...orderData, innerPaperType: e.target.value })
           }
         >
           {fetchedPaperTypes.map((type) => (
@@ -56,7 +56,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <br />
 
         <div className="label text-center">
-          <span className="label-text">Cover Paper Thickness</span>
+          <span className="label-text">Inner Paper Thickness</span>
         </div>
         <select
           className="select select-bordered"
