@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-const SecondForm = ({ orderData, setOrderData }) => {
-  const { paperThicknessData, fetchedPaperTypes } = orderData;
+const SecondForm = ({ orderData, entireData, setOrderData }) => {
+  const { paperThicknessData, fetchedPaperTypes } = entireData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -15,7 +15,12 @@ const SecondForm = ({ orderData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Outer Paper Type</span>
         </div>
-        <select className="select select-bordered">
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, outerPaperType: e.target.value })
+          }
+        >
           <option disabled defaultValue>
             Pick one
           </option>
@@ -29,7 +34,12 @@ const SecondForm = ({ orderData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Outer Paper Thickness</span>
         </div>
-        <select className="select select-bordered">
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, outerPaperThickness: e.target.value })
+          }
+        >
           <option disabled defaultValue>
             Pick one
           </option>

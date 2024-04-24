@@ -12,26 +12,19 @@ import { useParams } from "react-router";
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
     name: "",
-    paperTypes: [],
     email: "",
     address: "",
     companyName: "",
-    innerPaperType: "",
-    innerPaperThickness: "",
-    outerPaperType: "",
-    outerPaperThickness: "",
-    selectedPaperType: "",
-    selectedThickness: "",
-    paperSize: "",
-    fetchedPaperTypes: [],
-    paperSizeData: [],
-    selectedPaperSizeData: [],
-    paperThicknessData: [],
+    innerPaperType: "Art_Paper",
+    innerPaperThickness: "100",
+    outerPaperType: "Art_Paper",
+    outerPaperThickness: "100",
+    paperSize: "A4",
     pages: "",
     quantity: "",
-    laminationTypes: [],
-    bindingType: [],
-    inkTypes: [],
+    bindingType: "Center Stitch",
+    inkType: "Black and White",
+    laminationType: "Normal Glossy",
   });
 
   useEffect(() => {
@@ -42,6 +35,15 @@ function OrderPlacement() {
     getBinding();
     getPaperThicknesses();
   }, []);
+
+  const [entireData, setEntireData] = useState({
+    fetchedPaperTypes: [],
+    paperSizeData: [],
+    inkTypes: [],
+    laminationTypes: [],
+    bindingType: [],
+    paperThicknessData: [],
+  });
 
   const getInnerPaperType = () => {
     axios
@@ -55,8 +57,8 @@ function OrderPlacement() {
           name: paper.paperType,
         }));
         // Set the paper types data as state
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
+        setEntireData((prevEntireData) => ({
+          ...prevEntireData,
           fetchedPaperTypes: paperTypesData,
         }));
       })
@@ -72,8 +74,8 @@ function OrderPlacement() {
         const sortedData = response.data.sort(
           (a, b) => a.thicknessId - b.thicknessId
         );
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
+        setEntireData((prevEntireData) => ({
+          ...prevEntireData,
           paperThicknessData: sortedData,
         }));
       }
@@ -89,8 +91,8 @@ function OrderPlacement() {
         const sortedData = response.data.sort((a, b) => a.sizeId - b.sizeId);
         console.log("Sorted data");
         console.log(sortedData);
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
+        setEntireData((prevEntireData) => ({
+          ...prevEntireData,
           paperSizeData: sortedData,
         }));
       }
@@ -104,8 +106,8 @@ function OrderPlacement() {
       const response = await axios.get("http://localhost:8081/inks");
       if (response) {
         const sortedData = response.data.sort((a, b) => a.inkId - b.inkId);
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
+        setEntireData((prevEntireData) => ({
+          ...prevEntireData,
           inkTypes: sortedData,
         }));
       }
@@ -120,8 +122,8 @@ function OrderPlacement() {
       const sortedData = response.data.sort(
         (a, b) => a.laminationId - b.laminationId
       );
-      setOrderData((prevOrderData) => ({
-        ...prevOrderData,
+      setEntireData((prevEntireData) => ({
+        ...prevEntireData,
         laminationTypes: sortedData,
       }));
     } catch (error) {
@@ -135,8 +137,8 @@ function OrderPlacement() {
       const sortedData = response.data.sort(
         (a, b) => a.bindingId - b.bindingId
       );
-      setOrderData((prevOrderData) => ({
-        ...prevOrderData,
+      setEntireData((prevEntireData) => ({
+        ...prevEntireData,
         bindingType: sortedData,
       }));
     } catch (error) {
@@ -165,13 +167,21 @@ function OrderPlacement() {
       <div className="text-slate-200 mx-auto relative">
         <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
           {step == 1 ? (
-            <FirstForm orderData={orderData} setOrderData={setOrderData} />
+            <FirstForm
+              entireData={entireData}
+              orderData={orderData}
+              setOrderData={setOrderData}
+            />
           ) : (
             <></>
           )}
 
           {step == 2 ? (
-            <SecondForm orderData={orderData} setOrderData={setOrderData} />
+            <SecondForm
+              orderData={orderData}
+              entireData={entireData}
+              setOrderData={setOrderData}
+            />
           ) : (
             <></>
           )}
@@ -191,7 +201,11 @@ function OrderPlacement() {
           )}
 
           {step == 4 ? (
-            <FourthForm orderData={orderData} setOrderData={setOrderData} />
+            <FourthForm
+              orderData={orderData}
+              entireData={entireData}
+              setOrderData={setOrderData}
+            />
           ) : (
             <></>
           )}

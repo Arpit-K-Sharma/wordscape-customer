@@ -5,14 +5,13 @@ import { useDispatch } from "react-redux";
 import { increment } from "../../redux/progressSlice";
 import { useEffect } from "react";
 
-const FirstForm = ({ orderData, setOrderData }) => {
-  console.log(orderData);
+const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const {
     paperSizeData,
     fetchedPaperTypes,
     paperThicknessData,
     selectedThickness,
-  } = orderData;
+  } = entireData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -30,9 +29,6 @@ const FirstForm = ({ orderData, setOrderData }) => {
             setOrderData({ ...orderData, paperSizeData: e.target.value })
           }
         >
-          <option disabled defaultValue>
-            Pick one
-          </option>
           {paperSizeData &&
             paperSizeData.map((type) => (
               <option key={type.id} value={type.id}>
@@ -45,10 +41,12 @@ const FirstForm = ({ orderData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Cover Paper Type</span>
         </div>
-        <select className="select select-bordered">
-          <option disabled defaultValue>
-            Pick one
-          </option>
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, paperType: e.target.value })
+          }
+        >
           {fetchedPaperTypes.map((type) => (
             <option key={type.id} value={type.id}>
               {type.name}
@@ -63,14 +61,13 @@ const FirstForm = ({ orderData, setOrderData }) => {
         <select
           className="select select-bordered"
           value={selectedThickness}
-          onChange={(e) => e.target.value}
+          onChange={(e) =>
+            setOrderData({ ...orderData, innerPaperThickness: e.target.value })
+          }
         >
-          <option disabled defaultValue>
-            Pick one
-          </option>
           {paperThicknessData.map((gsm) => (
-            <option key={gsm.id} value={gsm.id}>
-              {gsm.thickness}
+            <option key={gsm.id} value={gsm.id} className="text-bold">
+              {gsm.thickness} GSM
             </option>
           ))}
         </select>

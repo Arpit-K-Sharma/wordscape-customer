@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 
-const FourthForm = ({ orderData, setOrderData }) => {
-  const { laminationTypes, selectedInk, bindingType, inkTypes } = orderData;
+const FourthForm = ({ orderData, setOrderData, entireData }) => {
+  const { laminationTypes, bindingType, inkTypes } = entireData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -16,10 +16,12 @@ const FourthForm = ({ orderData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Lamination Types</span>
         </div>
-        <select className="select select-bordered">
-          <option disabled defaultValue>
-            Pick one
-          </option>
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, laminationType: e.target.value })
+          }
+        >
           {laminationTypes.map((type) => (
             <option key={type.id} value={type.id}>
               {type.laminationType}
@@ -31,10 +33,12 @@ const FourthForm = ({ orderData, setOrderData }) => {
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
         </div>
-        <select className="select select-bordered">
-          <option disabled defaultValue>
-            Pick one
-          </option>
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, bindingType: e.target.value })
+          }
+        >
           {bindingType.map((type) => (
             <option key={type.id} value={type.id}>
               {type.bindingType}
@@ -48,12 +52,10 @@ const FourthForm = ({ orderData, setOrderData }) => {
           <div className="flex justify-center max-sm:mt-5">
             <select
               className="select select-bordered"
-              value={selectedInk}
-              onChange={(e) => setSelectedInk(e.target.value)}
+              onChange={(e) =>
+                setOrderData({ ...orderData, inkType: e.target.value })
+              }
             >
-              <option disabled defaultValue>
-                Pick one
-              </option>
               {inkTypes.map((type) => (
                 <option key={type.inkId} value={type.inkId}>
                   {type.inkType}
