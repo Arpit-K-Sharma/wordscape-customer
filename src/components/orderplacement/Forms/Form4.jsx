@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 const FourthForm = ({ orderData, setOrderData, entireData }) => {
-  const { laminationTypes, bindingType, inkTypes } = entireData;
-
+  const { laminationTypes, bindingType, inkTypes, coverTreatment } = entireData;
+  console.log(coverTreatment);
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control w-full max-w-xl">
@@ -47,6 +47,23 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </select>
         <br />
 
+        <div className="label text-center content-center">
+          <span className="label-text">Cover Treatment</span>
+        </div>
+        <select
+          className="select select-bordered"
+          onChange={(e) =>
+            setOrderData({ ...orderData, coverTreatment: e.target.value })
+          }
+        >
+          {coverTreatment.map((type) => (
+            <option key={type.coverTreatmentId} value={type.coverTreatmentType}>
+              {type.coverTreatmentType}
+            </option>
+          ))}
+        </select>
+        <br />
+
         <div>
           <h3 className="text-xl font-archivo">Color Type: </h3>
           <div className="flex justify-center max-sm:mt-5">
@@ -57,7 +74,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               }
             >
               {inkTypes.map((type) => (
-                <option key={type.inkId} value={type.inkId}>
+                <option key={type.inkId} value={type.inkType}>
                   {type.inkType}
                 </option>
               ))}

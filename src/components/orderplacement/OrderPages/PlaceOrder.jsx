@@ -16,15 +16,16 @@ function OrderPlacement() {
     address: "",
     companyName: "",
     innerPaperType: "Art_Paper",
-    innerPaperThickness: "100",
+    innerPaperThickness: 100,
     outerPaperType: "Art_Paper",
-    outerPaperThickness: "100",
+    outerPaperThickness: 100,
     paperSize: "A4",
     pages: "",
     quantity: "",
     bindingType: "Center Stitch",
     inkType: "Black and White",
     laminationType: "Normal Glossy",
+    coverTreatment: "",
   });
 
   useEffect(() => {
@@ -34,6 +35,7 @@ function OrderPlacement() {
     getInks();
     getBinding();
     getPaperThicknesses();
+    getCoverTreatment();
   }, []);
 
   const [entireData, setEntireData] = useState({
@@ -43,7 +45,25 @@ function OrderPlacement() {
     laminationTypes: [],
     bindingType: [],
     paperThicknessData: [],
+    coverTreatment: [],
   });
+
+  const getCoverTreatment = () => {
+    axios
+      .get("http://localhost:8081/coverTreatments")
+      .then((response) => {
+        const sortedData = response.data.sort(
+          (a, b) => a.coverTreatmentId - b.coverTreatmentId
+        );
+        setEntireData((prevEntireData) => ({
+          ...prevEntireData,
+          coverTreatment: sortedData,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error fetching cover treatment data:", error);
+      });
+  };
 
   const getInnerPaperType = () => {
     axios
@@ -150,12 +170,13 @@ function OrderPlacement() {
 
   const handleSubmit = async () => {
     try {
-      console.log("Test");
-      console.log(orderData);
-      // const response = await axios.post(
-      //   "http://localhost:8081/orders",
-      //   orderData
-      // console.log("Order placed successfully", response.data);
+      // console.log("Test");
+      // console.log(orderData);
+      const response = await axios.post(
+        "http://localhost:8081/orders",
+        orderData
+      );
+      console.log("Order placed successfully", response.data);
     } catch (error) {
       console.error("Error placing order", error);
     }

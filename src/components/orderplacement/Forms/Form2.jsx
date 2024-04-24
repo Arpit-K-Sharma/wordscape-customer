@@ -25,7 +25,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
             Pick one
           </option>
           {fetchedPaperTypes.map((type) => (
-            <option key={type.id} value={type.id}>
+            <option key={type.id} value={type.name}>
               {type.name}
             </option>
           ))}
@@ -37,15 +37,18 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         <select
           className="select select-bordered"
           onChange={(e) =>
-            setOrderData({ ...orderData, outerPaperThickness: e.target.value })
+            setOrderData({
+              ...orderData,
+              outerPaperThickness: parseInt(e.target.value),
+            })
           }
         >
           <option disabled defaultValue>
             Pick one
           </option>
           {paperThicknessData.map((gsm) => (
-            <option key={gsm.id} value={gsm.id}>
-              {gsm.thickness} GSM
+            <option key={gsm.id} value={gsm.thickness}>
+              {gsm.thickness}
             </option>
           ))}
         </select>

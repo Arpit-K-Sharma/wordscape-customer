@@ -48,7 +48,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           }
         >
           {fetchedPaperTypes.map((type) => (
-            <option key={type.id} value={type.id}>
+            <option key={type.id} value={type.name}>
               {type.name}
             </option>
           ))}
@@ -62,12 +62,15 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           className="select select-bordered"
           value={selectedThickness}
           onChange={(e) =>
-            setOrderData({ ...orderData, innerPaperThickness: e.target.value })
+            setOrderData({
+              ...orderData,
+              innerPaperThickness: parseInt(e.target.value),
+            })
           }
         >
           {paperThicknessData.map((gsm) => (
             <option key={gsm.id} value={gsm.id} className="text-bold">
-              {gsm.thickness} GSM
+              {gsm.thickness}
             </option>
           ))}
         </select>
