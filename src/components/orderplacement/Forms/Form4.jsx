@@ -81,8 +81,9 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
             </select>
           </div>
         </div>
+        <br />
 
-        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
+        <div className="lg:flex flex mb-9 max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/2">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous

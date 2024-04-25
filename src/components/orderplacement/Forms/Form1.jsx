@@ -26,7 +26,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <select
           className="select select-bordered"
           onChange={(e) =>
-            setOrderData({ ...orderData, paperSizeData: e.target.value })
+            setOrderData({ ...orderData, paperSize: e.target.value })
           }
         >
           {paperSizeData &&
