@@ -53,7 +53,6 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
           ))}
         </select>
         <br />
-
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/1">
             <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
