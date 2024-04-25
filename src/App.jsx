@@ -23,6 +23,7 @@ import UserDashboard from "./components/dashboard/UserDashboard";
 import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
 import PaperThickness from "./components/admin/menu/paperthickness/paperthickness.jsx";
+import Orders from "./components/admin/menu/order/order.jsx";
 
 function App() {
   return (
@@ -57,6 +58,8 @@ function App() {
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
         <Route path="/admin/plate" element={<Plate />} />
+        <Route path="/admin/orders" element={<Orders />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

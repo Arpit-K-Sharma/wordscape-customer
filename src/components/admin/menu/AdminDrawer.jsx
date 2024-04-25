@@ -95,7 +95,9 @@ function AdminDrawer() {
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
             <li>
-              <p className="text-xl font-light">Order</p>
+              <NavLink to="/admin/orders">
+                <p className="text-xl font-light">Order</p>
+              </NavLink>
             </li>
           </ul>
         </details>
