@@ -35,6 +35,7 @@ const CostCalculation = () => {
   const [reamCost, setReamCost] = useState(0);
   const [packetCost, setPacketCost] = useState(0);
   const [plateCost, setPlateCost] = useState(0);
+  const [inks, setInks] = useState([]);
   const [inkCost, setInkCost] = useState(0);
   const [bindingCost, setBindingCost] = useState(0);
   const [selectedBindingType, setSelectedBindingType] = useState("");
@@ -60,7 +61,19 @@ const CostCalculation = () => {
     getOuterPaperThickness();
     getLamination(setLaminations);
     getPlates();
+    getInks();
   }, []);
+
+  const getInks = () => {
+    axios
+      .get("http://localhost:8081/inks")
+      .then((response) => {
+        setInks(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching inks:", error);
+      });
+  };
 
   const sizesAndCosts = [
     { paperSize: "A3", plateSize: "19x25 or 20x30", plateCost: 40 },
@@ -199,12 +212,6 @@ const CostCalculation = () => {
         console.error("Error fetching lamination data:", error);
       });
   };
-
-  const inkTypes = [
-    { value: "CMYK", label: "CMYK" },
-    { value: "Spot", label: "Spot" },
-    { value: "Black and White", label: "Black and White" },
-  ];
 
   const getBinding = () => {
     axios
@@ -647,9 +654,9 @@ const CostCalculation = () => {
                       required
                     >
                       <option value="">Select Ink Type</option>
-                      {inkTypes.map((ink, index) => (
-                        <option key={index} value={ink.value}>
-                          {ink.label}
+                      {inks.map((ink) => (
+                        <option key={ink.inkId} value={ink.inkType}>
+                          {ink.inkType}
                         </option>
                       ))}
                     </select>
