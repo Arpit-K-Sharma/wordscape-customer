@@ -44,6 +44,8 @@ const CostCalculation = () => {
   const [covertreatmentType, setCovertreatmentType] = useState("");
   const [paperThicknesses, setPaperThicknesses] = useState([]);
 
+  const [laminationTypes, setLaminations] = useState([]);
+
   const handleCovertreatmentTypeChange = (event) => {
     setCovertreatmentType(event.target.value);
   };
@@ -56,6 +58,7 @@ const CostCalculation = () => {
     getOuterPaper();
     getThickness();
     getOuterPaperThickness();
+    getLamination(setLaminations);
   }, []);
 
   const sizesAndCosts = [
@@ -168,6 +171,17 @@ const CostCalculation = () => {
       });
   };
 
+  const getLamination = (setLaminations) => {
+    axios
+      .get("http://localhost:8081/laminations")
+      .then((response) => {
+        setLaminations(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching lamination data:", error);
+      });
+  };
+
   const inkTypes = [
     { value: "CMYK", label: "CMYK" },
     { value: "Spot", label: "Spot" },
@@ -194,56 +208,13 @@ const CostCalculation = () => {
     setSelectedBindingType(event.target.value);
   };
 
-  const laminationType = [
-    "Normal Glossy",
-    "Normal Matte",
-    "Thermal Glossy",
-    "Thermal Matte",
-  ];
-
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value);
     setQuantity(value);
   };
 
   const handleLaminationTypeChange = (e) => {
-    const selectedLaminationType = e.target.value;
-    setSelectedLaminationType(selectedLaminationType);
-
-    const requiresCustomPrice =
-      selectedLaminationType === "Normal Glossy" ||
-      selectedLaminationType === "Normal Matte" ||
-      selectedLaminationType === "Thermal Glossy" ||
-      selectedLaminationType === "Thermal Matte";
-
-    setIsLaminationSelected(requiresCustomPrice);
-
-    if (requiresCustomPrice) {
-      // Fetch the lamination cost data from the backend
-      axios
-        .get("http://localhost:8081/laminationCost")
-        .then((response) => {
-          const laminationCostData = response.data;
-          // Find the entry corresponding to the selected lamination type
-          const selectedLaminationCost = laminationCostData.find(
-            (cost) => cost.laminationType === selectedLaminationType
-          );
-          if (selectedLaminationCost) {
-            // Update the state with the fetched lamination cost value
-            setLaminationPrice(selectedLaminationCost.laminationCost);
-            console.log(
-              "Lamination cost:",
-              selectedLaminationCost.laminationCost
-            );
-            console.log(laminationPrice);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching lamination cost data:", error);
-        });
-    } else {
-      setShowPopup(false);
-    }
+    setSelectedLaminationType(e.target.value);
   };
 
   function reamCalc(selectedPaperThickness, costPerKg) {
@@ -609,9 +580,9 @@ const CostCalculation = () => {
                         required
                       >
                         <option value="">Select Lamination Type</option>
-                        {laminationType.map((type, index) => (
-                          <option key={index} value={type}>
-                            {type}
+                        {laminationTypes.map((lamination, index) => (
+                          <option key={index} value={lamination.laminationId}>
+                            {lamination.laminationType}
                           </option>
                         ))}
                       </select>
