@@ -59,6 +59,7 @@ const CostCalculation = () => {
     getThickness();
     getOuterPaperThickness();
     getLamination(setLaminations);
+    getPlates();
   }, []);
 
   const sizesAndCosts = [
@@ -106,6 +107,23 @@ const CostCalculation = () => {
 
   const handlePaperTypeChange = (e) => {
     setSelectedPaperType(e.target.value);
+  };
+
+  const getPlates = () => {
+    axios
+      .get("http://localhost:8081/plates")
+      .then((response) => {
+        // Extract plate sizes from response data
+        const fetchedPlateSizes = response.data.map((plate) => ({
+          value: plate.plateId, // Assuming 'plateId' is the unique identifier
+          label: plate.plateSize,
+        }));
+        // Set the plate sizes state
+        setPlateSizes(fetchedPlateSizes);
+      })
+      .catch((error) => {
+        console.error("Error fetching plate sizes:", error);
+      });
   };
 
   const getThickness = () => {
