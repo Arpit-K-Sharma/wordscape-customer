@@ -6,11 +6,13 @@ import DrawerOpen from "./drawer";
 import drawertest from "./drawertest";
 import DrawerTest from "./drawertest";
 import Navbar from "../navbar/navbar";
+import PaperThickness from "../admin/menu/paperthickness/paperthickness";
 
 const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);
 
   const [outerPaperType, setOuterPaperType] = useState([]);
+  const [outerPaperThickness, setOuterPaperThickness] = useState([]);
 
   const [paperSize, setPaperSize] = useState("");
   const [plateSize, setPlateSize] = useState("");
@@ -40,6 +42,7 @@ const CostCalculation = () => {
   const [selectedLaminationType, setSelectedLaminationType] = useState("");
   const [coverTreatmentTypes, setCoverTreatmentTypes] = useState([]);
   const [covertreatmentType, setCovertreatmentType] = useState("");
+  const [paperThicknesses, setPaperThicknesses] = useState([]);
 
   const handleCovertreatmentTypeChange = (event) => {
     setCovertreatmentType(event.target.value);
@@ -51,6 +54,8 @@ const CostCalculation = () => {
     getCoverTreatment();
     getPaper();
     getOuterPaper();
+    getThickness();
+    getOuterPaperThickness();
   }, []);
 
   const sizesAndCosts = [
@@ -78,8 +83,7 @@ const CostCalculation = () => {
   const [isLaminationSelected, setIsLaminationSelected] = useState(false);
 
   const handleOuterPaperThicknessChange = (e) => {
-    const selectedOuterPaperThickness = e.target.value;
-    setSelectedOuterPaperThickness(selectedOuterPaperThickness);
+    setSelectedOuterPaperThickness(e.target.value);
   };
 
   const handleOuterPaperTypeChange = (e) => {
@@ -99,6 +103,30 @@ const CostCalculation = () => {
 
   const handlePaperTypeChange = (e) => {
     setSelectedPaperType(e.target.value);
+  };
+
+  const getThickness = () => {
+    axios
+      .get("http://localhost:8081/paperThickness")
+      .then((response) => {
+        // Update the state with fetched paper thickness data
+        setPaperThicknesses(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching paper thickness data:", error);
+      });
+  };
+
+  const getOuterPaperThickness = () => {
+    axios
+      .get("http://localhost:8081/paperThickness") // Adjust URL accordingly
+      .then((response) => {
+        // Assuming the response data is an array of thickness values
+        setOuterPaperThickness(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching outer paper thickness:", error);
+      });
   };
 
   const getPaperSizes = () => {
@@ -140,23 +168,10 @@ const CostCalculation = () => {
       });
   };
 
-  const sheetDimension = [
-    {
-      value: 864, // 24 x 36
-    },
-    {
-      value: 600, // 20 x 30
-    },
-  ];
-
   const inkTypes = [
     { value: "CMYK", label: "CMYK" },
     { value: "Spot", label: "Spot" },
     { value: "Black and White", label: "Black and White" },
-  ];
-
-  const paperThicknesses = [
-    60, 70, 80, 90, 100, 115, 120, 128, 150, 200, 250, 300,
   ];
 
   const getBinding = () => {
@@ -304,37 +319,6 @@ const CostCalculation = () => {
       .catch((error) => {
         console.error("Error fetching plate cost data:", error);
       });
-  };
-
-  const handlePaperSizeChange = (e) => {
-    const selectedSize = e.target.value;
-    setPaperSize(selectedSize);
-
-    const selectedSizeData = sizesAndCosts.find(
-      (data) => data.paperSize === selectedSize
-    );
-    if (selectedSizeData) {
-      setPlateSize(selectedSizeData.plateSize);
-
-      // Add logic to recommend an appropriate plate size based on paper type
-      let recommendedPlateSize = selectedSizeData.plateSize;
-
-      // Logic to recommend a plate size based on paper type
-      if (selectedPaperType === "Art Paper") {
-        recommendedPlateSize = "20x30";
-      } else if (selectedPaperType === "Ivory Board") {
-        recommendedPlateSize = "19x25";
-      }
-      // Set the recommended plate size
-      setPlateSize(recommendedPlateSize);
-
-      setPlateCost(selectedSizeData.plateCost);
-    }
-  };
-
-  const handleOtherFieldChange = (e) => {
-    const value = e.target.value;
-    setOtherField(value);
   };
 
   const handleInkTypeChange = (e) => {
@@ -554,8 +538,8 @@ const CostCalculation = () => {
                       >
                         <option value="">Set Paper Thickness</option>
                         {paperThicknesses.map((thickness, index) => (
-                          <option key={index} value={thickness}>
-                            {thickness}
+                          <option key={index} value={thickness.thickness}>
+                            {thickness.thickness}
                           </option>
                         ))}
                       </select>
@@ -595,17 +579,17 @@ const CostCalculation = () => {
                       <p> </p>
                       <br></br>
                       <select
-                        id="paper-outer-thickness"
-                        name="paper-outer-thickness"
-                        value={selectedOuterPaperThickness}
-                        onChange={handleOuterPaperThicknessChange}
+                        id="paper-thickness"
+                        name="paper-thickness"
+                        value={selectedPaperThickness}
+                        onChange={handlePaperThicknessChange}
                         className="paper-type-select"
                         required
                       >
                         <option value="">Set Paper Thickness</option>
                         {paperThicknesses.map((thickness, index) => (
-                          <option key={index} value={thickness}>
-                            {thickness}
+                          <option key={index} value={thickness.thickness}>
+                            {thickness.thickness}
                           </option>
                         ))}
                       </select>
