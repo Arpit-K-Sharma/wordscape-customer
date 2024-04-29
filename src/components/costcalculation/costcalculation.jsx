@@ -8,11 +8,16 @@ import DrawerTest from "./drawertest";
 import Navbar from "../navbar/navbar";
 
 const CostCalculation = () => {
+  const [paperSizes, setPaperSizes] = useState([]);
+
+  const [outerPaperType, setOuterPaperType] = useState([]);
+
   const [paperSize, setPaperSize] = useState("");
   const [plateSize, setPlateSize] = useState("");
   const [quantity, setQuantity] = useState("");
   const [pages, setPages] = useState("");
   const [otherField, setOtherField] = useState("");
+  const [paperType, setPaperType] = useState([]);
   const [selectedPaperType, setSelectedPaperType] = useState("");
   const [outerSelectedPaperType, setOuterSelectedPaperType] = useState("");
   const [selectedPaperThickness, setSelectedPaperThickness] = useState("");
@@ -23,6 +28,7 @@ const CostCalculation = () => {
   const [laminationPrice, setLaminationPrice] = useState("");
   const [plateSizes, setPlateSizes] = useState([]);
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
+  const [bindingType, setBindingType] = useState([]);
 
   const [reamCost, setReamCost] = useState(0);
   const [packetCost, setPacketCost] = useState(0);
@@ -35,76 +41,17 @@ const CostCalculation = () => {
   const [coverTreatmentTypes, setCoverTreatmentTypes] = useState([]);
   const [covertreatmentType, setCovertreatmentType] = useState("");
 
-  const handleCustomPrice = () => {
-    // Make a POST request to your endpoint
-    axios
-      .post("http://localhost:8081/bindingCost", {
-        bindingType: selectedBindingType,
-        bindingCost: bindingCost,
-      })
-      .then((response) => {
-        // Handle successful response if needed
-        console.log("Custom price submitted successfully");
-        // You may want to clear the state after successful submission
-        setSelectedBindingType("");
-        setBindingCost("");
-        togglePopup();
-      })
-      .catch((error) => {
-        // Handle error if needed
-        console.error("Error submitting custom price:", error);
-      });
-  };
-
   const handleCovertreatmentTypeChange = (event) => {
     setCovertreatmentType(event.target.value);
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8081/coverTreatmentCost")
-      .then((response) => {
-        setCoverTreatmentTypes(
-          response.data.map((item) => item.coverTreatmentType)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    getBinding();
+    getPaperSizes();
+    getCoverTreatment();
+    getPaper();
+    getOuterPaper();
   }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8081/plateCost")
-      .then((response) => {
-        const plateCostData = response.data;
-        // Map plateCostData to plateSizes format
-        const mappedPlateSizes = plateCostData.map((plate) => ({
-          value: plate.plateSize,
-          label: plate.plateSize,
-        }));
-        // Update state with fetched plate sizes
-        setPlateSizes(mappedPlateSizes);
-      })
-      .catch((error) => {
-        console.error("Error fetching plate sizes:", error);
-      });
-  }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("//localhost:8081/cost")
-  //     .then((response) => {
-  //       const data = response.data;
-  //       setReamCost(data.find((cost) => cost.name === "ream").price);
-  //       setPacketCost(data.find((cost) => cost.name === "packet").price);
-  //       setPlateCost(data.find((cost) => cost.name === "plate").price);
-  //       setBindingCost(data.find((cost) => cost.name === "binding").price);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
 
   const sizesAndCosts = [
     { paperSize: "A3", plateSize: "19x25 or 20x30", plateCost: 40 },
@@ -123,14 +70,6 @@ const CostCalculation = () => {
     },
   ];
 
-  // const handleCovertreatmentTypeChange = (event) => {
-  //   setCovertreatmentType(event.target.value);
-  // };
-
-  const togglePopup = () => {
-    setShowPopup(!showPopup);
-  };
-
   const handlePaperThicknessChange = (e) => {
     const selectedPaperThickness = e.target.value;
     setSelectedPaperThickness(selectedPaperThickness);
@@ -144,109 +83,62 @@ const CostCalculation = () => {
   };
 
   const handleOuterPaperTypeChange = (e) => {
-    const outerSelectedPaperType = e.target.value;
-    setOuterSelectedPaperType(outerSelectedPaperType);
+    setSelectedPaperType(e.target.value);
+  };
 
-    // Fetch the paper cost data from the backend
+  const getCoverTreatment = () => {
     axios
-      .get("http://localhost:8081/papers")
+      .get("http://localhost:8081/coverTreatments")
       .then((response) => {
-        const paperCostData = response.data;
-        // Find the entry corresponding to the selected outer paper type
-        const selectedOuterPaperCost = paperCostData.find(
-          (cost) =>
-            cost.paperType.toLowerCase().replace("_", " ") ===
-            outerSelectedPaperType.toLowerCase()
-        );
-        if (selectedOuterPaperCost) {
-          // Update the state with the fetched costPerKg value for outer paper type
-          setOuterChangeCostPerKg(selectedOuterPaperCost.costPerKg);
-        }
+        setCoverTreatmentTypes(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching outer paper cost data:", error);
+        console.error("Error fetching cover treatment types:", error);
       });
   };
 
   const handlePaperTypeChange = (e) => {
-    const selectedPaperType = e.target.value;
-    setSelectedPaperType(selectedPaperType);
+    setSelectedPaperType(e.target.value);
+  };
 
-    // Fetch the paper cost data from the backend
+  const getPaperSizes = () => {
+    axios
+      .get("http://localhost:8081/paperSizes")
+      .then((response) => {
+        // Extract paper sizes from response data
+        const fetchedPaperSizes = response.data.map((size) => ({
+          value: size.paperSizeId, // Assuming 'paperSizeId' is the unique identifier
+          label: size.paperSize,
+        }));
+        // Set the paper size state
+        setPaperSizes(fetchedPaperSizes);
+      })
+      .catch((error) => {
+        console.error("Error fetching paper sizes:", error);
+      });
+  };
+
+  const getPaper = () => {
     axios
       .get("http://localhost:8081/papers")
       .then((response) => {
-        const paperCostData = response.data;
-        // Find the entry corresponding to the selected paper type
-        const selectedPaperCost = paperCostData.find(
-          (cost) =>
-            cost.paperType.toLowerCase().replace("_", " ") ===
-            selectedPaperType.toLowerCase()
-        );
-        if (selectedPaperCost) {
-          // Update the state with the fetched costPerKg value
-          setChangeCostPerKg(selectedPaperCost.costPerKg);
-          console.log(changeCostPerKg);
-        }
+        setPaperType(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching paper cost data:", error);
+        console.error("Error fetching paper data:", error);
       });
   };
 
-  const handleBindingTypeChange = (e) => {
-    const selectedBindingType = e.target.value;
-    setSelectedBindingType(selectedBindingType);
-
-    // Fetch the binding cost data from the backend
+  const getOuterPaper = () => {
     axios
-      .get("http://localhost:8081/bindingCost")
+      .get("http://localhost:8081/papers") // Adjust the URL accordingly
       .then((response) => {
-        const bindingCostData = response.data;
-        // Find the entry corresponding to the selected binding type
-        const selectedBindingCost = bindingCostData.find(
-          (cost) =>
-            cost.bindingType.toLowerCase() === selectedBindingType.toLowerCase()
-        );
-        if (selectedBindingCost) {
-          // Update the state with the fetched binding cost value
-          setBindingCost(selectedBindingCost.bindingCost);
-          setIsLaminationSelected(false);
-          setShowPopup(false); // No need to show popup if data is available
-        } else {
-          // If data is not present, set flag to show popup for custom price
-          setIsLaminationSelected(true);
-          setShowPopup(true);
-        }
+        setOuterPaperType(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching binding cost data:", error);
-        // If there's an error, assume custom price is required and show popup
-        setIsLaminationSelected(true);
-        setShowPopup(true);
+        console.error("Error fetching outer paper data:", error);
       });
   };
-
-  const paperSizes = [
-    { value: "A3", label: "A3" },
-    { value: "A4", label: "A4" },
-    { value: "A5", label: "A5" },
-    { value: "B5", label: "B5" },
-    { value: "Letter", label: "Letter" },
-  ];
-
-  const paperType = [
-    { type: "Art Paper" },
-    { type: "Art Board " },
-    { type: "Ivory" },
-    { type: "Card Board" },
-    { type: "Colored Paper" },
-    { type: "Wood Free" },
-    { type: "Tough Coat" },
-    { type: "Matte Paper" },
-    { type: "Carbonless Paper" },
-    { type: "Off-white Paper" },
-  ];
 
   const sheetDimension = [
     {
@@ -267,19 +159,25 @@ const CostCalculation = () => {
     60, 70, 80, 90, 100, 115, 120, 128, 150, 200, 250, 300,
   ];
 
-  const bindingType = [
-    "Center Stitch",
-    "Perfect Binding",
-    "Juju",
-    "Metal-foiling",
-    "Diecuting",
-    "Perforation",
-    "Padding",
-    "Spot Vanishing",
-    "Wiro",
-    "Spiral",
-    "Clear Sheet",
-  ];
+  const getBinding = () => {
+    axios
+      .get("http://localhost:8081/bindings")
+      .then((response) => {
+        // Extract binding types from response data
+        const bindingTypes = response.data.map(
+          (binding) => binding.bindingType
+        );
+        // Set the binding type state
+        setBindingType(bindingTypes);
+      })
+      .catch((error) => {
+        console.error("Error fetching binding types:", error);
+      });
+  };
+
+  const handleBindingTypeChange = (event) => {
+    setSelectedBindingType(event.target.value);
+  };
 
   const laminationType = [
     "Normal Glossy",
@@ -467,7 +365,7 @@ const CostCalculation = () => {
                 <b>Cost</b> Calculator
               </h1>
               <br></br>
-              <DrawerTest
+              {/* <DrawerTest
                 plateSize={plateSize}
                 outerChangeCostPerKg={outerChangeCostPerKg}
                 selectedLaminationType={selectedLaminationType}
@@ -496,7 +394,7 @@ const CostCalculation = () => {
                 costReam={Math.ceil(
                   reamCalc(selectedPaperThickness, changeCostPerKg)
                 )}
-              />
+              /> */}
             </div>
             <div className="total-b"></div>
             <br></br>
@@ -519,11 +417,12 @@ const CostCalculation = () => {
                     <select
                       id="paperSize"
                       value={paperSize}
-                      onChange={handlePaperSizeChange}
+                      onChange={(e) => setPaperSize(e.target.value)}
                     >
                       <option value="">Select Paper Size</option>
-                      {paperSizes.map((size, index) => (
-                        <option key={index} value={size.value}>
+                      {/* Map over the fetched paper sizes */}
+                      {paperSizes.map((size) => (
+                        <option key={size.value} value={size.value}>
                           {size.label}
                         </option>
                       ))}
@@ -596,9 +495,13 @@ const CostCalculation = () => {
                       required
                     >
                       <option value="">Select Cover Treatment Type</option>
+                      {/* Map over the fetched cover treatment types */}
                       {coverTreatmentTypes.map((coverTreatment, index) => (
-                        <option key={index} value={coverTreatment}>
-                          {coverTreatment}
+                        <option
+                          key={index}
+                          value={coverTreatment.coverTreatmentType}
+                        >
+                          {coverTreatment.coverTreatmentType}
                         </option>
                       ))}
                     </select>
@@ -620,15 +523,15 @@ const CostCalculation = () => {
                       <select
                         id="paper-type"
                         name="paper-type"
-                        value={selectedPaperType} // Set value to the selectedPaperType state
-                        onChange={handlePaperTypeChange} // Handle change event
+                        value={selectedPaperType}
+                        onChange={handlePaperTypeChange}
                         className="paper-type-select"
                         required
                       >
                         <option value="">Select Paper Type</option>
                         {paperType.map((paper, index) => (
-                          <option key={index} value={paper.type}>
-                            {paper.type}
+                          <option key={index} value={paper.paperType}>
+                            {paper.paperType.replace("_", " ")}
                           </option>
                         ))}
                       </select>
@@ -677,9 +580,9 @@ const CostCalculation = () => {
                         required
                       >
                         <option value="">Select Outer Paper Type</option>
-                        {paperType.map((paper, index) => (
-                          <option key={index} value={paper.type}>
-                            {paper.type}
+                        {outerPaperType.map((paper, index) => (
+                          <option key={index} value={paper.paperType}>
+                            {paper.paperType.replace("_", " ")}
                           </option>
                         ))}
                       </select>
