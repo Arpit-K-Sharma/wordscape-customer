@@ -7,8 +7,9 @@
 @layer base{
 
     html{
-        @apply bg-blue-300;
+        @apply bg-blue-100;
         @apply text-white;
-        
     }
+
+    
 }
