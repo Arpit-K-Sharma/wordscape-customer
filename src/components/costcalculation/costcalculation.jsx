@@ -20,35 +20,38 @@ const CostCalculation = () => {
   const [pages, setPages] = useState("");
   const [otherField, setOtherField] = useState("");
   const [paperType, setPaperType] = useState([]);
-  const [selectedPaperType, setSelectedPaperType] = useState("");
+  const [selectedPaperType, setSelectedInnerPaper] = useState("");
   const [outerSelectedPaperType, setOuterSelectedPaperType] = useState("");
   const [selectedPaperThickness, setSelectedPaperThickness] = useState("");
   const [selectedOuterPaperThickness, setSelectedOuterPaperThickness] =
     useState("");
   const [changeCostPerKg, setChangeCostPerKg] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
-  const [laminationPrice, setLaminationPrice] = useState("");
+  // const [laminationPrice, setLaminationPrice] = useState("");
+  const [laminationPrice, setLaminationPrice] = useState(0);
+
   const [plateSizes, setPlateSizes] = useState([]);
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
   const [bindingType, setBindingType] = useState([]);
+  const [laminationType, setLaminationType] = useState([]);
+  const [coverTreatmentType, setCoverTreatmentType] = useState([]);
 
-  const [reamCost, setReamCost] = useState(0);
   const [packetCost, setPacketCost] = useState(0);
   const [plateCost, setPlateCost] = useState(0);
   const [inks, setInks] = useState([]);
+  const [coverTreatmentRate, setCoverTreatmentRate] = useState(0);
+
   const [inkCost, setInkCost] = useState(0);
   const [bindingCost, setBindingCost] = useState(0);
   const [selectedBindingType, setSelectedBindingType] = useState("");
   const [selectedInkType, setSelectedInkType] = useState("");
   const [selectedLaminationType, setSelectedLaminationType] = useState("");
-  const [coverTreatmentTypes, setCoverTreatmentTypes] = useState([]);
-  const [covertreatmentType, setCovertreatmentType] = useState("");
+  const [selectedCoverTreatmentType, setSelectedCoverTreatmentType] =
+    useState("");
   const [paperThicknesses, setPaperThicknesses] = useState([]);
-
-  const [laminationTypes, setLaminations] = useState([]);
+  const [laminationTypes, setLaminationTypes] = useState([]);
 
   const handleCovertreatmentTypeChange = (event) => {
-    setCovertreatmentType(event.target.value);
+    setSelectedCoverTreatmentType(event.target.value);
   };
 
   useEffect(() => {
@@ -59,10 +62,13 @@ const CostCalculation = () => {
     getOuterPaper();
     getThickness();
     getOuterPaperThickness();
-    getLamination(setLaminations);
+    getLamination();
     getPlates();
     getInks();
-  }, []);
+    getRateForBindingType(selectedBindingType);
+    getRateForLaminationType(selectedLaminationType);
+    getRateForCoverTreatment(selectedCoverTreatmentType);
+  }, [selectedBindingType, selectedLaminationType, selectedCoverTreatmentType]);
 
   const getInks = () => {
     axios
@@ -75,51 +81,17 @@ const CostCalculation = () => {
       });
   };
 
-  const sizesAndCosts = [
-    { paperSize: "A3", plateSize: "19x25 or 20x30", plateCost: 40 },
-    { paperSize: "A4", plateSize: "19x25", plateCost: 15 },
-    { paperSize: "A5", plateSize: "19x25", plateCost: 20 },
-    { paperSize: "B5", plateSize: "15x20 or 20x30", plateCost: 40 },
-    { paperSize: "Letter", plateSize: "18x24", plateCost: 30 },
-  ];
-
-  const plateValue = [
-    {
-      value: 126,
-    },
-    {
-      value: 600,
-    },
-  ];
-
   const handlePaperThicknessChange = (e) => {
     const selectedPaperThickness = e.target.value;
     setSelectedPaperThickness(selectedPaperThickness);
   };
 
-  const [isLaminationSelected, setIsLaminationSelected] = useState(false);
-
-  const handleOuterPaperThicknessChange = (e) => {
-    setSelectedOuterPaperThickness(e.target.value);
-  };
-
   const handleOuterPaperTypeChange = (e) => {
-    setSelectedPaperType(e.target.value);
-  };
-
-  const getCoverTreatment = () => {
-    axios
-      .get("http://localhost:8081/coverTreatments")
-      .then((response) => {
-        setCoverTreatmentTypes(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching cover treatment types:", error);
-      });
+    setOuterSelectedPaperType(e.target.value);
   };
 
   const handlePaperTypeChange = (e) => {
-    setSelectedPaperType(e.target.value);
+    setSelectedInnerPaper(e.target.value);
   };
 
   const getPlates = () => {
@@ -201,15 +173,34 @@ const CostCalculation = () => {
         console.error("Error fetching outer paper data:", error);
       });
   };
-
-  const getLamination = (setLaminations) => {
+  const getLamination = () => {
     axios
       .get("http://localhost:8081/laminations")
       .then((response) => {
-        setLaminations(response.data);
+        // Map the response data to include both laminationId and laminationType
+        const laminationTypes = response.data.map(
+          (lamination) => lamination.laminationType
+        );
+        // Set the laminationTypes state
+        setLaminationType(laminationTypes);
       })
       .catch((error) => {
-        console.error("Error fetching lamination data:", error);
+        console.error("Error fetching lamination types:", error);
+      });
+  };
+
+  const getCoverTreatment = () => {
+    axios
+      .get("http://localhost:8081/coverTreatments")
+      .then((response) => {
+        const covertreatmentTypes = response.data.map(
+          (covertreatment) => covertreatment.coverTreatmentType
+        );
+
+        setCoverTreatmentType(covertreatmentTypes);
+      })
+      .catch((error) => {
+        console.error("Error fetching cover treatment types:", error);
       });
   };
 
@@ -221,11 +212,100 @@ const CostCalculation = () => {
         const bindingTypes = response.data.map(
           (binding) => binding.bindingType
         );
+        // console.log(response);
         // Set the binding type state
         setBindingType(bindingTypes);
       })
       .catch((error) => {
         console.error("Error fetching binding types:", error);
+      });
+  };
+
+  const getRateForBindingType = (selectedBindingType) => {
+    // Fetch the binding types and rates from the database
+    axios
+      .get("http://localhost:8081/bindings")
+      .then((response) => {
+        // Find the selected binding type in the response data
+        const selectedBinding = response.data.find(
+          (binding) => binding.bindingType === selectedBindingType
+        );
+
+        if (selectedBinding) {
+          // Log the rate of the selected binding
+          console.log(
+            "Binding Type:",
+            selectedBindingType,
+            "Rate:",
+            selectedBinding.rate
+          );
+        } else {
+          // If binding type not found, handle error accordingly
+          console.error("Binding type not found:", selectedBindingType);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching binding types:", error);
+      });
+  };
+
+  const getRateForLaminationType = (selectedLaminationType) => {
+    axios
+      .get("http://localhost:8081/laminations")
+      .then((response) => {
+        const selectedLamination = response.data.find(
+          (lamination) => lamination.laminationType === selectedLaminationType
+        );
+
+        if (selectedLamination) {
+          setLaminationPrice(selectedLamination.rate);
+          console.log(
+            "Lamination Type:",
+            selectedLaminationType,
+            "Rate:",
+            selectedLamination.rate
+          );
+        } else {
+          console.error("Lamination type not found:", selectedLaminationType);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching lamination types:", error);
+      });
+  };
+
+  getRateForLaminationType(selectedLaminationType);
+
+  const getRateForCoverTreatment = (selectedCoverTreatmentType) => {
+    // Fetch the cover treatments and rates from the database
+    axios
+      .get("http://localhost:8081/coverTreatments")
+      .then((response) => {
+        // Find the selected cover treatment type in the response data
+        const selectedCoverTreatment = response.data.find(
+          (coverTreatment) =>
+            coverTreatment.coverTreatmentType === selectedCoverTreatmentType
+        );
+
+        if (selectedCoverTreatment) {
+          // Update the state with the cover treatment rate
+          setCoverTreatmentRate(selectedCoverTreatment.rate);
+          console.log(
+            "Cover Treatment Type:",
+            selectedCoverTreatmentType,
+            "Rate:",
+            selectedCoverTreatment.rate
+          );
+        } else {
+          // If cover treatment type not found, handle error accordingly
+          console.error(
+            "Cover treatment type not found:",
+            selectedCoverTreatmentType
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cover treatments:", error);
       });
   };
 
@@ -238,8 +318,8 @@ const CostCalculation = () => {
     setQuantity(value);
   };
 
-  const handleLaminationTypeChange = (e) => {
-    setSelectedLaminationType(e.target.value);
+  const handleLaminationTypeChange = (event) => {
+    setSelectedLaminationType(event.target.value);
   };
 
   function reamCalc(selectedPaperThickness, costPerKg) {
@@ -253,6 +333,8 @@ const CostCalculation = () => {
   function totalPages(quantity, pages) {
     return Math.round(quantity * pages);
   }
+
+  //console.log("Total pages is " + totalPages(quantity, pages));
 
   function totalSheets(quantity, pages) {
     return totalPages(quantity, pages) / 16;
@@ -278,6 +360,10 @@ const CostCalculation = () => {
       ((12 * 18 * laminationPrice) / 2) * totalPages(quantity, pages)
     );
   }
+  console.log(
+    "Total Lamination is " +
+      calculateLamination(laminationPrice, quantity, pages)
+  );
 
   function platePrice(pages, plateCost) {
     return pages * plateCost;
@@ -470,18 +556,15 @@ const CostCalculation = () => {
                     <select
                       id="covertreatment-type"
                       name="covertreatment-type"
-                      value={covertreatmentType}
+                      value={coverTreatmentType}
                       onChange={handleCovertreatmentTypeChange}
                       required
                     >
                       <option value="">Select Cover Treatment Type</option>
                       {/* Map over the fetched cover treatment types */}
-                      {coverTreatmentTypes.map((coverTreatment, index) => (
-                        <option
-                          key={index}
-                          value={coverTreatment.coverTreatmentType}
-                        >
-                          {coverTreatment.coverTreatmentType}
+                      {coverTreatmentType.map((covertreatment, index) => (
+                        <option key={index} value={covertreatment}>
+                          {covertreatment}
                         </option>
                       ))}
                     </select>
@@ -605,9 +688,9 @@ const CostCalculation = () => {
                         required
                       >
                         <option value="">Select Lamination Type</option>
-                        {laminationTypes.map((lamination, index) => (
-                          <option key={index} value={lamination.laminationId}>
-                            {lamination.laminationType}
+                        {laminationType.map((lamination, index) => (
+                          <option key={index} value={lamination}>
+                            {lamination}
                           </option>
                         ))}
                       </select>
