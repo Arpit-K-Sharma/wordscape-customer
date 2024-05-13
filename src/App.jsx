@@ -24,6 +24,8 @@ import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
 import PaperThickness from "./components/admin/menu/paperthickness/paperthickness.jsx";
 import Orders from "./components/admin/menu/order/order.jsx";
+import ProtectedRoutes from "./components/newjobcard/protectedRoutes.jsx";
+import Profile from "./components/dashboard/profile.jsx";
 
 function App() {
   return (
@@ -38,7 +40,10 @@ function App() {
         <Route path="/cost" element={<CostCalculation />} />
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
-        <Route path="/jobcard" element={<NJobCard />} />
+        <Route element={<ProtectedRoutes/>} >  
+            <Route path="/jobcard" element={<NJobCard />} />
+        </Route>
+        
 
         <Route path="/order/:step" element={<OrderPlacement />} />
         {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
@@ -59,8 +64,9 @@ function App() {
         <Route path="/admin/lamination" element={<Lamination />} />
         <Route path="/admin/plate" element={<Plate />} />
         <Route path="/admin/orders" element={<Orders />} />
-
+        
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/user/edit" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
