@@ -473,6 +473,7 @@ const CostCalculation = () => {
                 <b>Cost</b> Calculator
               </h1>
               <br></br>
+              <DrawerTest inkCost={inkCost} pages={pages} quantity={quantity} />
               {/* <DrawerTest
                 plateSize={plateSize}
                 outerChangeCostPerKg={outerChangeCostPerKg}

@@ -156,7 +156,7 @@ function Users() {
               className="btn mx-[205px]"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
-              Add Users
+              Add Staffs
             </button>
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
