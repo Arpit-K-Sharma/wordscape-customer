@@ -42,7 +42,7 @@ const CostCalculation = () => {
 
   const [inkCost, setInkCost] = useState(0);
   const [bindingCost, setBindingCost] = useState(0);
-  const [selectedBindingType, setSelectedBindingType] = useState("");
+  const [selectedBindingType, setSelectedBindingType] = useState(0);
   const [selectedInkType, setSelectedInkType] = useState("");
   const [selectedLaminationType, setSelectedLaminationType] = useState("");
   const [selectedCoverTreatmentType, setSelectedCoverTreatmentType] =
@@ -232,6 +232,7 @@ const CostCalculation = () => {
         );
 
         if (selectedBinding) {
+          setBindingCost(selectedBinding.rate);
           // Log the rate of the selected binding
           console.log(
             "Binding Type:",
@@ -256,7 +257,6 @@ const CostCalculation = () => {
         const selectedLamination = response.data.find(
           (lamination) => lamination.laminationType === selectedLaminationType
         );
-
         if (selectedLamination) {
           setLaminationPrice(selectedLamination.rate);
           console.log(
@@ -355,11 +355,14 @@ const CostCalculation = () => {
     return Math.ceil(totalSheets(quantity, 4) / 100);
   }
 
+  console.log("The number of packets required are " + totalPacket(quantity));
+
   function calculateLamination(laminationPrice, quantity, pages) {
-    return Math.ceil(
-      ((12 * 18 * laminationPrice) / 2) * totalPages(quantity, pages)
-    );
+    return Math.ceil(((12 * 18 * laminationPrice) / 2) * pages * quantity);
   }
+
+  console.log("Lamination price is " + laminationPrice);
+
   console.log(
     "Total Lamination is " +
       calculateLamination(laminationPrice, quantity, pages)
