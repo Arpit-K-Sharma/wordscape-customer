@@ -19,7 +19,7 @@ function MobileNavbar() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-slate-200 bg-zinc-800">
           <img
             width="350"
             height="350"

@@ -26,6 +26,7 @@ import PaperThickness from "./components/admin/menu/paperthickness/paperthicknes
 import Orders from "./components/admin/menu/order/order.jsx";
 import ProtectedRoutes from "./components/newjobcard/protectedRoutes.jsx";
 import Profile from "./components/dashboard/profile.jsx";
+import CoverTreatment from "./components/admin/menu/covertreatment/covertreatment.jsx";
 
 function App() {
   return (
@@ -40,10 +41,10 @@ function App() {
         <Route path="/cost" element={<CostCalculation />} />
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
-        <Route element={<ProtectedRoutes/>} >  
-            <Route path="/jobcard" element={<NJobCard />} />
+        <Route element={<ProtectedRoutes />} >
+          <Route path="/jobcard" element={<NJobCard />} />
         </Route>
-        
+
 
         <Route path="/order/:step" element={<OrderPlacement />} />
         {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
@@ -54,6 +55,8 @@ function App() {
         <Route path="/user/dashboard" element={<UserDashboard />} />
 
         <Route path="/login/admin" element={<AdminLogin />} />
+
+
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/customer" element={<AdminCustomer />} />
         <Route path="/admin/paper" element={<Paper />} />
@@ -62,9 +65,10 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/binding" element={<Binding />} />
         <Route path="/admin/lamination" element={<Lamination />} />
+        <Route path="/admin/covertreatment" element={<CoverTreatment />} />
         <Route path="/admin/plate" element={<Plate />} />
         <Route path="/admin/orders" element={<Orders />} />
-        
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user/edit" element={<Profile />} />
       </Routes>

@@ -1,8 +1,28 @@
 import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const url = "http://localhost:8081/home/login";
+      const data = {
+        email: email,
+        password: password,
+        role: "ROLE_CUSTOMER",
+      };
+
+      const response = await axios.post(url, data);
+      console.log(response.data); // Handle the response data as needed
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="relative flex flex-col lg:justify-center h-[100vh] overflow-hidden">
       <div className="w-full p-6 mx-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 sm:w-96 max-sm:h-[100%] lg:w-[550px] ">
@@ -25,6 +45,7 @@ function Login() {
               type="text"
               placeholder="Email Address"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
+              value={email}
             />
           </div>
           <div>
@@ -35,6 +56,7 @@ function Login() {
               type="password"
               placeholder="Enter Password"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
+              value={password}
             />
           </div>
           <a

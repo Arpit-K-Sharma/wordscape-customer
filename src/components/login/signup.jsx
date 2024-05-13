@@ -1,8 +1,61 @@
 import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    fullName: null,
+    email: null,
+    password: null,
+    address: null,
+    phoneNumber: null,
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Perform validation checks here
+    if (formData.password === formData.confirmPassword) {
+      const userData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        address: formData.address,
+        phoneNumber: formData.phoneNumber,
+      };
+      signUpUser(userData);
+    } else {
+      console.log("Password mismatch");
+    }
+  };
+
+  const signUpUser = (userData) => {
+    axios
+      .post("http://localhost:8081/customers/register", userData)
+      .then((response) => {
+        console.log("Signup successful:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error signing up:", error);
+      });
+  };
+
+  const setChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-zinc-800">
       <div className="w-full p-6 mx-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 sm:w-96 lg:w-[550px]">
@@ -18,7 +71,7 @@ function SignUp() {
         <h1 className="text-3xl font-semibold text-center text-gray-700">
           Sign Up for WordScape
         </h1>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="label">
               <span className="text-base label-text">Name</span>
@@ -27,6 +80,10 @@ function SignUp() {
               type="text"
               placeholder="Name"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.fullName}
+              onChange={setChange}
+              name="fullName"
+              required
             />
           </div>
           <div>
@@ -37,6 +94,10 @@ function SignUp() {
               type="text"
               placeholder="Email Address"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.email}
+              onChange={setChange}
+              name="email"
+              required
             />
           </div>
           <div>
@@ -47,6 +108,10 @@ function SignUp() {
               type="text"
               placeholder="Address"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.address}
+              onChange={setChange}
+              name="address"
+              required
             />
           </div>
           <div>
@@ -59,6 +124,10 @@ function SignUp() {
               type="white"
               placeholder="+977 98XXXXXXXX"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.phoneNumber}
+              onChange={setChange}
+              name="phoneNumber"
+              required
             />
           </div>
           <div>
@@ -69,6 +138,10 @@ function SignUp() {
               type="password"
               placeholder="Enter Password"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.password}
+              onChange={setChange}
+              name="password"
+              required
             />
           </div>
           <div>
@@ -79,6 +152,10 @@ function SignUp() {
               type="password"
               placeholder="Confirm Password"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
+              value={formData.confirmPassword}
+              onChange={setChange}
+              name="confirmPassword"
+              required
             />
           </div>
           <div className="flex flex-col">

@@ -16,6 +16,26 @@ function Orders() {
       });
   }, []);
 
+  const handleViewInvoice = async (id) => {
+    try {
+      // Fetch invoice PDF using order ID
+      const response = await axios.get(`http://localhost:8081/orders/${id}`, {
+        responseType: "arraybuffer", // Ensure the response is treated as a binary array buffer
+      });
+
+      // Create Blob from response data
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Open PDF in a new window
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error fetching invoice:", error);
+    }
+  };
+
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -54,7 +74,8 @@ function Orders() {
                     <th className="w-[100px]">Lamination Type</th>
                     <th className="w-[100px]">Ink Type</th>
                     <th className="w-[100px]">Remarks</th>
-                    <th className="w-[50px]">Customer ID</th>
+                    <th className="w-[50px]">Customer Name</th>
+                    <th className="w-[50px]">Invoice</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,7 +95,15 @@ function Orders() {
                       <td className="text-wrap">{order.laminationType}</td>
                       <td className="text-wrap">{order.inkType}</td>
                       <td className="text-wrap">{order.remarks}</td>
-                      <td className="text-wrap">{order.customerId}</td>
+                      <td className="text-wrap">{order.name}</td>
+                      <td>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleViewInvoice(order.orderId)}
+                        >
+                          View Invoice
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
