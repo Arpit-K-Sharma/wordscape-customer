@@ -464,6 +464,7 @@ const CostCalculation = () => {
   return (
     <>
       <Navbar />
+      <DrawerOpen/>
       <div className="cost-calc-container bg-zinc-800">
         <div className="empty-box">
           <div className="test-box">

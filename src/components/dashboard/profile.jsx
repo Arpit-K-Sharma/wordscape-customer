@@ -6,10 +6,10 @@ import Menu from './menu';
 function Profile() {
     const [customerData, setCustomerData] = useState({
         customerId: null,
-        fullName: 'Spandan Bhattarai',
-        address: 'Ramkot',
-        email: 'spandan123@gmail.com',
-        companyName: 'TBC',
+        fullName: '',
+        address: '',
+        email: '',
+        companyName: '',
         status: false
     });
     const [editable, setEditable] = useState(false);

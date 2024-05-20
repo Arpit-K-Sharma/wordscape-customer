@@ -2,12 +2,17 @@ import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
+import Cookies from 'js-cookie';
+import {jwtDecode} from 'jwt-decode';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const url = "http://localhost:8081/home/login";
       const data = {
@@ -15,14 +20,34 @@ function Login() {
         password: password,
         role: "ROLE_CUSTOMER",
       };
-
+      console.log("Request Data:", data);
       const response = await axios.post(url, data);
-      console.log(response.data); // Handle the response data as needed
+      console.log("Response Data:", response.data);
+      
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        Cookies.set('token', token, { expires: 7 });
+        
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Decoded Token:", decoded);
+          
+          if (decoded.id) {
+            console.log("id:", decoded.id);
+            localStorage.setItem("id", decoded.id)
+          } else {
+            console.error("Error: Username not found in the token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+      } else {
+        console.error("Error: No token found in the response");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   return (
     <div className="relative flex flex-col lg:justify-center h-[100vh] overflow-hidden">
       <div className="w-full p-6 mx-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 sm:w-96 max-sm:h-[100%] lg:w-[550px] ">
@@ -46,6 +71,7 @@ function Login() {
               placeholder="Email Address"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
               value={email}
+              onChange={(e) => { setEmail(e.target.value) }}
             />
           </div>
           <div>
@@ -57,6 +83,7 @@ function Login() {
               placeholder="Enter Password"
               className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-800"
               value={password}
+              onChange={(e) => { setPassword(e.target.value) }}
             />
           </div>
           <a
@@ -66,7 +93,7 @@ function Login() {
             Forget Password?
           </a>
           <div className="flex flex-col">
-            <button className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600">
+            <button className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600" onClick={handleLogin}>
               Login
             </button>
             <div className="flex flex-col w-full">

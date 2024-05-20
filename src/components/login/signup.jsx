@@ -1,10 +1,11 @@
 import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: null,
     email: null,
@@ -43,6 +44,7 @@ function SignUp() {
       .post("http://localhost:8081/customers/register", userData)
       .then((response) => {
         console.log("Signup successful:", response.data);
+        navigate('/login');
       })
       .catch((error) => {
         console.error("Error signing up:", error);

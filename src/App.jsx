@@ -27,6 +27,8 @@ import Orders from "./components/admin/menu/order/order.jsx";
 import ProtectedRoutes from "./components/newjobcard/protectedRoutes.jsx";
 import Profile from "./components/dashboard/profile.jsx";
 import CoverTreatment from "./components/admin/menu/covertreatment/covertreatment.jsx";
+import UserOrder from "./components/dashboard/userOrder.jsx";
+import OrderDetails from "./components/dashboard/orderDetail.jsx";
 
 function App() {
   return (
@@ -53,6 +55,7 @@ function App() {
         <Route path="/order/5" element={<OrderPlacementFifth />} /> */}
 
         <Route path="/user/dashboard" element={<UserDashboard />} />
+        <Route path="/user/orders" element={<UserOrder />} />
 
         <Route path="/login/admin" element={<AdminLogin />} />
 
@@ -71,6 +74,8 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user/edit" element={<Profile />} />
+        <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
+        
       </Routes>
     </BrowserRouter>
   );
