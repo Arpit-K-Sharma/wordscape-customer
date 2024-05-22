@@ -39,7 +39,6 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-
         <Route path="/cost" element={<CostCalculation />} />
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
@@ -53,13 +52,7 @@ function App() {
         <Route path="/order/3" element={<OrderPlacementThird />} />
         <Route path="/order/4" element={<OrderPlacementFourth />} />
         <Route path="/order/5" element={<OrderPlacementFifth />} /> */}
-
-        <Route path="/user/dashboard" element={<UserDashboard />} />
-        <Route path="/user/orders" element={<UserOrder />} />
-
         <Route path="/login/admin" element={<AdminLogin />} />
-
-
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/customer" element={<AdminCustomer />} />
         <Route path="/admin/paper" element={<Paper />} />
@@ -71,11 +64,11 @@ function App() {
         <Route path="/admin/covertreatment" element={<CoverTreatment />} />
         <Route path="/admin/plate" element={<Plate />} />
         <Route path="/admin/orders" element={<Orders />} />
-
+        <Route path="/user/dashboard" element={<UserDashboard />} />
+        <Route path="/user/orders" element={<UserOrder />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user/edit" element={<Profile />} />
         <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
-        
       </Routes>
     </BrowserRouter>
   );

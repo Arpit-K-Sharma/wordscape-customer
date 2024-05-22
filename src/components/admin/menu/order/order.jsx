@@ -4,7 +4,17 @@ import AdminDrawer from "../AdminDrawer";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
-
+  const [steps, setSteps] = useState([
+    { name: "Order Slip", active: false, key: "orderSlip" },
+    { name: "Job Card", active: false, key: "jobCard" },
+    { name: "Paper Cutting", active: false, key: "paperCutting" },
+    { name: "Plate Preparation", active: false, key: "platePreparation" },
+    { name: "Printing", active: false, key: "printing" },
+    { name: "Post Press", active: false, key: "postPress" },
+    { name: "Delivery", active: false, key: "delivery" },
+    { name: "End", active: false, key: "end" },
+  ]);
+  const [orderid, setOrderid] = useState();
   useEffect(() => {
     axios
       .get("http://localhost:8081/orders")
@@ -18,21 +28,77 @@ function Orders() {
 
   const handleViewInvoice = async (id) => {
     try {
-      // Fetch invoice PDF using order ID
-      const response = await axios.get(`http://localhost:8081/orders/${id}`, {
-        responseType: "arraybuffer", // Ensure the response is treated as a binary array buffer
+      const response = await axios.get(`http://localhost:8081/orders/invoice/${id}`, {
+        responseType: "arraybuffer",
       });
 
-      // Create Blob from response data
       const blob = new Blob([response.data], { type: "application/pdf" });
-
-      // Create a URL for the Blob
       const url = URL.createObjectURL(blob);
-
-      // Open PDF in a new window
       window.open(url, "_blank");
     } catch (error) {
       console.error("Error fetching invoice:", error);
+    }
+  };
+
+  const handleBack = () => {
+    setSteps((prevSteps) => {
+      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      if (lastActiveIndex > 0) {
+        const newSteps = prevSteps.map((step, index) => ({
+          ...step,
+          active: index < lastActiveIndex
+        }));
+        return newSteps;
+      }
+      return prevSteps;
+    });
+  };
+
+  const handleNext = () => {
+    setSteps((prevSteps) => {
+      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      if (lastActiveIndex < prevSteps.length - 1) {
+        const newSteps = prevSteps.map((step, index) => ({
+          ...step,
+          active: index <= lastActiveIndex + 1
+        }));
+        return newSteps;
+      }
+      return prevSteps;
+    });
+  };
+
+  const handleDone = async () => {
+    const stepData = steps.reduce((acc, step) => {
+      acc[step.key] = step.active;
+      return acc;
+    }, {});
+
+    console.log(stepData);
+
+    try {
+      await axios.post(`http://localhost:8081/projectTracking/${orderid}`, stepData);
+      console.log("Data sent successfully");
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
+
+  const handleTracking = async (id) => {
+    console.log(id)
+    try {
+      const response = await axios.get(`http://localhost:8081/projectTracking/${id}`);
+      const trackingData = response.data;
+
+      const updatedSteps = steps.map(step => ({
+        ...step,
+        active: trackingData[step.key]
+      }));
+      console.log(updatedSteps);
+      setSteps(updatedSteps);
+      document.getElementById('my_modal_1').showModal();
+    } catch (error) {
+      console.error("Error fetching tracking data:", error);
     }
   };
 
@@ -76,6 +142,7 @@ function Orders() {
                     <th className="w-[100px]">Remarks</th>
                     <th className="w-[50px]">Customer Name</th>
                     <th className="w-[50px]">Invoice</th>
+                    <th className="w-[50px]">Tracking</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -104,6 +171,17 @@ function Orders() {
                           View Invoice
                         </button>
                       </td>
+                      <td>
+                        <button
+                          className="btn min-h-[30px] h-[40px]"
+                          onClick={() => {
+                            handleTracking(order.orderId),
+                            setOrderid(order.orderId)
+                          }}
+                        >
+                          Track It
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -112,6 +190,35 @@ function Orders() {
           </div>
         </div>
       </div>
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box overflow-hidden max-w-[64%]">
+          <div className="">
+            <ul className="steps w-[900px] mb-[20px]">
+              {steps.map((step, index) => (
+                <li key={index} className={`step ${step.active ? "step step-primary" : ""}` } data-content={step.active ? "✓" : null}>
+                  {step.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex gap-[20px] justify-end">
+            <button className="btn" onClick={handleBack}>
+              Back
+            </button>
+            <button className="btn" onClick={handleNext}>
+              Next
+            </button>
+          </div>
+          <div className="modal-action">
+            <form method="dialog">
+              <div className="flex justify-end gap-[15px]">
+                <button className="btn">Close</button>
+                <button className="btn" onClick={handleDone}>Done</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
       <AdminDrawer />
     </div>
   );

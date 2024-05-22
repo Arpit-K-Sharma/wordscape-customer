@@ -29,13 +29,15 @@ function MobileMenu() {
         <ul className="menu p-4 w-80 min-h-full bg-zinc-800 text-white">
           {/* Sidebar content here */}
           <li className="mt-[40px]">
-            <img
-              width="120"
-              height="120"
-              src={logo}
-              alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
-              className="mx-auto my-1 mb-5"
-            />
+            <NavLink to="/">
+              <img
+                width="120"
+                height="120"
+                src={logo}
+                alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
+                className="mx-auto my-1 mb-5"
+              />
+            </NavLink>
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
           <li>
@@ -47,10 +49,17 @@ function MobileMenu() {
             </NavLink>
           </li>
           <li>
-            <p className="text-xl mb-3 font-light">Cost Calculation</p>
+            {/* <NavLink to="/cost">
+              <p className="text-xl mb-3 font-light">Cost Calculation</p>
+            </NavLink> */}
           </li>
-          <li>
+          {/* <li>
             <p className="text-xl mb-3 font-light">Statement</p>
+          </li> */}
+          <li>
+            <NavLink to="/login">
+              <p className="text-xl mb-3 font-light">Login</p>
+            </NavLink>
           </li>
           <li>
             <NavLink to="/">

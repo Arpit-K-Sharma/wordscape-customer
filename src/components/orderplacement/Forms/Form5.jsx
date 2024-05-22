@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
-  const { name, companyName, email, address } = orderData;
+  const {  companyName, remarks, address } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -12,22 +12,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           Fill in the details and confirm your order!
         </p>
         <br />
-        <div className="grid grid-cols-2 max-sm:flex max-sm:flex-col">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text-alt">What is your name?</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Name"
-              className="input input-bordered w-full max-w-xs"
-              value={name}
-              onChange={(e) =>
-                setOrderData({ ...orderData, name: e.target.value })
-              }
-            />
-            <div className="label"></div>
-          </label>
+        <div className="grid  gap-[15px] grid-cols-2 max-sm:flex max-sm:flex-col">
 
           <label className="form-control w-full max-w-xs lg:ml-[20px]">
             <div className="label">
@@ -46,23 +31,6 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             />
             <div className="label"></div>
           </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text-alt">What is your email?</span>
-            </div>
-            <input
-              type="email"
-              placeholder="Email"
-              className="input input-bordered w-full max-w-xs"
-              value={email}
-              onChange={(e) =>
-                setOrderData({ ...orderData, email: e.target.value })
-              }
-            />
-
-            <div className="label"></div>
-          </label>
-
           <label className="form-control w-full max-w-xs lg:ml-[20px]">
             <div className="label">
               <span className="label-text-alt">
@@ -79,8 +47,24 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               }
             />
             <div className="label"></div>
-            <br />
           </label>
+          <label className="form-control w-full max-w-xs ml-[20px] mb-[10px]">
+            <div className="label">
+              <span className="label-text-alt">Remarks</span>
+            </div>
+            <input
+              type="text"
+              placeholder="Remarks"
+              className="input input-bordered w-full max-w-xs"
+              value={remarks}
+              onChange={(e) =>
+                setOrderData({ ...orderData, remarks: e.target.value })
+              }
+            />
+            <div className="label"></div>
+          </label>
+
+
         </div>
         <h1 className="text-m font-bold">
           Upload the PDF file for Printing here

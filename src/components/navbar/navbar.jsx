@@ -2,10 +2,11 @@ import React from "react";
 import config from "../../../config.json";
 import { NavLink } from "react-router-dom";
 import logo from "../images/logo/LogoOnly.png";
+import { GoArrowUpRight } from "react-icons/go";
 
 function Navbar() {
   return (
-    <div className="navbar bg-zinc-900 max-lg:hidden text-white">
+    <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">
       <div className="navbar-start ml-5">
         <NavLink to="/">
           <img
@@ -39,7 +40,9 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
-              <a>Statement</a>
+              <NavLink to="/jobcard">
+                <a>JC</a>
+              </NavLink>
             </li>
             <li>
               <a>Settings</a>
@@ -47,7 +50,10 @@ function Navbar() {
           </ul>
         </div>
         <NavLink to="/login">
-          <a className="btn mr-[25px] bg-zinc-500 text-white">Login</a>
+          <a className="mr-[25px]  text-white flex items-center ">
+            Login{" "}
+            <GoArrowUpRight color="white" size="25px" className="flex ml-1" />
+          </a>
         </NavLink>
       </div>
     </div>

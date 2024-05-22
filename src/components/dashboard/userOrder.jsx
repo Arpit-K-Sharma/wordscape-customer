@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import Menu from './menu';
-import { AiOutlineClockCircle, AiOutlineCheckCircle } from 'react-icons/ai';
-import { FaCheckCircle } from 'react-icons/fa';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Menu from "./menu";
+import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
+import { FaCheckCircle } from "react-icons/fa";
+import axios from "axios";
 
 function UserOrder() {
-    const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
-    const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
+    const [startDate, setStartDate] = useState(() => {
+        const currentDate = new Date();
+        const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 30));
+        return pastDate.toISOString().split("T")[0];
+    });
+    const [endDate, setEndDate] = useState(new Date().toISOString().split("T")[0]);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [ordersDetail, setOrdersDetail] = useState([]);
-
-    const orderDetails = {
-        date: "2024-05-16T08:38:01.928+00:00",
-        paperSize: "A4",
-        pages: 100,
-        quantity: 50,
-        bindingType: "Center Stitch",
-        coverTreatmentType: "Die Cutting",
-        innerPaperType: "Art_Paper",
-        innerPaperThickness: 120,
-        outerPaperType: "Art_Board",
-        outerPaperThickness: 200,
-        laminationType: "Normal Glossy",
-        inkType: "CMYK",
-        remarks: "Sample order 1",
-        customerName: "John Doe"
-    };
+    const [orderDetails, setOrderDetails] = useState([]);
+    const [tracking, setTracking] = useState([]);
+    const [pending, setPending] = useState();
+    const [approved, setApproved] = useState();
+    const [completed, setCompleted] = useState();
 
     const handleViewDetails = (order) => {
         setSelectedOrder(order);
@@ -33,117 +24,161 @@ function UserOrder() {
     };
 
     useEffect(() => {
-        const id = localStorage.getItem('id');
+        const id = localStorage.getItem("id");
         console.log(id);
         const fetchOrderDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:8081/orders/customer/${id}`);
-                setOrdersDetail(response.data);
-                console.log(response.data); 
+                setOrderDetails(response.data);
+                const d = response.data;
+                let Pending = 0;
+                let Approved = 0;
+                let Completed = 0;
+                for (let index = 0; index < d.length; index++) {
+                    if (d[index].status === "PENDING") {
+                        Pending++;
+                    } if (d[index].status === "APPROVED") {
+                        Approved++;
+                    } if (d[index].status === "COMPLETED") {
+                        Completed++;
+                    }
+                }
+                setPending(Pending);
+                setApproved(Approved);
+                setCompleted(Completed);
+                console.log(response.data);
             } catch (error) {
-                console.error('Error fetching order details:', error);
+                console.error("Error fetching order details:", error);
             }
         };
 
+
         fetchOrderDetails();
-    }, []); 
+    }, []);
+
+    const handleTracking = (id) => {
+        const tracking = orderDetails.find((order) => order.orderId == id);
+        setTracking(tracking.projectTracking);
+    }
 
     return (
-        <>
+        <div className="font-archivo">
             <Menu />
-            <div className='flex justify-center text-5xl '>
-                <h1>Orders</h1>
+            <div className="flex justify-center gap-5 text-slate-200 mb-9">
+                <h1 className="font-bold text-4xl">Orders Summary</h1>
+                <div className="flex gap-5">
+                    <div className="w-[150px] ml-[420px]">
+                        <label className="input input-bordered flex items-center gap-2">
+                            <input
+                                type="date"
+                                className="grow"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                        </label>
+                    </div>
+                    <div className="w-[150px]">
+                        <label className="input input-bordered flex items-center gap-2">
+                            <input
+                                type="date"
+                                className="grow"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div className='flex justify-center gap-[100px] mt-[20px]'>
-                <div className="card w-[300px] h-[200px] shadow-xl bg-base-200 bg-opacity-40 ">
+            <div className="flex justify-center gap-[100px] mt-[20px]">
+                <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
                     <div className="card-body p-[0.3rem] mt-[10%] mb-5">
-                        <a className='flex justify-center'><AiOutlineClockCircle size={35} color="white" className="ml-2" /></a>
-                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">Pending Orders</h3>
-                        <div className="card-actions justify-center items-center">
-                            <h2 className='text-4xl'>1</h2>
+                        <a className="flex justify-center">
+                            <AiOutlineClockCircle size={35} color="white" className="ml-2" />
+                            <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+                                Pending Orders
+                            </h3>
+                        </a>
+                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">
+                            Waiting to be processed
+                        </h3>
+                        <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
+                            <h2 className="text-4xl text-o1 font-bold">{pending}</h2>
                         </div>
                     </div>
                 </div>
-                <div className="card w-[300px] h-[200px] shadow-xl bg-base-200 bg-opacity-40 ">
+                <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
                     <div className="card-body p-[0.3rem] mt-[10%] mb-5">
-                        <a className='flex justify-center'><AiOutlineCheckCircle size={35} color="white" className="ml-2" /></a>
-                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">Approved Orders</h3>
-                        <div className="card-actions justify-center items-center">
-                            <h2 className='text-4xl'>1</h2>
+                        <a className="flex justify-center">
+                            <AiOutlineCheckCircle size={35} color="white" className="ml-2" />
+                            <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+                                Approved Orders
+                            </h3>
+                        </a>
+                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">
+                            Verification Completed
+                        </h3>
+                        <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
+                            <h2 className="text-4xl text-o1 font-bold">{approved}</h2>
                         </div>
                     </div>
                 </div>
-                <div className="card w-[300px] h-[200px] shadow-xl bg-base-200 bg-opacity-40 ">
-                    <div className="card-body p-[0.3rem] pt-[10px] mt-[10%] mb-5">
-                        <a className='flex justify-center'><FaCheckCircle size={32} color="white" className="ml-2" /></a>
-                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">Completed Orders </h3>
-                        <div className="card-actions justify-center items-center">
-                            <h2 className='text-4xl'>1</h2>
+                <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
+                    <div className="card-body p-[0.3rem] mt-[10%] mb-5">
+                        <a className="flex justify-center">
+                            <FaCheckCircle size={32} color="white" className="ml-2" />
+                            <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+                                Completed Orders
+                            </h3>
+                        </a>
+                        <h3 className="card-title flex justify-center text-[grey] text-[17px]">
+                            Order Finalized
+                        </h3>
+                        <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
+                            <h2 className="text-4xl text-o1 font-bold">{completed}</h2>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='mt-[70px] ml-[13%] flex gap-5'>
-                <div className='w-[200px]'>
-                    <label>From: </label>
-                    <label className="input input-bordered flex items-center gap-2">
-                        <input
-                            type="date"
-                            className="grow"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div className='w-[200px]'>
-                    <label>To: </label>
-                    <label className="input input-bordered flex items-center gap-2">
-                        <input
-                            type="date"
-                            className="grow"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </label>
-                </div>
-            </div>
-            <div className="overflow-y-auto w-[75%] h-[300px] ml-[13%] mt-[10px]">
+            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[30px] shadow-xl rounded-lg">
                 <table className="table">
                     <thead>
-                        <tr className='border border-gray-400 bg-base-200'>
+                        <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
                             <th>Order ID</th>
                             <th>Date</th>
                             <th>Delivery Date</th>
                             <th>Pages</th>
                             <th>Quantity</th>
-                            <th className='w-[200px]'>All Details</th>
+                            <th className="w-[200px]">All Details</th>
+                            <th className="w-[200px]">View Tracking</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2024-05-16</td>
-                            <td>-- --</td>
-                            <td>100</td>
-                            <td>50</td>
-                            <td><button className='btn min-h-[30px] h-[40px]' onClick={() => handleViewDetails(orderDetails)}>View details</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>2023-05-17</td>
-                            <td>-- --</td>
-                            <td>50</td>
-                            <td>30</td>
-                            <td><button className='btn min-h-[30px] h-[40px]'>View details</button></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>2023-05-18</td>
-                            <td>-- --</td>
-                            <td>200</td>
-                            <td>100</td>
-                            <td><button className='btn min-h-[30px] h-[40px]'>View details</button></td>
-                        </tr>
+                    <tbody className="text-semibold">
+                        {orderDetails && orderDetails.map((details) => (
+                            <tr key={details.orderId}>
+                                <td>{details.orderId}</td>
+                                <td>{new Date(details.date).toLocaleDateString()}</td>
+                                <td>{details.delivery ? new Date(details.delivery).toLocaleDateString() : 'N/A'}</td>
+                                <td>{details.pages}</td>
+                                <td>{details.quantity}</td>
+                                <td>
+                                    <button
+                                        className="btn min-h-[30px] h-[40px]"
+                                        onClick={() => handleViewDetails(details)}
+                                    >
+                                        View details
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        className="btn  min-h-[30px] h-[40px]"
+                                        onClick={() => (document.getElementById("my_modal_1").showModal(),
+                                            handleTracking(details.orderId))}
+                                    >
+                                        Track It
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -154,71 +189,94 @@ function UserOrder() {
                     <div className="p-4 w-80 min-h-full bg-base-200 pl-[20px] text-base-content">
                         <h1 className="text-3xl mb-4 mt-5 ">All Details</h1>
                         {selectedOrder && (
-                            <table className="table-auto w-full">
-                                <tbody>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Date</td>
-                                        <td className="w-1/2">{selectedOrder.date}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Paper Size</td>
-                                        <td className="w-1/2">{selectedOrder.paperSize}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Pages</td>
-                                        <td className="w-1/2">{selectedOrder.pages}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Quantity</td>
-                                        <td className="w-1/2">{selectedOrder.quantity}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Binding Type</td>
-                                        <td className="w-1/2">{selectedOrder.bindingType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Cover Treatment Type</td>
-                                        <td className="w-1/2">{selectedOrder.coverTreatmentType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Inner Paper Type</td>
-                                        <td className="w-1/2">{selectedOrder.innerPaperType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Inner Paper Thickness</td>
-                                        <td className="w-1/2">{selectedOrder.innerPaperThickness}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Outer Paper Type</td>
-                                        <td className="w-1/2">{selectedOrder.outerPaperType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Outer Paper Thickness</td>
-                                        <td className="w-1/2">{selectedOrder.outerPaperThickness}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Lamination Type</td>
-                                        <td className="w-1/2">{selectedOrder.laminationType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Ink Type</td>
-                                        <td className="w-1/2">{selectedOrder.inkType}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Remarks</td>
-                                        <td className="w-1/2">{selectedOrder.remarks}</td>
-                                    </tr>
-                                    <tr className="mb-4 text-lg" style={{ height: '50px' }}>
-                                        <td className="w-1/2">Customer Name</td>
-                                        <td className="w-1/2">{selectedOrder.customerName}</td> {/* Corrected property name */}
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <>
+                                <table className="table-auto w-full">
+                                    <tbody>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Date</td>
+                                            <td className="w-1/2">{new Date(selectedOrder.date).toLocaleDateString()}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Paper Size</td>
+                                            <td className="w-1/2">{selectedOrder.paperSize}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Pages</td>
+                                            <td className="w-1/2">{selectedOrder.pages}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Quantity</td>
+                                            <td className="w-1/2">{selectedOrder.quantity}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Binding Type</td>
+                                            <td className="w-1/2">{selectedOrder.binding.bindingType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Cover Treatment Type</td>
+                                            <td className="w-1/2">{selectedOrder.coverTreatment.coverTreatmentType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Inner Paper Type</td>
+                                            <td className="w-1/2">{selectedOrder.innerPaper.paperType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Inner Paper Thickness</td>
+                                            <td className="w-1/2">{selectedOrder.innerPaperThickness}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Outer Paper Type</td>
+                                            <td className="w-1/2">{selectedOrder.outerPaper.paperType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Outer Paper Thickness</td>
+                                            <td className="w-1/2">{selectedOrder.outerPaperThickness}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Lamination Type</td>
+                                            <td className="w-1/2">{selectedOrder.lamination.laminationType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Ink Type</td>
+                                            <td className="w-1/2">{selectedOrder.inkType}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Remarks</td>
+                                            <td className="w-1/2">{selectedOrder.remarks ? selectedOrder.remarks : 'N/A'}</td>
+                                        </tr>
+                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                                            <td className="w-1/2">Customer Name</td>
+                                            <td className="w-1/2">{selectedOrder.customer.fullName}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </>
                         )}
                     </div>
                 </div>
             </div>
-        </>
+            <dialog id="my_modal_1" className="modal">
+                <div className="modal-box overflow-hidden max-w-[900px]">
+                    <div className="">
+                        <ul className="steps w-[900px] mb-[20px]">
+                            <li className={tracking.orderSlip ? "step step-primary" : "step"} data-content={tracking.orderSlip ? "✓" : null}>Order Slip</li>
+                            <li className={tracking.jobCard ? "step step-primary" : "step"} data-content={tracking.jobCard ? "✓" : null}>Job Card</li>
+                            <li className={tracking.paperCutting ? "step step-primary" : "step"} data-content={tracking.paperCutting ? "✓" : null}>Paper Cutting</li>
+                            <li className={tracking.platePreparation ? "step step-primary" : "step"} data-content={tracking.platePreparation ? "✓" : null}>Plate Preparation</li>
+                            <li className={tracking.printing ? "step step-primary" : "step"} data-content={tracking.printing ? "✓" : null}>Printing</li>
+                            <li className={tracking.postPress ? "step step-primary" : "step"} data-content={tracking.postPress ? "✓" : null}>Post Press</li>
+                            <li className={tracking.delivery ? "step step-primary" : "step"} data-content={tracking.delivery ? "✓" : null}>Delivery</li>
+                            <li className={tracking.end ? "step step-primary" : "step"} data-content={tracking.end ? "✓" : null}>End</li>
+                        </ul>
+                    </div>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </div>
     );
 }
 

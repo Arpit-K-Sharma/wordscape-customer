@@ -173,8 +173,10 @@ function OrderPlacement() {
     try {
       // console.log("Test");
       // console.log(orderData);
+      const id = localStorage.getItem('id');
+      console.log(id);
       const response = await axios.post(
-        "http://localhost:8081/orders",
+        `http://localhost:8081/orders/${id}`,
         orderData
       );
       console.log("Order placed successfully", response.data);
