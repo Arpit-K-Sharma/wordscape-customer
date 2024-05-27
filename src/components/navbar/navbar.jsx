@@ -25,7 +25,7 @@ function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
             <li>
-              <NavLink to="/user/dashboard">
+              <NavLink to="/user/orders">
                 <a>Dashboard</a>
               </NavLink>
             </li>

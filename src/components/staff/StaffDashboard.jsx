@@ -1,26 +1,16 @@
 import { NavLink } from "react-router-dom";
-import AdminDrawer from "./menu/AdminDrawer";
-import React, { useState, useEffect, useRef } from "react";
+import StaffDrawer from "./menu/StaffDrawer";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
-import { IoMdTimer } from "react-icons/io";
-import { SlSizeActual } from "react-icons/sl";
-import { SiPowerpages } from "react-icons/si";
-import { RiNumbersFill } from "react-icons/ri";
-import { FaBook } from 'react-icons/fa';
-import { FaCut, FaPaintBrush, FaLayerGroup, FaPrint, FaTint, FaComment, FaUser } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
-import NJobCard from "../newjobcard/njobcard";
 
-function AdminDashboard() {
+function StaffDashboard() {
   const [startDate, setStartDate] = useState(() => {
     const currentDate = new Date();
     const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 30));
     return pastDate.toISOString().split("T")[0];
   });
-  const [filteredOrderDetails, setFilteredOrderDetails] = useState([]);
-  const [filteredOrder, setFilteredOrder] = useState([]);
   const [endDate, setEndDate] = useState(new Date().toISOString().split("T")[0]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderDetails, setOrderDetails] = useState([]);
@@ -39,15 +29,15 @@ function AdminDashboard() {
   ]);
   const [orderid, setOrderid] = useState();
 
-  const handleViewDetails = async (order) => {
+  const handleViewDetails = async(order) => {
     const response = await axios.get(`http://localhost:8081/jobCard/${order}`)
-    setSelectedOrder(response.data);
-    console.log(response.data);
+    console.log(response.data)
+    console.log(order)
+    setSelectedOrder(order);
     document.getElementById("my-drawer-4").checked = true;
   };
-  const dropdownRef = useRef(null);
 
-  const navigate = useNavigate();
+
   useEffect(() => {
     const id = localStorage.getItem("id");
     console.log(id);
@@ -55,8 +45,6 @@ function AdminDashboard() {
       try {
         const response = await axios.get(`http://localhost:8081/orders`);
         setOrderDetails(response.data);
-        setFilteredOrder(response.data);
-        setFilteredOrderDetails(response.data);
 
         const d = response.data;
         let Pending = 0;
@@ -83,15 +71,6 @@ function AdminDashboard() {
 
     fetchOrderDetails();
   }, []);
-
-  const handleInput = (e) => {
-    const value = e.target.value.toLowerCase();
-    const filteredOrders = orderDetails.filter((order) => order.customer.toLowerCase().startsWith(value));
-    setFilteredOrder(filteredOrders);
-    if (dropdownRef.current) {
-      dropdownRef.current.style.display = 'block';
-    }
-  };
 
   const handleTracking = async (id) => {
     console.log(id)
@@ -139,7 +118,6 @@ function AdminDashboard() {
       console.error("Error sending data:", error);
     }
   };
-
   const handleBack = () => {
     setSteps((prevSteps) => {
       const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
@@ -153,31 +131,6 @@ function AdminDashboard() {
       return prevSteps;
     });
   };
-
-  const handleJobCard = (id) => {
-    console.log(id);
-    navigate('/jobcard', { state: { ordersId: id } });
-  };
-  
-
-  const handleOrderChange = (id, customer) => {
-    setSelectedOrder(id);
-
-    if (dropdownRef.current) {
-      dropdownRef.current.style.display = 'none';
-    }
-    const filtered = orderDetails.filter((order) => order.customer == customer);
-    setFilteredOrderDetails(filtered);
-    const filteredOrderWithId = orderDetails.filter((order) => order.orderId === id);
-    if (filteredOrderWithId.length > 0) {
-      const name = filteredOrderWithId[0].customer;
-      document.getElementById('input').value = name;
-    } else {
-      console.log('Order not found');
-    }
-    console.log('ok');
-  };
-
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -275,20 +228,7 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
-            <div className="dropdown xl:ml-[10%] mt-[30px] text-center w-[300px]">
-              <label className="input input-bordered flex items-center gap-2">
-                <input tabIndex={0} type="text" className="grow" placeholder="Search" onChange={handleInput} id="input" />
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-[20px] h-[20px] opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
-              </label>
-              <ul ref={dropdownRef} tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-[230px]" >
-                {filteredOrder.map((order) => (
-                  <li key={order.orderId} onClick={() => handleOrderChange(order.orderId, order.customer)}>
-                    <a>{order.customer}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
+            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[30px] shadow-xl rounded-lg">
               <table className="table">
                 <thead>
                   <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
@@ -297,13 +237,12 @@ function AdminDashboard() {
                     <th>Delivery Date</th>
                     <th>Pages</th>
                     <th>Quantity</th>
-                    <th className="w-[200px]">OrderDetails</th>
-                    <th className="w-[200px]">Job Card</th>
+                    <th className="w-[200px]">All Details</th>
                     <th className="w-[200px]">View Tracking</th>
                   </tr>
                 </thead>
                 <tbody className="text-semibold">
-                  {filteredOrderDetails && filteredOrderDetails.map((details) => (
+                  {orderDetails && orderDetails.map((details) => (
                     <tr key={details.orderId}>
                       <td>{details.orderId}</td>
                       <td>{new Date(details.date).toLocaleDateString()}</td>
@@ -316,14 +255,6 @@ function AdminDashboard() {
                           onClick={() => handleViewDetails(details.orderId)}
                         >
                           View details
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="btn min-h-[30px] h-[40px]"
-                          onClick={(e) => handleJobCard(details.orderId)}
-                        >
-                          Job card
                         </button>
                       </td>
                       <td>
@@ -342,83 +273,79 @@ function AdminDashboard() {
                 </tbody>
               </table>
             </div>
-            <div className="drawer drawer-end ">
+            <div className="drawer drawer-end">
               <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
               <div className="drawer-side">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-                <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%]  ">
-                  <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">Order Details</h1>
+                <div className="p-4 w-80 min-h-full bg-base-200 pl-[20px] text-base-content">
+                  <h1 className="text-3xl mb-4 mt-5 ">All Details</h1>
                   {selectedOrder && (
                     <>
-                      <div className="shadow-2xl bg-base-200">
-                        <table className="table-auto w-full ml-[20px]">
-                          <tbody>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><IoMdTimer className="text-blue-500" size={30} />Date</td>
-                              <td className="w-1/2">{new Date(selectedOrder.date).toLocaleDateString()}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><SlSizeActual className="text-green-500" />Paper Size</td>
-                              <td className="w-1/2">{selectedOrder.paperSize}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><SiPowerpages className="text-yellow-500" /> Pages</td>
-                              <td className="w-1/2">{selectedOrder.pages}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><RiNumbersFill className="text-red-500" />Quantity</td>
-                              <td className="w-1/2">{selectedOrder.quantity}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaBook className="text-purple-500" />Binding Type</td>
-                              <td className="w-1/2">{selectedOrder.binding?.bindingType || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaCut className="text-blue-500" />Cover Treatment Type</td>
-                              <td className="w-1/2">{selectedOrder.coverTreatment?.coverTreatmentType || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPaintBrush className="text-green-500" />Inner Paper Type</td>
-                              <td className="w-1/2">{selectedOrder.innerPaper?.paperType || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaLayerGroup className="text-yellow-500" />Inner Paper Thickness</td>
-                              <td className="w-1/2">{selectedOrder.innerPaperThickness || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPaintBrush className="text-green-500" />Outer Paper Type</td>
-                              <td className="w-1/2">{selectedOrder.outerPaper?.paperType || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaLayerGroup className="text-yellow-500" />Outer Paper Thickness</td>
-                              <td className="w-1/2">{selectedOrder.outerPaperThickness || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPrint className="text-red-500" />Lamination Type</td>
-                              <td className="w-1/2">{selectedOrder.lamination?.laminationType || 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaTint className="text-blue-500" />Ink Type</td>
-                              <td className="w-1/2">{selectedOrder.inkType}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaComment className="text-purple-500" />Remarks</td>
-                              <td className="w-1/2">{selectedOrder.remarks ? selectedOrder.remarks : 'N/A'}</td>
-                            </tr>
-                            <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaUser className="text-yellow-500" />Customer Name</td>
-                              <td className="w-1/2">{selectedOrder.customer?.fullName || 'N/A'}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                      <table className="table-auto w-full">
+                        <tbody>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Date</td>
+                            <td className="w-1/2">{new Date(selectedOrder.date).toLocaleDateString()}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Paper Size</td>
+                            <td className="w-1/2">{selectedOrder.paperSize}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Pages</td>
+                            <td className="w-1/2">{selectedOrder.pages}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Quantity</td>
+                            <td className="w-1/2">{selectedOrder.quantity}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Binding Type</td>
+                            <td className="w-1/2">{selectedOrder.bindingType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Cover Treatment Type</td>
+                            <td className="w-1/2">{selectedOrder.coverTreatmentType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Inner Paper Type</td>
+                            <td className="w-1/2">{selectedOrder.innerPaperType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Inner Paper Thickness</td>
+                            <td className="w-1/2">{selectedOrder.innerPaperThickness}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Outer Paper Type</td>
+                            <td className="w-1/2">{selectedOrder.outerPaperType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Outer Paper Thickness</td>
+                            <td className="w-1/2">{selectedOrder.outerPaperThickness}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Lamination Type</td>
+                            <td className="w-1/2">{selectedOrder.laminationType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Ink Type</td>
+                            <td className="w-1/2">{selectedOrder.inkType}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Remarks</td>
+                            <td className="w-1/2">{selectedOrder.remarks ? selectedOrder.remarks : 'N/A'}</td>
+                          </tr>
+                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <td className="w-1/2">Customer Name</td>
+                            <td className="w-1/2">{selectedOrder.customer}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </>
                   )}
-
                 </div>
               </div>
             </div>
-
             <dialog id="my_modal_1" className="modal">
               <div className="modal-box overflow-hidden max-w-[64%]">
                 <div className="">
@@ -430,32 +357,30 @@ function AdminDashboard() {
                     ))}
                   </ul>
                 </div>
-                <div className="flex gap-[67%]">
-                  <div className="flex gap-[20px] justify-end">
-                    <button className="btn" onClick={handleBack}>
-                      Back
-                    </button>
-                    <button className="btn" onClick={handleNext}>
-                      Next
-                    </button>
-                  </div>
-                  <div className="modal-action">
-                    <form method="dialog">
-                      <div className="flex justify-end gap-[15px] mt-[-24px] ">
-                        <button className="btn">Close</button>
-                        <button className="btn" onClick={handleDone}>Done</button>
-                      </div>
-                    </form>
-                  </div>
+                <div className="flex gap-[20px] justify-end">
+                  <button className="btn" onClick={handleBack}>
+                    Back
+                  </button>
+                  <button className="btn" onClick={handleNext}>
+                    Next
+                  </button>
+                </div>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <div className="flex justify-end gap-[15px]">
+                      <button className="btn">Close</button>
+                      <button className="btn" onClick={handleDone}>Done</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </dialog>
           </div>
         </div>
       </div>
-      <AdminDrawer />
+      <StaffDrawer />
     </div>
   );
 }
 
-export default AdminDashboard;
+export default StaffDashboard;

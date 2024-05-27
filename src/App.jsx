@@ -18,7 +18,6 @@ import Lamination from "./components/admin/menu/lamination/lamination";
 import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/costcalculation/costcalculation";
 import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder";
-import UserDashboard from "./components/dashboard/UserDashboard";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
 import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
@@ -29,6 +28,16 @@ import Profile from "./components/dashboard/profile.jsx";
 import CoverTreatment from "./components/admin/menu/covertreatment/covertreatment.jsx";
 import UserOrder from "./components/dashboard/userOrder.jsx";
 import OrderDetails from "./components/dashboard/orderDetail.jsx";
+import StaffDashboard from "./components/staff/StaffDashboard.jsx";
+import StaffPaper from "./components/staff/menu/paper/paper.jsx";
+import StaffPaperSize from "./components/staff/menu/papersize/papersize.jsx";
+import StaffPaperThickness from "./components/staff/menu/paperthickness/paperthickness.jsx";
+import StaffBinding from "./components/staff/menu/binding/binding.jsx";
+import StaffLamination from "./components/staff/menu/lamination/lamination.jsx";
+import StaffCoverTreatment from "./components/staff/menu/covertreatment/covertreatment.jsx";
+import StaffPlate from "./components/staff/menu/plate/plate.jsx";
+import StaffCustomer from "./components/staff/menu/customer/customer.jsx";
+import StaffOrders from "./components/staff/menu/order/order.jsx";
 
 function App() {
   return (
@@ -64,11 +73,21 @@ function App() {
         <Route path="/admin/covertreatment" element={<CoverTreatment />} />
         <Route path="/admin/plate" element={<Plate />} />
         <Route path="/admin/orders" element={<Orders />} />
-        <Route path="/user/dashboard" element={<UserDashboard />} />
         <Route path="/user/orders" element={<UserOrder />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user/edit" element={<Profile />} />
         <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
+        <Route path="/staff/dashboard" element={<StaffDashboard />} />
+        <Route path="/staff/paper" element={<StaffPaper/>} />
+        <Route path="/staff/papersize" element={<StaffPaperSize />} />
+        <Route path="/staff/paperthickness" element={<StaffPaperThickness />} />
+        <Route path="/staff/binding" element={<StaffBinding />} />
+        <Route path="/staff/lamination" element={<StaffLamination />} />
+        <Route path="/staff/covertreatment" element={<StaffCoverTreatment />} />
+        <Route path="/staff/plate" element={<StaffPlate />} />
+        <Route path="/staff/customer" element={<StaffCustomer />} />
+        <Route path="/staff/orders" element={<StaffOrders />} />
+
       </Routes>
     </BrowserRouter>
   );

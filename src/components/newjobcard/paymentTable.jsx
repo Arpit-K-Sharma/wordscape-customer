@@ -4,10 +4,8 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function PaymentTable({ setCombinedData }) {
+function PaymentTable({ }) {
   const [paymentdone, setPaymentdone] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [serviceRequired, setServiceRequired] = useState("");
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -19,17 +17,17 @@ function PaymentTable({ setCombinedData }) {
   });
 
   const onSubmit = (data) => {
-    console.log(data); // Log the form data to verify it's what you expect
+    console.log(data); 
     const jsonData = {
       servicePaymentList: {
-        paymentMethod: data.servicePaymentList.paymentWay, // Corrected field access
-        serviceRequired: data.servicePaymentList.serviceRequired, // Corrected field access
+        paymentMethod: data.servicePaymentList.paymentWay, 
+        serviceRequired: data.servicePaymentList.serviceRequired, 
       },
     };
     console.log("json data from payment table jsx: ", jsonData);
     Cookies.set("paymentData", JSON.stringify(jsonData));
     setPaymentdone(!paymentdone);
-    setCombinedData(jsonData);
+    // setCombinedData(jsonData);
     document.getElementById("my_modal_5").close();
   };
 

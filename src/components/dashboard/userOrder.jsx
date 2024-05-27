@@ -3,6 +3,12 @@ import Menu from "./menu";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
+import { IoMdTimer } from "react-icons/io";
+import { SlSizeActual } from "react-icons/sl";
+import { SiPowerpages } from "react-icons/si";
+import { RiNumbersFill } from "react-icons/ri";
+import { FaBook } from 'react-icons/fa';
+import { FaCut, FaPaintBrush, FaLayerGroup, FaPrint, FaTint, FaComment, FaUser } from 'react-icons/fa';
 
 function UserOrder() {
     const [startDate, setStartDate] = useState(() => {
@@ -182,74 +188,76 @@ function UserOrder() {
                     </tbody>
                 </table>
             </div>
-            <div className="drawer drawer-end">
+            <div className="drawer drawer-end ">
                 <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-                    <div className="p-4 w-80 min-h-full bg-base-200 pl-[20px] text-base-content">
-                        <h1 className="text-3xl mb-4 mt-5 ">All Details</h1>
+                    <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%]  ">
+                        <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">All Details</h1>
                         {selectedOrder && (
                             <>
-                                <table className="table-auto w-full">
+                            <div className="shadow-2xl bg-base-200"> 
+                                <table className="table-auto w-full ml-[20px]">
                                     <tbody>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Date</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><IoMdTimer className="text-blue-500" size={30}/>Date</td>
                                             <td className="w-1/2">{new Date(selectedOrder.date).toLocaleDateString()}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Paper Size</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><SlSizeActual className="text-green-500"/>Paper Size</td>
                                             <td className="w-1/2">{selectedOrder.paperSize}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Pages</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><SiPowerpages className="text-yellow-500"/> Pages</td>
                                             <td className="w-1/2">{selectedOrder.pages}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Quantity</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><RiNumbersFill className="text-red-500" />Quantity</td>
                                             <td className="w-1/2">{selectedOrder.quantity}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Binding Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaBook className="text-purple-500"/>Binding Type</td>
                                             <td className="w-1/2">{selectedOrder.binding.bindingType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Cover Treatment Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaCut className="text-blue-500" />Cover Treatment Type</td>
                                             <td className="w-1/2">{selectedOrder.coverTreatment.coverTreatmentType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Inner Paper Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPaintBrush className="text-green-500"/>Inner Paper Type</td>
                                             <td className="w-1/2">{selectedOrder.innerPaper.paperType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Inner Paper Thickness</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaLayerGroup className="text-yellow-500"/>Inner Paper Thickness</td>
                                             <td className="w-1/2">{selectedOrder.innerPaperThickness}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Outer Paper Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPaintBrush className="text-green-500" />Outer Paper Type</td>
                                             <td className="w-1/2">{selectedOrder.outerPaper.paperType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Outer Paper Thickness</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaLayerGroup className="text-yellow-500"/>Outer Paper Thickness</td>
                                             <td className="w-1/2">{selectedOrder.outerPaperThickness}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Lamination Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaPrint className="text-red-500"/>Lamination Type</td>
                                             <td className="w-1/2">{selectedOrder.lamination.laminationType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Ink Type</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaTint className="text-blue-500"/>Ink Type</td>
                                             <td className="w-1/2">{selectedOrder.inkType}</td>
                                         </tr>
-                                        <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Remarks</td>
+                                        <tr className="mb-4 text-lg border-b-[0.5px] border-[#303031]" style={{ height: "50px" }}>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaComment className="text-purple-500"/>Remarks</td>
                                             <td className="w-1/2">{selectedOrder.remarks ? selectedOrder.remarks : 'N/A'}</td>
                                         </tr>
                                         <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                                            <td className="w-1/2">Customer Name</td>
+                                            <td className="w-[100%] flex items-center gap-[10px] mt-[9px]"><FaUser className="text-yellow-500"/>Customer Name</td>
                                             <td className="w-1/2">{selectedOrder.customer.fullName}</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </>
                         )}
                     </div>
