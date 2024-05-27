@@ -40,6 +40,27 @@ function PressUnits() {
     console.log("Press Units Data: ", jsonData);
     document.getElementById("my_modal_12").close();
     setPressunit(true);
+
+    let PaperUnitsData = Cookies.get('PaperUnitsData')
+    let binderyData = Cookies.get('binderyData')
+    let deliveryData = Cookies.get('deliveryData')
+    let paperData = Cookies.get('paperData')
+    let paymentData = Cookies.get('paymentData')
+    let plateDetailData = Cookies.get('plateData')
+    let prePressData = Cookies.get('prePressData')
+    let pressUnitData = Cookies.get('pressUnitData')
+
+    let cookiesData = {
+      paperData : PaperUnitsData.paperData,
+      binderyData : binderyData.binderyData,
+      deliveryDetail : deliveryData.deliveryDetail,
+      paperDetail: paperData.paperDetail,
+      servicePaymentList: paymentData.servicePaymentList,
+      plateDetailData,
+      prePressData,
+      pressUnitData
+    };
+    console.log(cookiesData)
   };
 
   const handleKeyPress = (event) => {

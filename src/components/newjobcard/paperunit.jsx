@@ -7,7 +7,7 @@ function PaperUnit() {
   const [paperunitdone, setPaperunitdone] = useState(false);
   const { handleSubmit, control, getValues, reset } = useForm({
     defaultValues: {
-      paperData: {
+      paperData0: {
         readyBy: "",
         date: "",
         time: "",
@@ -37,8 +37,10 @@ function PaperUnit() {
       ]
     }
   });
-
   const onSubmit = async (data) => {
+    console.log("Form Data:", data);
+
+
     setPaperunitdone(true);
     const replaceEmptyWithNull = (obj) => {
       Object.keys(obj).forEach(key => {
@@ -48,15 +50,26 @@ function PaperUnit() {
       });
     };
 
-    replaceEmptyWithNull(data.paperData);
+    replaceEmptyWithNull(data.paperData0);
     data.papersData1.forEach(replaceEmptyWithNull);
     data.papersData2.forEach(replaceEmptyWithNull);
     data.papersData3.forEach(replaceEmptyWithNull);
     console.log(data);
-    
+    // Access form data in onSubmit
+    let papersData = {
+      paperData: {
+        paperData0: data.paperData0,
+        papersData1: data.papersData1,
+        papersData2: data.papersData2,
+        papersData3: data.papersData3,
+      }
+    }
+    console.log("Papers Data:", papersData);
+    Cookies.set("PaperUnitsData", papersData)
+
     document.getElementById("my_modal_10").close();
   };
-  
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -68,7 +81,6 @@ function PaperUnit() {
       }
     }
   };
-
   return (
     <>
       <button
@@ -76,7 +88,7 @@ function PaperUnit() {
         onClick={() => document.getElementById("my_modal_10").showModal()}
       >
         <a className="flex"> Paper Unit </a>
- {paperunitdone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
+        {paperunitdone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
       <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%] bg-[#1c2127]">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none bg-[#1c2127] overflow-y-scroll ">
@@ -223,7 +235,7 @@ function PaperUnit() {
               <div>
                 <label>Paper Ready By: </label> <br />
                 <Controller
-                  name="paperData.readyBy"
+                  name="paperData0.readyBy"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -238,7 +250,7 @@ function PaperUnit() {
               <div className="ml-[10px]">
                 <label>Date: </label><br />
                 <Controller
-                  name="paperData.date"
+                  name="paperData0.date"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -253,7 +265,7 @@ function PaperUnit() {
               <div className="ml-[10px]">
                 <label>Time: </label><br />
                 <Controller
-                  name="paperData.time"
+                  name="paperData0.time"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -270,7 +282,7 @@ function PaperUnit() {
               <div>
                 <label>Type: </label> <br />
                 <Controller
-                  name="paperData.type"
+                  name="paperData0.type"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -285,7 +297,7 @@ function PaperUnit() {
               <div className="ml-[10px]">
                 <label>Size: </label> <br />
                 <Controller
-                  name="paperData.size"
+                  name="paperData0.size"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -300,7 +312,7 @@ function PaperUnit() {
               <div className="ml-[10px]">
                 <label>Number Of Page: </label> <br />
                 <Controller
-                  name="paperData.numberOfPages"
+                  name="paperData0.numberOfPages"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -317,7 +329,7 @@ function PaperUnit() {
               <div>
                 <label>Printrun: </label> <br />
                 <Controller
-                  name="paperData.printrun"
+                  name="paperData0.printrun"
                   control={control}
                   render={({ field }) => (
                     <input
@@ -333,7 +345,7 @@ function PaperUnit() {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <Controller
-                      name="paperData.side"
+                      name="paperData0.side"
                       control={control}
                       render={({ field }) => (
                         <>
@@ -352,7 +364,7 @@ function PaperUnit() {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <Controller
-                      name="paperData.side"
+                      name="paperData0.side"
                       control={control}
                       render={({ field }) => (
                         <>
