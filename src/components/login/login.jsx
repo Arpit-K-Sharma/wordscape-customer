@@ -32,7 +32,7 @@ function Login() {
 
       if (response.data && response.data.token) {
         const token = response.data.token;
-        Cookies.set("token", token, { expires: 7 });
+        Cookies.set("userToken", token, { expires: 7 });
 
         try {
           const decoded = jwtDecode(token);

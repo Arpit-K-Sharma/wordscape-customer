@@ -8,6 +8,7 @@ import DrawerTest from "./drawertest";
 import Navbar from "../navbar/navbar";
 import PaperThickness from "../admin/menu/paperthickness/paperthickness";
 import MobileMenu from "../navbar/mobile-menu";
+import AdminDrawer from "../admin/menu/AdminDrawer";
 
 const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);
@@ -528,8 +529,9 @@ const CostCalculation = () => {
 
   return (
     <>
-      <Navbar />
       {/* <MobileMenu /> */}
+      <Navbar />
+      <AdminDrawer />
       <div className="cost-calc-container bg-zinc-800">
         <div className="empty-box">
           <div className="test-box">
@@ -539,6 +541,7 @@ const CostCalculation = () => {
                 <b>Cost</b> Calculator
               </h1>
               <br></br>
+
               {console.log("PAPER SIZE TEST: " + paperSize)}
               <DrawerTest
                 // inkCost={inkCost}

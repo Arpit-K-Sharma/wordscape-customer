@@ -11,13 +11,13 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    Cookies.remove("token");
+    Cookies.remove("userToken");
     Cookies.remove("adminToken");
     localStorage.removeItem("id");
     navigate("/");
   };
 
-  const isLoggedIn = Cookies.get("token") !== undefined;
+  const isLoggedIn = Cookies.get("userToken") !== undefined;
 
   return (
     <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">
