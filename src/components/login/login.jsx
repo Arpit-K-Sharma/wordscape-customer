@@ -93,7 +93,7 @@ function Login() {
 
       if (response.data && response.data.token) {
         const token = response.data.token;
-        Cookies.set("token", token, { expires: 7 });
+        Cookies.set("adminToken", token, { expires: 7 }); // Save admin token with a different name
 
         try {
           const decoded = jwtDecode(token);

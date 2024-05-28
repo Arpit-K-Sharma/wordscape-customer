@@ -1,8 +1,45 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/logo/LogoOnly.png";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 function AdminDrawer() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      Cookies.remove("adminToken"); // Remove admin token
+      localStorage.removeItem("id");
+      setLoggedIn(false);
+      setIsAdmin(false);
+      toast.success("Logged Out Successfully", {
+        position: "top-right",
+        autoClose: 2000, // Show for 2 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Logout Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <div className="drawer-side font-archivo z-10">
       <label
@@ -131,9 +168,9 @@ function AdminDrawer() {
         <div className="mb-[130px]"></div>
 
         <li className="bg-gray-900 text-white rounded-lg">
-          <NavLink to="/">
+          <NavLink to="/" onClick={handleLogout}>
             <p className="text-xl mb-3 font-light top-[50px] ml-[34px]">
-              Home Page
+              Logout
             </p>
           </NavLink>
         </li>

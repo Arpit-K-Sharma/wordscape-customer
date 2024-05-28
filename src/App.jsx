@@ -51,34 +51,38 @@ function App() {
         <Route path="/cost" element={<CostCalculation />} />
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
-        <Route element={<ProtectedRoutes />} >
+        <Route element={<ProtectedRoutes />}>
           <Route path="/jobcard" element={<NJobCard />} />
         </Route>
-
 
         <Route path="/order/:step" element={<OrderPlacement />} />
         {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
         <Route path="/order/3" element={<OrderPlacementThird />} />
         <Route path="/order/4" element={<OrderPlacementFourth />} />
         <Route path="/order/5" element={<OrderPlacementFifth />} /> */}
+
         <Route path="/login/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/customer" element={<AdminCustomer />} />
-        <Route path="/admin/paper" element={<Paper />} />
-        <Route path="/admin/papersize" element={<PaperSize />} />
-        <Route path="/admin/paperthickness" element={<PaperThickness />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/binding" element={<Binding />} />
-        <Route path="/admin/lamination" element={<Lamination />} />
-        <Route path="/admin/covertreatment" element={<CoverTreatment />} />
-        <Route path="/admin/plate" element={<Plate />} />
-        <Route path="/admin/orders" element={<Orders />} />
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/customer" element={<AdminCustomer />} />
+          <Route path="/admin/paper" element={<Paper />} />
+          <Route path="/admin/papersize" element={<PaperSize />} />
+          <Route path="/admin/paperthickness" element={<PaperThickness />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/binding" element={<Binding />} />
+          <Route path="/admin/lamination" element={<Lamination />} />
+          <Route path="/admin/covertreatment" element={<CoverTreatment />} />
+          <Route path="/admin/plate" element={<Plate />} />
+          <Route path="/admin/orders" element={<Orders />} />
+        </Route>
+
         <Route path="/user/orders" element={<UserOrder />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user/edit" element={<Profile />} />
         <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
         <Route path="/staff/dashboard" element={<StaffDashboard />} />
-        <Route path="/staff/paper" element={<StaffPaper/>} />
+        <Route path="/staff/paper" element={<StaffPaper />} />
         <Route path="/staff/papersize" element={<StaffPaperSize />} />
         <Route path="/staff/paperthickness" element={<StaffPaperThickness />} />
         <Route path="/staff/binding" element={<StaffBinding />} />
@@ -87,7 +91,6 @@ function App() {
         <Route path="/staff/plate" element={<StaffPlate />} />
         <Route path="/staff/customer" element={<StaffCustomer />} />
         <Route path="/staff/orders" element={<StaffOrders />} />
-
       </Routes>
     </BrowserRouter>
   );

@@ -12,6 +12,7 @@ function Navbar() {
 
   const handleLogout = () => {
     Cookies.remove("token");
+    Cookies.remove("adminToken");
     localStorage.removeItem("id");
     navigate("/");
   };
@@ -47,7 +48,7 @@ function Navbar() {
             {isLoggedIn && (
               <li>
                 <NavLink to="/order/1">
-                  <a>Place and order</a>
+                  <a>Place an order</a>
                 </NavLink>
               </li>
             )}
