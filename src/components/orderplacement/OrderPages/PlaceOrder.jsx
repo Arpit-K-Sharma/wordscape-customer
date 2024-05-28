@@ -185,6 +185,20 @@ function OrderPlacement() {
     }
   };
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     // console.log("Test");
+  //     // console.log(orderData);
+  //     const response = await axios.post(
+  //       "http://localhost:8081/orders",
+  //       orderData
+  //     );
+  //     console.log("Order placed successfully", response.data);
+  //   } catch (error) {
+  //     console.error("Error placing order", error);
+  //   }
+  // };
+
   return (
     <div>
       <Progress step={step} />

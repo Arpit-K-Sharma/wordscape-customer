@@ -6,10 +6,14 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../navbar/navbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Navigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,6 +39,19 @@ function Login() {
           if (decoded.id) {
             console.log("id:", decoded.id);
             localStorage.setItem("id", decoded.id);
+            toast.success("Signed In Successfully", {
+              position: "top-right",
+              autoClose: 2000, // Show for 2 seconds
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              setLoggedIn(true);
+            }, 2000); // Navigate after 2 seconds
           } else {
             console.error("Error: Username not found in the token");
           }
@@ -46,8 +63,23 @@ function Login() {
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
+
+  if (loggedIn) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <>
       <Navbar />
@@ -116,6 +148,7 @@ function Login() {
             </div>
           </form>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

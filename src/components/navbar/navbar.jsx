@@ -1,10 +1,33 @@
 import React from "react";
 import config from "../../../config.json";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../images/logo/LogoOnly.png";
 import { GoArrowUpRight } from "react-icons/go";
+import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    localStorage.removeItem("id");
+    // toast.success("You have signed out", {
+    //   position: "top-right",
+    //   autoClose: 3000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "light",
+    // });
+    navigate("/");
+  };
+
+  const isLoggedIn = Cookies.get("token") !== undefined;
+
   return (
     <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">
       <div className="navbar-start ml-5">
@@ -49,13 +72,24 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <NavLink to="/login">
-          <a className="mr-[25px]  text-white flex items-center ">
-            Login{" "}
+        {isLoggedIn ? (
+          <a
+            className="mr-[25px] text-white flex items-center cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout{" "}
             <GoArrowUpRight color="white" size="25px" className="flex ml-1" />
           </a>
-        </NavLink>
+        ) : (
+          <NavLink to="/login">
+            <a className="mr-[25px] text-white flex items-center ">
+              Login{" "}
+              <GoArrowUpRight color="white" size="25px" className="flex ml-1" />
+            </a>
+          </NavLink>
+        )}
       </div>
+      <ToastContainer />
     </div>
   );
 }
