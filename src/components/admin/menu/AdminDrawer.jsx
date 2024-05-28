@@ -11,7 +11,7 @@ function AdminDrawer() {
 
   const handleLogout = async () => {
     try {
-      Cookies.remove("adminToken"); // Remove admin token
+      Cookies.remove("adminToken");
       localStorage.removeItem("id");
       setLoggedIn(false);
       setIsAdmin(false);
