@@ -13,16 +13,6 @@ function Navbar() {
   const handleLogout = () => {
     Cookies.remove("token");
     localStorage.removeItem("id");
-    // toast.success("You have signed out", {
-    //   position: "top-right",
-    //   autoClose: 3000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    // });
     navigate("/");
   };
 
@@ -47,29 +37,20 @@ function Navbar() {
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
-            <li>
-              <NavLink to="/user/orders">
-                <a>Dashboard</a>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/order/1">
-                <a>Place an order</a>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/cost">
-                <a>Cost calculation</a>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/jobcard">
-                <a>JC</a>
-              </NavLink>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
+            {isLoggedIn && (
+              <li>
+                <NavLink to="/user/orders">
+                  <a>Dashboard</a>
+                </NavLink>
+              </li>
+            )}
+            {isLoggedIn && (
+              <li>
+                <NavLink to="/order/1">
+                  <a>Place and order</a>
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
         {isLoggedIn ? (

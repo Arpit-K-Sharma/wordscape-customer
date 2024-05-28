@@ -36,7 +36,7 @@ function UserDrawer() {
         <br></br>
         <li>
           <NavLink to="/">
-            <p className="text-xl mb-3 font-bold top-[50px]">Logout</p>
+            <p className="text-xl mb-3 font-bold top-[50px]">Home Page</p>
           </NavLink>
         </li>
       </ul>

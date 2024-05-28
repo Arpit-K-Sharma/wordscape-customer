@@ -13,7 +13,9 @@ import { Navigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("ROLE_CUSTOMER");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,7 +24,129 @@ function Login() {
       const data = {
         email: email,
         password: password,
-        role: "ROLE_CUSTOMER",
+        role: role,
+      };
+      console.log("Request Data:", data);
+      const response = await axios.post(url, data);
+      console.log("Response Data:", response.data);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        Cookies.set("token", token, { expires: 7 });
+
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Decoded Token:", decoded);
+
+          if (decoded.id) {
+            console.log("id:", decoded.id);
+            localStorage.setItem("id", decoded.id);
+            toast.success("Signed In Successfully", {
+              position: "top-right",
+              autoClose: 2000, // Show for 2 seconds
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              setLoggedIn(true);
+            }, 2000); // Navigate after 2 seconds
+          } else {
+            console.error("Error: Username not found in the token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+      } else {
+        console.error("Error: No token found in the response");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleAdminLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8081/home/login";
+      const data = {
+        email: email,
+        password: password,
+        role: "ROLE_ADMIN",
+      };
+      console.log("Request Data:", data);
+      const response = await axios.post(url, data);
+      console.log("Response Data:", response.data);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        Cookies.set("token", token, { expires: 7 });
+
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Decoded Token:", decoded);
+
+          if (decoded.id) {
+            console.log("id:", decoded.id);
+            localStorage.setItem("id", decoded.id);
+            toast.success("Signed In Successfully", {
+              position: "top-right",
+              autoClose: 2000, // Show for 2 seconds
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              setIsAdmin(true); // Set isAdmin to true for admin login
+            }, 2000); // Navigate after 2 seconds
+          } else {
+            console.error("Error: Username not found in the token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+      } else {
+        console.error("Error: No token found in the response");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleEmployeeLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8081/home/login";
+      const data = {
+        email: email,
+        password: password,
+        role: "ROLE_USER",
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);
@@ -80,6 +204,10 @@ function Login() {
     return <Navigate to="/" />;
   }
 
+  if (isAdmin) {
+    return <Navigate to="/admin/dashboard" />;
+  }
+
   return (
     <>
       <Navbar />
@@ -124,6 +252,22 @@ function Login() {
                 }}
               />
             </div>
+            <div>
+              <label className="label">
+                <span className="text-base label-text">Role</span>
+              </label>
+              <select
+                className="w-full select select-bordered bg-slate-100 text-zinc-900"
+                value={role}
+                onChange={(e) => {
+                  setRole(e.target.value);
+                }}
+              >
+                <option value="ROLE_CUSTOMER">Customer</option>
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_USER">Employee</option>
+              </select>
+            </div>
             <a
               href="#"
               className="text-xs text-gray-600 hover:underline hover:text-blue-600"
@@ -131,12 +275,28 @@ function Login() {
               Forget Password?
             </a>
             <div className="flex flex-col">
-              <button
-                className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600"
-                onClick={handleLogin}
-              >
-                Login
-              </button>
+              {role === "ROLE_ADMIN" ? (
+                <button
+                  className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600"
+                  onClick={handleAdminLogin}
+                >
+                  Login as Admin
+                </button>
+              ) : role === "ROLE_USER" ? (
+                <button
+                  className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600"
+                  onClick={handleEmployeeLogin}
+                >
+                  Login as Employee
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600"
+                  onClick={handleLogin}
+                >
+                  Login
+                </button>
+              )}
               <div className="flex flex-col w-full">
                 <div className="divider font-semibold">OR</div>
               </div>
