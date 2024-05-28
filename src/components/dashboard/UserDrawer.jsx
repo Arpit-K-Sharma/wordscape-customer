@@ -1,8 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from ".././images/logo/LogoOnly.png";
+import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 function UserDrawer() {
+  const [logout, isLogout] = React.useState(false);
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    Cookies.remove("adminToken");
+    localStorage.removeItem("id");
+    isLogout(true);
+  };
+
+  if (logout) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="drawer-side font-archivo z-10">
       <label
@@ -35,8 +50,8 @@ function UserDrawer() {
         </li>
         <br></br>
         <li>
-          <NavLink to="/">
-            <p className="text-xl mb-3 font-bold top-[50px]">Home Page</p>
+          <NavLink to="/" onClick={handleLogout}>
+            <p className="text-xl mb-3 font-bold top-[50px]">Logout</p>
           </NavLink>
         </li>
       </ul>
