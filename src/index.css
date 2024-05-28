@@ -5,8 +5,13 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-color: theme("colors.zinc.800");
+    --text-color: theme("colors.white");
+  }
+
   html {
-    @apply bg-blue-300;
-    @apply text-white;
+    @apply bg-[var(--bg-color)];
+    @apply text-[var(--text-color)];
   }
 }

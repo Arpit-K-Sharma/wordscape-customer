@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="footer p-10 bg-base-300 text-base-content font-archivo">
+    <footer className="footer p-10 bg-zinc-800 text-white font-archivo">
       <nav>
         <h6 className="footer-title text-xl">Services</h6>
         <a className="link link-hover">Branding</a>
@@ -17,7 +17,7 @@ function Footer() {
         <a className="link link-hover">Contact</a>
         <a className="link link-hover">Jobs</a>
         <NavLink to="/faq">
-        <a className="link link-hover">FAQ</a>
+          <a className="link link-hover">FAQ</a>
         </NavLink>
       </nav>
       <nav>

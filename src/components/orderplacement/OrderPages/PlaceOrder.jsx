@@ -173,7 +173,7 @@ function OrderPlacement() {
     try {
       // console.log("Test");
       // console.log(orderData);
-      const id = localStorage.getItem('id');
+      const id = localStorage.getItem("id");
       console.log(id);
       const response = await axios.post(
         `http://localhost:8081/orders/${id}`,
@@ -188,7 +188,7 @@ function OrderPlacement() {
   return (
     <div>
       <Progress step={step} />
-      <div className="text-slate-200 mx-auto relative">
+      <div className="text-slate-200 mx-auto relative text-white">
         <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
           {step == 1 ? (
             <FirstForm
