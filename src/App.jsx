@@ -48,12 +48,8 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/cost" element={<CostCalculation />} />
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/jobcard" element={<NJobCard />} />
-        </Route>
 
         <Route path="/order/:step" element={<OrderPlacement />} />
         {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
@@ -75,6 +71,8 @@ function App() {
           <Route path="/admin/covertreatment" element={<CoverTreatment />} />
           <Route path="/admin/plate" element={<Plate />} />
           <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/jobcard" element={<NJobCard />} />
+          <Route path="/cost" element={<CostCalculation />} />
         </Route>
 
         <Route path="/user/orders" element={<UserOrder />} />
