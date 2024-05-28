@@ -7,6 +7,7 @@ import drawertest from "./drawertest";
 import DrawerTest from "./drawertest";
 import Navbar from "../navbar/navbar";
 import PaperThickness from "../admin/menu/paperthickness/paperthickness";
+import MobileMenu from "../navbar/mobile-menu";
 
 const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);
@@ -18,16 +19,17 @@ const CostCalculation = () => {
   const [plateSize, setPlateSize] = useState("");
   const [quantity, setQuantity] = useState("");
   const [pages, setPages] = useState("");
-  const [otherField, setOtherField] = useState("");
   const [paperType, setPaperType] = useState([]);
   const [selectedPaperType, setSelectedInnerPaper] = useState("");
   const [outerSelectedPaperType, setOuterSelectedPaperType] = useState("");
   const [selectedPaperThickness, setSelectedPaperThickness] = useState("");
+
   const [selectedOuterPaperThickness, setSelectedOuterPaperThickness] =
     useState("");
   const [changeCostPerKg, setChangeCostPerKg] = useState(0);
   // const [laminationPrice, setLaminationPrice] = useState("");
   const [laminationPrice, setLaminationPrice] = useState(0);
+  const [paperPrice, setPaperPrice] = useState(0);
 
   const [plateSizes, setPlateSizes] = useState([]);
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
@@ -45,14 +47,15 @@ const CostCalculation = () => {
   const [selectedBindingType, setSelectedBindingType] = useState(0);
   const [selectedInkType, setSelectedInkType] = useState("");
   const [selectedLaminationType, setSelectedLaminationType] = useState("");
+  const [selectedCoverPaperType, setSelectedCoverPaperType] = useState("");
 
-  const [selectedCoverTreatmentType, setSelectedCoverTreatmentType] = useState(
-    []
-  );
+  const [selectedCoverTreatmentType, setSelectedCoverTreatmentType] =
+    useState("");
 
   const [paperThicknesses, setPaperThicknesses] = useState([]);
   const [laminationTypes, setLaminationTypes] = useState([]);
   const [costPerKg, setPaperRate] = useState(0);
+  const [outerPaperPrice, setOuterPaperPrice] = useState(0);
 
   useEffect(() => {
     getBinding();
@@ -64,16 +67,21 @@ const CostCalculation = () => {
     getOuterPaperThickness();
     getLamination();
     getPlates();
+    getRatePlate(plateSize);
     getInks();
     getRateForBindingType(selectedBindingType);
     getRateForLaminationType(selectedLaminationType);
     getRateForCoverTreatment(selectedCoverTreatmentType);
     getRateForPaper(selectedPaperType);
+    getRateForOuterPaper();
+    //getRateForOuterPaper(selectedOuterPaperType);
   }, [
     selectedBindingType,
     selectedLaminationType,
     selectedCoverTreatmentType,
     selectedPaperType,
+    plateSize,
+    outerSelectedPaperType,
   ]);
 
   const getInks = () => {
@@ -87,9 +95,36 @@ const CostCalculation = () => {
       });
   };
 
+  const getRatePlate = (plateSize) => {
+    axios
+      .get("http://localhost:8081/plates")
+      .then((response) => {
+        // Find the plate with the matching size in the response data
+        const plate = response.data.find(
+          (plate) => plate.plateSize === plateSize
+        );
+
+        if (plate) {
+          // Update the state with the plate rate
+          setPlateCost(plate.plateRate);
+          console.log("Plate Rate for size", plateSize, "is", plate.plateRate);
+        } else {
+          console.error("Plate size not found:", plateSize);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching plate rate:", error);
+      });
+  };
+
   const handlePaperThicknessChange = (e) => {
     const selectedPaperThickness = e.target.value;
     setSelectedPaperThickness(selectedPaperThickness);
+  };
+
+  const handlePaperOuterThicknessChange = (e) => {
+    const selectedOuterPaperThickness = e.target.value;
+    setSelectedOuterPaperThickness(selectedOuterPaperThickness);
   };
 
   const handleOuterPaperTypeChange = (e) => {
@@ -100,8 +135,7 @@ const CostCalculation = () => {
     setSelectedInnerPaper(e.target.value);
   };
 
-  const handleCovertreatmentTypeChange = (e) => {
-    console.log("check " + e.target.value);
+  const handleCoverTreatmentTypeChange = (e) => {
     setSelectedCoverTreatmentType(e.target.value);
   };
 
@@ -243,7 +277,8 @@ const CostCalculation = () => {
 
         if (selectedPaper) {
           // Update the state with the paper rate
-          setPaperRate(selectedPaper.rate); // Assuming you have a state variable to store the paper rate
+          setPaperPrice(selectedPaper.rate); // Assuming you have a state variable to store the paper rate
+          setOuterPaperPrice(selectedPaper.rate);
           console.log(
             "Paper Type:",
             selectedPaperType,
@@ -258,6 +293,38 @@ const CostCalculation = () => {
       .catch((error) => {
         console.error("Error fetching paper rates:", error);
       });
+  };
+
+  const getRateForOuterPaper = () => {
+    // Fetch the paper rates from the database
+    if (outerSelectedPaperType) {
+      console.log("Outer Paper Type test:", outerSelectedPaperType);
+      axios
+        .get("http://localhost:8081/papers") // Adjust the URL to match your API endpoint
+        .then((response) => {
+          // Find the selected paper type in the response data
+          const outPaper = response.data.find(
+            (paper) => paper.paperType === outerSelectedPaperType
+          );
+
+          if (outPaper) {
+            // Update the state with the paper rate
+            setOuterPaperPrice(outPaper.rate);
+            console.log(
+              "Outer Paper Type:",
+              outPaper,
+              "Outer Rate:",
+              outPaper.rate
+            );
+          } else {
+            // If paper type not found, handle error accordingly
+            console.error("Paper type not found:", selectedPaperType);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching paper rates:", error);
+        });
+    }
   };
 
   const getRateForBindingType = (selectedBindingType) => {
@@ -373,8 +440,6 @@ const CostCalculation = () => {
     return Math.round(quantity * pages);
   }
 
-  //console.log("Total pages is " + totalPages(quantity, pages));
-
   function totalSheets(quantity, pages) {
     return totalPages(quantity, pages) / 16;
   }
@@ -464,7 +529,7 @@ const CostCalculation = () => {
   return (
     <>
       <Navbar />
-      <DrawerOpen/>
+      {/* <MobileMenu /> */}
       <div className="cost-calc-container bg-zinc-800">
         <div className="empty-box">
           <div className="test-box">
@@ -474,7 +539,27 @@ const CostCalculation = () => {
                 <b>Cost</b> Calculator
               </h1>
               <br></br>
-              <DrawerTest inkCost={inkCost} pages={pages} quantity={quantity} />
+              {console.log("PAPER SIZE TEST: " + paperSize)}
+              <DrawerTest
+                // inkCost={inkCost}
+                pages={pages}
+                quantity={quantity}
+                paperSize={paperSize}
+                selectedPaperType={selectedPaperType}
+                selectedPaperThickness={selectedPaperThickness}
+                selectedOuterPaperThickness={selectedOuterPaperThickness}
+                totalReams={totalReams(quantity, pages)}
+                selectedBindingType={selectedBindingType}
+                outerSelectedPaperType={outerSelectedPaperType}
+                plateSize={plateSize}
+                selectedLaminationType={selectedLaminationType}
+                changeCostPerKg={paperPrice}
+                selectedInkType={selectedInkType}
+                plateCost={plateCost}
+                laminationCost={laminationPrice}
+                outerPaperPrice={outerPaperPrice}
+                totalCost={totalCost}
+              />
               {/* <DrawerTest
                 plateSize={plateSize}
                 outerChangeCostPerKg={outerChangeCostPerKg}
@@ -531,8 +616,8 @@ const CostCalculation = () => {
                     >
                       <option value="">Select Paper Size</option>
                       {/* Map over the fetched paper sizes */}
-                      {paperSizes.map((size) => (
-                        <option key={size.value} value={size.value}>
+                      {paperSizes.map((size, index) => (
+                        <option key={index} value={size.label}>
                           {size.label}
                         </option>
                       ))}
@@ -593,15 +678,18 @@ const CostCalculation = () => {
                     </select>
 
                     <br></br>
-                    <label htmlFor="covertreatment">
+                    <label htmlFor="covertreatment-type">
                       <b>Cover </b>Treatment
                     </label>
                     <br></br>
                     <select
-                      id="covertreatment"
-                      name="covertreatment"
-                      value={coverTreatmentType}
-                      onChange={handleCovertreatmentTypeChange}
+                      id="covertreatment-type"
+                      name="covertreatment-type"
+                      value={selectedCoverTreatmentType}
+                      onChange={handleCoverTreatmentTypeChange}
+                      // onChange={(e) =>
+                      //   setSelectedCoverTreatmentType(e.target.value)
+                      // }
                       required
                     >
                       <option value="">Select Cover Treatment Type</option>
@@ -609,7 +697,6 @@ const CostCalculation = () => {
                       {coverTreatmentType.map((covertreatment, index) => (
                         <option key={index} value={covertreatment}>
                           {covertreatment}
-                          {console.log("cv " + covertreatment)}
                         </option>
                       ))}
                     </select>
@@ -683,6 +770,7 @@ const CostCalculation = () => {
                         id="outer-paper-type"
                         name="outer-paper-type"
                         value={outerSelectedPaperType}
+                        //onChange={(e) => setSelectedCoverPaperType(e.target.value)}
                         onChange={handleOuterPaperTypeChange}
                         className="paper-type-select"
                         required
@@ -705,8 +793,8 @@ const CostCalculation = () => {
                       <select
                         id="paper-thickness"
                         name="paper-thickness"
-                        value={selectedPaperThickness}
-                        onChange={handlePaperThicknessChange}
+                        value={selectedOuterPaperThickness}
+                        onChange={handlePaperOuterThicknessChange}
                         className="paper-type-select"
                         required
                       >
@@ -762,7 +850,7 @@ const CostCalculation = () => {
                       <option value="">Select Plate Size</option>
                       {/* Mapping over plateSizes directly */}
                       {plateSizes.map((size, index) => (
-                        <option key={index} value={size.value}>
+                        <option key={index} value={size.label}>
                           {size.label}
                         </option>
                       ))}
