@@ -47,6 +47,11 @@ function UserDrawer() {
             <p className="text-xl mb-3 font-light">Profile</p>
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/">
+            <p className="text-xl mb-3 top-[50px]">Return to home page</p>
+          </NavLink>
+        </li>
         <br></br>
         <li>
           <NavLink to="/" onClick={handleLogout}>

@@ -12,12 +12,12 @@ function Navbar() {
 
   const handleLogout = () => {
     Cookies.remove("userToken");
-    Cookies.remove("adminToken");
+    // Cookies.remove("adminToken");
     localStorage.removeItem("id");
     navigate("/");
   };
 
-  const isLoggedIn = Cookies.get("userToken") !== undefined;
+  const isLoggedIn = Cookies.get("userToken");
 
   return (
     <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">

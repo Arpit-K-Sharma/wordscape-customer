@@ -8,6 +8,7 @@ import FifthForm from "../Forms/Form5";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
@@ -180,6 +181,9 @@ function OrderPlacement() {
         orderData
       );
       console.log("Order placed successfully", response.data);
+      toast.success(
+        "Order placed successfully. Thank you for ordering through WordScape."
+      );
     } catch (error) {
       console.error("Error placing order", error);
     }

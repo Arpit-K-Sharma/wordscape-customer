@@ -11,7 +11,9 @@ function StaffDashboard() {
     const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 30));
     return pastDate.toISOString().split("T")[0];
   });
-  const [endDate, setEndDate] = useState(new Date().toISOString().split("T")[0]);
+  const [endDate, setEndDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderDetails, setOrderDetails] = useState([]);
   const [pending, setPending] = useState();
@@ -29,14 +31,13 @@ function StaffDashboard() {
   ]);
   const [orderid, setOrderid] = useState();
 
-  const handleViewDetails = async(order) => {
-    const response = await axios.get(`http://localhost:8081/jobCard/${order}`)
-    console.log(response.data)
-    console.log(order)
+  const handleViewDetails = async (order) => {
+    const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
+    console.log(response.data);
+    console.log(order);
     setSelectedOrder(order);
     document.getElementById("my-drawer-4").checked = true;
   };
-
 
   useEffect(() => {
     const id = localStorage.getItem("id");
@@ -53,9 +54,11 @@ function StaffDashboard() {
         for (let index = 0; index < d.length; index++) {
           if (d[index].status === "PENDING") {
             Pending++;
-          } if (d[index].status === "APPROVED") {
+          }
+          if (d[index].status === "APPROVED") {
             Approved++;
-          } if (d[index].status === "COMPLETED") {
+          }
+          if (d[index].status === "COMPLETED") {
             Completed++;
           }
         }
@@ -68,34 +71,38 @@ function StaffDashboard() {
       }
     };
 
-
     fetchOrderDetails();
   }, []);
 
   const handleTracking = async (id) => {
-    console.log(id)
+    console.log(id);
     try {
-      const response = await axios.get(`http://localhost:8081/projectTracking/${id}`);
+      const response = await axios.get(
+        `http://localhost:8081/projectTracking/${id}`
+      );
       const trackingData = response.data;
 
-      const updatedSteps = steps.map(step => ({
+      const updatedSteps = steps.map((step) => ({
         ...step,
-        active: trackingData[step.key]
+        active: trackingData[step.key],
       }));
       console.log(updatedSteps);
       setSteps(updatedSteps);
-      document.getElementById('my_modal_1').showModal();
+      document.getElementById("my_modal_1").showModal();
     } catch (error) {
       console.error("Error fetching tracking data:", error);
     }
   };
   const handleNext = () => {
     setSteps((prevSteps) => {
-      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      const lastActiveIndex = prevSteps.reduce(
+        (lastIndex, step, index) => (step.active ? index : lastIndex),
+        -1
+      );
       if (lastActiveIndex < prevSteps.length - 1) {
         const newSteps = prevSteps.map((step, index) => ({
           ...step,
-          active: index <= lastActiveIndex + 1
+          active: index <= lastActiveIndex + 1,
         }));
         return newSteps;
       }
@@ -112,7 +119,10 @@ function StaffDashboard() {
     console.log(stepData);
 
     try {
-      await axios.post(`http://localhost:8081/projectTracking/${orderid}`, stepData);
+      await axios.post(
+        `http://localhost:8081/projectTracking/${orderid}`,
+        stepData
+      );
       console.log("Data sent successfully");
     } catch (error) {
       console.error("Error sending data:", error);
@@ -120,11 +130,14 @@ function StaffDashboard() {
   };
   const handleBack = () => {
     setSteps((prevSteps) => {
-      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      const lastActiveIndex = prevSteps.reduce(
+        (lastIndex, step, index) => (step.active ? index : lastIndex),
+        -1
+      );
       if (lastActiveIndex > 0) {
         const newSteps = prevSteps.map((step, index) => ({
           ...step,
-          active: index < lastActiveIndex
+          active: index < lastActiveIndex,
         }));
         return newSteps;
       }
@@ -135,7 +148,10 @@ function StaffDashboard() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <NavLink to="/admin/dashboard">
             <img
               width="26"
@@ -182,7 +198,11 @@ function StaffDashboard() {
               <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
                 <div className="card-body p-[0.3rem] mt-[10%] mb-5">
                   <a className="flex justify-center">
-                    <AiOutlineClockCircle size={35} color="white" className="ml-2" />
+                    <AiOutlineClockCircle
+                      size={35}
+                      color="white"
+                      className="ml-2"
+                    />
                     <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
                       Pending Orders
                     </h3>
@@ -198,7 +218,11 @@ function StaffDashboard() {
               <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
                 <div className="card-body p-[0.3rem] mt-[10%] mb-5">
                   <a className="flex justify-center">
-                    <AiOutlineCheckCircle size={35} color="white" className="ml-2" />
+                    <AiOutlineCheckCircle
+                      size={35}
+                      color="white"
+                      className="ml-2"
+                    />
                     <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
                       Approved Orders
                     </h3>
@@ -242,39 +266,48 @@ function StaffDashboard() {
                   </tr>
                 </thead>
                 <tbody className="text-semibold">
-                  {orderDetails && orderDetails.map((details) => (
-                    <tr key={details.orderId}>
-                      <td>{details.orderId}</td>
-                      <td>{new Date(details.date).toLocaleDateString()}</td>
-                      <td>{details.delivery ? new Date(details.delivery).toLocaleDateString() : 'N/A'}</td>
-                      <td>{details.pages}</td>
-                      <td>{details.quantity}</td>
-                      <td>
-                        <button
-                          className="btn min-h-[30px] h-[40px]"
-                          onClick={() => handleViewDetails(details.orderId)}
-                        >
-                          View details
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="btn min-h-[30px] h-[40px]"
-                          onClick={() => {
-                            handleTracking(details.orderId),
-                              setOrderid(details.orderId)
-                          }}
-                        >
-                          Track It
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {orderDetails &&
+                    orderDetails.map((details) => (
+                      <tr key={details.orderId}>
+                        <td>{details.orderId}</td>
+                        <td>{new Date(details.date).toLocaleDateString()}</td>
+                        <td>
+                          {details.delivery
+                            ? new Date(details.delivery).toLocaleDateString()
+                            : "N/A"}
+                        </td>
+                        <td>{details.pages}</td>
+                        <td>{details.quantity}</td>
+                        <td>
+                          <button
+                            className="btn min-h-[30px] h-[40px]"
+                            onClick={() => handleViewDetails(details.orderId)}
+                          >
+                            View details
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className="btn min-h-[30px] h-[40px]"
+                            onClick={() => {
+                              handleTracking(details.orderId),
+                                setOrderid(details.orderId);
+                            }}
+                          >
+                            Track It
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
             <div className="drawer drawer-end">
-              <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+              <input
+                id="my-drawer-4"
+                type="checkbox"
+                className="drawer-toggle"
+              />
               <div className="drawer-side">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
                 <div className="p-4 w-80 min-h-full bg-base-200 pl-[20px] text-base-content">
@@ -283,59 +316,123 @@ function StaffDashboard() {
                     <>
                       <table className="table-auto w-full">
                         <tbody>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Date</td>
-                            <td className="w-1/2">{new Date(selectedOrder.date).toLocaleDateString()}</td>
+                            <td className="w-1/2">
+                              {new Date(
+                                selectedOrder.date
+                              ).toLocaleDateString()}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Paper Size</td>
                             <td className="w-1/2">{selectedOrder.paperSize}</td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Pages</td>
                             <td className="w-1/2">{selectedOrder.pages}</td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Quantity</td>
                             <td className="w-1/2">{selectedOrder.quantity}</td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Binding Type</td>
-                            <td className="w-1/2">{selectedOrder.bindingType}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.bindingType}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Cover Treatment Type</td>
-                            <td className="w-1/2">{selectedOrder.coverTreatmentType}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.coverTreatmentType}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Inner Paper Type</td>
-                            <td className="w-1/2">{selectedOrder.innerPaperType}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.innerPaperType}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Inner Paper Thickness</td>
-                            <td className="w-1/2">{selectedOrder.innerPaperThickness}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.innerPaperThickness}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Outer Paper Type</td>
-                            <td className="w-1/2">{selectedOrder.outerPaperType}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.outerPaperType}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Outer Paper Thickness</td>
-                            <td className="w-1/2">{selectedOrder.outerPaperThickness}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.outerPaperThickness}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Lamination Type</td>
-                            <td className="w-1/2">{selectedOrder.laminationType}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.laminationType}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Ink Type</td>
                             <td className="w-1/2">{selectedOrder.inkType}</td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Remarks</td>
-                            <td className="w-1/2">{selectedOrder.remarks ? selectedOrder.remarks : 'N/A'}</td>
+                            <td className="w-1/2">
+                              {selectedOrder.remarks
+                                ? selectedOrder.remarks
+                                : "N/A"}
+                            </td>
                           </tr>
-                          <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                          <tr
+                            className="mb-4 text-lg"
+                            style={{ height: "50px" }}
+                          >
                             <td className="w-1/2">Customer Name</td>
                             <td className="w-1/2">{selectedOrder.customer}</td>
                           </tr>
@@ -351,7 +448,13 @@ function StaffDashboard() {
                 <div className="">
                   <ul className="steps w-[900px] mb-[20px]">
                     {steps.map((step, index) => (
-                      <li key={index} className={`step ${step.active ? "step step-primary" : ""}`} data-content={step.active ? "✓" : null}>
+                      <li
+                        key={index}
+                        className={`step ${
+                          step.active ? "step step-primary" : ""
+                        }`}
+                        data-content={step.active ? "✓" : null}
+                      >
                         {step.name}
                       </li>
                     ))}
@@ -369,7 +472,9 @@ function StaffDashboard() {
                   <form method="dialog">
                     <div className="flex justify-end gap-[15px]">
                       <button className="btn">Close</button>
-                      <button className="btn" onClick={handleDone}>Done</button>
+                      <button className="btn" onClick={handleDone}>
+                        Done
+                      </button>
                     </div>
                   </form>
                 </div>

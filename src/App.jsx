@@ -23,7 +23,7 @@ import NJobCard from "./components/newjobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
 import PaperThickness from "./components/admin/menu/paperthickness/paperthickness.jsx";
 import Orders from "./components/admin/menu/order/order.jsx";
-import ProtectedRoutes from "./components/newjobcard/protectedRoutes.jsx";
+import ProtectedRoutes from "./components/protectedRoutes.jsx";
 import Profile from "./components/dashboard/profile.jsx";
 import CoverTreatment from "./components/admin/menu/covertreatment/covertreatment.jsx";
 import UserOrder from "./components/dashboard/userOrder.jsx";
@@ -38,6 +38,7 @@ import StaffCoverTreatment from "./components/staff/menu/covertreatment/covertre
 import StaffPlate from "./components/staff/menu/plate/plate.jsx";
 import StaffCustomer from "./components/staff/menu/customer/customer.jsx";
 import StaffOrders from "./components/staff/menu/order/order.jsx";
+import ProtectedUser from "./components/protectedUser.jsx";
 
 function App() {
   return (
@@ -51,7 +52,6 @@ function App() {
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
 
-        <Route path="/order/:step" element={<OrderPlacement />} />
         {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
         <Route path="/order/3" element={<OrderPlacementThird />} />
         <Route path="/order/4" element={<OrderPlacementFourth />} />
@@ -75,9 +75,14 @@ function App() {
           <Route path="/cost" element={<CostCalculation />} />
         </Route>
 
-        <Route path="/user/orders" element={<UserOrder />} />
+        <Route element={<ProtectedUser />}>
+          <Route path="/order/:step" element={<OrderPlacement />} />
+          <Route path="/user/orders" element={<UserOrder />} />
+          <Route path="/user/edit" element={<Profile />} />
+        </Route>
+
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/user/edit" element={<Profile />} />
+
         <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
         <Route path="/staff/dashboard" element={<StaffDashboard />} />
         <Route path="/staff/paper" element={<StaffPaper />} />

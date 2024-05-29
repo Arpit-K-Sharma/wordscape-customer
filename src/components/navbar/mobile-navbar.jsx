@@ -6,8 +6,11 @@ import { NavLink } from "react-router-dom";
 import Footer from "./footer";
 import Pricing from "./pricing";
 import Services from "./services";
+import Cookies from "js-cookie";
 
 function MobileNavbar() {
+  const isLoggedIn = Cookies.get("userToken") !== undefined;
+
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -52,14 +55,26 @@ function MobileNavbar() {
               </h1>
               <p className="w-[30%] text-center mx-auto leading-[23px] text-[18px] max-sm:text-[14px] max-sm:w-[60%] font-archivo ">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry.
+                industry. Lorem Ipsum has been the industry. Register and Login
+                to place an order
               </p>
               <div className="flex flex-row justify-center mt-[40px] mb-[150px]">
-                <NavLink to="/order/1">
-                  <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                    Place an Order
-                  </button>
-                </NavLink>
+                {!isLoggedIn && (
+                  <NavLink to="/login">
+                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                      Login to Start
+                    </button>
+                  </NavLink>
+                )}
+
+                {isLoggedIn && (
+                  <NavLink to="/order/1">
+                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                      Place an Order
+                    </button>
+                  </NavLink>
+                )}
+
                 <button className="bg-[#ffffff] px-[20px] py-[10px] text-[#000000] rounded-[8px] font-archivo font-semibold">
                   Learn More
                 </button>

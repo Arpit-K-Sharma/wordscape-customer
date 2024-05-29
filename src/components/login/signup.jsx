@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "../navbar/navbar";
+import { ToastContainer, toast } from "react-toastify";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function SignUp() {
       signUpUser(userData);
     } else {
       console.log("Password mismatch");
+      toast.error("Password mismatch");
     }
   };
 
@@ -45,7 +47,19 @@ function SignUp() {
       .post("http://localhost:8081/customers/register", userData)
       .then((response) => {
         console.log("Signup successful:", response.data);
-        navigate("/login");
+        toast.success("Signed Up Successfully", {
+          position: "top-right",
+          autoClose: 1500, // Show for 2 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       })
       .catch((error) => {
         console.error("Error signing up:", error);
