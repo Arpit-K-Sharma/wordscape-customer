@@ -1,41 +1,51 @@
 import React, { useState } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../images/logo/LogoOnly.png";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import books from "../images/logo/books.jpeg";
 
-import "react-toastify/dist/ReactToastify.css";
-
 function UpdatedRegister() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: null,
+    email: null,
+    password: null,
+    address: null,
+    phoneNumber: null,
+  });
 
-  const handleSignUp = async (e) => {
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const url = "http://localhost:8081/customers/register";
-      const data = {
-        fullName: fullName,
-        email: email,
-        password: password,
-        address: address,
-        phoneNumber: phoneNumber,
+    // Perform validation checks here
+    if (formData.password === formData.confirmPassword) {
+      const userData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        address: formData.address,
+        phoneNumber: formData.phoneNumber,
       };
-      console.log("Request Data:", data);
-      const response = await axios.post(url, data);
-      console.log("Response Data:", response.data);
+      signUpUser(userData);
+    } else {
+      console.log("Password mismatch");
+      toast.error("Password mismatch");
+    }
+  };
 
-      if (response.data && response.data.token) {
-        // Handle token and login
+  const signUpUser = (userData) => {
+    axios
+      .post("http://localhost:8081/customers/register", userData)
+      .then((response) => {
+        console.log("Signup successful:", response.data);
         toast.success("Signed Up Successfully", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1500, // Show for 1.5 seconds
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -44,29 +54,13 @@ function UpdatedRegister() {
           theme: "light",
         });
         setTimeout(() => {
-          setLoggedIn(true);
-        }, 2000);
-      } else {
-        console.error("Error: No token found in the response");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Sign Up Failed", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+          navigate("/login");
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error("Error signing up:", error);
       });
-    }
   };
-
-  if (loggedIn) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
@@ -85,7 +79,7 @@ function UpdatedRegister() {
             </h2>
             <h5 className="mb-8">Enter your details to sign up</h5>
           </div>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control w-full">
                 <label htmlFor="fullName" className="label">
@@ -97,8 +91,8 @@ function UpdatedRegister() {
                   type="text"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={formData.fullName || ""}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
@@ -112,8 +106,8 @@ function UpdatedRegister() {
                   autoComplete="email"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email || ""}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -128,8 +122,8 @@ function UpdatedRegister() {
                   type="text"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  value={formData.phoneNumber || ""}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
@@ -142,8 +136,8 @@ function UpdatedRegister() {
                   type="text"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={formData.address || ""}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -159,8 +153,8 @@ function UpdatedRegister() {
                   autoComplete="password"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password || ""}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
@@ -175,8 +169,8 @@ function UpdatedRegister() {
                   type="password"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={formData.confirmPassword || ""}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -184,7 +178,6 @@ function UpdatedRegister() {
               <button
                 type="submit"
                 className="btn btn-neutral w-full hover:text-white"
-                onClick={handleSignUp}
               >
                 Sign up
               </button>

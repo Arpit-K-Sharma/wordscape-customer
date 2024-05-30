@@ -1,8 +1,20 @@
 import React from "react";
 import logo from "../images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function MobileMenu() {
+  const isLoggedIn = Cookies.get("userToken") !== undefined;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove("userToken");
+    // Cookies.remove("adminToken");
+    localStorage.removeItem("id");
+    navigate("/");
+  };
+
   return (
     <div className="drawer z-10">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -40,14 +52,22 @@ function MobileMenu() {
             </NavLink>
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
-          <li>
-            <p className="text-xl mb-3 font-light">Dashboard</p>
-          </li>
-          <li>
+
+          {isLoggedIn && (
+            <li>
+              <NavLink to="/user/orders">
+                <p className="text-xl mb-3 font-light">Dashboard</p>
+              </NavLink>
+            </li>
+          )}
+
+          {isLoggedIn && (
             <NavLink to="/order/1">
-              <p className="text-xl mb-3 font-light">Place an order</p>
+              <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                Place an Order
+              </button>
             </NavLink>
-          </li>
+          )}
           <li>
             {/* <NavLink to="/cost">
               <p className="text-xl mb-3 font-light">Cost Calculation</p>
@@ -56,16 +76,20 @@ function MobileMenu() {
           {/* <li>
             <p className="text-xl mb-3 font-light">Statement</p>
           </li> */}
-          <li>
-            <NavLink to="/login">
-              <p className="text-xl mb-3 font-light">Login</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              <p className="text-xl mb-3 font-light">Logout</p>
-            </NavLink>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <NavLink to="/login">
+                <p className="text-xl mb-3 font-light">Login</p>
+              </NavLink>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <p className="text-xl mb-3 font-light" onClick={handleLogout}>
+                Logout
+              </p>
+            </li>
+          )}
         </ul>
       </div>
     </div>

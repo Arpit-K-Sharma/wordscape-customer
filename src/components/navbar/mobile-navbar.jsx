@@ -7,9 +7,18 @@ import Footer from "./footer";
 import Pricing from "./pricing";
 import Services from "./services";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function MobileNavbar() {
   const isLoggedIn = Cookies.get("userToken") !== undefined;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove("userToken");
+    // Cookies.remove("adminToken");
+    localStorage.removeItem("id");
+    navigate("/");
+  };
 
   return (
     <div className="drawer">
@@ -106,34 +115,34 @@ function MobileNavbar() {
             </NavLink>
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
-          <li>
-            <NavLink to="/user/dashboard">
-              <p className="text-xl mb-3 font-light">Dashboard</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin/dashboard">
-              <p className="text-xl mb-3 font-light">Admin Dashboard</p>
-            </NavLink>
-          </li>
+          {isLoggedIn && (
+            <li>
+              <NavLink to="/user/orders">
+                <p className="text-xl mb-3 font-light">Dashboard</p>
+              </NavLink>
+            </li>
+          )}
+
           <li>
             <NavLink to="/order/1">
               <p className="text-xl mb-3 font-light">Place an order</p>
             </NavLink>
           </li>
-          <li>
-            <p className="text-xl mb-3 font-light">Cost Calculation</p>
-          </li>
-          <li>
-            <NavLink to="/login">
-              <p className="text-xl mb-3 font-light">Login</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              <p className="text-xl mb-3 font-light">Logout</p>
-            </NavLink>
-          </li>
+
+          {!isLoggedIn && (
+            <li>
+              <NavLink to="/login">
+                <p className="text-xl mb-3 font-light">Login</p>
+              </NavLink>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <p className="text-xl mb-3 font-light" onClick={handleLogout}>
+                Logout
+              </p>
+            </li>
+          )}
         </ul>
       </div>
     </div>
