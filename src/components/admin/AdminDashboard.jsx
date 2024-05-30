@@ -19,7 +19,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import NJobCard from "../newjobcard/njobcard";
+import { FaClock, FaTimesCircle } from "react-icons/fa";
 
 function AdminDashboard() {
   const [startDate, setStartDate] = useState(() => {
@@ -202,6 +202,14 @@ function AdminDashboard() {
     }
     console.log("ok");
   };
+  const handleCancel = async (id) => {
+    try {
+      await axios.put(`http://localhost:8081/orders/cancel/${id}`);
+      console.log("Order Cancelled successfully");
+    } catch (error) {
+      console.error("Error Cancelling Order:", error);
+    }
+  };
 
   return (
     <div className="drawer">
@@ -363,6 +371,8 @@ function AdminDashboard() {
                     <th className="w-[200px]">OrderDetails</th>
                     <th className="w-[200px]">Job Card</th>
                     <th className="w-[200px]">View Tracking</th>
+                    <th className="w-[200px]">Status</th>
+                    <th className="w-[200px]">Cancel Order</th>
                   </tr>
                 </thead>
                 <tbody className="text-semibold">
@@ -380,7 +390,7 @@ function AdminDashboard() {
                         <td>{details.quantity}</td>
                         <td>
                           <button
-                            className="btn min-h-[30px] h-[40px]"
+                            className="btn min-h-[30px] h-[40px] w-[111px]"
                             onClick={() => handleViewDetails(details.orderId)}
                           >
                             View details
@@ -388,7 +398,7 @@ function AdminDashboard() {
                         </td>
                         <td>
                           <button
-                            className="btn min-h-[30px] h-[40px]"
+                            className="btn min-h-[30px] h-[40px] w-[90px]"
                             onClick={(e) => handleJobCard(details.orderId)}
                           >
                             Job card
@@ -403,6 +413,40 @@ function AdminDashboard() {
                             }}
                           >
                             Track It
+                          </button>
+                        </td>
+                        <td>
+                          <a
+                            className={
+                              details.status == "PENDING"
+                                ? "bg-blue-400 p-[6px] rounded-[5px] flex gap-[10px] font-bold"
+                                : details.status == "APPROVED" ||
+                                  details.status == "COMPLETED"
+                                ? "bg-[#299229] p-[6px] rounded-[5px] flex gap-[10px]"
+                                : details.status == "CANCELED"
+                                ? "bg-[red] p-[6px] rounded-[5px] font-bold flex gap-[10px]"
+                                : null
+                            }
+                          >
+                            {details.status == "PENDING" ? (
+                              <FaClock size={19} />
+                            ) : details.status == "APPROVED" ||
+                              details.status == "COMPLETED" ? (
+                              <FaCheckCircle size={19} />
+                            ) : details.status == "CANCELED" ? (
+                              <FaTimesCircle size={19} />
+                            ) : null}
+                            {details.status}
+                          </a>
+                        </td>
+                        <td>
+                          <button
+                            className="btn min-h-[30px] h-[40px] hover:bg-[red]  hover:border-[#212c4b] hover:text-[white]"
+                            onClick={(e) => {
+                              handleCancel(details.orderId);
+                            }}
+                          >
+                            Cancel
                           </button>
                         </td>
                       </tr>

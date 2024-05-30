@@ -8,6 +8,7 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
+import { FaClock, FaTimesCircle } from "react-icons/fa";
 import {
   FaCut,
   FaPaintBrush,
@@ -161,11 +162,11 @@ function UserOrder() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-5 text-slate-200 mt-[20px] mb-9">
+      <div className="flex justify-center gap-5 text-slate-200 mt-[30px] mb-9">
         <h1 className="font-bold text-4xl">Order Status</h1>
       </div>
 
-      <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[30px] shadow-xl rounded-lg">
+      <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
         <table className="table">
           <thead>
             <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
@@ -176,6 +177,7 @@ function UserOrder() {
               <th>Quantity</th>
               <th className="w-[200px]">All Details</th>
               <th className="w-[200px]">View Tracking</th>
+              <th className="w-[200px]">Status</th>
             </tr>
           </thead>
           <tbody className="text-semibold">
@@ -209,6 +211,30 @@ function UserOrder() {
                     >
                       Track It
                     </button>
+                  </td>
+                  <td>
+                    <a
+                      className={
+                        details.status == "PENDING"
+                          ? "bg-blue-400 p-[6px] rounded-[5px] w-[120px] flex gap-[10px] font-bold text-[white]"
+                          : details.status == "APPROVED" ||
+                            details.status == "COMPLETED"
+                          ? "bg-[#155415] p-[6px] rounded-[5px] w-[120px] flex gap-[10px]"
+                          : details.status == "CANCELED"
+                          ? "bg-[red] p-[6px] rounded-[5px] w-[120px] flex gap-[10px] text-white font-bold"
+                          : null
+                      }
+                    >
+                      {details.status == "PENDING" ? (
+                        <FaClock size={19} />
+                      ) : details.status == "APPROVED" ||
+                        details.status == "COMPLETED" ? (
+                        <FaCheckCircle size={19} />
+                      ) : details.status == "CANCELED" ? (
+                        <FaTimesCircle size={19} />
+                      ) : null}
+                      {details.status}
+                    </a>
                   </td>
                 </tr>
               ))}
