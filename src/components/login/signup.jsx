@@ -178,7 +178,7 @@ function SignUp() {
               />
             </div>
             <div className="flex flex-col">
-              <button className="btn btn-primary mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px] text-white bg-[#0369a1] hover:bg-slate-600">
+              <button className="btn btn-neutral mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px]  hover:bg-slate-600 hover:text-white">
                 Signup
               </button>
               <div className="flex flex-col w-full">

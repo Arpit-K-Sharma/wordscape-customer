@@ -24,7 +24,7 @@ function Login() {
       const data = {
         email: email,
         password: password,
-        role: role,
+        role: "ROLE_CUSTOMER",
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);

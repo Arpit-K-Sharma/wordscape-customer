@@ -39,6 +39,8 @@ import StaffPlate from "./components/staff/menu/plate/plate.jsx";
 import StaffCustomer from "./components/staff/menu/customer/customer.jsx";
 import StaffOrders from "./components/staff/menu/order/order.jsx";
 import ProtectedUser from "./components/protectedUser.jsx";
+import UpdatedLogin from "./components/login/UpdatedLogin.jsx";
+import UpdatedRegister from "./components/login/UpdatedRegister.jsx";
 
 function App() {
   return (
@@ -47,8 +49,10 @@ function App() {
         <Route path="/" element={<MobileLanding />} />
         <Route path="/web" element={<WebLanding />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<UpdatedLogin />} />
+        <Route path="/register" element={<SignUp />} />
+        <Route path="/signup" element={<UpdatedRegister />} />
+        {/* <Route path="/nlogin" element={<UpdatedLogin />} /> */}
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
 
