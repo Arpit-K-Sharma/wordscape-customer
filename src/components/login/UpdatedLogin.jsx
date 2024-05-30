@@ -14,6 +14,7 @@ function Signin() {
   const [role, setRole] = useState("ROLE_CUSTOMER");
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isEmployee, setIsEmployee] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -51,10 +52,132 @@ function Signin() {
             });
             setTimeout(() => {
               if (role === "ROLE_ADMIN") {
-                setIsAdmin(true);
+                handleAdminLogin();
+              } else if (role === "ROLE_USER") {
+                handleEmployeeLogin();
               } else {
                 setLoggedIn(true);
               }
+            }, 2000);
+          } else {
+            console.error("Error: Username not found in the token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+      } else {
+        console.error("Error: No token found in the response");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleAdminLogin = async (e) => {
+    try {
+      const url = "http://localhost:8081/home/login";
+      const data = {
+        email: email,
+        password: password,
+        role: "ROLE_ADMIN",
+      };
+      console.log("Request Data:", data);
+      const response = await axios.post(url, data);
+      console.log("Response Data:", response.data);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        Cookies.set("adminToken", token, { expires: 7 }); // Save admin token with "adminToken" name
+
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Decoded Token:", decoded);
+
+          if (decoded.id) {
+            console.log("id:", decoded.id);
+            localStorage.setItem("id", decoded.id);
+            toast.success("Signed In Successfully", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              setIsAdmin(true);
+            }, 2000);
+          } else {
+            console.error("Error: Username not found in the token");
+          }
+        } catch (decodeError) {
+          console.error("Error decoding token:", decodeError);
+        }
+      } else {
+        console.error("Error: No token found in the response");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Login Failed", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const handleEmployeeLogin = async (e) => {
+    try {
+      const url = "http://localhost:8081/home/login";
+      const data = {
+        email: email,
+        password: password,
+        role: "ROLE_USER",
+      };
+      console.log("Request Data:", data);
+      const response = await axios.post(url, data);
+      console.log("Response Data:", response.data);
+
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        Cookies.set("token", token, { expires: 7 });
+
+        try {
+          const decoded = jwtDecode(token);
+          console.log("Decoded Token:", decoded);
+
+          if (decoded.id) {
+            console.log("id:", decoded.id);
+            localStorage.setItem("id", decoded.id);
+            toast.success("Signed In Successfully", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              setIsEmployee(true);
             }, 2000);
           } else {
             console.error("Error: Username not found in the token");
@@ -88,9 +211,13 @@ function Signin() {
     return <Navigate to="/admin/dashboard" />;
   }
 
+  if (isEmployee) {
+    return <Navigate to="/staff/dashboard" />; // Replace with the appropriate path
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
-      <div className="bg-white p-8 md:p-16 flex items-center">
+      <div className="bg-zinc-50 p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto">
           <NavLink to="/">
             <img

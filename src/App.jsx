@@ -50,6 +50,7 @@ function App() {
         <Route path="/web" element={<WebLanding />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<UpdatedLogin />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/signup" element={<UpdatedRegister />} />
         {/* <Route path="/nlogin" element={<UpdatedLogin />} /> */}

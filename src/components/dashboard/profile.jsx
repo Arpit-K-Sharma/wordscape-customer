@@ -4,6 +4,7 @@ import Avatar from "react-avatar";
 import Menu from "./menu";
 
 function Profile() {
+  const userId = localStorage.getItem("id");
   const [customerData, setCustomerData] = useState({
     customerId: null,
     fullName: "",
@@ -15,7 +16,7 @@ function Profile() {
   const [editable, setEditable] = useState(false);
   useEffect(() => {
     axios
-      .get("http://localhost:8081/customers/1")
+      .get(`http://localhost:8081/customers/${userId}`)
       .then((response) => {
         console.log(response.data);
         setCustomerData(response.data);
