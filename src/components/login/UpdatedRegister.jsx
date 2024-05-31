@@ -68,7 +68,7 @@ function UpdatedRegister() {
         <div className="max-w-md mx-auto">
           <NavLink to="/">
             <img
-              className="mx-auto my-1 mb-5 sm:w-32 sm:h-32 lg:h-[140px]"
+              className="mx-auto my-1 mb-5 sm:w-32 max-sm:h-[200px] lg:h-[100px]"
               src={logo}
               alt="Logo"
             />
@@ -77,7 +77,7 @@ function UpdatedRegister() {
             <h2 className="text-2xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto">
               Sign Up
             </h2>
-            <h5 className="mb-8">Enter your details to sign up</h5>
+            {/* <h5 className="mb-8">Enter your details to sign up</h5> */}
           </div>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,12 +193,8 @@ function UpdatedRegister() {
           </form>
         </div>
       </div>
-      <div className="bg-slate-200 hidden md:block">
-        <img
-          src={books}
-          className="max-h-screen w-full max-w-screen-lg"
-          alt="Books"
-        />
+      <div className="bg-slate-200 hidden md:block max-h-screen overflow-hidden">
+        <img src={books} className="h-full w-full object-cover" alt="Books" />
       </div>
       <ToastContainer />
     </div>

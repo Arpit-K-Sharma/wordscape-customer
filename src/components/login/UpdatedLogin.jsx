@@ -206,21 +206,21 @@ function Signin() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen">
       <div className="bg-zinc-50 p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto">
           <NavLink to="/">
             <img
-              className="mx-auto my-1 mb-5 sm:w-32 sm:h-32 lg:h-[140px]"
+              className="mx-auto my-1 mb-5 sm:w-32 max-sm:h-[200px] lg:h-[100px] "
               src={logo}
               alt="Logo"
             />
           </NavLink>
           <div>
-            <h2 className="text-2xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto">
-              Login
+            <h2 className="text-xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto">
+              Sign in
             </h2>
-            <h5 className="mb-8">Enter your credentials to sign in</h5>
+            {/* <h5 className="mb-8">Enter your credentials to sign in</h5> */}
           </div>
           <form className="space-y-6">
             <div className="form-control w-full">
@@ -295,10 +295,10 @@ function Signin() {
           </form>
         </div>
       </div>
-      <div className="bg-slate-200 hidden md:block">
+      <div className="bg-slate-200 hidden md:block max-h-screen">
         <img
           src={books}
-          className="max-h-screen w-full max-w-screen-lg"
+          className="lg:h-full max-h-full w-full object-cover"
           alt="Books"
         />
       </div>

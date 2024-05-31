@@ -367,99 +367,121 @@ function AdminDashboard() {
               </ul>
             </div>
             <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
-              <table className="table">
-                <thead>
-                  <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
-                    <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Delivery Date</th>
-                    <th>Pages</th>
-                    <th>Quantity</th>
-                    <th className="w-[200px]">OrderDetails</th>
-                    <th className="w-[200px]">Job Card</th>
-                    <th className="w-[200px]">View Tracking</th>
-                    <th className="w-[200px]">Status</th>
-                    <th className="w-[200px]">Cancel Order</th>
-                  </tr>
-                </thead>
-                <tbody className="text-semibold">
-                  {filteredOrderDetails &&
-                    filteredOrderDetails.map((details) => (
-                      <tr key={details.orderId}>
-                        <td>{details.orderId}</td>
-                        <td>{new Date(details.date).toLocaleDateString()}</td>
-                        <td>
-                          {details.delivery
-                            ? new Date(details.delivery).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                        <td>{details.pages}</td>
-                        <td>{details.quantity}</td>
-                        <td>
-                          <button
-                            className="btn min-h-[30px] h-[40px] w-[111px]"
-                            onClick={() => handleViewDetails(details.orderId)}
-                          >
-                            View details
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className="btn min-h-[30px] h-[40px] w-[90px]"
-                            onClick={(e) => handleJobCard(details.orderId)}
-                          >
-                            Job card
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className="btn min-h-[30px] h-[40px]"
-                            onClick={() => {
-                              handleTracking(details.orderId),
-                                setOrderid(details.orderId);
-                            }}
-                          >
-                            Track It
-                          </button>
-                        </td>
-                        <td>
-                          <a
-                            className={
-                              details.status == "PENDING"
-                                ? "bg-blue-400 p-[6px] rounded-[5px] flex gap-[10px] font-bold"
-                                : details.status == "APPROVED" ||
-                                  details.status == "COMPLETED"
-                                ? "bg-[#299829] p-[6px] rounded-[5px] flex gap-[10px]"
-                                : details.status == "CANCELED"
-                                ? "bg-[red] p-[6px] rounded-[5px] font-bold flex gap-[10px]"
-                                : null
-                            }
-                          >
-                            {details.status == "PENDING" ? (
-                              <FaClock size={19} />
-                            ) : details.status == "APPROVED" ||
-                              details.status == "COMPLETED" ? (
-                              <FaCheckCircle size={19} />
-                            ) : details.status == "CANCELED" ? (
-                              <FaTimesCircle size={19} />
-                            ) : null}
-                            {details.status}
-                          </a>
-                        </td>
-                        <td>
-                          <button
-                            className="btn min-h-[30px] h-[40px] hover:bg-[red]  hover:border-[#212c4b] hover:text-[white]"
-                            onClick={(e) => {
-                              handleCancel(details.orderId);
-                            }}
-                          >
-                            Cancel
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+              <div className="overflow-x-auto w-full">
+                <table className="table w-full">
+                  {/* head */}
+                  <thead>
+                    <tr className="bg-base-200">
+                      <th className="text-base-content font-semibold">
+                        Order ID
+                      </th>
+                      <th className="text-base-content font-semibold">Date</th>
+                      <th className="text-base-content font-semibold">
+                        Delivery Date
+                      </th>
+                      <th className="text-base-content font-semibold">Pages</th>
+                      <th className="text-base-content font-semibold">
+                        Quantity
+                      </th>
+                      <th className="text-base-content font-semibold w-[200px]">
+                        Order Details
+                      </th>
+                      <th className="text-base-content font-semibold w-[200px]">
+                        Job Card
+                      </th>
+                      <th className="text-base-content font-semibold w-[200px]">
+                        View Tracking
+                      </th>
+                      <th className="text-base-content font-semibold w-[200px]">
+                        Status
+                      </th>
+                      <th className="text-base-content font-semibold w-[200px]">
+                        Cancel Order
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredOrderDetails &&
+                      filteredOrderDetails.map((details) => (
+                        <tr
+                          key={details.orderId}
+                          className="hover:bg-base-300 transition-colors duration-300"
+                        >
+                          <td>{details.orderId}</td>
+                          <td>{new Date(details.date).toLocaleDateString()}</td>
+                          <td>
+                            {details.delivery
+                              ? new Date(details.delivery).toLocaleDateString()
+                              : "N/A"}
+                          </td>
+                          <td>{details.pages}</td>
+                          <td>{details.quantity}</td>
+                          <td>
+                            <button
+                              className="btn btn-sm btn-active"
+                              onClick={() => handleViewDetails(details.orderId)}
+                            >
+                              View details
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-sm btn-active"
+                              onClick={(e) => handleJobCard(details.orderId)}
+                            >
+                              Job card
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-sm btn-active"
+                              onClick={() => {
+                                handleTracking(details.orderId),
+                                  setOrderid(details.orderId);
+                              }}
+                            >
+                              Track It
+                            </button>
+                          </td>
+                          <td>
+                            <div
+                              className={`badge badge-lg ${
+                                details.status === "PENDING"
+                                  ? "badge-info"
+                                  : details.status === "APPROVED" ||
+                                    details.status === "COMPLETED"
+                                  ? "badge-success"
+                                  : details.status === "CANCELLED"
+                                  ? "badge-error"
+                                  : ""
+                              }`}
+                            >
+                              {details.status === "PENDING" ? (
+                                <FaClock className="mr-2" />
+                              ) : details.status === "APPROVED" ||
+                                details.status === "COMPLETED" ? (
+                                <FaCheckCircle className="mr-2" />
+                              ) : details.status === "CANCELLED" ? (
+                                <FaTimesCircle className="mr-2" />
+                              ) : null}
+                              {details.status}
+                            </div>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-sm btn-pimrary underline text-red-500"
+                              onClick={(e) => {
+                                handleCancel(details.orderId);
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div className="drawer drawer-end ">
               <input
@@ -476,7 +498,7 @@ function AdminDashboard() {
                   {selectedOrder && (
                     <>
                       <div className="shadow-2xl bg-base-200">
-                        <table className="table-auto w-full ml-[20px]">
+                        <table className="table-auto w-full ml-[20px] table-zebra">
                           <tbody>
                             <tr
                               className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
