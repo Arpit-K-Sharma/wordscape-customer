@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const OrderDetails = (order) => {
-  console.log(order);
+  console.log(order)
   const {
     date,
     paperSize,
@@ -16,15 +16,11 @@ const OrderDetails = (order) => {
     laminationType,
     inkType,
     remarks,
-    customerName,
+    customerName
   } = order;
 
   if (!date) {
-    return (
-      <div className="order-details p-4 rounded shadow-lg bg-gray-100 max-w-lg mx-auto">
-        No order details available.
-      </div>
-    );
+    return <div className="order-details p-4 rounded shadow-lg bg-gray-100 max-w-lg mx-auto">No order details available.</div>;
   }
 
   return (
@@ -47,22 +43,19 @@ const OrderDetails = (order) => {
           <strong>Binding Type:</strong> <span>{bindingType}</span>
         </div>
         <div>
-          <strong>Cover Treatment Type:</strong>{" "}
-          <span>{coverTreatmentType}</span>
+          <strong>Cover Treatment Type:</strong> <span>{coverTreatmentType}</span>
         </div>
         <div>
           <strong>Inner Paper Type:</strong> <span>{innerPaperType}</span>
         </div>
         <div>
-          <strong>Inner Paper Thickness:</strong>{" "}
-          <span>{innerPaperThickness} gsm</span>
+          <strong>Inner Paper Thickness:</strong> <span>{innerPaperThickness} gsm</span>
         </div>
         <div>
           <strong>Outer Paper Type:</strong> <span>{outerPaperType}</span>
         </div>
         <div>
-          <strong>Outer Paper Thickness:</strong>{" "}
-          <span>{outerPaperThickness} gsm</span>
+          <strong>Outer Paper Thickness:</strong> <span>{outerPaperThickness} gsm</span>
         </div>
         <div>
           <strong>Lamination Type:</strong> <span>{laminationType}</span>

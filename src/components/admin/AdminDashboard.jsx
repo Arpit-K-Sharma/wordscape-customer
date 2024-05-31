@@ -234,10 +234,11 @@ function AdminDashboard() {
             <p>Logged in as: </p>
           </div>
         </div> */}
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-slate-200 bg-sl0\">
           <div className="font-archivo">
             <div className="flex justify-center gap-5 text-slate-200 mb-9">
-              <h1 className="font-bold text-4xl">Orders Summary</h1>
+              <h1 className="font-bold text-5xl mx-auto">Admin Dashboard</h1>
+              {/* <h2 className="font-bold text-4xl">Orders Summary</h2> */}
               <div className="flex gap-5">
                 <div className="w-[150px] ml-[420px]">
                   <label className="input input-bordered flex items-center gap-2">
@@ -261,60 +262,66 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center gap-[100px] mt-[20px]">
-              <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
-                <div className="card-body p-[0.3rem] mt-[10%] mb-5">
-                  <a className="flex justify-center">
-                    <AiOutlineClockCircle
-                      size={35}
-                      color="white"
-                      className="ml-2"
-                    />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Pending Orders
+            <div className="flex flex-wrap justify-center gap-8 mt-6">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
+                <div className="card h-48 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg">
+                  <div className="card-body p-4 mt-4">
+                    <a className="flex justify-center text-white mb-2">
+                      <AiOutlineClockCircle size={25} className="mr-2" />
+                      <h3 className="card-title font-semibold text-lg">
+                        Pending Orders
+                      </h3>
+                    </a>
+                    <h3 className="card-title flex justify-center text-gray-300 text-sm">
+                      Waiting to be processed
                     </h3>
-                  </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Waiting to be processed
-                  </h3>
-                  <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-                    <h2 className="text-4xl text-o1 font-bold">{pending}</h2>
+                    <div className="card-actions justify-center items-center bg-white bg-opacity-20 h-2/3 rounded-md mt-2">
+                      <h2 className="text-3xl font-bold text-white">
+                        {pending}
+                      </h2>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
-                <div className="card-body p-[0.3rem] mt-[10%] mb-5">
-                  <a className="flex justify-center">
-                    <AiOutlineCheckCircle
-                      size={35}
-                      color="white"
-                      className="ml-2"
-                    />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Approved Orders
+
+              <div className="w-full sm:w-1/3 p-4 bg-white rounded-lg shadow-lg">
+                <div className="card h-48 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg">
+                  <div className="card-body p-4 mt-4">
+                    <a className="flex justify-center text-white mb-2">
+                      <AiOutlineCheckCircle size={25} className="mr-2" />
+                      <h3 className="card-title font-semibold text-lg">
+                        Approved Orders
+                      </h3>
+                    </a>
+                    <h3 className="card-title flex justify-center text-gray-300 text-sm">
+                      Verification Completed
                     </h3>
-                  </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Verification Completed
-                  </h3>
-                  <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-                    <h2 className="text-4xl text-o1 font-bold">{approved}</h2>
+                    <div className="card-actions justify-center items-center bg-white bg-opacity-20 h-2/3 rounded-md mt-2">
+                      <h2 className="text-3xl font-bold text-white">
+                        {approved}
+                      </h2>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
-                <div className="card-body p-[0.3rem] mt-[10%] mb-5">
-                  <a className="flex justify-center">
-                    <FaCheckCircle size={32} color="white" className="ml-2" />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Completed Orders
+
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
+                <div className="card h-48 bg-gradient-to-r from-purple-600 to-green-400 rounded-lg">
+                  <div className="card-body p-4 mt-4">
+                    <a className="flex justify-center text-white mb-2">
+                      <FaCheckCircle size={22} className="mr-2" />
+                      <h3 className="card-title font-semibold text-lg">
+                        Completed Orders
+                      </h3>
+                    </a>
+                    <h3 className="card-title flex justify-center text-gray-300 text-sm">
+                      Order Finalized
                     </h3>
-                  </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Order Finalized
-                  </h3>
-                  <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-                    <h2 className="text-4xl text-o1 font-bold">{completed}</h2>
+                    <div className="card-actions justify-center items-center bg-white bg-opacity-20 h-2/3 rounded-md mt-2">
+                      <h2 className="text-3xl font-bold text-white">
+                        {completed}
+                      </h2>
+                    </div>
                   </div>
                 </div>
               </div>
