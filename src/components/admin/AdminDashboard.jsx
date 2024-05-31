@@ -234,12 +234,13 @@ function AdminDashboard() {
             <p>Logged in as: </p>
           </div>
         </div> */}
-        <div className="p-7 text-slate-200 bg-sl0\">
+        <div className="p-7 text-slate-200">
           <div className="font-archivo">
             <div className="flex justify-center gap-5 text-slate-200 mb-9">
               <h1 className="font-bold text-5xl mx-auto">Admin Dashboard</h1>
+
               {/* <h2 className="font-bold text-4xl">Orders Summary</h2> */}
-              <div className="flex gap-5">
+              {/* <div className="flex gap-5">
                 <div className="w-[150px] ml-[420px]">
                   <label className="input input-bordered flex items-center gap-2">
                     <input
@@ -260,8 +261,12 @@ function AdminDashboard() {
                     />
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
+            <h3 className="mx-auto text-center self-center text-xl">
+              At a glance
+            </h3>
+
             <div className="flex flex-wrap justify-center gap-8 mt-6">
               <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg">
@@ -326,7 +331,7 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
-            <div className="dropdown xl:ml-[10%] mt-[30px] text-center w-[300px]">
+            <div className="dropdown xl:ml-[9%] mt-[30px] p-4 text-center w-[300px]">
               <label className="input input-bordered flex items-center gap-2">
                 <input
                   tabIndex={0}

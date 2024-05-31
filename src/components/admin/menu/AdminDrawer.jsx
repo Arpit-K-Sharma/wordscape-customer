@@ -141,7 +141,7 @@ function AdminDrawer() {
             </li>
           </ul>
         </details>
-        <div className="mb-[130px]"></div>
+        <div className="mt-[25px]"></div>
 
         <li className="bg-gray-900 text-white rounded-lg">
           <NavLink to="/" onClick={handleLogout}>
