@@ -42,7 +42,7 @@ function Signin() {
             localStorage.setItem("id", decoded.id);
             toast.success("Signed In Successfully", {
               position: "top-right",
-              autoClose: 2000,
+              autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -108,7 +108,7 @@ function Signin() {
             localStorage.setItem("id", decoded.id);
             setTimeout(() => {
               setIsAdmin(true);
-            }, 2000);
+            }, 1500);
           } else {
             console.error("Error: Username not found in the token");
           }
@@ -122,7 +122,7 @@ function Signin() {
       console.error("Error:", error);
       toast.error("Login Failed", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
