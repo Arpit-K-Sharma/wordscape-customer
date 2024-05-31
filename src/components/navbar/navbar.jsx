@@ -47,13 +47,13 @@ function Navbar() {
               </li>
             )}
 
-            {/* {isAdmin && (
+            {isAdmin && (
               <li>
                 <NavLink to="/admin/dashboard">
                   <a>Admin Dashboard</a>
                 </NavLink>
               </li>
-            )} */}
+            )}
 
             {isLoggedIn && (
               <li>

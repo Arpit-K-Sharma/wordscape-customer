@@ -1,43 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import logo from "../../images/logo/LogoOnly.png";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
 function AdminDrawer() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [logout, isLogout] = React.useState(false);
 
-  const handleLogout = async () => {
-    try {
-      Cookies.remove("adminToken");
-      localStorage.removeItem("id");
-      setLoggedIn(false);
-      setIsAdmin(false);
-      toast.success("Logged Out Successfully", {
-        position: "top-right",
-        autoClose: 2000, // Show for 2 seconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Logout Failed", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
+  const handleLogout = () => {
+    Cookies.remove("adminToken");
+    Cookies.remove("userToken");
+    localStorage.removeItem("id");
+    isLogout(true);
+    Navigate("/");
   };
 
   return (
