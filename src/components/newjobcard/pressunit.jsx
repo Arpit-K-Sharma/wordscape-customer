@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
-function PressUnits() {
-  const [pressUnit, setPressUnit] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
-  const [pressunit, setPressunit] = useState(false);
-  const { register, handleSubmit, reset } = useForm({
+function PressUnits({ data }) {
+
+  const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       totalset: "",
       forma: "",
@@ -17,11 +17,31 @@ function PressUnits() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [pressUnit, setPressUnit] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [pressunit, setPressunit] = useState(false);
 
-    // Process pressData to replace empty strings with null
-    const processedPressData = data.pressData.map((entry) => {
+  useEffect(() => {
+    if (data) {
+      const initialFormValues = {
+        totalset: data.totalSet || "",
+        forma: data.forma || "",
+        workandturn: data.workAndTurn || "",
+        pressData: data.pressData.map((entry) => ({
+          paperType: entry.paperType || "",
+          size: entry.size || "",
+          signature: entry.signature || "",
+          ordered: entry.ordered || "",
+          produced: entry.produced || ""
+        })),
+      };
+      reset(initialFormValues);
+    }
+  }, [data, reset]);
+
+  const onSubmit = async (formData) => {
+    console.log(formData);
+
+    const processedPressData = formData.pressData.map((entry) => {
       const processedEntry = {};
       Object.entries(entry).forEach(([key, value]) => {
         processedEntry[key] = value ? value : null;
@@ -30,42 +50,63 @@ function PressUnits() {
     });
 
     const jsonData = {
-      totalSet: data.totalset,
-      forma: data.forma,
-      workAndTurn: data.workandturn,
+      totalSet: formData.totalset,
+      forma: formData.forma,
+      workAndTurn: formData.workandturn,
       pressData: processedPressData,
     };
 
-    Cookies.set("pressUnitData", JSON.stringify(jsonData));
-    console.log("Press Units Data: ", jsonData);
     document.getElementById("my_modal_12").close();
     setPressunit(true);
 
-    let PaperUnitsData = Cookies.get('PaperUnitsData')
-    let binderyData = Cookies.get('binderyData')
-    let deliveryData = Cookies.get('deliveryData')
-    let paperData = Cookies.get('paperData')
-    let paymentData = Cookies.get('paymentData')
-    let plateDetailData = Cookies.get('plateData')
-    let prePressData = Cookies.get('prePressData')
-    let pressUnitData = Cookies.get('pressUnitData')
+    const parseJSONCookie = (cookie) => {
+      try {
+        return JSON.parse(cookie);
+      } catch (e) {
+        console.error("Error parsing cookie:", cookie);
+        return null;
+      }
+    };
+
+    let PaperDetailData = parseJSONCookie(Cookies.get('paperData'));
+    let binderyData = parseJSONCookie(Cookies.get('binderyData'));
+    let deliveryData = parseJSONCookie(Cookies.get('deliveryData'));
+    let paperData = parseJSONCookie(Cookies.get('PaperUnitsData'));
+    let paymentData = parseJSONCookie(Cookies.get('paymentData'));
+    let plateDetailData = parseJSONCookie(Cookies.get('plateData'));
+    let prePressData = parseJSONCookie(Cookies.get('prePressData'));
 
     let cookiesData = {
-      paperData : PaperUnitsData.paperData,
-      binderyData : binderyData.binderyData,
-      deliveryDetail : deliveryData.deliveryDetail,
-      paperDetail: paperData.paperDetail,
-      servicePaymentList: paymentData.servicePaymentList,
-      plateDetailData,
-      prePressData,
-      pressUnitData
+      paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
+      binderyData: binderyData ? binderyData.binderyData : null,
+      deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
+      paperData: paperData ? paperData.paperData : null,
+      prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
+      plateDetailData: plateDetailData ? plateDetailData : null,
+      prePressData: prePressData ? prePressData.prePressUnitList : null,
+      pressUnitData: jsonData
     };
-    console.log(cookiesData)
+
+    const orderId = 4;
+    const url = `http://localhost:8081/jobCard/${orderId}`;
+    console.log(cookiesData);
+
+    try {
+      const response = await axios.post(url, cookiesData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Successfully sent data to API:', response.data);
+    } catch (error) {
+      console.error('Error sending data to API:', error);
+    }
   };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent default behavior of the Enter key
+      event.preventDefault();
       const inputs = document.querySelectorAll("input");
       const currentIndex = Array.from(inputs).findIndex(
         (input) => document.activeElement === input
@@ -77,23 +118,6 @@ function PressUnits() {
     }
   };
 
-  const handlePressDataChange = (index, fieldName, value) => {
-    const updatedPressData = [...pressData];
-    if (index >= updatedPressData.length) {
-      while (index >= updatedPressData.length) {
-        updatedPressData.push({
-          paperType: "",
-          size: "",
-          signature: "",
-          ordered: "",
-          produced: "",
-        });
-      }
-    }
-    updatedPressData[index][fieldName] = value;
-    setPressData(updatedPressData);
-  };
-
   return (
     <>
       <button
@@ -101,7 +125,7 @@ function PressUnits() {
         onClick={() => document.getElementById("my_modal_12").showModal()}
       >
         <a className="flex"> Press Unit </a>
-        {pressunit == true ? (
+        {pressunit ? (
           <AiOutlineCheckCircle size={24} color="green" />
         ) : null}
       </button>
@@ -155,7 +179,7 @@ function PressUnits() {
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th className=" flex ml-[-60px]">Impressions</th>
+                  <th className="flex ml-[-60px]">Impressions</th>
                 </tr>
                 <tr className="bg-base-200 border-b border-gray-400 ">
                   <th className="">Paper Type</th>
@@ -167,50 +191,48 @@ function PressUnits() {
               </thead>
               <tbody>
                 {pressUnit.map((press, index) => (
-                  <>
-                    <tr className="border border-[#393838]" key={press}>
-                      <td>
-                        <input
-                          type="text"
-                          className="input input-bordered h-[40px] w-full max-w-xs"
-                          {...register(`pressData.${index}.paperType`)}
-                          onKeyDown={handleKeyPress}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="input input-bordered h-[40px] w-full max-w-xs"
-                          {...register(`pressData.${index}.size`)}
-                          onKeyDown={handleKeyPress}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="signature"
-                          className="input input-bordered  h-[40px] w-full max-w-xs"
-                          {...register(`pressData.${index}.signature`)}
-                          onKeyDown={handleKeyPress}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="input input-bordered  h-[40px] w-full max-w-xs"
-                          {...register(`pressData.${index}.ordered`)}
-                          onKeyDown={handleKeyPress}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="input input-bordered h-[40px] w-full max-w-xs"
-                          {...register(`pressData.${index}.produced`)}
-                          onKeyDown={handleKeyPress}
-                        />
-                      </td>
-                    </tr>
-                  </>
+                  <tr className="border border-[#393838]" key={press}>
+                    <td>
+                      <input
+                        type="text"
+                        className="input input-bordered h-[40px] w-full max-w-xs"
+                        {...register(`pressData.${index}.paperType`)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        className="input input-bordered h-[40px] w-full max-w-xs"
+                        {...register(`pressData.${index}.size`)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="signature"
+                        className="input input-bordered h-[40px] w-full max-w-xs"
+                        {...register(`pressData.${index}.signature`)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        className="input input-bordered h-[40px] w-full max-w-xs"
+                        {...register(`pressData.${index}.ordered`)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        className="input input-bordered h-[40px] w-full max-w-xs"
+                        {...register(`pressData.${index}.produced`)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -225,4 +247,5 @@ function PressUnits() {
     </>
   );
 }
+
 export default PressUnits;

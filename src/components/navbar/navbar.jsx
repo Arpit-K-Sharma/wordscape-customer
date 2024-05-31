@@ -18,6 +18,7 @@ function Navbar() {
   };
 
   const isLoggedIn = Cookies.get("userToken");
+  const isAdmin = Cookies.get("adminToken");
 
   return (
     <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">
@@ -45,6 +46,15 @@ function Navbar() {
                 </NavLink>
               </li>
             )}
+
+            {/* {isAdmin && (
+              <li>
+                <NavLink to="/admin/dashboard">
+                  <a>Admin Dashboard</a>
+                </NavLink>
+              </li>
+            )} */}
+
             {isLoggedIn && (
               <li>
                 <NavLink to="/order/1">

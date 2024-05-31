@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { useEffect } from "react";
-import { useState } from "react";
 import Cookies from "js-cookie";
 
-function Bindery() {
-  const [binderyOpen, setBinderyOpen] = useState(false); // Declare the binderyOpen state
+function Bindery({ data }) {
+  const [bindery, setBindery] = useState(false); // Use state to manage bindery status
+
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       filledBy: "",
@@ -16,8 +14,15 @@ function Bindery() {
     },
   });
 
-  const bindery = watch("bindery", false);
   const selectedOption = watch("selectedOption", "");
+
+  useEffect(() => {
+    if (data) {
+      setValue("filledBy", data.filledInBy || "");
+      setValue("approvedBy", data.approvedBy || "");
+      setValue("selectedOption", data.bindingSelectedOption || "");
+    }
+  }, [data, setValue]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -37,18 +42,18 @@ function Bindery() {
     setValue("selectedOption", value);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     const jsondata = {
       binderyData: {
-        filledBy: data.filledBy,
-        approvedBy: data.approvedBy,
-        binderyselectedOption: data.selectedOption,
+        filledInBy: formData.filledBy,
+        approvedBy: formData.approvedBy,
+        bindingSelectedOption: formData.selectedOption,
       },
     };
     console.log("Bindery Data in JSON", jsondata);
     Cookies.set("binderyData", JSON.stringify(jsondata));
     document.getElementById("my_modal_11").close();
-    setBinderyOpen(false);
+    setBindery(true); // Update the bindery state here
   };
 
   return (
@@ -58,7 +63,7 @@ function Bindery() {
         onClick={() => document.getElementById("my_modal_11").showModal()}
       >
         <a className="flex"> Bindery </a>
-        {bindery === true ? (
+        {bindery ? (
           <AiOutlineCheckCircle size={24} color="green" />
         ) : null}
       </button>
@@ -81,6 +86,7 @@ function Bindery() {
                       value="Center Stitch"
                       className="h-6 w-6"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("Center Stitch")}
                     />
                     <span className="ml-1 mr-5">Center stitch</span>
                   </label>
@@ -93,6 +99,7 @@ function Bindery() {
                       value="Perfect"
                       className="h-6 w-8"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("Perfect")}
                     />
                     <span className="ml-1">Perfect</span>
                   </label>
@@ -105,6 +112,7 @@ function Bindery() {
                       value="juju"
                       className="h-6 w-6"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("juju")}
                     />
                     <span className="ml-1 mr-5">Juju</span>
                   </label>
@@ -117,6 +125,7 @@ function Bindery() {
                       value="metal-foiling"
                       className="h-6 w-8"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("metal-foiling")}
                     />
                     <span className="ml-1">Metal-foiling</span>
                   </label>
@@ -131,6 +140,7 @@ function Bindery() {
                       value="diecuting"
                       className="h-6 w-6"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("diecuting")}
                     />
                     <span className="ml-1 mr-5">Diecuting</span>
                   </label>
@@ -143,6 +153,7 @@ function Bindery() {
                       value="perforation"
                       className="h-6 w-8"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("perforation")}
                     />
                     <span className="ml-1">Perforation</span>
                   </label>
@@ -155,6 +166,7 @@ function Bindery() {
                       value="padding"
                       className="h-6 w-6"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("padding")}
                     />
                     <span className="ml-1 mr-5">Padding</span>
                   </label>
@@ -167,6 +179,7 @@ function Bindery() {
                       value="spot-varnishing"
                       className="h-6 w-8"
                       {...register("selectedOption")}
+                      onChange={() => handleRadioChange("spot-varnishing")}
                     />
                     <span className="ml-1">Spot varnishing</span>
                   </label>
@@ -191,6 +204,7 @@ function Bindery() {
                   type="text"
                   className="input input-bordered w-[305px] max-w-xs"
                   {...register("approvedBy")}
+                  onKeyDown={handleKeyPress}
                 />
               </div>
             </div>

@@ -1,44 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
 import Cookies from "js-cookie";
 
-function PaperDetail() {
+function PaperDetail({ data }) {
   const {
     register,
     handleSubmit,
     formState: { isSubmitSuccessful },
+    setValue,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (data) {
+      setValue("paperSize", data.paperSize);
+      setValue("gutterSize", data.gutterSize);
+      setValue("gripperSize", data.gripperSize);
+      setValue("coverPaperSize", data.coverPaperSize);
+      setValue("innerPaperSize", data.innerPaperSize);
+      setValue("folderName", data.folderName);
+      setValue("plateProcessBy", data.plateProcessBy);
+    }
+  }, [data, setValue]);
+
+  const onSubmit = async (formData) => {
+    console.log(formData);
     const jsonData = {
       paperDetail: {
-        paperSize: data.paperSize,
-        gutterSize: data.gutterSize,
-        gripperSize: data.gripperSize,
-        coverPaperSize: data.coverPaperSize,
-        innerPaperSize: data.innerPaperSize,
-        folderName: data.folderName,
-        plateProcessBy: data.plateProcessBy,
+        paperSize: formData.paperSize,
+        gutterSize: formData.gutterSize,
+        gripperSize: formData.gripperSize,
+        coverPaperSize: formData.coverPaperSize,
+        innerPaperSize: formData.innerPaperSize,
+        folderName: formData.folderName,
+        plateProcessBy: formData.plateProcessBy,
       },
     };
     Cookies.set("paperData", JSON.stringify(jsonData));
     console.log("Paper Data from Paper Details: " + jsonData);
     document.getElementById("my_modal_8").close();
   };
-
-  // try {
-  //   const response = await axios.post("your-api-endpoint-url", data);
-  //   if (response.status === 200) {
-  //     document.getElementById("my_modal_8").close();
-  //   } else {
-  //     console.error("Failed to send data to API:", response.statusText);
-  //   }
-  // } catch (error) {
-  //   console.error("Error sending data to API:", error.message);
-  // }
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {

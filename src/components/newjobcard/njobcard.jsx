@@ -21,6 +21,7 @@ function NJobCard() {
   const [orderId, setOrderId] = useState();
   const [filteredOrder, setFilteredOrder] = useState([]);
   const dropdownRef = useRef(null);
+  const [jobCard, setJobCard] = useState([]);
 
   const handleClick = () => {
     setOpen(true);
@@ -41,6 +42,14 @@ function NJobCard() {
   useEffect(() => {
     if (orders.length > 0 && ordersId) {
       handleOrderChange(ordersId);
+      const fetchJobCard = async () => {
+        const response = await axios.get(
+          `http://localhost:8081/jobCard/${ordersId}`
+        );
+        console.log(response.data);
+        setJobCard(response.data);
+      };
+      fetchJobCard();
     }
   }, [orders, ordersId]);
 
@@ -81,7 +90,9 @@ function NJobCard() {
           <h1 className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl">
             Order Details
           </h1>
-          <div className="flex gap-[20px]">
+          <div
+            className={open ? "flex gap-[20px] ml-[-100%]" : "flex gap-[20px]"}
+          >
             <div className="dropdown xl:ml-[80%] mt-[10px] text-center">
               <label className="input input-bordered flex items-center gap-2">
                 <input
@@ -129,14 +140,18 @@ function NJobCard() {
               onClick={handleClick}
               className="grid grid-cols-2 gap-x-[250px] gap-y-[50px]"
             >
-              <PaymentTable />
-              <DeliveryDetail />
-              <PressUnit />
-              <PaperDetail />
-              <PlateDetail />
-              <PaperUnit />
-              <Bindery />
-              <PressUnits />
+              {jobCard ? (
+                <>
+                  <PaymentTable data={jobCard.prePressUnitList} />
+                  <DeliveryDetail data={jobCard.delivery} />
+                  <PressUnit data={jobCard.prePressData} />
+                  <PaperDetail data={jobCard.paperDetailData} />
+                  <PlateDetail data={jobCard.plateDetailData} />
+                  <PaperUnit data={jobCard.paperData} />
+                  <Bindery data={jobCard.bindingData} />
+                  <PressUnits data={jobCard.pressUnitData} />
+                </>
+              ) : null}
             </div>
           </div>
         </div>

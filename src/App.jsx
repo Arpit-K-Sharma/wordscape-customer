@@ -84,11 +84,11 @@ function App() {
           <Route path="/order/:step" element={<OrderPlacement />} />
           <Route path="/user/orders" element={<UserOrder />} />
           <Route path="/user/edit" element={<Profile />} />
+          {/* <Route path="/dashboard/orderdetail" element={<OrderDetails />} /> */}
         </Route>
 
         <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/dashboard/orderdetail" element={<OrderDetails />} />
         <Route path="/staff/dashboard" element={<StaffDashboard />} />
         <Route path="/staff/paper" element={<StaffPaper />} />
         <Route path="/staff/papersize" element={<StaffPaperSize />} />

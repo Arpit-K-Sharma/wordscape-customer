@@ -4,7 +4,7 @@ import Avatar from "react-avatar";
 import Menu from "./menu";
 
 function Profile() {
-  const userId = localStorage.getItem("id");
+  const userId = localStorage.getItem('id')
   const [customerData, setCustomerData] = useState({
     customerId: null,
     fullName: "",

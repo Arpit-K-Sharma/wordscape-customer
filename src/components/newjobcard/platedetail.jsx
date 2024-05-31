@@ -1,57 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-function PlateDetail() {
+function PlateDetail({ data }) {
   const [plate, setPlate] = useState(false);
   const [platenumber, setPlatenumber] = useState([1, 2, 3, 4]);
+
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       screenType: "",
-      plateData: [
-        {
-          size: "",
-          colour1: "",
-          colour2: "",
-          colour3: "",
-          colour4: "",
-          special: "",
-          total: "",
-        },
-      ],
+      plateData: Array(4).fill({
+        size: "",
+        colour1: "",
+        colour2: "",
+        colour3: "",
+        colour4: "",
+        special: "",
+        total: "",
+      }),
       plateDamage: "",
       plateRemake: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (data) {
+      setValue("screenType", data.screenType || "");
+      setValue("plateDamage", data.plateDamage || "");
+      setValue("plateRemake", data.plateRemake || "");
+      
+      const plateData = data.plateData || [];
+      plateData.forEach((plate, index) => {
+        setValue(`plateData[${index}].size`, plate.size || "");
+        setValue(`plateData[${index}].colour1`, plate.colour1 || "");
+        setValue(`plateData[${index}].colour2`, plate.colour2 || "");
+        setValue(`plateData[${index}].colour3`, plate.colour3 || "");
+        setValue(`plateData[${index}].colour4`, plate.colour4 || "");
+        setValue(`plateData[${index}].special`, plate.special || "");
+        setValue(`plateData[${index}].total`, plate.total || "");
+      });
+    }
+  }, [data, setValue]);
+
+  const onSubmit = (formData) => {
     const jsonData = {
-      screenType: data.screenType,
-      plateData: data.plateData,
-      plateDamage: data.plateDamage,
-      plateRemake: data.plateRemake,
+      screenType: formData.screenType,
+      plateData: formData.plateData,
+      plateDamage: formData.plateDamage,
+      plateRemake: formData.plateRemake,
     };
     Cookies.set("plateData", JSON.stringify(jsonData));
     console.log("Plate Data from Plate Details: ", jsonData);
     document.getElementById("my_modal_9").close();
     setPlate(true);
   };
-
-  useEffect(() => {
-    platenumber.forEach((_, index) => {
-      setValue(`plateData[${index}].size`);
-      setValue(`plateData[${index}].colour1`);
-      setValue(`plateData[${index}].colour2`);
-      setValue(`plateData[${index}].colour3`);
-      setValue(`plateData[${index}].colour4`);
-      setValue(`plateData[${index}].special`);
-      setValue(`plateData[${index}].total`);
-    });
-  }, []);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -67,26 +70,6 @@ function PlateDetail() {
     }
   };
 
-  const handlePlateDataChange = (index, fieldName, value) => {
-    const updatedPlateData = [...plateData];
-    if (index >= updatedPlateData.length) {
-      while (index >= updatedPlateData.length) {
-        updatedPlateData.push({
-          size: "",
-          colour1: "",
-          colour2: "",
-          colour3: "",
-          colour4: "",
-          special: "",
-          total: "",
-        });
-      }
-    }
-    updatedPlateData[index][fieldName] = value;
-    setValue(`plateData[${index}].${fieldName}`, value); // Update react-hook-form state
-    setPlateData(updatedPlateData);
-  };
-
   return (
     <>
       <button
@@ -94,9 +77,7 @@ function PlateDetail() {
         onClick={() => document.getElementById("my_modal_9").showModal()}
       >
         <a className="flex"> Plate Details </a>
-        {plate === true ? (
-          <AiOutlineCheckCircle size={24} color="green" />
-        ) : null}
+        {plate && <AiOutlineCheckCircle size={24} color="green" />}
       </button>
       <dialog
         id="my_modal_9"
@@ -146,7 +127,6 @@ function PlateDetail() {
                         <input
                           type="text"
                           className="input input-bordered w-[80px] h-[40px] max-w-xs"
-                          name={`plateData[${index}].size`}
                           {...register(`plateData.${index}.size`)}
                           onKeyDown={handleKeyPress}
                         />
@@ -154,7 +134,6 @@ function PlateDetail() {
                       <td className="border-b border-[#393838]">
                         <input
                           type="text"
-                          name="colour1"
                           className="input input-bordered w-[90px] h-[40px] max-w-xs"
                           {...register(`plateData.${index}.colour1`)}
                           onKeyDown={handleKeyPress}
@@ -163,7 +142,6 @@ function PlateDetail() {
                       <td className="border-b border-[#393838]">
                         <input
                           type="text"
-                          name="colour2"
                           className="input input-bordered w-[90px] h-[40px] max-w-xs"
                           {...register(`plateData.${index}.colour2`)}
                           onKeyDown={handleKeyPress}
@@ -172,9 +150,7 @@ function PlateDetail() {
                       <td className="border-b border-[#393838]">
                         <input
                           type="text"
-                          name="colour3"
                           className="input input-bordered w-[90px] h-[40px] max-w-xs"
-                          value={row.colour3}
                           {...register(`plateData.${index}.colour3`)}
                           onKeyDown={handleKeyPress}
                         />
@@ -182,7 +158,6 @@ function PlateDetail() {
                       <td className="border-b border-[#393838]">
                         <input
                           type="text"
-                          name="colour4"
                           className="input input-bordered w-[90px] h-[40px] max-w-xs"
                           {...register(`plateData.${index}.colour4`)}
                           onKeyDown={handleKeyPress}
@@ -191,9 +166,7 @@ function PlateDetail() {
                       <td className="border-b border-[#393838]">
                         <input
                           type="text"
-                          name="special"
                           className="input input-bordered w-[90px] h-[40px] max-w-xs"
-                          value={row.special}
                           {...register(`plateData.${index}.special`)}
                           onKeyDown={handleKeyPress}
                         />
@@ -201,9 +174,7 @@ function PlateDetail() {
                       <td className="border-b border-r border-[#393838]">
                         <input
                           type="text"
-                          name="total"
                           className="input input-bordered w-[80px] h-[40px] max-w-xs"
-                          value={row.total}
                           {...register(`plateData.${index}.total`)}
                           onKeyDown={handleKeyPress}
                         />

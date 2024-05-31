@@ -422,7 +422,7 @@ function AdminDashboard() {
                                 ? "bg-blue-400 p-[6px] rounded-[5px] flex gap-[10px] font-bold"
                                 : details.status == "APPROVED" ||
                                   details.status == "COMPLETED"
-                                ? "bg-[#299229] p-[6px] rounded-[5px] flex gap-[10px]"
+                                ? "bg-[#299829] p-[6px] rounded-[5px] flex gap-[10px]"
                                 : details.status == "CANCELED"
                                 ? "bg-[red] p-[6px] rounded-[5px] font-bold flex gap-[10px]"
                                 : null

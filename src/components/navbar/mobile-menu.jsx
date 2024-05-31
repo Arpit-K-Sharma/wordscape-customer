@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function MobileMenu() {
   const isLoggedIn = Cookies.get("userToken") !== undefined;
   const navigate = useNavigate();
+  const isAdmin = Cookies.get("adminToken");
 
   const handleLogout = () => {
     Cookies.remove("userToken");
@@ -57,6 +58,14 @@ function MobileMenu() {
             <li>
               <NavLink to="/user/orders">
                 <p className="text-xl mb-3 font-light">Dashboard</p>
+              </NavLink>
+            </li>
+          )}
+
+          {isAdmin && (
+            <li>
+              <NavLink to="/admin/dashboard">
+                <p className="text-xl mb-3 font-light">Admin Dashboard</p>
               </NavLink>
             </li>
           )}

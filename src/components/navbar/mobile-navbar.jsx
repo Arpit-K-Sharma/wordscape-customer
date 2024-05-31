@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 function MobileNavbar() {
   const isLoggedIn = Cookies.get("userToken") !== undefined;
   const navigate = useNavigate();
+  const isAdmin = Cookies.get("adminToken");
 
   const handleLogout = () => {
     Cookies.remove("userToken");
@@ -123,11 +124,21 @@ function MobileNavbar() {
             </li>
           )}
 
-          <li>
-            <NavLink to="/order/1">
-              <p className="text-xl mb-3 font-light">Place an order</p>
-            </NavLink>
-          </li>
+          {isAdmin && (
+            <li>
+              <NavLink to="/admin/dashboard">
+                <p className="text-xl mb-3 font-light">Admin Dashboard</p>
+              </NavLink>
+            </li>
+          )}
+
+          {isLoggedIn && (
+            <li>
+              <NavLink to="/order/1">
+                <p className="text-xl mb-3 font-light">Place an order</p>
+              </NavLink>
+            </li>
+          )}
 
           {!isLoggedIn && (
             <li>

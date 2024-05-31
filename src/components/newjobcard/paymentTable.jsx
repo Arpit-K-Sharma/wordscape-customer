@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function PaymentTable({ setCombinedData }) {
+function PaymentTable({ data }) {
   const [paymentdone, setPaymentdone] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [serviceRequired, setServiceRequired] = useState("");
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       servicePaymentList: {
         paymentWay: "",
@@ -18,18 +15,25 @@ function PaymentTable({ setCombinedData }) {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data); // Log the form data to verify it's what you expect
+  useEffect(() => {
+    if (data) {
+      setValue("servicePaymentList.paymentWay", data.paymentMethod);
+      setValue("servicePaymentList.serviceRequired", data.serviceRequired);
+    }
+  }, [data, setValue]);
+
+  const onSubmit = (formData) => {
+    console.log(formData); // Log the form data to verify it's what you expect
     const jsonData = {
       servicePaymentList: {
-        paymentMethod: data.servicePaymentList.paymentWay, // Corrected field access
-        serviceRequired: data.servicePaymentList.serviceRequired, // Corrected field access
+        paymentMethod: formData.servicePaymentList.paymentWay, // Corrected field access
+        serviceRequired: formData.servicePaymentList.serviceRequired, // Corrected field access
       },
     };
     console.log("json data from payment table jsx: ", jsonData);
     Cookies.set("paymentData", JSON.stringify(jsonData));
     setPaymentdone(!paymentdone);
-    setCombinedData(jsonData);
+
     document.getElementById("my_modal_5").close();
   };
 

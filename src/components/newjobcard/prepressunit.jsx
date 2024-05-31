@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function PressUnit() {
+function PressUnit({ data }) {
   const [predone, setPredone] = useState(false);
-  //   const { register, handleSubmit } = useForm();
-  const { register, handleSubmit } = useForm({
+
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       prePressUnitList: {
         paymentMethod: "",
@@ -17,13 +16,21 @@ function PressUnit() {
     },
   });
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  useEffect(() => {
+    if (data) {
+      setValue("prePressUnitList.paymentMethod", data.paymentMethod);
+      setValue("prePressUnitList.materialReceived", data.materialReceived);
+      setValue("prePressUnitList.flapSize", data.flapSize);
+    }
+  }, [data, setValue]);
+
+  const onSubmit = async (formData) => {
+    console.log(formData);
     const jsonData = {
       prePressUnitList: {
-        paymentMethod: data.prePressUnitList.paymentMethod,
-        materialReceived: data.prePressUnitList.materialReceived,
-        flapSize: data.prePressUnitList.flapSize,
+        paymentMethod: formData.prePressUnitList.paymentMethod,
+        materialReceived: formData.prePressUnitList.materialReceived,
+        flapSize: formData.prePressUnitList.flapSize,
       },
     };
     console.log("json data from prepress unit: ", jsonData);
@@ -71,7 +78,6 @@ function PressUnit() {
                     className="w-6 h-6 mr-2 ml-3 rounded-full border border-gray-300 checked:bg-blue-500 checked:border-blue-500 focus:ring-blue-500 focus:ring-opacity-75"
                   />
                   <span className="mr-[25px] ml-[15px]">
-                    {" "}
                     Original Document File
                   </span>
                 </label>

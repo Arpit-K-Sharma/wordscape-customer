@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import Cookies from "js-cookie";
-import { useState } from "react";
-function PaperUnit() {
+function PaperUnit({ data }) {
+  console.log(data)
   const [paperunitdone, setPaperunitdone] = useState(false);
   const { handleSubmit, control, getValues, reset } = useForm({
     defaultValues: {
@@ -15,7 +15,7 @@ function PaperUnit() {
         size: "",
         numberOfPages: "",
         printrun: "",
-        side: ""
+        side: "singleside"
       },
       papersData1: [
         { type: "Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" },
@@ -24,22 +24,33 @@ function PaperUnit() {
         { type: "Other Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" }
       ],
       papersData2: [
-        { type: "Paper", CutSheetSize: "", Wastage: "", TotalCutSheet: "" },
-        { type: "Cover Paper", CutSheetSize: "", Wastage: "", TotalCutSheet: "" },
-        { type: "Inner Paper", CutSheetSize: "", Wastage: "", TotalCutSheet: "" },
-        { type: "Other Paper", CutSheetSize: "", Wastage: "", TotalCutSheet: "" }
+        { type: "Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
+        { type: "Cover Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
+        { type: "Inner Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
+        { type: "Other Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" }
       ],
       papersData3: [
-        { Type: "Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { Type: "Cover Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { Type: "Inner Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { Type: "Other Paper", type: "", gsm: "", printColor: "", lamination: "" }
+        { ptype: "Paper", type: "", gsm: "", printColor: "", lamination: "" },
+        { ptype: "Cover Paper", type: "", gsm: "", printColor: "", lamination: "" },
+        { ptype: "Inner Paper", type: "", gsm: "", printColor: "", lamination: "" },
+        { ptype: "Other Paper", type: "", gsm: "", printColor: "", lamination: "" }
       ]
     }
   });
-  const onSubmit = async (data) => {
-    console.log("Form Data:", data);
 
+  useEffect(() => {
+    if (data) {
+      reset({
+        paperData0: data.paperData0,
+        papersData1: data.paperData1,
+        papersData2: data.paperData2,
+        papersData3: data.paperData3
+      });
+    }
+  }, [data, reset]);
+
+  const onSubmit = async (formData) => {
+    console.log("Form Data:", formData);
 
     setPaperunitdone(true);
     const replaceEmptyWithNull = (obj) => {
@@ -50,22 +61,23 @@ function PaperUnit() {
       });
     };
 
-    replaceEmptyWithNull(data.paperData0);
-    data.papersData1.forEach(replaceEmptyWithNull);
-    data.papersData2.forEach(replaceEmptyWithNull);
-    data.papersData3.forEach(replaceEmptyWithNull);
-    console.log(data);
-    // Access form data in onSubmit
+    replaceEmptyWithNull(formData.paperData0);
+    formData.papersData1.forEach(replaceEmptyWithNull);
+    formData.papersData2.forEach(replaceEmptyWithNull);
+    formData.papersData3.forEach(replaceEmptyWithNull);
+
+    console.log(formData);
     let papersData = {
       paperData: {
-        paperData0: data.paperData0,
-        papersData1: data.papersData1,
-        papersData2: data.papersData2,
-        papersData3: data.papersData3,
+        paperData0: formData.paperData0,
+        paperData1: formData.papersData1,
+        paperData2: formData.papersData2,
+        paperData3: formData.papersData3,
       }
     }
     console.log("Papers Data:", papersData);
-    Cookies.set("PaperUnitsData", papersData)
+
+    Cookies.set("PaperUnitsData", JSON.stringify(papersData))
 
     document.getElementById("my_modal_10").close();
   };
@@ -81,6 +93,7 @@ function PaperUnit() {
       }
     }
   };
+
   return (
     <>
       <button
@@ -175,7 +188,7 @@ function PaperUnit() {
                 <tr className="bg-base-200 border border-gray-400">
                   <th className="border-r border-[#393838]">Paper Type</th>
                   <th>Cut Sheet Size</th>
-                  <th>Wastage</th>
+                  <th>wastage</th>
                   <th>Total Cut Sheet</th>
                 </tr>
               </thead>
@@ -187,7 +200,7 @@ function PaperUnit() {
                     </th>
                     <td>
                       <Controller
-                        name={`papersData2[${index}].CutSheetSize`}
+                        name={`papersData2[${index}].cutSheetSize`}
                         control={control}
                         render={({ field }) => (
                           <input
@@ -201,7 +214,7 @@ function PaperUnit() {
                     </td>
                     <td>
                       <Controller
-                        name={`papersData2[${index}].Wastage`}
+                        name={`papersData2[${index}].wastage`}
                         control={control}
                         render={({ field }) => (
                           <input
@@ -215,7 +228,7 @@ function PaperUnit() {
                     </td>
                     <td>
                       <Controller
-                        name={`papersData2[${index}].TotalCutSheet`}
+                        name={`papersData2[${index}].totalCutSheet`}
                         control={control}
                         render={({ field }) => (
                           <input
@@ -354,6 +367,7 @@ function PaperUnit() {
                             type="radio"
                             value="singleside"
                             className="h-6 w-6"
+                            checked={field.value === "singleside"}
                           />
                           <span className="ml-1 mr-5">Single Side</span>
                         </>
@@ -373,6 +387,7 @@ function PaperUnit() {
                             type="radio"
                             value="bothside"
                             className="h-6 w-8"
+                            checked={field.value === "bothside"}
                           />
                           <span className="ml-1">Both Side</span>
                         </>
@@ -396,7 +411,7 @@ function PaperUnit() {
                 {getValues("papersData3").map((row, index) => (
                   <tr key={index} className="border-b border-[#393838]">
                     <th className="border-r bg-base-200 border-[#393838]">
-                      {row.Type}
+                      {row.ptype}
                     </th>
                     <td>
                       <Controller

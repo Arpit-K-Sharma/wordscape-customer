@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function DeliveryDetail({ setCombinedData }) {
-  const { register, handleSubmit } = useForm({
+function DeliveryDetail({ data }) {
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       deliveryDetail: {
         company: "",
@@ -15,23 +14,32 @@ function DeliveryDetail({ setCombinedData }) {
       },
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      setValue("deliveryDetail.company", data.company);
+      setValue("deliveryDetail.venue", data.venue);
+      setValue("deliveryDetail.contactPersonName", data.contactPersonName);
+      setValue("deliveryDetail.contactPersonNumber", data.contactPersonNumber);
+    }
+  }, [data, setValue]);
+
   const [deliverydone, setDeliverydone] = useState(false);
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (formData) => {
+    console.log(formData);
     const jsonData = {
       deliveryDetail: {
-        company: data.deliveryDetail.company,
-        venue: data.deliveryDetail.venue,
-        contactPersonName: data.deliveryDetail.contactPersonName,
-        contactPersonNumber: data.deliveryDetail.contactPersonNumber,
+        company: formData.deliveryDetail.company,
+        venue: formData.deliveryDetail.venue,
+        contactPersonName: formData.deliveryDetail.contactPersonName,
+        contactPersonNumber: formData.deliveryDetail.contactPersonNumber,
       },
     };
 
     console.log("json data from delivery: ", jsonData);
     Cookies.set("deliveryData", JSON.stringify(jsonData));
     setDeliverydone(!deliverydone);
-    setCombinedData(jsonData);
     document.getElementById("my_modal_6").close();
   };
 
