@@ -212,7 +212,7 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="drawer">
+    <div className="drawer max-h-screen">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
@@ -234,10 +234,12 @@ function AdminDashboard() {
             <p>Logged in as: </p>
           </div>
         </div> */}
-        <div className="p-7 text-slate-200">
+        <div className="p-7">
           <div className="font-archivo">
             <div className="flex justify-center gap-5 text-slate-200 mb-9">
-              <h1 className="font-bold text-5xl mx-auto">Admin Dashboard</h1>
+              <h1 className="font-bold text-5xl mx-auto text-blue-200">
+                Admin Dashboard
+              </h1>
 
               {/* <h2 className="font-bold text-4xl">Orders Summary</h2> */}
               {/* <div className="flex gap-5">
@@ -263,9 +265,48 @@ function AdminDashboard() {
                 </div>
               </div> */}
             </div>
-            <h3 className="mx-auto text-center self-center text-xl">
+            <h3 className="mx-auto text-center self-center text-xl text-white">
               At a glance
             </h3>
+
+            {orderid &&
+              steps.reduce((lastActiveIndex, step, index) => {
+                if (step.active) {
+                  return index;
+                }
+                return lastActiveIndex;
+              }, -1) ===
+                steps.length - 1 && (
+                <div className="flex justify-center mt-4">
+                  <p>
+                    Order {orderid} is in the{" "}
+                    {steps[steps.length - 1]?.name || ""} process
+                  </p>
+                </div>
+              )}
+            {orderid &&
+              steps.reduce((lastActiveIndex, step, index) => {
+                if (step.active) {
+                  return index;
+                }
+                return lastActiveIndex;
+              }, -1) <
+                steps.length - 1 && (
+                <div className="flex justify-center mt-4">
+                  <p>
+                    Order {orderid} is in the{" "}
+                    {steps[
+                      steps.reduce((lastActiveIndex, step, index) => {
+                        if (step.active) {
+                          return index;
+                        }
+                        return lastActiveIndex;
+                      }, -1)
+                    ]?.name || ""}{" "}
+                    process
+                  </p>
+                </div>
+              )}
 
             <div className="flex flex-wrap justify-center gap-8 mt-6">
               <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
@@ -290,7 +331,7 @@ function AdminDashboard() {
               </div>
 
               <div className="w-full sm:w-1/3 p-4 bg-white rounded-lg shadow-lg">
-                <div className="card h-48 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg">
+                <div className="card h-48 bg-gradient-to-r from-green-800 to-emerald-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
                       <AiOutlineCheckCircle size={25} className="mr-2" />
@@ -311,7 +352,7 @@ function AdminDashboard() {
               </div>
 
               <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
-                <div className="card h-48 bg-gradient-to-r from-purple-600 to-green-400 rounded-lg">
+                <div className="card h-48 bg-gradient-to-r from-blue-800 to-purple-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
                       <FaCheckCircle size={22} className="mr-2" />
@@ -373,10 +414,10 @@ function AdminDashboard() {
             </div>
             <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
               <div className="overflow-x-auto w-full">
-                <table className="table w-full">
+                <table className="table w-full text-[13px]">
                   {/* head */}
                   <thead>
-                    <tr className="bg-base-200">
+                    <tr className="bg-base-200 text-[13px]">
                       <th className="text-base-content font-semibold">
                         Order ID
                       </th>
@@ -510,10 +551,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <IoMdTimer
-                                  className="text-blue-500"
-                                  size={30}
-                                />
+                                <IoMdTimer className="text-white" size={30} />
                                 Date
                               </td>
                               <td className="w-1/2">
@@ -527,7 +565,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <SlSizeActual className="text-green-500" />
+                                <SlSizeActual className="text-white" />
                                 Paper Size
                               </td>
                               <td className="w-1/2">
@@ -539,8 +577,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <SiPowerpages className="text-yellow-500" />{" "}
-                                Pages
+                                <SiPowerpages className="text-white" /> Pages
                               </td>
                               <td className="w-1/2">{selectedOrder.pages}</td>
                             </tr>
@@ -549,7 +586,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <RiNumbersFill className="text-red-500" />
+                                <RiNumbersFill className="text-white" />
                                 Quantity
                               </td>
                               <td className="w-1/2">
@@ -561,7 +598,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaBook className="text-purple-500" />
+                                <FaBook className="text-white" />
                                 Binding Type
                               </td>
                               <td className="w-1/2">
@@ -573,7 +610,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaCut className="text-blue-500" />
+                                <FaCut className="text-white" />
                                 Cover Treatment Type
                               </td>
                               <td className="w-1/2">
@@ -586,7 +623,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPaintBrush className="text-green-500" />
+                                <FaPaintBrush className="text-white" />
                                 Inner Paper Type
                               </td>
                               <td className="w-1/2">
@@ -598,7 +635,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaLayerGroup className="text-yellow-500" />
+                                <FaLayerGroup className="text-white" />
                                 Inner Paper Thickness
                               </td>
                               <td className="w-1/2">
@@ -610,7 +647,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPaintBrush className="text-green-500" />
+                                <FaPaintBrush className="text-white" />
                                 Outer Paper Type
                               </td>
                               <td className="w-1/2">
@@ -622,7 +659,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaLayerGroup className="text-yellow-500" />
+                                <FaLayerGroup className="text-white" />
                                 Outer Paper Thickness
                               </td>
                               <td className="w-1/2">
@@ -634,7 +671,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPrint className="text-red-500" />
+                                <FaPrint className="text-white" />
                                 Lamination Type
                               </td>
                               <td className="w-1/2">
@@ -647,7 +684,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaTint className="text-blue-500" />
+                                <FaTint className="text-white" />
                                 Ink Type
                               </td>
                               <td className="w-1/2">{selectedOrder.inkType}</td>
@@ -657,7 +694,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaComment className="text-purple-500" />
+                                <FaComment className="text-white" />
                                 Remarks
                               </td>
                               <td className="w-1/2">
@@ -671,7 +708,7 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaUser className="text-yellow-500" />
+                                <FaUser className="text-white" />
                                 Customer Name
                               </td>
                               <td className="w-1/2">
@@ -715,7 +752,7 @@ function AdminDashboard() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-                      <div className="flex justify-end gap-[15px] mt-[-24px] ">
+                      <div className="flex justify-end gap-[15px] mt-[-24px]">
                         <button className="btn">Close</button>
                         <button className="btn" onClick={handleDone}>
                           Done

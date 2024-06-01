@@ -23,6 +23,7 @@ function OrderPlacement() {
     paperSize: "A4",
     pages: "",
     quantity: "",
+    estimatedAmount: 0,
     bindingType: "Center Stitch",
     inkType: "Black and White",
     laminationType: "Normal Glossy",
