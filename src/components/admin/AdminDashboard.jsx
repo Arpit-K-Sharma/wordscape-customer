@@ -361,34 +361,43 @@ function AdminDashboard() {
             <h3 className="mx-auto text-center self-center text-xl text-white">
               At a glance
             </h3>
+            <div className="container mx-auto px-4 py-6">
+              <div className="card bg-base-100 shadow-xl">
+                <div className="card-body items-center text-center">
+                  <h2 className="card-title mb-4">Your Recent Order</h2>
 
-            <div className="flex justify-center mt-4">
-              <p>
-                Most Recent Order ID: #{" "}
-                <span className="font-weight-bold text-primary">
-                  {orderDetails[orderDetails.length - 1]?.orderId}
-                </span>
-              </p>
-            </div>
+                  <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8 w-full">
+                    <div className="mb-4 md:mb-0">
+                      <p className="text-lg">Most Recent Order ID:</p>
+                      <p className="text-3xl font-bold text-primary">
+                        #
+                        {orderDetails[orderDetails.length - 1]?.orderId ||
+                          "N/A"}
+                      </p>
+                    </div>
 
-            <div className="flex justify-center mt-4">
-              <p>
-                Order #{" "}
-                <span className="font-weight-bold text-primary">
-                  {orderDetails[orderDetails.length - 1]?.orderId}
-                </span>{" "}
-                is in the process:{" "}
-                <span className="font-weight-bold text-success">
-                  {steps[
-                    recentSteps.reduce((lastActiveIndex, step, index) => {
-                      if (step.active) {
-                        return index;
-                      }
-                      return lastActiveIndex;
-                    }, -1)
-                  ]?.name || ""}
-                </span>
-              </p>
+                    <div>
+                      <p className="text-lg">Order Status:</p>
+                      <div className="flex items-center justify-center">
+                        <span className="loading loading-spinner loading-md text-success mr-2"></span>
+                        <p className="text-2xl font-bold text-success">
+                          {steps[
+                            recentSteps.reduce(
+                              (lastActiveIndex, step, index) => {
+                                if (step.active) {
+                                  return index;
+                                }
+                                return lastActiveIndex;
+                              },
+                              -1
+                            )
+                          ]?.name || "Processing"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">
