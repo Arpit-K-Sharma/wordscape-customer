@@ -364,8 +364,6 @@ function AdminDashboard() {
             <div className="container mx-auto px-4 py-6">
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body items-center text-center">
-                  <h2 className="card-title mb-4">Your Recent Order</h2>
-
                   <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8 w-full">
                     <div className="mb-4 md:mb-0">
                       <p className="text-lg">Most Recent Order ID:</p>
