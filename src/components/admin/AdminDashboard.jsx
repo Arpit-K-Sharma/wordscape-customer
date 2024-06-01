@@ -48,6 +48,32 @@ function AdminDashboard() {
     { name: "End", active: false, key: "end" },
   ]);
   const [orderid, setOrderid] = useState();
+  const [lastOrderStatus, setLastOrderStatus] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [lastOrder, setLastOrder] = useState(null);
+  const [currentProcess, setCurrentProcess] = useState("");
+
+  useEffect(() => {
+    const recentOrder = orderDetails[orderDetails.length - 1];
+    setLastOrder(recentOrder);
+
+    const activeStep = steps.reduce((lastActiveIndex, step, index) => {
+      if (step.active) {
+        return index;
+      }
+      return lastActiveIndex;
+    }, -1);
+
+    setCurrentProcess(steps[activeStep]?.name || "");
+  }, [orderDetails, steps]);
+
+  useEffect(() => {
+    const lastOrder = orderDetails[orderDetails.length - 1];
+    if (lastOrder) {
+      setLastOrderStatus(lastOrder.status);
+      setCustomerName(lastOrder.customerName);
+    }
+  }, [orderDetails]);
 
   const handleViewDetails = async (order) => {
     const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
@@ -269,44 +295,30 @@ function AdminDashboard() {
               At a glance
             </h3>
 
-            {orderid &&
-              steps.reduce((lastActiveIndex, step, index) => {
-                if (step.active) {
-                  return index;
-                }
-                return lastActiveIndex;
-              }, -1) ===
-                steps.length - 1 && (
-                <div className="flex justify-center mt-4">
-                  <p>
-                    Order {orderid} is in the{" "}
-                    {steps[steps.length - 1]?.name || ""} process
-                  </p>
-                </div>
-              )}
-            {orderid &&
-              steps.reduce((lastActiveIndex, step, index) => {
-                if (step.active) {
-                  return index;
-                }
-                return lastActiveIndex;
-              }, -1) <
-                steps.length - 1 && (
-                <div className="flex justify-center mt-4">
-                  <p>
-                    Order {orderid} is in the{" "}
-                    {steps[
-                      steps.reduce((lastActiveIndex, step, index) => {
-                        if (step.active) {
-                          return index;
-                        }
-                        return lastActiveIndex;
-                      }, -1)
-                    ]?.name || ""}{" "}
-                    process
-                  </p>
-                </div>
-              )}
+            <div className="flex justify-center mt-4">
+              <p>
+                Most Recent Order ID:{" "}
+                <span className="font-weight-bold text-primary">
+                  {orderDetails[orderDetails.length - 1]?.orderId}
+                </span>
+              </p>
+            </div>
+
+            <div className="flex justify-center mt-4">
+              <p>
+                Current Process:{" "}
+                <span className="font-weight-bold text-success">
+                  {steps[
+                    steps.reduce((lastActiveIndex, step, index) => {
+                      if (step.active) {
+                        return index;
+                      }
+                      return lastActiveIndex;
+                    }, -1)
+                  ]?.name || ""}
+                </span>
+              </p>
+            </div>
 
             <div className="flex flex-wrap justify-center gap-8 mt-6">
               <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
