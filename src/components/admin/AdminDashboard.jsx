@@ -47,11 +47,22 @@ function AdminDashboard() {
     { name: "Delivery", active: false, key: "delivery" },
     { name: "End", active: false, key: "end" },
   ]);
+  const [recentSteps, setRecentSteps] = useState([
+    { name: "Order Slip", active: false, key: "orderSlip" },
+    { name: "Job Card", active: false, key: "jobCard" },
+    { name: "Paper Cutting", active: false, key: "paperCutting" },
+    { name: "Plate Preparation", active: false, key: "platePreparation" },
+    { name: "Printing", active: false, key: "printing" },
+    { name: "Post Press", active: false, key: "postPress" },
+    { name: "Delivery", active: false, key: "delivery" },
+    { name: "End", active: false, key: "end" },
+  ]);
   const [orderid, setOrderid] = useState();
   const [lastOrderStatus, setLastOrderStatus] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [lastOrder, setLastOrder] = useState(null);
   const [currentProcess, setCurrentProcess] = useState("");
+  const [recentId, setRecentId] = useState();
 
   useEffect(() => {
     const recentOrder = orderDetails[orderDetails.length - 1];
@@ -90,6 +101,12 @@ function AdminDashboard() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/orders`);
+        const allorder = response.data;
+        const recentOrder = allorder.reduce((maxOrder, order) => {
+          return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
+        }, null);
+
+        handleRecentTracking(recentOrder.orderId);
         setOrderDetails(response.data);
         setFilteredOrder(response.data);
         setFilteredOrderDetails(response.data);
@@ -151,21 +168,23 @@ function AdminDashboard() {
       console.error("Error fetching tracking data:", error);
     }
   };
-  const handleNext = () => {
-    setSteps((prevSteps) => {
-      const lastActiveIndex = prevSteps.reduce(
-        (lastIndex, step, index) => (step.active ? index : lastIndex),
-        -1
+  const handleRecentTracking = async (id) => {
+    setRecentId(id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/projectTracking/${id}`
       );
-      if (lastActiveIndex < prevSteps.length - 1) {
-        const newSteps = prevSteps.map((step, index) => ({
-          ...step,
-          active: index <= lastActiveIndex + 1,
-        }));
-        return newSteps;
-      }
-      return prevSteps;
-    });
+      const trackingData = response.data;
+
+      const updatedSteps = recentSteps.map((step) => ({
+        ...step,
+        active: trackingData[step.key],
+      }));
+      console.log(updatedSteps);
+      setRecentSteps(updatedSteps);
+    } catch (error) {
+      console.error("Error fetching tracking data:", error);
+    }
   };
 
   const handleDone = async () => {
@@ -202,6 +221,54 @@ function AdminDashboard() {
       }
       return prevSteps;
     });
+    if (orderid == recentId) {
+      setRecentSteps((prevSteps) => {
+        const lastActiveIndex = prevSteps.reduce(
+          (lastIndex, step, index) => (step.active ? index : lastIndex),
+          -1
+        );
+        if (lastActiveIndex > 0) {
+          const newSteps = prevSteps.map((step, index) => ({
+            ...step,
+            active: index < lastActiveIndex,
+          }));
+          return newSteps;
+        }
+        return prevSteps;
+      });
+    }
+  };
+  const handleNext = () => {
+    setSteps((prevSteps) => {
+      const lastActiveIndex = prevSteps.reduce(
+        (lastIndex, step, index) => (step.active ? index : lastIndex),
+        -1
+      );
+      if (lastActiveIndex < prevSteps.length - 1) {
+        const newSteps = prevSteps.map((step, index) => ({
+          ...step,
+          active: index <= lastActiveIndex + 1,
+        }));
+        return newSteps;
+      }
+      return prevSteps;
+    });
+    if (orderid == recentId) {
+      setRecentSteps((prevSteps) => {
+        const lastActiveIndex = prevSteps.reduce(
+          (lastIndex, step, index) => (step.active ? index : lastIndex),
+          -1
+        );
+        if (lastActiveIndex < prevSteps.length - 1) {
+          const newSteps = prevSteps.map((step, index) => ({
+            ...step,
+            active: index <= lastActiveIndex + 1,
+          }));
+          return newSteps;
+        }
+        return prevSteps;
+      });
+    }
   };
 
   const handleJobCard = (id) => {
@@ -260,10 +327,10 @@ function AdminDashboard() {
             <p>Logged in as: </p>
           </div>
         </div> */}
-        <div className="p-7">
+        <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
-            <div className="flex justify-center gap-5 text-slate-200 mb-9">
-              <h1 className="font-bold text-5xl mx-auto text-blue-200">
+            <div className="flex justify-center text-slate-200 mb-9">
+              <h1 className="font-bold text-3xl max-sm:text-xl mx-auto text-blue-200">
                 Admin Dashboard
               </h1>
 
@@ -297,7 +364,7 @@ function AdminDashboard() {
 
             <div className="flex justify-center mt-4">
               <p>
-                Most Recent Order ID:{" "}
+                Most Recent Order ID: #{" "}
                 <span className="font-weight-bold text-primary">
                   {orderDetails[orderDetails.length - 1]?.orderId}
                 </span>
@@ -306,10 +373,14 @@ function AdminDashboard() {
 
             <div className="flex justify-center mt-4">
               <p>
-                Current Process:{" "}
+                Order #{" "}
+                <span className="font-weight-bold text-primary">
+                  {orderDetails[orderDetails.length - 1]?.orderId}
+                </span>{" "}
+                is in the process:{" "}
                 <span className="font-weight-bold text-success">
                   {steps[
-                    steps.reduce((lastActiveIndex, step, index) => {
+                    recentSteps.reduce((lastActiveIndex, step, index) => {
                       if (step.active) {
                         return index;
                       }
@@ -320,8 +391,8 @@ function AdminDashboard() {
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-8 mt-6">
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
+            <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -342,7 +413,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/3 p-4 bg-white rounded-lg shadow-lg">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-green-800 to-emerald-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -363,7 +434,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-purple-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
