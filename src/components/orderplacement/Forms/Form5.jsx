@@ -9,6 +9,23 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [changeCostPerKg, setChangeCostPerKg] = useState(0);
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmitWithState = async () => {
+    setIsSubmitting(true);
+    try {
+      await handleSubmit();
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(false);
+      }, 3000); // Reset state after 3 seconds
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      setIsSubmitting(false);
+    }
+  };
 
   console.log(orderData.quantity, orderData.pages);
 
@@ -131,9 +148,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   useEffect(() => {
     if (orderData) {
       const cost =
-        Math.ceil(
-          totalPacket(orderData.quantity) *
-            packetCalc(orderData.outerPaperThickness, outerChangeCostPerKg)
+        Math.round(
+          Math.ceil(
+            totalPacket(orderData.quantity) *
+              packetCalc(orderData.outerPaperThickness, outerChangeCostPerKg)
+          )
         ) +
         Math.round(
           innerCost(
@@ -143,12 +162,14 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             changeCostPerKg
           )
         ) +
-        platePrice(orderData.pages, plateCost) +
-        Math.ceil(bindingCost * orderData.quantity) +
-        calculateLamination(
-          laminationPrice,
-          orderData.quantity,
-          orderData.pages
+        Math.round(platePrice(orderData.pages, plateCost)) +
+        Math.round(bindingCost * orderData.quantity) +
+        Math.round(
+          calculateLamination(
+            laminationPrice,
+            orderData.quantity,
+            orderData.pages
+          )
         );
 
       setTotalCost(cost);
@@ -163,7 +184,10 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   ]);
 
   useEffect(() => {
-    setOrderData({ ...orderData, estimatedAmount: totalCost });
+    setOrderData({
+      ...orderData,
+      estimatedAmount: (totalCost / 100).toFixed(2),
+    });
   }, [totalCost]);
 
   const { companyName, remarks, address, estimatedAmount } = orderData;
@@ -234,7 +258,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               type="text"
               placeholder="Remarks"
               className="input input-bordered w-full max-w-xs text-[white] disabled"
-              value={"Rs. " + totalCost}
+              value={`Rs. ${totalCost.toFixed(2)}`}
             />
             {console.log("Estimated amount " + totalCost)}
             <div className="label"></div>
@@ -259,10 +283,25 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             </button>
           </NavLink>
           <button
-            className="btn btn-primary w-[280px] mt-5 bg-green-700 border-none text-white hover:bg-blue-600"
-            onClick={handleSubmit}
+            className={`btn btn-primary w-[280px] mt-5 border-none text-white ${
+              isSubmitted ? "bg-blue-600" : "bg-green-700 hover:bg-blue-600"
+            }`}
+            onClick={handleSubmitWithState}
+            disabled={isSubmitting || isSubmitted}
           >
-            Confirm Order
+            {isSubmitting ? (
+              <>
+                <span className="loading loading-spinner loading-md text-white mr-2"></span>
+                Placing your order...
+              </>
+            ) : isSubmitted ? (
+              <>
+                <span className="text-white mr-2">✓</span>
+                Order Confirmed
+              </>
+            ) : (
+              "Confirm Order"
+            )}
           </button>
         </div>
       </label>
