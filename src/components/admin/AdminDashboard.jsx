@@ -8,6 +8,7 @@ import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
+import OrderStatusList from "./OrderStatusList";
 import { FaBook } from "react-icons/fa";
 import {
   FaCut,
@@ -358,9 +359,7 @@ function AdminDashboard() {
                 </div>
               </div> */}
             </div>
-            <h3 className="mx-auto text-center self-center text-xl text-white">
-              At a glance
-            </h3>
+
             <div className="container mx-auto px-4 py-6">
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body items-center text-center">
@@ -396,6 +395,9 @@ function AdminDashboard() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col items-center justify-center space-y-4 mt-8">
+              <OrderStatusList orderDetails={orderDetails} />
             </div>
 
             <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">

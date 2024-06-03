@@ -1,2 +1,12 @@
 GET  http://localhost:8081/orders
 Content-Type: application/json
+
+### Retrieving Orders ###
+
+GET  http://localhost:8081/orders/4
+Content-Type: application/json
+
+### Retrieve Progress
+GET http://localhost:8081/projectTracking/4
+Content-Type: application/json
+
