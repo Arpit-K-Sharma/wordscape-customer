@@ -58,8 +58,8 @@ function OrderStatusList({ orderDetails }) {
         <table className="table w-full text-center">
           <thead>
             <tr>
-              <th>Customer Name</th>
               <th>Order ID</th>
+              <th>Customer Name</th>
               <th>Tracking Stage</th>
               {/* <th>Current Status</th> */}
             </tr>
@@ -67,8 +67,8 @@ function OrderStatusList({ orderDetails }) {
           <tbody>
             {orderDetails.map((order) => (
               <tr key={order.orderId}>
-                <td>{order.customer || "N/A"}</td>
                 <td>{order.orderId}</td>
+                <td>{order.customer || "N/A"}</td>
                 <td>{trackingData[order.orderId] || "Loading..."}</td>
                 {/* <td>
                   <div className="badge badge-secondary">
