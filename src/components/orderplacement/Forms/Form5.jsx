@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaIndustry } from "react-icons/fa6";
+import { FaRegAddressCard } from "react-icons/fa";
+import { CiStickyNote } from "react-icons/ci";
+import { GiMoneyStack } from "react-icons/gi";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
@@ -205,6 +209,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               <span className="label-text-alt">
                 For which company is this for?
               </span>
+              <FaIndustry size={`25px`} color="white" />
+
               {console.log("Estimated amount is Rs. " + estimatedAmount)}
             </div>
             <input
@@ -223,6 +229,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               <span className="label-text-alt">
                 What is the delivery address for the order?
               </span>
+              <FaRegAddressCard size={`25px`} color="white" />
             </div>
             <input
               type="text"
@@ -238,6 +245,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px]">
             <div className="label">
               <span className="label-text-alt">Remarks</span>
+              <CiStickyNote size={`25px`} color="white" />
             </div>
             <input
               type="text"
@@ -253,6 +261,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px] ">
             <div className="label">
               <span className="label-text-alt">Total Estimated Cost</span>
+              <GiMoneyStack size={`25px`} color="white" />
             </div>
             <input
               type="text"

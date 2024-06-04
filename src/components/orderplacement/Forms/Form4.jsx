@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { IoMdPaper } from "react-icons/io";
+import { IoNewspaperSharp } from "react-icons/io5";
+import { HiNewspaper } from "react-icons/hi";
+import { FaRegAddressCard } from "react-icons/fa";
 
 const FourthForm = ({ orderData, setOrderData, entireData }) => {
   const { laminationTypes, bindingType, inkTypes, coverTreatment } = entireData;
@@ -15,6 +19,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center">
           <span className="label-text">Lamination Types</span>
+          <IoMdPaper size={`25px`} color="white" />
         </div>
         <select
           className="select select-bordered"
@@ -32,6 +37,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
+          <IoNewspaperSharp size={`25px`} color="white" />
         </div>
         <select
           className="select select-bordered"
@@ -49,6 +55,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Cover Treatment</span>
+          <HiNewspaper size={`25px`} color="white" />
         </div>
         <select
           className="select select-bordered"
