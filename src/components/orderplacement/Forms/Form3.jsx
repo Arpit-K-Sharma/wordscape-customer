@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { GiPapers } from "react-icons/gi";
+import { FaBookOpen } from "react-icons/fa6";
+import { PiBooksBold } from "react-icons/pi";
+import { IoNewspaper } from "react-icons/io5";
 
 const ThirdForm = ({ orderData, setOrderData }) => {
   const { pages, quantity } = orderData;
@@ -13,6 +17,7 @@ const ThirdForm = ({ orderData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Pages</span>
+          <IoNewspaper color="white" size={`25px`} />
         </div>
         <input
           className="input input-bordered"
@@ -31,6 +36,7 @@ const ThirdForm = ({ orderData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Quantities</span>
+          <PiBooksBold size={`25px`} color="white" />
         </div>
         <input
           className="input input-bordered"

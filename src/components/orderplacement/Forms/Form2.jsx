@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { FaRegNewspaper } from "react-icons/fa";
+import { ImBook } from "react-icons/im";
+import { GiPapers } from "react-icons/gi";
 
 const SecondForm = ({ orderData, entireData, setOrderData }) => {
   const { paperThicknessData, fetchedPaperTypes } = entireData;
@@ -14,6 +17,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Outer Paper Type</span>
+          <FaRegNewspaper size={`25px`} />
         </div>
         <select
           className="select select-bordered"
@@ -33,6 +37,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Outer Paper Thickness</span>
+          <GiPapers color="white" size={`25px`} />
         </div>
         <select
           className="select select-bordered"

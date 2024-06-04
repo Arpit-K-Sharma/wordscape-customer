@@ -2,14 +2,14 @@ import { NavLink } from "react-router-dom";
 import AdminDrawer from "./menu/AdminDrawer";
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
-import OrderStatusList from "./OrderStatusList";
 import { FaBook } from "react-icons/fa";
+import Avatar from "react-avatar";
 import {
   FaCut,
   FaPaintBrush,
@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
+import OrderStatusList from "./orderStatus";
 
 function AdminDashboard() {
   const [startDate, setStartDate] = useState(() => {
@@ -109,7 +110,7 @@ function AdminDashboard() {
 
         handleRecentTracking(recentOrder.orderId);
         setOrderDetails(response.data);
-        setFilteredOrder(response.data);
+        setFilteredOrder(response.data.sort((a, b) => a.orderId - b.orderId));
         setFilteredOrderDetails(response.data);
 
         const d = response.data;
@@ -306,18 +307,18 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="drawer max-h-screen">
+    <div className="drawer h-[250%] bg-gray-100">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
           htmlFor="my-drawer"
-          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5 bg-gray-300 border-gray-100 text-[#201f1f] hover:bg-gray-200 hover:border-gray-100"
         >
           <NavLink to="/admin/dashboard">
             <img
               width="26"
               height="26"
-              src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+              src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
               alt="menu--v1"
             />
           </NavLink>
@@ -328,10 +329,11 @@ function AdminDashboard() {
             <p>Logged in as: </p>
           </div>
         </div> */}
+
         <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
             <div className="flex justify-center text-slate-200 mb-9">
-              <h1 className="font-bold text-3xl max-sm:text-xl mx-auto text-blue-200">
+              <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
                 Admin Dashboard
               </h1>
 
@@ -358,46 +360,6 @@ function AdminDashboard() {
                   </label>
                 </div>
               </div> */}
-            </div>
-
-            <div className="container mx-auto px-4 py-6">
-              <div className="card bg-base-100 shadow-xl">
-                <div className="card-body items-center text-center">
-                  <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8 w-full">
-                    <div className="mb-4 md:mb-0">
-                      <p className="text-lg">Most Recent Order ID:</p>
-                      <p className="text-3xl font-bold text-primary">
-                        #
-                        {orderDetails[orderDetails.length - 1]?.orderId ||
-                          "N/A"}
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-lg">Order Status:</p>
-                      <div className="flex items-center justify-center">
-                        <span className="loading loading-spinner loading-md text-success mr-2"></span>
-                        <p className="text-2xl font-bold text-success">
-                          {steps[
-                            recentSteps.reduce(
-                              (lastActiveIndex, step, index) => {
-                                if (step.active) {
-                                  return index;
-                                }
-                                return lastActiveIndex;
-                              },
-                              -1
-                            )
-                          ]?.name || "Processing"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center space-y-4 mt-8">
-              <OrderStatusList orderDetails={orderDetails} />
             </div>
 
             <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">
@@ -464,12 +426,87 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
-            <div className="dropdown xl:ml-[9%] mt-[30px] p-4 text-center w-[300px]">
-              <label className="input input-bordered flex items-center gap-2">
+
+            <div className="flex gap-[20px] mt-[30px]">
+              <OrderStatusList orderDetails={orderDetails} />
+              <div className="grid mt-[-8px]">
+                <div className="flex justify-end">
+                  <h2
+                    className="text-indigo-700 font-semibold hover:text-indigo-500 cursor-pointer"
+                    onClick={(e) => navigate("/admin/orders")}
+                  >
+                    See all
+                  </h2>
+                </div>
+                <div className="w-[640px] h-[350px] bg-[white] mt-[5px] rounded-lg  text-[#1c1b1b] p-4 overflow-auto">
+                  <table className="w-full text-[13px] bg-[white]">
+                    <thead>
+                      <tr className="text-[16px] border-b border-[#d5d4d4] text-[#171717] h-[47px]">
+                        <th className="w-[100px] pl-[15px] text-left">
+                          Order ID
+                        </th>
+                        <th className="w-[100px] text-left">Date</th>
+                        <th className="w-[150px] text-left">Delivery Date</th>
+                        <th className="w-[150px] text-left">Order Details</th>
+                        <th className="w-[100px] text-left"> Order Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOrderDetails &&
+                        filteredOrderDetails.map((details) => (
+                          <tr
+                            key={details.orderId}
+                            className="hover:bg-gray-100 transition-colors duration-300 border-b border-[#d5d4d4] text-[15px] text-gray-700"
+                          >
+                            <td className="h-[60px] pl-[15px] text-left">
+                              {details.orderId}
+                            </td>
+                            <td className="h-[60px] text-left">
+                              {new Date(details.date).toLocaleDateString()}
+                            </td>
+                            <td className="h-[60px] text-left">
+                              {details.delivery
+                                ? new Date(
+                                    details.delivery
+                                  ).toLocaleDateString()
+                                : "N/A"}
+                            </td>
+                            <td className="h-[60px] text-left">
+                              <button
+                                className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold w-[107px]"
+                                onClick={() =>
+                                  handleViewDetails(details.orderId)
+                                }
+                              >
+                                View details
+                              </button>
+                            </td>
+                            <td className="h-[60px] pr-[10px] text-left">
+                              <div className="flex gap-[10px] items-center">
+                                {details.status === "PENDING" ? (
+                                  <FaClock size={20} color="orange" />
+                                ) : details.status === "APPROVED" ||
+                                  details.status === "COMPLETED" ? (
+                                  <FaCheckCircle size={20} color="green" />
+                                ) : details.status === "CANCELED" ? (
+                                  <FaTimesCircle size={20} color="red" />
+                                ) : null}
+                                {details.status}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div className="dropdown xl:ml-[9%] mt-[30px] p-4 text-center w-[300px] bg-white border border-gray-300 rounded-lg shadow-md">
+              <label className="input input-bordered flex items-center gap-2 bg-white border border-white rounded-lg">
                 <input
                   tabIndex={0}
                   type="text"
-                  className="grow"
+                  className="grow bg-white text-[black]"
                   placeholder="Search"
                   onChange={handleInput}
                   id="input"
@@ -478,7 +515,7 @@ function AdminDashboard() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
                   fill="currentColor"
-                  className="w-[20px] h-[20px] opacity-70"
+                  className="w-[20px] h-[20px] text-gray-700 opacity-70"
                 >
                   <path
                     fillRule="evenodd"
@@ -490,7 +527,7 @@ function AdminDashboard() {
               <ul
                 ref={dropdownRef}
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-[230px]"
+                className="dropdown-content z-[1] menu p-2 shadow bg-white border border-gray-300 rounded-box w-[220px]"
               >
                 {filteredOrder.map((order) => (
                   <li
@@ -499,43 +536,27 @@ function AdminDashboard() {
                       handleOrderChange(order.orderId, order.customer)
                     }
                   >
-                    <a>{order.customer}</a>
+                    <a className="text-[black]">{order.customer}</a>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
+            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg font-medium text mb-[20px]">
               <div className="overflow-x-auto w-full">
-                <table className="table w-full text-[13px]">
+                <table className="table w-full text-[13px] ">
                   {/* head */}
                   <thead>
-                    <tr className="bg-base-200 text-[13px]">
-                      <th className="text-base-content font-semibold">
-                        Order ID
-                      </th>
-                      <th className="text-base-content font-semibold">Date</th>
-                      <th className="text-base-content font-semibold">
-                        Delivery Date
-                      </th>
-                      <th className="text-base-content font-semibold">Pages</th>
-                      <th className="text-base-content font-semibold">
-                        Quantity
-                      </th>
-                      <th className="text-base-content font-semibold w-[200px]">
-                        Order Details
-                      </th>
-                      <th className="text-base-content font-semibold w-[200px]">
-                        Job Card
-                      </th>
-                      <th className="text-base-content font-semibold w-[200px]">
-                        View Tracking
-                      </th>
-                      <th className="text-base-content font-semibold w-[200px]">
-                        Status
-                      </th>
-                      <th className="text-base-content font-semibold w-[200px]">
-                        Cancel Order
-                      </th>
+                    <tr className="bg-white text-[16px] border-[#d5d4d4] text-gray-700">
+                      <th className=" ">Order ID</th>
+                      <th className="">Date</th>
+                      <th className="">Delivery Date</th>
+                      <th className="">Pages</th>
+                      <th className="">Quantity</th>
+                      <th className=" w-[200px]">Order Details</th>
+                      <th className=" w-[200px]">Job Card</th>
+                      <th className=" w-[200px]">View Tracking</th>
+                      <th className=" w-[200px]">Status</th>
+                      <th className=" w-[200px]">Cancel Order</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -543,7 +564,7 @@ function AdminDashboard() {
                       filteredOrderDetails.map((details) => (
                         <tr
                           key={details.orderId}
-                          className="hover:bg-base-300 transition-colors duration-300"
+                          className="hover:bg-gray-100 bg-white transition-colors duration-300 border-[#d5d4d4] text-[15px] text-gray-700"
                         >
                           <td>{details.orderId}</td>
                           <td>{new Date(details.date).toLocaleDateString()}</td>
@@ -556,7 +577,7 @@ function AdminDashboard() {
                           <td>{details.quantity}</td>
                           <td>
                             <button
-                              className="btn btn-sm btn-active"
+                              className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold "
                               onClick={() => handleViewDetails(details.orderId)}
                             >
                               View details
@@ -564,7 +585,7 @@ function AdminDashboard() {
                           </td>
                           <td>
                             <button
-                              className="btn btn-sm btn-active"
+                              className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold"
                               onClick={(e) => handleJobCard(details.orderId)}
                             >
                               Job card
@@ -572,7 +593,7 @@ function AdminDashboard() {
                           </td>
                           <td>
                             <button
-                              className="btn btn-sm btn-active"
+                              className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold ml-5"
                               onClick={() => {
                                 handleTracking(details.orderId),
                                   setOrderid(details.orderId);
@@ -582,37 +603,38 @@ function AdminDashboard() {
                             </button>
                           </td>
                           <td>
-                            <div
-                              className={`badge badge-lg ${
-                                details.status === "PENDING"
-                                  ? "badge-info"
-                                  : details.status === "APPROVED" ||
-                                    details.status === "COMPLETED"
-                                  ? "badge-success"
-                                  : details.status === "CANCELLED"
-                                  ? "badge-error"
-                                  : ""
-                              }`}
-                            >
+                            <div className="flex gap-[10px]">
                               {details.status === "PENDING" ? (
-                                <FaClock className="mr-2" />
+                                <FaClock
+                                  className="mr-2"
+                                  size={20}
+                                  color="orange"
+                                />
                               ) : details.status === "APPROVED" ||
                                 details.status === "COMPLETED" ? (
-                                <FaCheckCircle className="mr-2" />
-                              ) : details.status === "CANCELLED" ? (
-                                <FaTimesCircle className="mr-2" />
+                                <FaCheckCircle
+                                  className="mr-2"
+                                  size={20}
+                                  color="green"
+                                />
+                              ) : details.status === "CANCELED" ? (
+                                <FaTimesCircle
+                                  className="mr-2"
+                                  size={20}
+                                  color="red"
+                                />
                               ) : null}
                               {details.status}
                             </div>
                           </td>
-                          <td>
+                          <td className="flex justify-center">
                             <button
-                              className="btn btn-sm btn-pimrary underline text-red-500"
+                              className=" text-indigo-500 hover:text-[red] mt-[10px]"
                               onClick={(e) => {
                                 handleCancel(details.orderId);
                               }}
                             >
-                              Cancel
+                              <FaTrash size={20} />
                             </button>
                           </td>
                         </tr>
@@ -621,6 +643,7 @@ function AdminDashboard() {
                 </table>
               </div>
             </div>
+
             <div className="drawer drawer-end ">
               <input
                 id="my-drawer-4"
@@ -629,167 +652,175 @@ function AdminDashboard() {
               />
               <div className="drawer-side">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-                <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%]  ">
-                  <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">
+                <div className="p-4 w-80 min-h-full bg-white pl-[20px] text-gray-800 w-[35%]">
+                  <h1 className="text-3xl mb-4 mt-5 flex justify-center text-gray-800">
                     Order Details
                   </h1>
                   {selectedOrder && (
                     <>
-                      <div className="shadow-2xl bg-base-200">
-                        <table className="table-auto w-full ml-[20px] table-zebra">
+                      <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px]">
+                        <table className="table-auto w-full ml-[20px]">
                           <tbody>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <IoMdTimer className="text-white" size={30} />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <IoMdTimer
+                                  className="text-gray-600"
+                                  size={30}
+                                />
                                 Date
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {new Date(
                                   selectedOrder.date
                                 ).toLocaleDateString()}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <SlSizeActual className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <SlSizeActual className="text-gray-600" />
                                 Paper Size
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.paperSize}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <SiPowerpages className="text-white" /> Pages
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <SiPowerpages className="text-gray-600" />
+                                Pages
                               </td>
-                              <td className="w-1/2">{selectedOrder.pages}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.pages}
+                              </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <RiNumbersFill className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <RiNumbersFill className="text-gray-600" />
                                 Quantity
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.quantity}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaBook className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaBook className="text-gray-600" />
                                 Binding Type
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.binding?.bindingType || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaCut className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaCut className="text-gray-600" />
                                 Cover Treatment Type
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.coverTreatment
                                   ?.coverTreatmentType || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPaintBrush className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaPaintBrush className="text-gray-600" />
                                 Inner Paper Type
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.innerPaper?.paperType || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaLayerGroup className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaLayerGroup className="text-gray-600" />
                                 Inner Paper Thickness
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.innerPaperThickness || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPaintBrush className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaPaintBrush className="text-gray-600" />
                                 Outer Paper Type
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.outerPaper?.paperType || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaLayerGroup className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaLayerGroup className="text-gray-600" />
                                 Outer Paper Thickness
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.outerPaperThickness || "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaPrint className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaPrint className="text-gray-600" />
                                 Lamination Type
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.lamination?.laminationType ||
                                   "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaTint className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaTint className="text-gray-600" />
                                 Ink Type
                               </td>
-                              <td className="w-1/2">{selectedOrder.inkType}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.inkType}
+                              </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaComment className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaComment className="text-gray-600" />
                                 Remarks
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.remarks
                                   ? selectedOrder.remarks
                                   : "N/A"}
@@ -799,11 +830,11 @@ function AdminDashboard() {
                               className="mb-4 text-lg"
                               style={{ height: "50px" }}
                             >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                                <FaUser className="text-white" />
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaUser className="text-gray-600" />
                                 Customer Name
                               </td>
-                              <td className="w-1/2">
+                              <td className="w-1/2 text-gray-600">
                                 {selectedOrder.customer?.fullName || "N/A"}
                               </td>
                             </tr>
@@ -817,14 +848,16 @@ function AdminDashboard() {
             </div>
 
             <dialog id="my_modal_1" className="modal">
-              <div className="modal-box overflow-hidden max-w-[64%]">
-                <div className="">
+              <div className="modal-box overflow-hidden max-w-[64%] bg-white text-gray-800">
+                <div>
                   <ul className="steps w-[900px] mb-[20px]">
                     {steps.map((step, index) => (
                       <li
                         key={index}
-                        className={`step ${
-                          step.active ? "step step-primary" : ""
+                        className={` step  ${
+                          step.active
+                            ? "step-primary text-[black]"
+                            : "text-[gray] step-neutral"
                         }`}
                         data-content={step.active ? "✓" : null}
                       >
@@ -835,18 +868,29 @@ function AdminDashboard() {
                 </div>
                 <div className="flex gap-[67%]">
                   <div className="flex gap-[20px] justify-end">
-                    <button className="btn" onClick={handleBack}>
+                    <button
+                      className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                      onClick={handleBack}
+                    >
                       Back
                     </button>
-                    <button className="btn" onClick={handleNext}>
+                    <button
+                      className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                      onClick={handleNext}
+                    >
                       Next
                     </button>
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
                       <div className="flex justify-end gap-[15px] mt-[-24px]">
-                        <button className="btn">Close</button>
-                        <button className="btn" onClick={handleDone}>
+                        <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]">
+                          Close
+                        </button>
+                        <button
+                          className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                          onClick={handleDone}
+                        >
                           Done
                         </button>
                       </div>

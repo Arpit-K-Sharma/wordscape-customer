@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { increment } from "../../redux/progressSlice";
 import { useEffect } from "react";
+import { IoNewspaper } from "react-icons/io5";
+import { GiPapers } from "react-icons/gi";
+import { ImBook } from "react-icons/im";
 
 const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const {
@@ -22,6 +25,9 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Paper Size</span>
+          <span className="ml-2">
+            <IoNewspaper color="white" size={`25px`} />
+          </span>
         </div>
         <select
           className="select select-bordered"
@@ -40,6 +46,10 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
 
         <div className="label text-center">
           <span className="label-text">Inner Paper Type</span>
+          <span>
+            {" "}
+            <ImBook color="white" size={`25px`} />
+          </span>
         </div>
         <select
           className="select select-bordered"
@@ -57,6 +67,9 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
 
         <div className="label text-center">
           <span className="label-text">Inner Paper Thickness</span>
+          <span>
+            <GiPapers color="white" size={`25px`} />
+          </span>
         </div>
         <select
           className="select select-bordered"
