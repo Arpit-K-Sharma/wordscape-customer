@@ -5,6 +5,7 @@ import { FaIndustry } from "react-icons/fa6";
 import { FaRegAddressCard } from "react-icons/fa";
 import { CiStickyNote } from "react-icons/ci";
 import { GiMoneyStack } from "react-icons/gi";
+import { get } from "react-hook-form";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
@@ -141,11 +142,63 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       });
   };
 
+  const getRatePaper = (selectedPaperType) => {
+    axios
+      .get("http://localhost:8081/papers")
+      .then((response) => {
+        const paper = response.data.find(
+          (paper) => paper.paperType === selectedPaperType
+        );
+
+        if (paper) {
+          setChangeCostPerKg(paper.rate);
+          console.log(
+            "Inner Paper Rate for",
+            selectedPaperType,
+            " is ",
+            paper.rate
+          );
+        } else {
+          console.error("Paper type not found:", selectedPaperType);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching paper rate:", error);
+      });
+  };
+
+  const getOuterPaperRate = (selectedOuterPaperType) => {
+    axios
+      .get("http://localhost:8081/papers")
+      .then((response) => {
+        const outerPaper = response.data.find(
+          (paper) => paper.paperType === selectedOuterPaperType
+        );
+
+        if (outerPaper) {
+          setOuterChangeCostPerKg(outerPaper.rate);
+          console.log(
+            "Outer Paper Rate for ",
+            selectedOuterPaperType,
+            " is ",
+            outerPaper.rate
+          );
+        } else {
+          console.error("Outer paper type not found:", selectedOuterPaperType);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching outer paper rate:", error);
+      });
+  };
+
   useEffect(() => {
     if (orderData) {
       getRateForBindingType(orderData.bindingType);
       getRateForLaminationType(orderData.laminationType);
       getRatePlate("18 X 24");
+      getRatePaper(orderData.innerPaperType);
+      getOuterPaperRate(orderData.outerPaperType);
     }
   }, [orderData]);
 
@@ -190,9 +243,21 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   useEffect(() => {
     setOrderData({
       ...orderData,
-      estimatedAmount: (totalCost / 100).toFixed(2),
+      innerPaperRate: changeCostPerKg,
+      outerPaperRate: outerChangeCostPerKg,
+      bindingRate: bindingCost,
+      laminationRate: laminationPrice,
+      plateRate: plateCost,
+      estimatedAmount: totalCost,
     });
-  }, [totalCost]);
+  }, [
+    changeCostPerKg,
+    outerChangeCostPerKg,
+    bindingCost,
+    laminationPrice,
+    plateCost,
+    totalCost,
+  ]);
 
   const { companyName, remarks, address, estimatedAmount } = orderData;
 

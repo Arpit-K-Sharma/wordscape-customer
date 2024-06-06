@@ -10,3 +10,11 @@ Content-Type: application/json
 GET http://localhost:8081/projectTracking/4
 Content-Type: application/json
 
+
+### Retrieve papers
+GET http://localhost:8081/papers
+Content-Type: application/json
+
+### Get Order
+GET http://localhost:8081/orders/4
+Content-Type: application/json

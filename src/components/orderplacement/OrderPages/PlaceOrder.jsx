@@ -29,6 +29,11 @@ function OrderPlacement() {
     laminationType: "Normal Glossy",
     coverTreatmentType: "Die Cutting",
     date: Date.now(),
+    innerPaperRate: 0,
+    outerPaperRate: 0,
+    laminationRate: 0,
+    bindingRate: 0,
+    plateRate: 0,
   });
 
   useEffect(() => {
@@ -153,6 +158,8 @@ function OrderPlacement() {
       console.error("Error fetching lamination data:", error);
     }
   };
+
+  console.log("The orderData is: ", JSON.stringify(orderData));
 
   const getBinding = async () => {
     try {
