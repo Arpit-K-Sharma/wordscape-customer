@@ -13,7 +13,9 @@ function Footer() {
       </nav>
       <nav>
         <h6 className="footer-title text-xl">Company</h6>
-        <a className="link link-hover">About us</a>
+        <NavLink to="/about-us">
+          <a className="link link-hover">About us</a>
+        </NavLink>
         <a className="link link-hover">Contact</a>
         <a className="link link-hover">Jobs</a>
         <NavLink to="/faq">

@@ -41,6 +41,7 @@ import StaffOrders from "./components/staff/menu/order/order.jsx";
 import ProtectedUser from "./components/protectedUser.jsx";
 import UpdatedLogin from "./components/login/UpdatedLogin.jsx";
 import UpdatedRegister from "./components/login/UpdatedRegister.jsx";
+import AboutUs from "./components/navbar/about-us.jsx";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/signup" element={<UpdatedRegister />} />
+        <Route path="/about-us" element={<AboutUs />} />
         {/* <Route path="/nlogin" element={<UpdatedLogin />} /> */}
         {/* <Route path="/jobcard" element={<JobCard />} />
         <Route path="/pjobcard" element={<PrevJobCard />} /> */}
