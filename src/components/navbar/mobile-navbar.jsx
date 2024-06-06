@@ -36,7 +36,7 @@ function MobileNavbar() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200 bg-zinc-800">
+        <div className="p-7 text-slate-800 bg-gray-200">
           <img
             width="350"
             height="350"
@@ -46,7 +46,7 @@ function MobileNavbar() {
           />{" "}
           <h3 className="text-center my-7 text-xl">
             <div className="">
-              <h1 className="text-[#FEFEFE] mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto w-[50%] text-center font-bold font-archivo max-sm:text-[35px]">
+              <h1 className="text-b1 mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto w-[50%] text-center font-bold font-archivo max-sm:text-[35px]">
                 All your printing needs in{" "}
                 <span
                   style={{
@@ -63,7 +63,7 @@ function MobileNavbar() {
                   place
                 </span>
               </h1>
-              <p className="w-[30%] text-center mx-auto leading-[23px] text-[18px] max-sm:text-[14px] max-sm:w-[60%] font-archivo ">
+              <p className="w-[30%] text-center mx-auto leading-[23px] text-[18px] max-sm:text-[14px] max-sm:w-[60%] font-archivo text-slate-700 ">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry. Register and Login
                 to place an order
@@ -71,7 +71,7 @@ function MobileNavbar() {
               <div className="flex flex-row justify-center mt-[40px] mb-[150px]">
                 {!isLoggedIn && (
                   <NavLink to="/login">
-                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                    <button className="mr-[10px] px-[20px] py-[10px] text-[#fefefe] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
                       Login to Start
                     </button>
                   </NavLink>
@@ -85,7 +85,7 @@ function MobileNavbar() {
                   </NavLink>
                 )}
 
-                <button className="bg-[#ffffff] px-[20px] py-[10px] text-[#000000] rounded-[8px] font-archivo font-semibold">
+                <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold">
                   Learn More
                 </button>
               </div>
