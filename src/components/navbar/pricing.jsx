@@ -6,7 +6,7 @@ import Van from "../../assets/icons/van.svg";
 
 function Pricing() {
   return (
-    <section className="bg-gray-100 py-12 font-archivo pt-5 pb-1">
+    <section className="bg-gray-100 py-12 font-archivo pt-[5px] pb-1">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-extrabold text-b1 sm:text-5xl mt-10">
@@ -30,7 +30,9 @@ function Pricing() {
               <img
                 src={BookLogo}
                 alt="Booklets"
-                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                width={100}
+                height={100}
+                className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] lg:w-[100px] lg:h-[100px]"
               />
             </div>
 
@@ -106,8 +108,10 @@ function Pricing() {
             <div className="mb-8 flex justify-center">
               <img
                 src={Poster}
+                width={100}
+                height={100}
                 alt="Posters"
-                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] lg:w-[100px] lg:h-[100px]"
               />
             </div>
             <ul className="mb-8 space-y-4 text-gray-700">
@@ -182,7 +186,9 @@ function Pricing() {
               <img
                 src={Banner}
                 alt="Banners"
-                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                width={100}
+                height={100}
+                className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] lg:w-[100px] lg:h-[100px]"
               />
             </div>
             <ul className="mb-8 space-y-4 text-gray-700">
@@ -260,7 +266,7 @@ function Pricing() {
               <img
                 src={Van}
                 alt="Additional Services"
-                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] lg:w-[100px] lg:h-[100px]"
               />
             </div>
             <ul className="mb-8 space-y-4 text-gray-700">

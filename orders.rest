@@ -15,6 +15,15 @@ Content-Type: application/json
 GET http://localhost:8081/papers
 Content-Type: application/json
 
-### Get Order
-GET http://localhost:8081/orders/4
+### Get All Orders
+GET http://localhost:8081/orders
 Content-Type: application/json
+
+### Job Card Order
+GET http://localhost:8081/jobCard/4
+Content-Type: application/json
+
+
+
+
+
