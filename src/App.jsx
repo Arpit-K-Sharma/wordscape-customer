@@ -55,14 +55,6 @@ function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/signup" element={<UpdatedRegister />} />
         <Route path="/about-us" element={<AboutUs />} />
-        {/* <Route path="/nlogin" element={<UpdatedLogin />} /> */}
-        {/* <Route path="/jobcard" element={<JobCard />} />
-        <Route path="/pjobcard" element={<PrevJobCard />} /> */}
-
-        {/* <Route path="/order/2" element={<OrderPlacementSecond />} />
-        <Route path="/order/3" element={<OrderPlacementThird />} />
-        <Route path="/order/4" element={<OrderPlacementFourth />} />
-        <Route path="/order/5" element={<OrderPlacementFifth />} /> */}
 
         <Route path="/login/admin" element={<AdminLogin />} />
 

@@ -9,6 +9,7 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
+import { FaDollarSign } from "react-icons/fa";
 import Avatar from "react-avatar";
 import {
   FaCut,
@@ -94,8 +95,15 @@ function AdminDashboard() {
     console.log(response.data);
     document.getElementById("my-drawer-4").checked = true;
   };
+  const [filteredOrderCost, setFilteredOrderCost] = useState();
+  const handleViewDetail = async (id) => {
+    const response = await axios.get(`http://localhost:8081/orders/${id}`);
+    console.log(response.data);
+    setFilteredOrderCost(response.data);
+    document.getElementById("my-drawer-4").checked = true;
+  };
   const dropdownRef = useRef(null);
-
+  const [recentOrders, setRecentOrders] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const id = localStorage.getItem("id");
@@ -109,6 +117,7 @@ function AdminDashboard() {
         }, null);
 
         handleRecentTracking(recentOrder.orderId);
+        setRecentOrders(response.data);
         setOrderDetails(response.data);
         setFilteredOrder(response.data.sort((a, b) => a.orderId - b.orderId));
         setFilteredOrderDetails(response.data);
@@ -452,8 +461,8 @@ function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredOrderDetails &&
-                        filteredOrderDetails.map((details) => (
+                      {recentOrders &&
+                        recentOrders.map((details) => (
                           <tr
                             key={details.orderId}
                             className="hover:bg-gray-100 transition-colors duration-300 border-b border-[#d5d4d4] text-[15px] text-gray-700"
@@ -475,7 +484,7 @@ function AdminDashboard() {
                               <button
                                 className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold w-[107px]"
                                 onClick={() =>
-                                  handleViewDetails(details.orderId)
+                                  handleViewDetail(details.orderId)
                                 }
                               >
                                 View details
@@ -656,7 +665,7 @@ function AdminDashboard() {
                   <h1 className="text-3xl mb-4 mt-5 flex justify-center text-gray-800">
                     Order Details
                   </h1>
-                  {selectedOrder && (
+                  {filteredOrderCost && (
                     <>
                       <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px]">
                         <table className="table-auto w-full ml-[20px]">
@@ -674,7 +683,7 @@ function AdminDashboard() {
                               </td>
                               <td className="w-1/2 text-gray-600">
                                 {new Date(
-                                  selectedOrder.date
+                                  filteredOrderCost.date
                                 ).toLocaleDateString()}
                               </td>
                             </tr>
@@ -687,7 +696,7 @@ function AdminDashboard() {
                                 Paper Size
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.paperSize}
+                                {filteredOrderCost.paperSize}
                               </td>
                             </tr>
                             <tr
@@ -699,7 +708,7 @@ function AdminDashboard() {
                                 Pages
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.pages}
+                                {filteredOrderCost.pages}
                               </td>
                             </tr>
                             <tr
@@ -711,7 +720,7 @@ function AdminDashboard() {
                                 Quantity
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.quantity}
+                                {filteredOrderCost.quantity}
                               </td>
                             </tr>
                             <tr
@@ -723,7 +732,11 @@ function AdminDashboard() {
                                 Binding Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.binding?.bindingType || "N/A"}
+                                {filteredOrderCost?.bindingType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs.{" "}
+                                  {filteredOrderCost?.bindingRate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -735,8 +748,7 @@ function AdminDashboard() {
                                 Cover Treatment Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.coverTreatment
-                                  ?.coverTreatmentType || "N/A"}
+                                {filteredOrderCost?.coverTreatmentType || "N/A"}
                               </td>
                             </tr>
                             <tr
@@ -748,7 +760,11 @@ function AdminDashboard() {
                                 Inner Paper Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.innerPaper?.paperType || "N/A"}
+                                {filteredOrderCost?.innerPaperType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs{" "}
+                                  {filteredOrderCost?.innerPaperRate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -760,7 +776,7 @@ function AdminDashboard() {
                                 Inner Paper Thickness
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.innerPaperThickness || "N/A"}
+                                {filteredOrderCost.innerPaperThickness || "N/A"}
                               </td>
                             </tr>
                             <tr
@@ -772,7 +788,11 @@ function AdminDashboard() {
                                 Outer Paper Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.outerPaper?.paperType || "N/A"}
+                                {filteredOrderCost?.outerPaperType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs{" "}
+                                  {filteredOrderCost?.outerPaperRate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -784,7 +804,7 @@ function AdminDashboard() {
                                 Outer Paper Thickness
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.outerPaperThickness || "N/A"}
+                                {filteredOrderCost.outerPaperThickness || "N/A"}
                               </td>
                             </tr>
                             <tr
@@ -796,8 +816,11 @@ function AdminDashboard() {
                                 Lamination Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.lamination?.laminationType ||
-                                  "N/A"}
+                                {filteredOrderCost.laminationType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs{" "}
+                                  {filteredOrderCost.laminationRate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -809,7 +832,7 @@ function AdminDashboard() {
                                 Ink Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.inkType}
+                                {filteredOrderCost.inkType}
                               </td>
                             </tr>
                             <tr
@@ -821,13 +844,13 @@ function AdminDashboard() {
                                 Remarks
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.remarks
-                                  ? selectedOrder.remarks
+                                {filteredOrderCost.remarks
+                                  ? filteredOrderCost.remarks
                                   : "N/A"}
                               </td>
                             </tr>
                             <tr
-                              className="mb-4 text-lg"
+                              className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
@@ -835,7 +858,20 @@ function AdminDashboard() {
                                 Customer Name
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.customer?.fullName || "N/A"}
+                                {filteredOrderCost?.customer || "N/A"}
+                              </td>
+                            </tr>
+                            <tr
+                              className="mb-4 text-lg"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaDollarSign className="text-gray-600" />
+                                Estimated Cost
+                              </td>
+                              <td className="w-1/2 text-black font-bold">
+                                Rs.
+                                {filteredOrderCost?.estimatedAmount || "N/A"}
                               </td>
                             </tr>
                           </tbody>
