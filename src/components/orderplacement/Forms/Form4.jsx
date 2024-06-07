@@ -22,7 +22,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
           <IoMdPaper size={`25px`} color="black" />
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-800"
           onChange={(e) =>
             setOrderData({ ...orderData, laminationType: e.target.value })
           }
@@ -40,7 +40,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
           <IoNewspaperSharp size={`25px`} color="black" />
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-800"
           onChange={(e) =>
             setOrderData({ ...orderData, bindingType: e.target.value })
           }

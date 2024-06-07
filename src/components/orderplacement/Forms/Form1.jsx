@@ -17,7 +17,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   } = entireData;
 
   return (
-    <div className="lg:mt-6 lg:mb-6">
+    <div className="lg:mt-6 lg:mb-6 max-sm:mx-auto max-sm:justify-center">
       <label className="form-control max-sm:mr-5">
         <p className="text-2xl max-sm:text-[24px] text-zinc-900 font-light">
           Start placing your order with the paper size, type, and its thickness
@@ -89,7 +89,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         </select>
         <br />
         <NavLink to="/order/2">
-          <button className="btn bg-blue-600 btn-primary mt-5 w-full text-white">
+          <button className="btn bg-blue-600 btn-primary max-sm:mx-auto mt-5 w-full text-white">
             Next
           </button>
         </NavLink>

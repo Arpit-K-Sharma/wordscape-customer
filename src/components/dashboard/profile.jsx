@@ -4,7 +4,7 @@ import Avatar from "react-avatar";
 import Menu from "./menu";
 
 function Profile() {
-  const userId = localStorage.getItem('id')
+  const userId = localStorage.getItem("id");
   const [customerData, setCustomerData] = useState({
     customerId: null,
     fullName: "",
@@ -128,7 +128,7 @@ function Profile() {
                 />
                 <button
                   onClick={handleSaveChanges}
-                  className="btn btn-primar text-white"
+                  className="btn btn-primary bg-zinc-800 hover:bg-zinc-800 text-white"
                 >
                   {editable ? "Save Changes" : "Edit"}
                 </button>

@@ -2,7 +2,7 @@ import React from "react";
 
 function Services() {
   return (
-    <div className="py-16 bg-gray-100 pt-1 pb-1 font-archivo">
+    <div className="py-16 bg-gray-100 pt-1 pb-1 font-archivo max-sm:mt-[-150px] lg:mt-[-145px]">
       <div className="container m-auto px-6 text-zinc-800 md:px-12 xl:px-0">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-extrabold text-b1 sm:text-5xl m-1 mb-10">
