@@ -12,14 +12,14 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control w-full max-w-xl">
-        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex text-zinc-900 max-sm:justify-center">
           What lamination and binding would you want to choose from?
         </p>
         <br />
 
         <div className="label text-center">
           <span className="label-text">Lamination Types</span>
-          <IoMdPaper size={`25px`} color="white" />
+          <IoMdPaper size={`25px`} color="black" />
         </div>
         <select
           className="select select-bordered"
@@ -37,7 +37,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
-          <IoNewspaperSharp size={`25px`} color="white" />
+          <IoNewspaperSharp size={`25px`} color="black" />
         </div>
         <select
           className="select select-bordered"
@@ -55,10 +55,10 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Cover Treatment</span>
-          <HiNewspaper size={`25px`} color="white" />
+          <HiNewspaper size={`25px`} color="black" />
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-900"
           onChange={(e) =>
             setOrderData({ ...orderData, coverTreatmentType: e.target.value })
           }
@@ -72,10 +72,12 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         <br />
 
         <div>
-          <h3 className="text-xl font-archivo">Color Type: </h3>
+          <h3 className="mx-auto justify-center text-l font-archivo text-zinc-900">
+            Color Type:{" "}
+          </h3>
           <div className="flex justify-center max-sm:mt-5">
             <select
-              className="select select-bordered"
+              className="select select-bordered text-zinc-900"
               onChange={(e) =>
                 setOrderData({ ...orderData, inkType: e.target.value })
               }
@@ -97,7 +99,9 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
             </button>
           </NavLink>
           <NavLink to="/order/5">
-            <button className="btn btn-primary w-[280px] mt-5">Next</button>
+            <button className="btn bg-blue-600 btn-primary w-[280px] mt-5">
+              Next
+            </button>
           </NavLink>
         </div>
       </label>

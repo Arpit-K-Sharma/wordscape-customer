@@ -7,7 +7,10 @@ function Menu() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 bg-black text-white drawer-button mt-8 ml-5"
+        >
           <NavLink to="/">
             <img
               width="26"
@@ -25,7 +28,6 @@ function Menu() {
         </div> */}
       </div>
       <UserDrawer />
-      
     </div>
   );
 }

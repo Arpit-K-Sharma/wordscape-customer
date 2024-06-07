@@ -19,18 +19,18 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control max-sm:mr-5">
-        <p className="text-2xl font-light max-sm:text-[24px]">
+        <p className="text-2xl max-sm:text-[24px] text-zinc-900 font-light">
           Start placing your order with the paper size, type, and its thickness
         </p>
         <br />
         <div className="label text-center">
           <span className="label-text">Paper Size</span>
           <span className="ml-2">
-            <IoNewspaper color="white" size={`25px`} />
+            <IoNewspaper color="black" size={`25px`} />
           </span>
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-900"
           onChange={(e) =>
             setOrderData({ ...orderData, paperSize: e.target.value })
           }
@@ -48,11 +48,11 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           <span className="label-text">Inner Paper Type</span>
           <span>
             {" "}
-            <ImBook color="white" size={`25px`} />
+            <ImBook color="black" size={`25px`} />
           </span>
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-900"
           onChange={(e) =>
             setOrderData({ ...orderData, innerPaperType: e.target.value })
           }
@@ -68,11 +68,11 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <div className="label text-center">
           <span className="label-text">Inner Paper Thickness</span>
           <span>
-            <GiPapers color="white" size={`25px`} />
+            <GiPapers color="black" size={`25px`} />
           </span>
         </div>
         <select
-          className="select select-bordered"
+          className="select select-bordered text-zinc-900"
           value={selectedThickness}
           onChange={(e) =>
             setOrderData({
@@ -89,7 +89,9 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         </select>
         <br />
         <NavLink to="/order/2">
-          <button className="btn btn-primary mt-5 w-full">Next</button>
+          <button className="btn bg-blue-600 btn-primary mt-5 w-full text-white">
+            Next
+          </button>
         </NavLink>
       </label>
     </div>

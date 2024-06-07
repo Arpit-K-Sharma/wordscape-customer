@@ -27,13 +27,13 @@ function MobileNavbar() {
       <div className="drawer-content">
         <label
           htmlFor="my-drawer"
-          className="btn mx-1 my-1 drawer-button lg:hidden"
+          className="btn btn-ghost mx-1 my-1 lg:hidden p-0"
         >
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
-            alt="menu--v1"
+            src="https://img.icons8.com/?size=100&id=8113&format=png&color=ffffff"
+            alt="menu icon"
           />
         </label>
         <div className="p-7 text-slate-800 bg-gray-200">

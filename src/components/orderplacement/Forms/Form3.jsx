@@ -11,16 +11,16 @@ const ThirdForm = ({ orderData, setOrderData }) => {
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control max-sm:mr-5">
-        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
+        <p className="text-2xl font-light max-sm:text-[24px] text-zinc-900 max-sm:flex max-sm:justify-center">
           How many quantities and pages do you want to print?
         </p>
         <br />
         <div className="label text-center">
           <span className="label-text">Pages</span>
-          <IoNewspaper color="white" size={`25px`} />
+          <IoNewspaper color="black" size={`25px`} />
         </div>
         <input
-          className="input input-bordered"
+          className="input input-bordered text-zinc-900"
           type="number"
           value={pages}
           onChange={(e) =>
@@ -36,10 +36,10 @@ const ThirdForm = ({ orderData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Quantities</span>
-          <PiBooksBold size={`25px`} color="white" />
+          <PiBooksBold size={`25px`} color="black" />
         </div>
         <input
-          className="input input-bordered"
+          className="input input-bordered text-zinc-900"
           type="number"
           value={quantity}
           onChange={(e) =>
@@ -58,7 +58,9 @@ const ThirdForm = ({ orderData, setOrderData }) => {
             </button>
           </NavLink>
           <NavLink to="/order/4">
-            <button className="btn btn-primary w-[280px] mt-5">Next</button>
+            <button className="btn bg-blue-600 btn-primary w-[280px] mt-5">
+              Next
+            </button>
           </NavLink>
         </div>
       </label>

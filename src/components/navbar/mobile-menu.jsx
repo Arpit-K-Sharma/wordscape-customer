@@ -27,7 +27,7 @@ function MobileMenu() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=3096&format=png&color=1A1A1A"
             alt="menu--v1"
           />
         </label>

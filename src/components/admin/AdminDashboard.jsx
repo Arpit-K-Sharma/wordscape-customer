@@ -339,10 +339,10 @@ function AdminDashboard() {
           </div>
         </div> */}
 
-        <div className="max-sm:mr-[10%]">
+        <div className="max-sm:mx-auto max-sm:w-full">
           <div className="font-archivo">
-            <div className="flex justify-center text-slate-200 mb-9">
-              <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
+            <div className="flex flex-col items-center text-slate-200 mb-9">
+              <h1 className="font-bold text-5xl max-sm:text-3xl text-blue-800 text-center">
                 Admin Dashboard
               </h1>
 
@@ -371,8 +371,8 @@ function AdminDashboard() {
               </div> */}
             </div>
 
-            <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
+            <div className="flex flex-wrap justify-center gap-8 mt-6 max-sm:flex-col max-sm:items-center">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -393,7 +393,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
                 <div className="card h-48 bg-gradient-to-r from-green-800 to-emerald-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -414,7 +414,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-purple-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -510,6 +510,7 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
+
             <div className="dropdown xl:ml-[9%] mt-[30px] p-4 text-center w-[300px] bg-white border border-gray-300 rounded-lg shadow-md">
               <label className="input input-bordered flex items-center gap-2 bg-white border border-white rounded-lg">
                 <input

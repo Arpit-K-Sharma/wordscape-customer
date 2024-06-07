@@ -8,7 +8,7 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
-import { FaClock, FaTimesCircle } from 'react-icons/fa';
+import { FaClock, FaTimesCircle } from "react-icons/fa";
 import {
   FaCut,
   FaPaintBrush,
@@ -85,10 +85,12 @@ function UserOrder() {
     <div className="font-archivo">
       <Menu />
 
-      <div className="flex justify-center gap-5 text-slate-200 mb-9">
-        <h1 className="font-bold text-4xl">Orders Summary</h1>
-        <div className="flex gap-5">
-          <div className="w-[150px] ml-[420px]">
+      <div className="flex flex-col items-center gap-5 text-slate-900 mb-9 px-4 max-sm:text-center">
+        <h1 className="font-bold text-4xl mt-5 max-sm:text-3xl">
+          Orders Summary
+        </h1>
+        <div className="flex gap-5 max-sm:flex-col max-sm:items-center">
+          <div className="w-[150px] max-sm:w-full">
             <label className="input input-bordered flex items-center gap-2">
               <input
                 type="date"
@@ -98,7 +100,7 @@ function UserOrder() {
               />
             </label>
           </div>
-          <div className="w-[150px]">
+          <div className="w-[150px] max-sm:w-full">
             <label className="input input-bordered flex items-center gap-2">
               <input
                 type="date"
@@ -111,12 +113,12 @@ function UserOrder() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-[100px] mt-[20px]">
-        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
+      <div className="flex justify-center gap-[100px] mt-[20px] max-sm:flex-col max-sm:items-center max-sm:gap-8">
+        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
               <AiOutlineClockCircle size={35} color="white" className="ml-2" />
-              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Pending Orders
               </h3>
             </a>
@@ -124,15 +126,15 @@ function UserOrder() {
               Waiting to be processed
             </h3>
             <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl text-o1 font-bold">{pending}</h2>
+              <h2 className="text-4xl font-bold">{pending}</h2>
             </div>
           </div>
         </div>
-        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
+        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
               <AiOutlineCheckCircle size={35} color="white" className="ml-2" />
-              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Approved Orders
               </h3>
             </a>
@@ -140,15 +142,15 @@ function UserOrder() {
               Verification Completed
             </h3>
             <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl text-o1 font-bold">{approved}</h2>
+              <h2 className="text-4xl font-bold">{approved}</h2>
             </div>
           </div>
         </div>
-        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
+        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
               <FaCheckCircle size={32} color="white" className="ml-2" />
-              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
+              <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Completed Orders
               </h3>
             </a>
@@ -156,29 +158,28 @@ function UserOrder() {
               Order Finalized
             </h3>
             <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl text-o1 font-bold">{completed}</h2>
+              <h2 className="text-4xl font-bold">{completed}</h2>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center gap-5 text-slate-200 mt-[30px] mb-9">
-        <h1 className="font-bold text-4xl">Order Status</h1>
+      <div className="flex justify-center gap-5 text-slate-900 mt-[30px] mb-9 max-sm:text-center">
+        <h1 className="font-bold text-4xl max-sm:text-3xl">Order Status</h1>
       </div>
 
-      <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg">
-        <table className="table">
+      <div className="overflow-x-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg max-sm:w-[95%] max-sm:ml-[2.5%] max-sm:h-[400px]">
+        <table className="table w-full">
           <thead>
-            <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
+            <tr className="bg-base-200 font-semibold text-[15px] text-slate-800">
               <th>Order ID</th>
               <th>Date</th>
-              <th>Delivery Date</th>
+              <th>Delivery</th>
               <th>Pages</th>
-              <th>Quantity</th>
-              <th className="w-[200px]">All Details</th>
-              <th className="w-[200px]">View Tracking</th>
-              <th className="w-[200px]">Status</th>
-
+              <th>Qty</th>
+              <th className="w-[100px] max-sm:w-[80px]">Details</th>
+              <th className="w-[100px] max-sm:w-[80px]">Track</th>
+              <th className="w-[100px] max-sm:w-[80px]">Status</th>
             </tr>
           </thead>
           <tbody className="text-semibold">
@@ -196,37 +197,45 @@ function UserOrder() {
                   <td>{details.quantity}</td>
                   <td>
                     <button
-                      className="btn min-h-[30px] h-[40px]"
+                      className="btn min-h-[30px] h-[40px] max-sm:btn-sm"
                       onClick={() => handleViewDetails(details)}
                     >
-                      View details
+                      View
                     </button>
                   </td>
                   <td>
                     <button
-                      className="btn  min-h-[30px] h-[40px]"
+                      className="btn min-h-[30px] h-[40px] max-sm:btn-sm"
                       onClick={() => (
                         document.getElementById("my_modal_1").showModal(),
                         handleTracking(details.orderId)
                       )}
                     >
-                      Track It
+                      Track
                     </button>
                   </td>
                   <td>
-                    <a className={
-                      details.status == 'PENDING' ? "bg-blue-400 p-[6px] rounded-[5px] w-[120px] flex gap-[10px] font-bold text-[white]" :
-                        (details.status == 'APPROVED' || details.status == 'COMPLETED') ? "bg-[#155415] p-[6px] rounded-[5px] w-[120px] flex gap-[10px]" :
-                          details.status == 'CANCELED' ?
-                            "bg-[red] p-[6px] rounded-[5px] w-[120px] flex gap-[10px] text-white font-bold" : null
-                    }>
-                      {
-                        details.status == 'PENDING' ? <FaClock size={19} /> :
-                          (details.status == 'APPROVED' || details.status == 'COMPLETED') ? <FaCheckCircle size={19} /> :
-                            details.status == 'CANCELED' ?
-                              <FaTimesCircle size={19} /> : null
-                      }{details.status}
-
+                    <a
+                      className={
+                        details.status == "PENDING"
+                          ? "bg-blue-400 p-[6px] rounded-[5px] w-[100px] flex gap-[5px] font-bold text-[white] max-sm:w-[80px]"
+                          : details.status == "APPROVED" ||
+                            details.status == "COMPLETED"
+                          ? "bg-[#155415] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] max-sm:w-[80px]"
+                          : details.status == "CANCELED"
+                          ? "bg-[red] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] text-white font-bold max-sm:w-[80px]"
+                          : null
+                      }
+                    >
+                      {details.status == "PENDING" ? (
+                        <FaClock size={16} />
+                      ) : details.status == "APPROVED" ||
+                        details.status == "COMPLETED" ? (
+                        <FaCheckCircle size={16} />
+                      ) : details.status == "CANCELED" ? (
+                        <FaTimesCircle size={16} />
+                      ) : null}
+                      <span className="max-sm:text-xs">{details.status}</span>
                     </a>
                   </td>
                 </tr>
@@ -238,7 +247,7 @@ function UserOrder() {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-side">
           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-          <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%]  ">
+          <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%] max-sm:w-full">
             <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">
               All Details
             </h1>

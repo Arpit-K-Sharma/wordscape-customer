@@ -264,7 +264,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   return (
     <div className="lg:mt-6 lg:mb-6">
       <label className="form-control max-sm:mr-5">
-        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center text-zinc-900">
           Fill in the details and confirm your order!
         </p>
         <br />
@@ -338,17 +338,17 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             <div className="label"></div>
           </label>
         </div>
-        <h1 className="text-m mt-[-20px]">
+        <h1 className="text-m mt-[-20px] text-zinc-900">
           <span className="text-[red] text-[30px] mb-[-10px]"> *</span>Please
           note that the estimated price of the order may differ from the actual
           total cost.
         </h1>
-        <h1 className="text-m font-bold mt-[10px]">
+        <h1 className="text-m font-bold mt-[10px] text-zinc-900">
           Upload the PDF file for Printing here
         </h1>
         <input
           type="file"
-          className="file-input w-full max-w-xs mx-auto mt-5"
+          className="file-input w-full max-w-xs mx-auto mt-5 text-zinc-900"
         />
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/4">
