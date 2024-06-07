@@ -208,7 +208,7 @@ function Signin() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen">
       <div className="bg-zinc-50 p-8 md:p-16 flex items-center">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto w-[450px]">
           <NavLink to="/">
             <img
               className="mx-auto my-1 mb-5 sm:w-32 max-sm:h-[200px] lg:h-[100px] "

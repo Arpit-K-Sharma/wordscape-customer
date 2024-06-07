@@ -44,8 +44,8 @@ function MobileMenu() {
           <li className="mt-[40px]">
             <NavLink to="/">
               <img
-                width="120"
-                height="120"
+                width="140"
+                height="140"
                 src={logo}
                 alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
                 className="mx-auto my-1 mb-5"

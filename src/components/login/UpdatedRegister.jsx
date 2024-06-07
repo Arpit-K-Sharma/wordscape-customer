@@ -105,6 +105,8 @@ function UpdatedRegister() {
                   type="email"
                   autoComplete="email"
                   required
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                  title="Please enter a valid email address"
                   className="input input-bordered w-full bg-white text-gray-900"
                   value={formData.email || ""}
                   onChange={handleInputChange}
@@ -120,6 +122,7 @@ function UpdatedRegister() {
                   id="phoneNumber"
                   name="phoneNumber"
                   type="text"
+                  minLength={10}
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
                   value={formData.phoneNumber || ""}
@@ -150,6 +153,7 @@ function UpdatedRegister() {
                   id="password"
                   name="password"
                   type="password"
+                  minLength={8}
                   autoComplete="password"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
@@ -167,6 +171,7 @@ function UpdatedRegister() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
+                  minLength={8}
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
                   value={formData.confirmPassword || ""}
