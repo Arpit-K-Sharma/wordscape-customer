@@ -274,14 +274,14 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               <span className="label-text-alt">
                 For which company is this for?
               </span>
-              <FaIndustry size={`25px`} color="white" />
+              <FaIndustry size={`25px`} color="black" />
 
               {console.log("Estimated amount is Rs. " + estimatedAmount)}
             </div>
             <input
               type="text"
               placeholder="Company name"
-              className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs text-black"
               value={companyName}
               onChange={(e) =>
                 setOrderData({ ...orderData, companyName: e.target.value })
@@ -294,12 +294,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               <span className="label-text-alt">
                 What is the delivery address for the order?
               </span>
-              <FaRegAddressCard size={`25px`} color="white" />
+              <FaRegAddressCard size={`25px`} color="black" />
             </div>
             <input
               type="text"
               placeholder="Delivery Address"
-              className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs text-black"
               value={address}
               onChange={(e) =>
                 setOrderData({ ...orderData, address: e.target.value })
@@ -310,12 +310,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px]">
             <div className="label">
               <span className="label-text-alt">Remarks</span>
-              <CiStickyNote size={`25px`} color="white" />
+              <CiStickyNote size={`25px`} color="black" />
             </div>
             <input
               type="text"
               placeholder="Remarks"
-              className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs text-black"
               value={remarks}
               onChange={(e) =>
                 setOrderData({ ...orderData, remarks: e.target.value })
@@ -326,12 +326,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px] ">
             <div className="label">
               <span className="label-text-alt">Total Estimated Cost</span>
-              <GiMoneyStack size={`25px`} color="white" />
+              <GiMoneyStack size={`25px`} color="black" />
             </div>
             <input
               type="text"
               placeholder="Remarks"
-              className="input input-bordered w-full max-w-xs text-[white] disabled"
+              className="input input-bordered w-full max-w-xs text-[black] disabled"
               value={`Rs. ${totalCost.toFixed(2)}`}
             />
             {console.log("Estimated amount " + totalCost)}
