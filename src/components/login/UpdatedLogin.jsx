@@ -236,6 +236,7 @@ function Signin() {
                 className="input input-bordered w-full bg-white text-gray-900"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               />
             </div>
             <div className="form-control w-full">
