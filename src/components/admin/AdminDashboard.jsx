@@ -788,7 +788,7 @@ function AdminDashboard() {
                                 <FaPaintBrush className="text-gray-600" />
                                 Outer Paper Type
                               </td>
-                              <td className="w-1/2 text-gray-600">
+                              <td className="w-1/2 text-zinc-900">
                                 {filteredOrderCost?.outerPaperType || "N/A"}{" "}
                                 <span className="text-black font-bold">
                                   | Rs{" "}
@@ -801,10 +801,10 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
-                                <FaLayerGroup className="text-gray-600" />
+                                <FaLayerGroup className="text-zinc-900" />
                                 Outer Paper Thickness
                               </td>
-                              <td className="w-1/2 text-gray-600">
+                              <td className="w-1/2 text-zinc-900">
                                 {filteredOrderCost.outerPaperThickness || "N/A"}
                               </td>
                             </tr>
