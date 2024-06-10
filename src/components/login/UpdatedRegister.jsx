@@ -45,17 +45,17 @@ function UpdatedRegister() {
         console.log("Signup successful:", response.data);
         toast.success("Signed Up Successfully", {
           position: "top-right",
-          autoClose: 1500, // Show for 1.5 seconds
+          autoClose: 1200,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          pauseOnHover: false,
+          draggable: false,
           progress: undefined,
-          theme: "light",
+          theme: "dark",
         });
         setTimeout(() => {
           navigate("/login");
-        }, 1500);
+        }, 1200);
       })
       .catch((error) => {
         console.error("Error signing up:", error);
@@ -144,10 +144,10 @@ function UpdatedRegister() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="form-control w-full">
                 <label htmlFor="password" className="label">
-                  <span className="label-text text-black">Password</span>
+                  <span className="label-text text-gray-700">Password</span>
                 </label>
                 <input
                   id="password"
@@ -160,10 +160,16 @@ function UpdatedRegister() {
                   value={formData.password || ""}
                   onChange={handleInputChange}
                 />
+                <ul className="mt-[20px] text-sm text-gray-600 list-disc list-inside">
+                  <li>At least 8 characters long</li>
+                  <li>Include uppercase & lowercase letters</li>
+                  <li>Add numbers (0-9)</li>
+                  <li>Use special characters (!@#$%^&*)</li>
+                </ul>
               </div>
-              <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
+              <div className="form-control w-full">
                 <label htmlFor="confirmPassword" className="label">
-                  <span className="label-text text-black">
+                  <span className="label-text text-gray-700">
                     Confirm Password
                   </span>
                 </label>

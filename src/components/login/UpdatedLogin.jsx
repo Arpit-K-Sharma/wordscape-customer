@@ -42,13 +42,13 @@ function Signin() {
             localStorage.setItem("id", decoded.id);
             toast.success("Signed In Successfully", {
               position: "top-right",
-              autoClose: 1500,
+              autoClose: 1200,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
+              pauseOnHover: false,
+              draggable: false,
               progress: undefined,
-              theme: "light",
+              theme: "dark",
             });
             setTimeout(() => {
               if (role === "ROLE_ADMIN") {
@@ -58,7 +58,7 @@ function Signin() {
               } else {
                 setLoggedIn(true);
               }
-            }, 2000);
+            }, 1200);
           } else {
             console.error("Error: Username not found in the token");
           }
