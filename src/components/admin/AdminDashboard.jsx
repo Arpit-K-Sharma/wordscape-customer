@@ -339,10 +339,10 @@ function AdminDashboard() {
           </div>
         </div> */}
 
-        <div className="max-sm:mx-auto max-sm:w-full">
+        <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
-            <div className="flex flex-col items-center text-slate-200 mb-9">
-              <h1 className="font-bold text-5xl max-sm:text-3xl text-blue-800 text-center">
+            <div className="flex justify-center text-slate-200 mb-9">
+              <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
                 Admin Dashboard
               </h1>
 
@@ -371,8 +371,8 @@ function AdminDashboard() {
               </div> */}
             </div>
 
-            <div className="flex flex-wrap justify-center gap-8 mt-6 max-sm:flex-col max-sm:items-center">
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
+            <div className="flex flex-wrap justify-center max-sm:flex-col max-sm:items-center gap-8 mt-6">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-blue-400 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -393,7 +393,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-green-800 to-emerald-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -414,7 +414,7 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:w-[90%]">
+              <div className="w-full sm:w-1/4 p-4 bg-white rounded-lg shadow-lg max-sm:max-w-xs">
                 <div className="card h-48 bg-gradient-to-r from-blue-800 to-purple-600 rounded-lg">
                   <div className="card-body p-4 mt-4">
                     <a className="flex justify-center text-white mb-2">
@@ -456,7 +456,9 @@ function AdminDashboard() {
                         </th>
                         <th className="w-[100px] text-left">Date</th>
                         <th className="w-[150px] text-left">Delivery Date</th>
-                        <th className="w-[150px] text-left">Order Details</th>
+                        <th className="w-[150px] text-left">
+                          Estimated Amount
+                        </th>
                         <th className="w-[100px] text-left"> Order Status</th>
                       </tr>
                     </thead>
@@ -480,15 +482,8 @@ function AdminDashboard() {
                                   ).toLocaleDateString()
                                 : "N/A"}
                             </td>
-                            <td className="h-[60px] text-left">
-                              <button
-                                className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold w-[107px]"
-                                onClick={() =>
-                                  handleViewDetail(details.orderId)
-                                }
-                              >
-                                View details
-                              </button>
+                            <td className="h-[60px] text-left pl-[15px]">
+                              RS.{details.estimatedAmount}
                             </td>
                             <td className="h-[60px] pr-[10px] text-left">
                               <div className="flex gap-[10px] items-center">
@@ -510,7 +505,6 @@ function AdminDashboard() {
                 </div>
               </div>
             </div>
-
             <div className="dropdown xl:ml-[9%] mt-[30px] p-4 text-center w-[300px] bg-white border border-gray-300 rounded-lg shadow-md">
               <label className="input input-bordered flex items-center gap-2 bg-white border border-white rounded-lg">
                 <input
@@ -788,7 +782,7 @@ function AdminDashboard() {
                                 <FaPaintBrush className="text-gray-600" />
                                 Outer Paper Type
                               </td>
-                              <td className="w-1/2 text-zinc-900">
+                              <td className="w-1/2 text-gray-600">
                                 {filteredOrderCost?.outerPaperType || "N/A"}{" "}
                                 <span className="text-black font-bold">
                                   | Rs{" "}
@@ -801,10 +795,10 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
-                                <FaLayerGroup className="text-zinc-900" />
+                                <FaLayerGroup className="text-gray-600" />
                                 Outer Paper Thickness
                               </td>
-                              <td className="w-1/2 text-zinc-900">
+                              <td className="w-1/2 text-gray-600">
                                 {filteredOrderCost.outerPaperThickness || "N/A"}
                               </td>
                             </tr>
@@ -870,7 +864,7 @@ function AdminDashboard() {
                                 <FaDollarSign className="text-gray-600" />
                                 Estimated Cost
                               </td>
-                              <td className="w-1/2 text-black font-bold">
+                              <td className="w-1/2 text-gray-600">
                                 Rs.
                                 {filteredOrderCost?.estimatedAmount || "N/A"}
                               </td>

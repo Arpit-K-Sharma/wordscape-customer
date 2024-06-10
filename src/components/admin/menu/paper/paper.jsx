@@ -159,7 +159,7 @@ function Paper() {
             </table>
             <br />
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[45%] btn-neutral"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Paper

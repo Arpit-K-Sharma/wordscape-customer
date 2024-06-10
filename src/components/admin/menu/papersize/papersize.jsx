@@ -89,7 +89,7 @@ function PaperSize() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-800">
           <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
             Paper Sizes
           </h1>
@@ -165,7 +165,7 @@ function PaperSize() {
             </table>
             <br />
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[45%] btn-neutral text-white"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Paper Size

@@ -340,8 +340,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         </div>
         <h1 className="text-m mt-[-20px] text-zinc-900">
           <span className="text-[red] text-[30px] mb-[-10px]"> *</span>Please
-          note that the estimated price of the order may differ from the actual
-          total cost.
+          note that the <span className="text-[red]">estimated price</span> of
+          the order may differ from the actual total cost.
         </h1>
         <h1 className="text-m font-bold mt-[10px] text-zinc-900">
           Upload the PDF file for Printing here
