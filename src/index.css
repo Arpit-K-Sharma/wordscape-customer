@@ -14,4 +14,8 @@
     @apply bg-[var(--bg-color)];
     @apply text-[var(--text-color)];
   }
+
+  p {
+    font-size: 1.2rem;
+  }
 }

@@ -63,7 +63,7 @@ function UpdatedRegister() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen font-archivo">
       <div className="bg-white p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto">
           <NavLink to="/">

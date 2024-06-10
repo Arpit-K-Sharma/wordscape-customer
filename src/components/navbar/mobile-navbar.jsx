@@ -63,7 +63,7 @@ function MobileNavbar() {
                   place
                 </span>
               </h1>
-              <p className="w-[30%] text-center mx-auto leading-[23px] text-[18px] max-sm:text-[14px] max-sm:w-[60%] font-archivo text-slate-700 ">
+              <p className="w-[30%] text-center mx-auto leading-[23px] text-[19px] max-sm:text-[14px] max-sm:w-[60%] font-archivo text-slate-700 ">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry. Register and Login
                 to place an order

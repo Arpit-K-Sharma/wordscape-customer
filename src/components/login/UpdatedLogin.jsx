@@ -206,7 +206,7 @@ function Signin() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen font-archivo">
       <div className="bg-zinc-50 p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto w-[450px]">
           <NavLink to="/">
@@ -217,7 +217,7 @@ function Signin() {
             />
           </NavLink>
           <div>
-            <h2 className="text-xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto">
+            <h2 className="text-xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto text-[22px]">
               Sign in
             </h2>
             {/* <h5 className="mb-8">Enter your credentials to sign in</h5> */}
@@ -225,7 +225,9 @@ function Signin() {
           <form className="space-y-6">
             <div className="form-control w-full">
               <label htmlFor="email" className="label">
-                <span className="label-text text-black">Email address</span>
+                <span className="label-text text-[16px] text-black">
+                  Email address
+                </span>
               </label>
               <input
                 id="email"
@@ -241,7 +243,9 @@ function Signin() {
             </div>
             <div className="form-control w-full">
               <label htmlFor="password" className="label">
-                <span className="label-text text-black">Password</span>
+                <span className="label-text text-black text-[16px]">
+                  Password
+                </span>
               </label>
               <input
                 id="password"
@@ -256,7 +260,7 @@ function Signin() {
             </div>
             <div className="form-control w-full">
               <label htmlFor="role" className="label">
-                <span className="label-text text-black">Role</span>
+                <span className="label-text text-black text-[16px]">Role</span>
               </label>
               <select
                 id="role"
