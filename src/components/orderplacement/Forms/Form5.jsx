@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaIndustry } from "react-icons/fa6";
+import { FaIndustry, FaCalendar } from "react-icons/fa6";
 import { FaRegAddressCard } from "react-icons/fa";
 import { CiStickyNote } from "react-icons/ci";
 import { GiMoneyStack } from "react-icons/gi";
@@ -307,22 +307,24 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             />
             <div className="label"></div>
           </label>
+
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px]">
             <div className="label">
-              <span className="label-text-alt">Remarks</span>
-              <CiStickyNote size={`25px`} color="black" />
+              <span className="label-text-alt">Deadline</span>
+              <FaCalendar size={`25px`} color="black" />
             </div>
             <input
-              type="text"
-              placeholder="Remarks"
+              type="date"
+              placeholder="Deadline"
               className="input input-bordered w-full max-w-xs text-black"
-              value={remarks}
+              // value={deadline}
               onChange={(e) =>
-                setOrderData({ ...orderData, remarks: e.target.value })
+                setOrderData({ ...orderData, deadline: e.target.value })
               }
             />
             <div className="label"></div>
           </label>
+
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px] ">
             <div className="label">
               <span className="label-text-alt">Total Estimated Cost</span>
@@ -335,6 +337,21 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               value={`Rs. ${totalCost.toFixed(2)}`}
             />
             {console.log("Estimated amount " + totalCost)}
+            <div className="label"></div>
+          </label>
+          <label className="form-control w-full lg:ml-[20px] mb-[10px]">
+            <div className="label">
+              <span className="label-text-alt">Remarks</span>
+              <CiStickyNote size={`25px`} color="black" />
+            </div>
+            <textarea
+              placeholder="Remarks"
+              className="textarea textarea-bordered w-full text-black"
+              value={remarks}
+              onChange={(e) =>
+                setOrderData({ ...orderData, remarks: e.target.value })
+              }
+            />
             <div className="label"></div>
           </label>
         </div>
