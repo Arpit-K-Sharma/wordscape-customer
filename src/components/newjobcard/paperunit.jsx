@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { MdAdd } from "react-icons/md";
 import Cookies from "js-cookie";
 function PaperUnit({ data }) {
-  console.log(data)
+  console.log(data);
   const [paperunitdone, setPaperunitdone] = useState(false);
-  const { handleSubmit, control, getValues, reset } = useForm({
+  const { handleSubmit, control, getValues, setValue, reset, watch } = useForm({
     defaultValues: {
       paperData0: {
         readyBy: "",
@@ -15,46 +16,112 @@ function PaperUnit({ data }) {
         size: "",
         numberOfPages: "",
         printrun: "",
-        side: "singleside"
+        side: "singleside",
       },
       papersData1: [
-        { type: "Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" },
-        { type: "Cover Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" },
-        { type: "Inner Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" },
-        { type: "Other Paper", fullSheetSize: "", weight: "", paperType: "", totalSheets: "" }
+        {
+          type: "Paper",
+          fullSheetSize: "",
+          weight: "",
+          paperType: "",
+          totalSheets: "",
+        },
+        {
+          type: "Cover Paper",
+          fullSheetSize: "",
+          weight: "",
+          paperType: "",
+          totalSheets: "",
+        },
+        {
+          type: "Inner Paper",
+          fullSheetSize: "",
+          weight: "",
+          paperType: "",
+          totalSheets: "",
+        },
+        {
+          type: "Other Paper",
+          fullSheetSize: "",
+          weight: "",
+          paperType: "",
+          totalSheets: "",
+        },
       ],
       papersData2: [
         { type: "Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
-        { type: "Cover Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
-        { type: "Inner Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" },
-        { type: "Other Paper", cutSheetSize: "", wastage: "", totalCutSheet: "" }
+        {
+          type: "Cover Paper",
+          cutSheetSize: "",
+          wastage: "",
+          totalCutSheet: "",
+        },
+        {
+          type: "Inner Paper",
+          cutSheetSize: "",
+          wastage: "",
+          totalCutSheet: "",
+        },
+        {
+          type: "Other Paper",
+          cutSheetSize: "",
+          wastage: "",
+          totalCutSheet: "",
+        },
       ],
       papersData3: [
         { ptype: "Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { ptype: "Cover Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { ptype: "Inner Paper", type: "", gsm: "", printColor: "", lamination: "" },
-        { ptype: "Other Paper", type: "", gsm: "", printColor: "", lamination: "" }
-      ]
-    }
+        {
+          ptype: "Cover Paper",
+          type: "",
+          gsm: "",
+          printColor: "",
+          lamination: "",
+        },
+        {
+          ptype: "Inner Paper",
+          type: "",
+          gsm: "",
+          printColor: "",
+          lamination: "",
+        },
+        {
+          ptype: "Other Paper",
+          type: "",
+          gsm: "",
+          printColor: "",
+          lamination: "",
+        },
+      ],
+    },
   });
+
+  const papersData1 = watch("papersData1");
 
   useEffect(() => {
     if (data) {
       reset({
-        paperData0: data.paperData0,
-        papersData1: data.paperData1,
-        papersData2: data.paperData2,
-        papersData3: data.paperData3
+        paperData0: data.paperData0 || {
+          readyBy: "",
+          date: "",
+          time: "",
+          type: "",
+          size: "",
+          numberOfPages: "",
+          printrun: "",
+          side: "singleside",
+        },
+        papersData1: data.paperData1 || [],
+        papersData2: data.paperData2 || [],
+        papersData3: data.paperData3 || [],
       });
     }
   }, [data, reset]);
 
   const onSubmit = async (formData) => {
-    console.log("Form Data:", formData);
-
     setPaperunitdone(true);
     const replaceEmptyWithNull = (obj) => {
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         if (obj[key] === "") {
           obj[key] = null;
         }
@@ -66,19 +133,16 @@ function PaperUnit({ data }) {
     formData.papersData2.forEach(replaceEmptyWithNull);
     formData.papersData3.forEach(replaceEmptyWithNull);
 
-    console.log(formData);
     let papersData = {
       paperData: {
         paperData0: formData.paperData0,
         paperData1: formData.papersData1,
         paperData2: formData.papersData2,
         paperData3: formData.papersData3,
-      }
-    }
-    console.log("Papers Data:", papersData);
+      },
+    };
 
-    Cookies.set("PaperUnitsData", JSON.stringify(papersData))
-
+    Cookies.set("PaperUnitsData", JSON.stringify(papersData));
     document.getElementById("my_modal_10").close();
   };
 
@@ -86,12 +150,26 @@ function PaperUnit({ data }) {
     if (event.key === "Enter") {
       event.preventDefault();
       const inputs = document.querySelectorAll("input");
-      const currentIndex = Array.from(inputs).findIndex(input => document.activeElement === input);
+      const currentIndex = Array.from(inputs).findIndex(
+        (input) => document.activeElement === input
+      );
       const nextIndex = currentIndex + 1;
       if (nextIndex < inputs.length) {
         inputs[nextIndex].focus();
       }
     }
+  };
+
+  const handleAdd = () => {
+    const newRow = {
+      type: "Other Paper",
+      fullSheetSize: "",
+      weight: "",
+      paperType: "",
+      totalSheets: "",
+    };
+    const updatedPapersData1 = [...papersData1, newRow];
+    setValue("papersData1", updatedPapersData1);
   };
 
   return (
@@ -101,12 +179,15 @@ function PaperUnit({ data }) {
         onClick={() => document.getElementById("my_modal_10").showModal()}
       >
         <a className="flex"> Paper Unit </a>
-        {paperunitdone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
+        {paperunitdone ? (
+          <AiOutlineCheckCircle size={24} color="green" />
+        ) : null}
       </button>
-      <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%] bg-[#1c2127]">
-        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none bg-[#1c2127] overflow-y-scroll ">
+      <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%] ">
+        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none overflow-y-scroll ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[10px]">Paper Unit</h3>
+
             <table className="table">
               <thead>
                 <tr className="bg-base-200 border border-gray-400">
@@ -183,6 +264,9 @@ function PaperUnit({ data }) {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-end mt-[5px]" onClick={handleAdd}>
+              <MdAdd size={30} color="green" />
+            </div>
             <table className="table mt-5">
               <thead>
                 <tr className="bg-base-200 border border-gray-400">
@@ -261,7 +345,8 @@ function PaperUnit({ data }) {
                 />
               </div>
               <div className="ml-[10px]">
-                <label>Date: </label><br />
+                <label>Date: </label>
+                <br />
                 <Controller
                   name="paperData0.date"
                   control={control}
@@ -276,7 +361,8 @@ function PaperUnit({ data }) {
                 />
               </div>
               <div className="ml-[10px]">
-                <label>Time: </label><br />
+                <label>Time: </label>
+                <br />
                 <Controller
                   name="paperData0.time"
                   control={control}
@@ -474,7 +560,9 @@ function PaperUnit({ data }) {
               </tbody>
             </table>
             <div className="modal-action">
-              <button className="btn hover:bg-[#376437]" type="submit">Done</button>
+              <button className="btn hover:bg-[#376437]" type="submit">
+                Done
+              </button>
             </div>
           </form>
         </div>

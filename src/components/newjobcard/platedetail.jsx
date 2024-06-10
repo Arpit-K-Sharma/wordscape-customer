@@ -29,7 +29,7 @@ function PlateDetail({ data }) {
       setValue("screenType", data.screenType || "");
       setValue("plateDamage", data.plateDamage || "");
       setValue("plateRemake", data.plateRemake || "");
-      
+
       const plateData = data.plateData || [];
       plateData.forEach((plate, index) => {
         setValue(`plateData[${index}].size`, plate.size || "");
@@ -79,11 +79,8 @@ function PlateDetail({ data }) {
         <a className="flex"> Plate Details </a>
         {plate && <AiOutlineCheckCircle size={24} color="green" />}
       </button>
-      <dialog
-        id="my_modal_9"
-        className="modal flex h-[100%] ml-[37%] bg-[#1c2127]"
-      >
-        <div className="modal-box max-h-[100%] max-w-[63%] shadow-none bg-[#1c2127]">
+      <dialog id="my_modal_9" className="modal flex h-[100%] ml-[37%]">
+        <div className="modal-box max-h-[100%] max-w-[63%] shadow-none ">
           <h3 className="font-bold text-lg flex align-center justify-center">
             Plate Details
           </h3>

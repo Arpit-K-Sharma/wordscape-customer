@@ -56,11 +56,8 @@ function DeliveryDetail({ data }) {
           <AiOutlineCheckCircle size={24} color="green" />
         ) : null}
       </button>
-      <dialog
-        id="my_modal_6"
-        className="modal flex h-[100%] ml-[50%] bg-[#1c2127]"
-      >
-        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none bg-[#1c2127]">
+      <dialog id="my_modal_6" className="modal flex h-[100%] ml-[50%] ">
+        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <h3 className="font-bold text-lg">If to be sent to</h3>
           <p className="mt-5">Fill Below</p>
           <p className="py-4">

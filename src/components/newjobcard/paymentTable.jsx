@@ -47,11 +47,8 @@ function PaymentTable({ data }) {
         {paymentdone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
 
-      <dialog
-        id="my_modal_5"
-        className="modal flex h-[100%] ml-[50%] bg-[#1c2127]"
-      >
-        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none bg-[#1c2127]">
+      <dialog id="my_modal_5" className="modal flex h-[100%] ml-[50%]">
+        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="font-bold flex align-center justify-center text-xl">
               Payment Method
