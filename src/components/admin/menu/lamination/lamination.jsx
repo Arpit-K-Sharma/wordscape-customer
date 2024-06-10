@@ -91,14 +91,14 @@ function Lamination() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-900">
           <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
             Laminations
           </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">ID</th>
                   <th className="w-[100px]">Lamination Type</th>
                   <th className="w-[80px]">Rate</th>
@@ -167,7 +167,7 @@ function Lamination() {
               <br />
             </table>
             <button
-              className="btn ml-[200px]"
+              className="btn mx-[45%] bg-zinc-700 text-white"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Lamination

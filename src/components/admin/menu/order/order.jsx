@@ -295,19 +295,42 @@ function AdminDashboard() {
     }
     console.log("ok");
   };
+
+  const [deleteOrder, setDeleteOrder] = useState();
+
   const handleCancel = async (id) => {
+    document.getElementById("my_modal_2").showModal();
+    setDeleteOrder(id);
+  };
+
+  const handleDelete = async () => {
     try {
-      await axios.put(`http://localhost:8081/orders/cancel/${id}`);
+      await axios.put(`http://localhost:8081/orders/cancel/${deleteOrder}`);
       console.log("Order Cancelled successfully");
+
+      const filtered = [];
+      filteredOrderDetails.forEach((order) => {
+        if (order.orderId === deleteOrder) {
+          filtered.push({ ...order, status: "CANCELED" });
+        } else {
+          filtered.push(order);
+        }
+      });
+      console.log(filtered);
+      setFilteredOrderDetails(filtered);
     } catch (error) {
       console.error("Error Cancelling Order:", error);
     }
   };
+
   const handleViewInvoice = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8081/orders/invoice/${id}`, {
-        responseType: "arraybuffer",
-      });
+      const response = await axios.get(
+        `http://localhost:8081/orders/invoice/${id}`,
+        {
+          responseType: "arraybuffer",
+        }
+      );
 
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
@@ -329,7 +352,7 @@ function AdminDashboard() {
             <img
               width="26"
               height="26"
-              src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+              src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
               alt="menu--v1"
             />
           </NavLink>
@@ -368,7 +391,9 @@ function AdminDashboard() {
                 {filteredOrder.map((order) => (
                   <li
                     key={order.orderId}
-                    onClick={() => handleOrderChange(order.orderId, order.customer)}
+                    onClick={() =>
+                      handleOrderChange(order.orderId, order.customer)
+                    }
                   >
                     <a className="text-[black]">{order.customer}</a>
                   </li>
@@ -381,36 +406,18 @@ function AdminDashboard() {
                   {/* head */}
                   <thead>
                     <tr className="bg-white text-[16px] border-[#d5d4d4] text-gray-700">
-                      <th className="">
-                        Order ID
-                      </th>
+                      <th className="">Order ID</th>
                       <th className="">Date</th>
-                      <th className="">
-                        Delivery Date
-                      </th>
+                      <th className="">Delivery Date</th>
                       <th className="">Pages</th>
-                      <th className="">
-                        Quantity
-                      </th>
-                      <th className=" w-[200px]">
-                        Order Details
-                      </th>
-                      <th className=" w-[200px]">
-                        Job Card
-                      </th>
-                      <th className=" w-[200px]">
-                        View Tracking
-                      </th>
-                      <th className=" w-[200px]">
-                        Status
-                      </th>
-                      <th className=" w-[200px]">
-                        View Invoice
-                      </th>
+                      <th className="">Quantity</th>
+                      <th className=" w-[200px]">Order Details</th>
+                      <th className=" w-[200px]">Job Card</th>
+                      <th className=" w-[200px]">View Tracking</th>
+                      <th className=" w-[200px]">Status</th>
+                      <th className=" w-[200px]">View Invoice</th>
 
-                      <th className=" w-[200px]">
-                        Cancel Order
-                      </th>
+                      <th className=" w-[200px]">Cancel Order</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -459,12 +466,24 @@ function AdminDashboard() {
                           <td>
                             <div className="flex gap-[10px]">
                               {details.status === "PENDING" ? (
-                                <FaClock className="mr-2" size={20} color="orange" />
+                                <FaClock
+                                  className="mr-2"
+                                  size={20}
+                                  color="orange"
+                                />
                               ) : details.status === "APPROVED" ||
                                 details.status === "COMPLETED" ? (
-                                <FaCheckCircle className="mr-2" size={20} color="green" />
+                                <FaCheckCircle
+                                  className="mr-2"
+                                  size={20}
+                                  color="green"
+                                />
                               ) : details.status === "CANCELED" ? (
-                                <FaTimesCircle className="mr-2" size={20} color="red" />
+                                <FaTimesCircle
+                                  className="mr-2"
+                                  size={20}
+                                  color="red"
+                                />
                               ) : null}
                               {details.status}
                             </div>
@@ -478,7 +497,12 @@ function AdminDashboard() {
                             </button>
                           </td>
                           <td className="flex justify-center">
-                            <button className=" text-indigo-500 hover:text-[red] mt-[10px]" onClick={(e) => { handleCancel(details.orderId); }}>
+                            <button
+                              className=" text-indigo-500 hover:text-[red] mt-[10px]"
+                              onClick={(e) => {
+                                handleCancel(details.orderId);
+                              }}
+                            >
                               <FaTrash size={20} />
                             </button>
                           </td>
@@ -505,105 +529,182 @@ function AdminDashboard() {
                       <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px]">
                         <table className="table-auto w-full ml-[20px]">
                           <tbody>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
-                                <IoMdTimer className="text-gray-600" size={30} />
+                                <IoMdTimer
+                                  className="text-gray-600"
+                                  size={30}
+                                />
                                 Date
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {new Date(selectedOrder.date).toLocaleDateString()}
+                                {new Date(
+                                  selectedOrder.date
+                                ).toLocaleDateString()}
                               </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <SlSizeActual className="text-gray-600" />
                                 Paper Size
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.paperSize}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.paperSize}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <SiPowerpages className="text-gray-600" />
                                 Pages
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.pages}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.pages}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <RiNumbersFill className="text-gray-600" />
                                 Quantity
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.quantity}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.quantity}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaBook className="text-gray-600" />
                                 Binding Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.binding?.bindingType || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.binding?.bindingType || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaCut className="text-gray-600" />
                                 Cover Treatment Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.coverTreatment?.coverTreatmentType || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.coverTreatment
+                                  ?.coverTreatmentType || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaPaintBrush className="text-gray-600" />
                                 Inner Paper Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.innerPaper?.paperType || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.innerPaper?.paperType || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaLayerGroup className="text-gray-600" />
                                 Inner Paper Thickness
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.innerPaperThickness || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.innerPaperThickness || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaPaintBrush className="text-gray-600" />
                                 Outer Paper Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.outerPaper?.paperType || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.outerPaper?.paperType || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaLayerGroup className="text-gray-600" />
                                 Outer Paper Thickness
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.outerPaperThickness || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.outerPaperThickness || "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaPrint className="text-gray-600" />
                                 Lamination Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.lamination?.laminationType || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.lamination?.laminationType ||
+                                  "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaTint className="text-gray-600" />
                                 Ink Type
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.inkType}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.inkType}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg border-b border-gray-300" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaComment className="text-gray-600" />
                                 Remarks
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.remarks ? selectedOrder.remarks : "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.remarks
+                                  ? selectedOrder.remarks
+                                  : "N/A"}
+                              </td>
                             </tr>
-                            <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                            <tr
+                              className="mb-4 text-lg"
+                              style={{ height: "50px" }}
+                            >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaUser className="text-gray-600" />
                                 Customer Name
                               </td>
-                              <td className="w-1/2 text-gray-600">{selectedOrder.customer?.fullName || "N/A"}</td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.customer?.fullName || "N/A"}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -621,9 +722,12 @@ function AdminDashboard() {
                     {steps.map((step, index) => (
                       <li
                         key={index}
-                        className={` step  ${step.active ? "step-primary text-[black]" : "text-[gray] step-neutral"}`}
+                        className={` step  ${
+                          step.active
+                            ? "step-primary text-[black]"
+                            : "text-[gray] step-neutral"
+                        }`}
                         data-content={step.active ? "✓" : null}
-                        
                       >
                         {step.name}
                       </li>
@@ -632,18 +736,29 @@ function AdminDashboard() {
                 </div>
                 <div className="flex gap-[67%]">
                   <div className="flex gap-[20px] justify-end">
-                    <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]" onClick={handleBack}>
+                    <button
+                      className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                      onClick={handleBack}
+                    >
                       Back
                     </button>
-                    <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]" onClick={handleNext}>
+                    <button
+                      className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                      onClick={handleNext}
+                    >
                       Next
                     </button>
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
                       <div className="flex justify-end gap-[15px] mt-[-24px]">
-                        <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]">Close</button>
-                        <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]" onClick={handleDone}>
+                        <button className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]">
+                          Close
+                        </button>
+                        <button
+                          className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 border-[white] hover:border-[white]"
+                          onClick={handleDone}
+                        >
                           Done
                         </button>
                       </div>
@@ -652,7 +767,23 @@ function AdminDashboard() {
                 </div>
               </div>
             </dialog>
-
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Alert!</h3>
+                <p className="py-4">Do you really wanna cancel this order?</p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn">Close</button>
+                    <button
+                      className="btn ml-[20px] hover:bg-[red] hover:text-white"
+                      onClick={handleDelete}
+                    >
+                      Yes
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </div>
       </div>

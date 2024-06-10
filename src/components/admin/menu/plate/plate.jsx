@@ -155,18 +155,18 @@ function Plate() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-800">
           <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
             Plate
           </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Plate Size</th>
                   <th className="w-[80px]">Plate Rate</th>
@@ -251,7 +251,7 @@ function Plate() {
             </table>
             <br />
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[45%] bg-zinc-700 text-white"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Plate
@@ -292,14 +292,18 @@ function Plate() {
               </div>
             </dialog>
           </div>
+          <div className="flex flex-col w-full">
+            <div className="divider"></div>
+          </div>
+
           <div className="ink-class mt-9">
-            <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px] mt-5">
+            <h1 className="text-center mx-auto text-5xl text-archivo mt-9">
               Ink Type
             </h1>
             <div className="overflow-x-auto mt-[80px]">
               <table className="table w-2/3 mx-auto my-auto">
                 <thead>
-                  <tr className="bg-base-200">
+                  <tr className="bg-zinc-600 text-white">
                     <th className="w-[50px]">S.N</th>
                     <th className="w-[100px]">Ink Type</th>
                     <th className="w-[100px]">Actions</th>
@@ -353,7 +357,7 @@ function Plate() {
             </div>
           </div>
           <button
-            className="btn mx-[200px]"
+            className="btn mx-[45%] bg-zinc-800 text-white"
             onClick={() => document.getElementById("my_modal_4").showModal()}
           >
             Add Ink

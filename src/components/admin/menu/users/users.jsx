@@ -76,16 +76,16 @@ function Users() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-800">
           <h1 className="text-center mx-auto text-5xl text-archivo">Staffs</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">User ID</th>
                   <th className="w-[100px]">Username</th>
                   <th className="w-[80px]">Email</th>
@@ -153,7 +153,7 @@ function Users() {
             </table>
             <br></br>
             <button
-              className="btn mx-[205px]"
+              className="btn mx-[45%] text-white bg-zinc-800"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Staffs

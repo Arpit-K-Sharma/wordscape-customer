@@ -91,14 +91,14 @@ function CoverTreatment() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-900">
           <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
             Cover Treatments
           </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Cover Treatment Type</th>
                   <th className="w-[80px]">Rate</th>
@@ -167,7 +167,7 @@ function CoverTreatment() {
             </table>
             <br></br>
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[45%] bg-zinc-800 text-white"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Cover Treatment
