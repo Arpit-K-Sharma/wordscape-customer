@@ -85,14 +85,14 @@ function Customers() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-zinc-800">
           <h1 className="text-center mx-auto text-5xl text-archivo">
             Customers
           </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">Customer ID</th>
                   <th className="w-[150px]">Full Name</th>
                   <th className="w-[120px]">Address</th>
