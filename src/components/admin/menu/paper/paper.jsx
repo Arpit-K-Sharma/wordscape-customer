@@ -11,16 +11,13 @@ function Paper() {
       .get("http://localhost:8081/papers")
       .then((response) => {
         // Sort the data by paperId in ascending order
-        const sortedData = response.data.sort(
-          (a, b) => a.paperId - b.paperId
-        );
+        const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
         setPaperDataState(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }
-
 
   // Fetching paper data from the backend
   useEffect(() => {
@@ -68,7 +65,7 @@ function Paper() {
   const handleSave = (row) => {
     const updatedData = {
       paperType: document.getElementById(`paper_type_${row.paperId}`).value,
-      rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value)
+      rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value),
     };
     handleUpdate(row.paperId, updatedData);
     setEditingData(null); // Reset editing state after save
@@ -78,20 +75,25 @@ function Paper() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Papers</h1>
+        <div className="p-7 text-zinc-800">
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+            Papers
+          </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Paper Type</th>
                   <th className="w-[80px]">Rate</th>

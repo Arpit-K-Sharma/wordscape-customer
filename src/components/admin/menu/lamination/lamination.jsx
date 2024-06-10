@@ -87,7 +87,7 @@ function Lamination() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>

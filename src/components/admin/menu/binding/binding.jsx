@@ -90,16 +90,18 @@ function Binding() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Binding</h1>
+        <div className="p-7 text-zinc-900">
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+            Binding
+          </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Binding Type</th>
                   <th className="w-[80px]">Rate</th>
@@ -166,15 +168,10 @@ function Binding() {
                 ))}
               </tbody>
             </table>
-            {/* <button
-              className="btn btn-success mx-[200px] bg-zinc-900 text-white border-0 hover:bg-blue-800"
-              onClick={openForm}
-            >
-              Add Binding
-            </button> */}
+
             <br></br>
             <button
-              className="btn mx-[200px]"
+              className="btn mx-[40%] btn-neutral"
               onClick={() => document.getElementById("my_modal_3").showModal()}
             >
               Add Binding

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+import axios from "axios";
 
 function PressUnits({ data }) {
-
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       totalset: "",
@@ -31,7 +30,7 @@ function PressUnits({ data }) {
           size: entry.size || "",
           signature: entry.signature || "",
           ordered: entry.ordered || "",
-          produced: entry.produced || ""
+          produced: entry.produced || "",
         })),
       };
       reset(initialFormValues);
@@ -68,13 +67,13 @@ function PressUnits({ data }) {
       }
     };
 
-    let PaperDetailData = parseJSONCookie(Cookies.get('paperData'));
-    let binderyData = parseJSONCookie(Cookies.get('binderyData'));
-    let deliveryData = parseJSONCookie(Cookies.get('deliveryData'));
-    let paperData = parseJSONCookie(Cookies.get('PaperUnitsData'));
-    let paymentData = parseJSONCookie(Cookies.get('paymentData'));
-    let plateDetailData = parseJSONCookie(Cookies.get('plateData'));
-    let prePressData = parseJSONCookie(Cookies.get('prePressData'));
+    let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
+    let binderyData = parseJSONCookie(Cookies.get("binderyData"));
+    let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
+    let paperData = parseJSONCookie(Cookies.get("PaperUnitsData"));
+    let paymentData = parseJSONCookie(Cookies.get("paymentData"));
+    let plateDetailData = parseJSONCookie(Cookies.get("plateData"));
+    let prePressData = parseJSONCookie(Cookies.get("prePressData"));
 
     let cookiesData = {
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
@@ -84,7 +83,7 @@ function PressUnits({ data }) {
       prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
       plateDetailData: plateDetailData ? plateDetailData : null,
       prePressData: prePressData ? prePressData.prePressUnitList : null,
-      pressUnitData: jsonData
+      pressUnitData: jsonData,
     };
 
     const orderId = 4;
@@ -94,13 +93,13 @@ function PressUnits({ data }) {
     try {
       const response = await axios.post(url, cookiesData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
-      console.log('Successfully sent data to API:', response.data);
+      console.log("Successfully sent data to API:", response.data);
     } catch (error) {
-      console.error('Error sending data to API:', error);
+      console.error("Error sending data to API:", error);
     }
   };
 
@@ -125,16 +124,11 @@ function PressUnits({ data }) {
         onClick={() => document.getElementById("my_modal_12").showModal()}
       >
         <a className="flex"> Press Unit </a>
-        {pressunit ? (
-          <AiOutlineCheckCircle size={24} color="green" />
-        ) : null}
+        {pressunit ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
 
-      <dialog
-        id="my_modal_12"
-        className="modal flex h-[100%] ml-[50%] bg-[#1c2127]"
-      >
-        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none bg-[#1c2127]">
+      <dialog id="my_modal_12" className="modal flex h-[100%] ml-[50%]">
+        <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[20px] flex align-center justify-center">
               Press Unit

@@ -85,7 +85,7 @@ function PaperSize() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
         </label>
@@ -96,7 +96,7 @@ function PaperSize() {
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
-                <tr className="bg-base-200">
+                <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Paper Size</th>
                   <th className="w-[100px]">Dimensions</th>

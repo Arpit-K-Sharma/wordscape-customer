@@ -97,6 +97,8 @@ function PaperUnit({ data }) {
   });
 
   const papersData1 = watch("papersData1");
+  const papersData2 = watch("papersData2");
+  const papersData3 = watch("papersData3");
 
   useEffect(() => {
     if (data) {
@@ -160,7 +162,7 @@ function PaperUnit({ data }) {
     }
   };
 
-  const handleAdd = () => {
+  const handleAdd1 = () => {
     const newRow = {
       type: "Other Paper",
       fullSheetSize: "",
@@ -170,6 +172,29 @@ function PaperUnit({ data }) {
     };
     const updatedPapersData1 = [...papersData1, newRow];
     setValue("papersData1", updatedPapersData1);
+  };
+
+  const handleAdd2 = () => {
+    const newRow = {
+      type: "Other Paper",
+      cutSheetSize: "",
+      wastage: "",
+      totalCutSheet: "",
+    };
+    const updatedPapersData2 = [...papersData2, newRow];
+    setValue("papersData2", updatedPapersData2);
+  };
+
+  const handleAdd3 = () => {
+    const newRow = {
+      ptype: "Other Paper",
+      type: "",
+      gsm: "",
+      printColor: "",
+      lamination: "",
+    };
+    const updatedPapersData3 = [...papersData3, newRow];
+    setValue("papersData3", updatedPapersData3);
   };
 
   return (
@@ -183,7 +208,7 @@ function PaperUnit({ data }) {
           <AiOutlineCheckCircle size={24} color="green" />
         ) : null}
       </button>
-      <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%] ">
+      <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%]">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none overflow-y-scroll ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[10px]">Paper Unit</h3>
@@ -264,7 +289,7 @@ function PaperUnit({ data }) {
                 ))}
               </tbody>
             </table>
-            <div className="flex justify-end mt-[5px]" onClick={handleAdd}>
+            <div className="flex justify-end mt-[5px]" onClick={handleAdd1}>
               <MdAdd size={30} color="green" />
             </div>
             <table className="table mt-5">
@@ -328,6 +353,9 @@ function PaperUnit({ data }) {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-end mt-[5px]" onClick={handleAdd2}>
+              <MdAdd size={30} color="green" />
+            </div>
             <div className="flex mt-[20px]">
               <div>
                 <label>Paper Ready By: </label> <br />
@@ -559,6 +587,9 @@ function PaperUnit({ data }) {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-end mt-[5px]" onClick={handleAdd3}>
+              <MdAdd size={30} color="green" />
+            </div>
             <div className="modal-action">
               <button className="btn hover:bg-[#376437]" type="submit">
                 Done
