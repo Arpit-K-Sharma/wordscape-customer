@@ -259,7 +259,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     totalCost,
   ]);
 
-  const { companyName, remarks, address, estimatedAmount } = orderData;
+  const { companyName, remarks, address, estimatedAmount, date } = orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -317,10 +317,15 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               type="date"
               placeholder="Deadline"
               className="input input-bordered w-full max-w-xs text-black"
-              // value={deadline}
-              onChange={(e) =>
-                setOrderData({ ...orderData, deadline: e.target.value })
+              value={
+                orderData.deadline
+                  ? orderData.deadline.split("/").reverse().join("-")
+                  : ""
               }
+              onChange={(e) => {
+                // Assuming you want to keep the date in YYYY-MM-DD format in the state
+                setOrderData({ ...orderData, deadline: e.target.value });
+              }}
             />
             <div className="label"></div>
           </label>
@@ -339,14 +344,14 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             {console.log("Estimated amount " + totalCost)}
             <div className="label"></div>
           </label>
-          <label className="form-control w-full lg:ml-[20px] mb-[10px]">
+          <label className="form-control w-full lg:ml-[20px] mb-[10px] col-span-2">
             <div className="label">
               <span className="label-text-alt">Remarks</span>
               <CiStickyNote size={`25px`} color="black" />
             </div>
             <textarea
               placeholder="Remarks"
-              className="textarea textarea-bordered w-full text-black"
+              className="textarea textarea-bordered w-full h-full text-black"
               value={remarks}
               onChange={(e) =>
                 setOrderData({ ...orderData, remarks: e.target.value })

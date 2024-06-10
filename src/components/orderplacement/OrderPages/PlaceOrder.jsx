@@ -28,7 +28,7 @@ function OrderPlacement() {
     inkType: "Black and White",
     laminationType: "Normal Glossy",
     coverTreatmentType: "Die Cutting",
-    date: Date.now(),
+    date: "",
     innerPaperRate: 0,
     outerPaperRate: 0,
     laminationRate: 0,
