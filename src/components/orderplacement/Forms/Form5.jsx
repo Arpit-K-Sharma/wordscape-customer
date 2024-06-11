@@ -259,7 +259,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     totalCost,
   ]);
 
-  const { companyName, remarks, address, estimatedAmount, date } = orderData;
+  const { companyName, remarks, address, estimatedAmount, deadline } =
+    orderData;
 
   return (
     <div className="lg:mt-6 lg:mb-6">
@@ -317,11 +318,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               type="date"
               placeholder="Deadline"
               className="input input-bordered w-full max-w-xs text-black"
-              value={
-                orderData.deadline
-                  ? orderData.deadline.split("/").reverse().join("-")
-                  : ""
-              }
+              value={deadline}
               onChange={(e) => {
                 // Assuming you want to keep the date in YYYY-MM-DD format in the state
                 setOrderData({ ...orderData, deadline: e.target.value });
@@ -329,8 +326,6 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             />
             <div className="label"></div>
           </label>
-          <p></p>
-
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px] ">
             <div className="label">
               <span className="label-text-alt">Total Estimated Cost</span>
