@@ -7,7 +7,14 @@ import { HiNewspaper } from "react-icons/hi";
 import { FaRegAddressCard } from "react-icons/fa";
 
 const FourthForm = ({ orderData, setOrderData, entireData }) => {
-  const { laminationTypes, bindingType, inkTypes, coverTreatment } = entireData;
+  const {
+    laminationTypes,
+    innerLamination,
+    outerLamination,
+    bindingType,
+    inkTypes,
+    coverTreatment,
+  } = entireData;
   console.log(coverTreatment);
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
@@ -18,7 +25,43 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         <br />
 
         <div className="label text-center">
-          <span className="label-text">Lamination Types</span>
+          <span className="label-text">Inner Lamination Types</span>
+          <IoMdPaper size={`25px`} color="black" />
+        </div>
+        <select
+          className="select select-bordered text-zinc-800"
+          onChange={(e) =>
+            setOrderData({ ...orderData, innerLamination: e.target.value })
+          }
+        >
+          {laminationTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.laminationType}
+            </option>
+          ))}
+        </select>
+        <br />
+
+        <div className="label text-center">
+          <span className="label-text">Outer Lamination Types</span>
+          <IoMdPaper size={`25px`} color="black" />
+        </div>
+        <select
+          className="select select-bordered text-zinc-800"
+          onChange={(e) =>
+            setOrderData({ ...orderData, outerLamination: e.target.value })
+          }
+        >
+          {laminationTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.laminationType}
+            </option>
+          ))}
+        </select>
+        <br />
+
+        <div className="label text-center">
+          <span className="label-text">Outer Lamination Types</span>
           <IoMdPaper size={`25px`} color="black" />
         </div>
         <select

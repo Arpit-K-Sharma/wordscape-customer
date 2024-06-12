@@ -26,7 +26,6 @@ function OrderPlacement() {
     estimatedAmount: 0,
     bindingType: "Center Stitch",
     inkType: "B/W",
-    laminationType: "Normal Glossy",
     coverTreatmentType: "Die Cutting",
     date: Date.now(),
     deadline: "",
@@ -36,6 +35,8 @@ function OrderPlacement() {
     bindingRate: 0,
     plateRate: 0,
     deliveryOption: "",
+    innerLamination: "",
+    outerLamination: "",
   });
 
   useEffect(() => {
