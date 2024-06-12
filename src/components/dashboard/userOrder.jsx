@@ -98,7 +98,7 @@ function UserOrder() {
     <div className="font-archivo">
       <Menu />
 
-      <div className="flex flex-col items-center gap-5 text-slate-900 mb-9 px-4 max-sm:text-center">
+      <div className="flex flex-col items-center gap-5 text-blue-700 mb-9 px-4 max-sm:text-center">
         <h1 className="font-bold text-4xl mt-5 max-sm:text-3xl">
           Orders Summary
         </h1>
@@ -130,7 +130,7 @@ function UserOrder() {
         <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
-              <AiOutlineClockCircle size={35} color="white" className="ml-2" />
+              <AiOutlineClockCircle size={35} color="orange" className="ml-2" />
               <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Pending Orders
               </h3>
@@ -138,15 +138,15 @@ function UserOrder() {
             <h3 className="card-title flex justify-center text-[grey] text-[17px]">
               Waiting to be processed
             </h3>
-            <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl font-bold">{pending}</h2>
+            <div className="card-actions justify-center items-center bg-yellow-600 b h-2/3 rounded-md ml-6 mr-6 mt-1">
+              <h2 className="text-4xl font-bold text-white">{pending}</h2>
             </div>
           </div>
         </div>
         <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
-              <AiOutlineCheckCircle size={35} color="white" className="ml-2" />
+              <AiOutlineCheckCircle size={35} color="green" className="ml-2" />
               <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Approved Orders
               </h3>
@@ -154,15 +154,15 @@ function UserOrder() {
             <h3 className="card-title flex justify-center text-[grey] text-[17px]">
               Verification Completed
             </h3>
-            <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl font-bold">{approved}</h2>
+            <div className="card-actions justify-center items-center bg-green-700 h-2/3 rounded-md ml-6 mr-6 mt-1">
+              <h2 className="text-4xl text-white font-bold">{approved}</h2>
             </div>
           </div>
         </div>
         <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
-              <FaCheckCircle size={32} color="white" className="ml-2" />
+              <FaCheckCircle size={32} color="green" className="ml-2" />
               <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-900 pl-5">
                 Completed Orders
               </h3>
@@ -170,8 +170,8 @@ function UserOrder() {
             <h3 className="card-title flex justify-center text-[grey] text-[17px]">
               Order Finalized
             </h3>
-            <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
-              <h2 className="text-4xl font-bold">{completed}</h2>
+            <div className="card-actions justify-center items-center bg-blue-600 h-2/3 rounded-md ml-6 mr-6 mt-1">
+              <h2 className="text-4xl font-bold text-white">{completed}</h2>
             </div>
           </div>
         </div>
@@ -184,7 +184,7 @@ function UserOrder() {
       <div className="overflow-x-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg max-sm:w-[95%] max-sm:ml-[2.5%] max-sm:h-[400px]">
         <table className="table w-full">
           <thead>
-            <tr className="bg-base-200 font-semibold text-[15px] text-slate-800">
+            <tr className="bg-blue-500 text-white font-semibold text-[15px] text-slate-800">
               <th>Order ID</th>
               <th>Date</th>
               <th>Delivery</th>
