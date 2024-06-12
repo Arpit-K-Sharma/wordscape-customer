@@ -10,17 +10,17 @@ function Bindery({ data }) {
     defaultValues: {
       filledBy: "",
       approvedBy: "",
-      selectedOption: "",
+      selectedOptions: [], // Change to an array
     },
   });
 
-  const selectedOption = watch("selectedOption", "");
+  const selectedOptions = watch("selectedOptions", []);
 
   useEffect(() => {
     if (data) {
       setValue("filledBy", data.filledInBy || "");
       setValue("approvedBy", data.approvedBy || "");
-      setValue("selectedOption", data.bindingSelectedOption || "");
+      setValue("selectedOptions", data.bindingSelectedOptions || []); // Change to an array
     }
   }, [data, setValue]);
 
@@ -38,8 +38,16 @@ function Bindery({ data }) {
     }
   };
 
-  const handleRadioChange = (value) => {
-    setValue("selectedOption", value);
+  const handleCheckboxChange = (value) => {
+    const currentSelection = watch("selectedOptions");
+    if (currentSelection.includes(value)) {
+      setValue(
+        "selectedOptions",
+        currentSelection.filter((option) => option !== value)
+      );
+    } else {
+      setValue("selectedOptions", [...currentSelection, value]);
+    }
   };
 
   const onSubmit = async (formData) => {
@@ -47,7 +55,7 @@ function Bindery({ data }) {
       binderyData: {
         filledInBy: formData.filledBy,
         approvedBy: formData.approvedBy,
-        bindingSelectedOption: formData.selectedOption,
+        bindingSelectedOptions: formData.selectedOptions,
       },
     };
     console.log("Bindery Data in JSON", jsondata);
@@ -65,10 +73,7 @@ function Bindery({ data }) {
         <a className="flex"> Bindery </a>
         {bindery ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
-      <dialog
-        id="my_modal_11"
-        className="modal flex h-[100%] ml-[50%] bg-white"
-      >
+      <dialog id="my_modal_11" className="modal flex h-[100%] ml-[50%]">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[20px] flex align-center justify-center">
@@ -79,12 +84,12 @@ function Bindery({ data }) {
                 <div className="mr-4 ml-[35px]">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="Center Stitch"
                       value="Center Stitch"
                       className="h-6 w-6"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("Center Stitch")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("Center Stitch")}
                     />
                     <span className="ml-1 mr-5">Center stitch</span>
                   </label>
@@ -92,12 +97,12 @@ function Bindery({ data }) {
                 <div className="mr-4 ml-[18px]">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="Perfect"
                       value="Perfect"
                       className="h-6 w-8"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("Perfect")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("Perfect")}
                     />
                     <span className="ml-1">Perfect</span>
                   </label>
@@ -105,12 +110,12 @@ function Bindery({ data }) {
                 <div className="mr-4 ml-[67px]">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="juju"
                       className="h-6 w-6"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("juju")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("juju")}
                     />
                     <span className="ml-1 mr-5">Juju</span>
                   </label>
@@ -118,12 +123,12 @@ function Bindery({ data }) {
                 <div className="mr-4 ml-[67px]">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="metal-foiling"
                       className="h-6 w-8"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("metal-foiling")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("metal-foiling")}
                     />
                     <span className="ml-1">Metal-foiling</span>
                   </label>
@@ -133,12 +138,12 @@ function Bindery({ data }) {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="diecuting"
                       className="h-6 w-6"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("diecuting")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("diecuting")}
                     />
                     <span className="ml-1 mr-5">Diecuting</span>
                   </label>
@@ -146,12 +151,12 @@ function Bindery({ data }) {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="perforation"
                       className="h-6 w-8"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("perforation")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("perforation")}
                     />
                     <span className="ml-1">Perforation</span>
                   </label>
@@ -159,12 +164,12 @@ function Bindery({ data }) {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="padding"
                       className="h-6 w-6"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("padding")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("padding")}
                     />
                     <span className="ml-1 mr-5">Padding</span>
                   </label>
@@ -172,12 +177,12 @@ function Bindery({ data }) {
                 <div className="mr-4">
                   <label className="inline-flex items-center">
                     <input
-                      type="radio"
+                      type="checkbox"
                       name="binderyOption"
                       value="spot-varnishing"
                       className="h-6 w-8"
-                      {...register("selectedOption")}
-                      onChange={() => handleRadioChange("spot-varnishing")}
+                      {...register("selectedOptions")}
+                      onChange={() => handleCheckboxChange("spot-varnishing")}
                     />
                     <span className="ml-1">Spot varnishing</span>
                   </label>
