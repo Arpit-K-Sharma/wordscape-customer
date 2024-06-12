@@ -7,6 +7,8 @@ import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
+import { FaCar } from "react-icons/fa";
+
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
 import {
@@ -405,6 +407,20 @@ function UserOrder() {
                             : "N/A"}
                         </td>
                       </tr>
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <FaCar className="text-blue-500" />
+                          Delivery Option
+                        </td>
+                        <td className="w-1/2">
+                          {selectedOrder.deliveryOption
+                            ? selectedOrder.deliveryOption
+                            : "N/A"}
+                        </td>
+                      </tr>
                       <tr className="mb-4 text-lg" style={{ height: "50px" }}>
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
                           <FaUser className="text-yellow-500" />
@@ -423,9 +439,9 @@ function UserOrder() {
         </div>
       </div>
       <dialog id="my_modal_1" className="modal">
-        <div className="modal-box overflow-hidden max-w-[900px]">
+        <div className="modal-box overflow-hidden max-w-[55%]">
           <div className="">
-            <ul className="steps w-[900px] mb-[20px]">
+            <ul className="steps w-[100%] mb-[20px]">
               <li
                 className={tracking.orderSlip ? "step step-primary" : "step"}
                 data-content={tracking.orderSlip ? "✓" : null}
