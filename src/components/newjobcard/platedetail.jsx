@@ -79,7 +79,7 @@ function PlateDetail({ data }) {
         <a className="flex"> Plate Details </a>
         {plate && <AiOutlineCheckCircle size={24} color="green" />}
       </button>
-      <dialog id="my_modal_9" className="modal flex h-[100%] ml-[37%]">
+      <dialog id="my_modal_9" className="modal flex h-[100%] ml-[37%] bg-white">
         <div className="modal-box max-h-[100%] max-w-[63%] shadow-none ">
           <h3 className="font-bold text-lg flex align-center justify-center">
             Plate Details

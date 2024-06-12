@@ -64,7 +64,7 @@ function PaperDetail({ data }) {
         <span className="flex">Paper Details </span>
         {isSubmitSuccessful && <AiOutlineCheckCircle size={24} color="green" />}
       </button>
-      <dialog id="my_modal_8" className="modal flex h-[100%] ml-[50%]">
+      <dialog id="my_modal_8" className="modal flex h-[100%] ml-[50%] bg-white">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <h3 className="font-bold text-lg">Paper Details</h3>
           <p className="py-4">

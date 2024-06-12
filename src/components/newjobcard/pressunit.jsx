@@ -127,7 +127,10 @@ function PressUnits({ data }) {
         {pressunit ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
 
-      <dialog id="my_modal_12" className="modal flex h-[100%] ml-[50%]">
+      <dialog
+        id="my_modal_12"
+        className="modal flex h-[100%] ml-[50%] bg-white"
+      >
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[20px] flex align-center justify-center">

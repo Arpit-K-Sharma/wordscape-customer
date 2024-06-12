@@ -11,6 +11,7 @@ import JobcardMenu from "./jobcardMenu";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import AdminDrawer from "../admin/menu/AdminDrawer";
+import Costbreakdown from "./costbreakdown";
 
 function NJobCard() {
   const location = useLocation();
@@ -150,6 +151,7 @@ function NJobCard() {
                   <PaperUnit data={jobCard.paperData} />
                   <Bindery data={jobCard.bindingData} />
                   <PressUnits data={jobCard.pressUnitData} />
+                  <Costbreakdown coverData={jobCard.coverTreatment} bindingData={jobCard.binding} laminationData={jobCard.lamination} innerData={jobCard.innerPaper} outerData={jobCard.outerPaper}/>
                 </>
               ) : null}
             </div>
