@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Avatar from 'react-avatar';
+import Avatar from "react-avatar";
 
 function OrderStatusList({ orderDetails }) {
   const [trackingData, setTrackingData] = useState({});
@@ -42,6 +42,7 @@ function OrderStatusList({ orderDetails }) {
       { key: "printing", label: "Printing" },
       { key: "postPress", label: "Post Press" },
       { key: "delivery", label: "Delivery" },
+      { key: "invoice", label: "Invoice" },
       { key: "end", label: "End" },
     ];
 
@@ -53,11 +54,13 @@ function OrderStatusList({ orderDetails }) {
     return "Not Started";
   }
 
-  const sortedOrderDetails = [...orderDetails].sort((a, b) => a.orderId - b.orderId);
+  const sortedOrderDetails = [...orderDetails].sort(
+    (a, b) => a.orderId - b.orderId
+  );
 
   return (
     <>
-      <div className="w-[520px] h-[350px] bg-[white] rounded-lg ml-[10%] mt-[20px] text-[#1c1b1b] p-4">
+      <div className="w-1/3 h-[350px] bg-[white] rounded-lg ml-[10%] mt-[20px] text-[#1c1b1b] p-4">
         <table className="min-w-full">
           <thead>
             <tr className="font-medium text-[16px] h-[47px] border-b border-gray-200 text-left">
@@ -68,7 +71,10 @@ function OrderStatusList({ orderDetails }) {
           </thead>
           <tbody>
             {sortedOrderDetails.map((order) => (
-              <tr key={order.orderId} className="border-b border-gray-200 hover:bg-gray-100 text-gray-700">
+              <tr
+                key={order.orderId}
+                className="border-b border-gray-200 hover:bg-gray-100 text-gray-700"
+              >
                 <td className="flex items-center gap-[10px] h-[60px]">
                   <Avatar
                     name={order.customer || "N/A"}

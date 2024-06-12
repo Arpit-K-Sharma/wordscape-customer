@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Avatar from "react-avatar";
 
 function OrderStatusList({ orderDetails }) {
   const [trackingData, setTrackingData] = useState({});
@@ -52,35 +53,51 @@ function OrderStatusList({ orderDetails }) {
     return "Not Started";
   }
 
+  const sortedOrderDetails = [...orderDetails]
+    .sort((a, b) => a.orderId - b.orderId)
+    .slice(0, 5);
+
   return (
-    <div className="flex flex-col items-center justify-center mt-8 w-full px-4 lg:px-20">
-      <div className="w-3/4 overflow-x-auto">
-        <table className="table w-full text-center">
+    <>
+      <div className="w-1/2 h-[350px] bg-white rounded-lg ml-[10%] mt-[20px] text-[#1c1b1b] p-4">
+        <table className="min-w-full">
           <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer Name</th>
-              <th>Tracking Stage</th>
-              {/* <th>Current Status</th> */}
+            <tr className="font-medium text-[16px] h-[47px] border-b border-gray-200 text-left">
+              <th className="w-[270px] pl-[10px]">Customer Name</th>
+              <th className="w-[100px]">Order Id</th>
+              <th className="w-[150px]">Tracking Stage</th>
             </tr>
           </thead>
           <tbody>
-            {orderDetails.map((order) => (
-              <tr key={order.orderId}>
-                <td>{order.orderId}</td>
-                <td>{order.customer || "N/A"}</td>
-                <td>{trackingData[order.orderId] || "Loading..."}</td>
-                {/* <td>
-                  <div className="badge badge-secondary">
-                    {order.currentStatus || "Unknown"}
+            {sortedOrderDetails.map((order) => (
+              <tr
+                key={order.orderId}
+                className="border-b border-gray-200 hover:bg-gray-100 text-gray-700"
+              >
+                <td className="flex items-center gap-[10px] h-[60px]">
+                  <Avatar
+                    name={order.customer || "N/A"}
+                    size="40"
+                    round={true}
+                    color="#990aff"
+                    className="m-3 mb-[5px] mt-[2px] ml-[3px]"
+                  />
+                  <div className="grid mb-[5px] mt-[5px]">
+                    <span>{order.customer || "N/A"}</span>
                   </div>
-                </td> */}
+                </td>
+                <td>
+                  <h4>#{order.orderId}</h4>
+                </td>
+                <td>
+                  <h3>{trackingData[order.orderId] || "Loading..."}</h3>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

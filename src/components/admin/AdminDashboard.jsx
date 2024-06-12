@@ -439,7 +439,7 @@ function AdminDashboard() {
 
             <div className="flex gap-[20px] mt-[30px]">
               <OrderStatusList orderDetails={orderDetails} />
-              <div className="grid mt-[-8px]">
+              <div className="grid mt-[-8px] w-full lg:w-1/2">
                 <div className="flex justify-end">
                   <h2
                     className="text-indigo-700 font-semibold hover:text-indigo-500 cursor-pointer"
@@ -448,8 +448,8 @@ function AdminDashboard() {
                     View all orders
                   </h2>
                 </div>
-                <div className="w-[640px] h-[350px] bg-[white] mt-[5px] rounded-lg  text-[#1c1b1b] p-4 overflow-auto mb-10">
-                  <table className="w-full text-[13px] bg-[white]">
+                <div className="w-full h-[350px] bg-white mt-[5px] rounded-lg text-[#1c1b1b] p-4 overflow-auto mb-10">
+                  <table className="w-full text-[13px] bg-white">
                     <thead>
                       <tr className="text-[16px] border-b border-[#d5d4d4] text-[#171717] h-[47px]">
                         <th className="w-[100px] pl-[15px] text-left">
@@ -460,7 +460,7 @@ function AdminDashboard() {
                         <th className="w-[150px] text-left">
                           Estimated Amount
                         </th>
-                        <th className="w-[100px] text-left"> Order Status</th>
+                        <th className="w-[100px] text-left">Order Status</th>
                       </tr>
                     </thead>
                     <tbody>

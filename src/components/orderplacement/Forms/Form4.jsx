@@ -15,44 +15,6 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
     inkTypes,
     coverTreatment,
   } = entireData;
-
-  const getRateForLaminationType = (selectedLaminationType, laminationKey) => {
-    axios
-      .get("http://localhost:8081/laminations")
-      .then((response) => {
-        const selectedLamination = response.data.find(
-          (lamination) => lamination.laminationType === selectedLaminationType
-        );
-        if (selectedLamination) {
-          if (laminationKey === "outerLamination") {
-            setOrderData((prev) => ({
-              ...prev,
-              outerLaminationRate: selectedLamination.rate,
-            }));
-          } else if (laminationKey === "innerLamination") {
-            setOrderData((prev) => ({
-              ...prev,
-              innerLaminationRate: selectedLamination.rate,
-            }));
-          }
-          console.log(
-            `${laminationKey} Type:`,
-            selectedLaminationType,
-            "Rate:",
-            selectedLamination.rate
-          );
-        } else {
-          console.error(
-            `${laminationKey} type not found:`,
-            selectedLaminationType
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching lamination types:", error);
-      });
-  };
-
   console.log(coverTreatment);
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
@@ -68,10 +30,9 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </div>
         <select
           className="select select-bordered text-zinc-800"
-          onChange={(e) => {
-            setOrderData({ ...orderData, innerLamination: e.target.value });
-            getRateForLaminationType(e.target.value, "innerLamination");
-          }}
+          onChange={(e) =>
+            setOrderData({ ...orderData, innerLamination: e.target.value })
+          }
         >
           {laminationTypes.map((type) => (
             <option key={type.id} value={type.id}>
@@ -87,10 +48,27 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </div>
         <select
           className="select select-bordered text-zinc-800"
-          onChange={(e) => {
-            setOrderData({ ...orderData, outerLamination: e.target.value });
-            getRateForLaminationType(e.target.value, "outerLamination");
-          }}
+          onChange={(e) =>
+            setOrderData({ ...orderData, outerLamination: e.target.value })
+          }
+        >
+          {laminationTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.laminationType}
+            </option>
+          ))}
+        </select>
+        <br />
+
+        <div className="label text-center">
+          <span className="label-text">Outer Lamination Types</span>
+          <IoMdPaper size={`25px`} color="black" />
+        </div>
+        <select
+          className="select select-bordered text-zinc-800"
+          onChange={(e) =>
+            setOrderData({ ...orderData, laminationType: e.target.value })
+          }
         >
           {laminationTypes.map((type) => (
             <option key={type.id} value={type.id}>

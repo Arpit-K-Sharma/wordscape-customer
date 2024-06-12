@@ -543,7 +543,7 @@ function AdminDashboard() {
                                   className="text-gray-600"
                                   size={30}
                                 />
-                                Date
+                                Ordered Date
                               </td>
                               <td className="w-1/2 text-gray-600">
                                 {new Date(

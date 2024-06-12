@@ -8,6 +8,7 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
+import { FaCalendarCheck } from "react-icons/fa";
 
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -449,7 +450,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaCar className="text-blue-500" />
+                          <FaCalendarCheck className="text-red-500" />
                           Deadline
                         </td>
                         <td className="w-1/2">
