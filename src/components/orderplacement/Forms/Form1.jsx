@@ -61,7 +61,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
               ))}
           </select>
         ) : (
-          <div className="mb-[-10px]">
+          <div className="mb-[-10px] font-archivo">
             <div className="flex gap-[30px] justify-center items-center">
               <label className="form-control">
                 <input

@@ -9,7 +9,7 @@ const ThirdForm = ({ orderData, setOrderData }) => {
   const { pages, quantity } = orderData;
 
   return (
-    <div className="lg:mt-6 lg:mb-6">
+    <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control max-sm:mr-5">
         <p className="text-2xl font-light max-sm:text-[24px] text-zinc-900 max-sm:flex max-sm:justify-center">
           How many quantities and pages do you want to print?

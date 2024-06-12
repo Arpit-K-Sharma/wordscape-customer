@@ -272,9 +272,9 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     orderData;
 
   return (
-    <div className="lg:mt-6 lg:mb-6">
+    <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control max-sm:mr-5">
-        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center text-zinc-900">
+        <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center text-zinc-900 font-archivo">
           Fill in the details and confirm your order!
         </p>
         <br />
@@ -350,7 +350,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             <div className="label"></div>
           </label>
 
-          <div className="form-control w-full lg:flex lg:justify-between lg:items-center lg:px-10 col-span-2">
+          <div className="form-control w-full lg:flex lg:justify-between lg:items-center lg:px-10 col-span-2 font-archivo">
             <div className="label flex items-center gap-2 mb-2">
               <FaRegAddressCard size={`25px`} color="black" />
               <span className="label text-black">Delivery Option</span>
@@ -407,8 +407,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <span className="text-[blue] text-[30px] mb-[-10px]"> *</span>Please
           note flap size within the{" "}
           <span className="text-[blue] font-semibold">remarks </span> along with
-          the designated size or any other special instructions (page number,
-          etc.).
+          the designated size or any other{" "}
+          <span className="text-[blue] font-semibold">
+            special instructions
+          </span>{" "}
+          (page number, etc.).
         </h1>
         <h1 className="text-m font-bold mt-[10px] text-zinc-900">
           Upload the PDF file for Printing here

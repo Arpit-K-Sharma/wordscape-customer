@@ -10,7 +10,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
   const { laminationTypes, bindingType, inkTypes, coverTreatment } = entireData;
   console.log(coverTreatment);
   return (
-    <div className="lg:mt-6 lg:mb-6">
+    <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control w-full max-w-xl">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex text-zinc-900 max-sm:justify-center">
           What lamination and binding would you want to choose from?
