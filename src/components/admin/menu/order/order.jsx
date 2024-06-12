@@ -45,6 +45,7 @@ function AdminDashboard() {
     { name: "Printing", active: false, key: "printing" },
     { name: "Post Press", active: false, key: "postPress" },
     { name: "Delivery", active: false, key: "delivery" },
+    { name: "Invoice", active: false, key: "invoice" },
     { name: "End", active: false, key: "end" },
   ]);
   const [recentSteps, setRecentSteps] = useState([
@@ -55,6 +56,7 @@ function AdminDashboard() {
     { name: "Printing", active: false, key: "printing" },
     { name: "Post Press", active: false, key: "postPress" },
     { name: "Delivery", active: false, key: "delivery" },
+    { name: "Invoice", active: false, key: "invoice" },
     { name: "End", active: false, key: "end" },
   ]);
   const [orderid, setOrderid] = useState();

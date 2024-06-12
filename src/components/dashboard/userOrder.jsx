@@ -471,6 +471,12 @@ function UserOrder() {
                 Delivery
               </li>
               <li
+                className={tracking.invoice ? "step step-primary" : "step"}
+                data-content={tracking.invoice ? "✓" : null}
+              >
+                Invoice
+              </li>
+              <li
                 className={tracking.end ? "step step-primary" : "step"}
                 data-content={tracking.end ? "✓" : null}
               >

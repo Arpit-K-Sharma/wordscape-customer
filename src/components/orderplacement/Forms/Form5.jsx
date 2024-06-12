@@ -403,6 +403,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           <span className="text-[red] font-semibold">estimated price</span> of
           the order <span className="text-[red] font-semibold">may differ</span>{" "}
           from the actual total cost.
+          <br />
+          <span className="text-[red] text-[30px] mb-[-10px]"> *</span>Please
+          note flap size within the{" "}
+          <span className="text-[red] font-semibold">remarks </span> along with
+          the designated size or any other special instructions (page number,
+          etc.).
         </h1>
         <h1 className="text-m font-bold mt-[10px] text-zinc-900">
           Upload the PDF file for Printing here
