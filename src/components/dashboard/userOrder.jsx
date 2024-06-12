@@ -387,10 +387,22 @@ function UserOrder() {
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
                           <FaPrint className="text-red-500" />
-                          Lamination Type
+                          Inner Lamination Type
                         </td>
                         <td className="w-1/2">
-                          {selectedOrder.lamination.laminationType}
+                          {selectedOrder.innerLamination.laminationType}
+                        </td>
+                      </tr>
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <FaPrint className="text-blue-500" />
+                          Outer Lamination Type
+                        </td>
+                        <td className="w-1/2">
+                          {selectedOrder.outerLamination.laminationType}
                         </td>
                       </tr>
                       <tr
