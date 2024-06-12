@@ -32,13 +32,13 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
 
   return (
     <div className="lg:mt-6 lg:mb-6 text-zinc-800">
-      <label className="form-control max-sm:mr-5">
+      <label className="form-control ">
         <p className="text-2xl font-light max-sm:text-[24px]">
           Start placing your order with the paper size, type, and its thickness
         </p>
         <br />
         <div className="label text-center">
-          <div className="flex gap-[10px]">
+          <div className="flex ">
             <span className="label-text mt-[5px]">Paper Size</span>
           </div>
           <span className="ml-2">
@@ -62,7 +62,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           </select>
         ) : (
           <div className="mb-[-10px] font-archivo">
-            <div className="flex gap-[30px] justify-center items-center">
+            <div className="flex justify-center items-center">
               <label className="form-control">
                 <input
                   className="input input-bordered w-[70px]"

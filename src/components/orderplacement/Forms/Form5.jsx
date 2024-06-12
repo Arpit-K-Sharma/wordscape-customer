@@ -6,6 +6,8 @@ import { FaRegAddressCard } from "react-icons/fa";
 import { CiStickyNote } from "react-icons/ci";
 import { GiMoneyStack } from "react-icons/gi";
 import { get } from "react-hook-form";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
@@ -15,24 +17,44 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [deliveryOption, setDeliveryOption] = useState("Pickup");
+  const [deliveryOption, setDeliveryOption] = useState("pickup");
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmitWithState = async () => {
+    // Check if all required fields are filled
+    if (!orderData.deliveryOption) {
+      toast.error("Please select a delivery option.");
+      return; // Prevent form submission
+    }
+    if (!orderData.deadline) {
+      toast.error("Please enter a deadline.");
+      return; // Prevent form submission
+    }
+    // Add more checks as needed
+
     setIsSubmitting(true);
     try {
       await handleSubmit();
       setIsSubmitted(true);
+      toast.success("Check your email for the invoice!");
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(false);
       }, 3000); // Reset state after 3 seconds
     } catch (error) {
       console.error("Error submitting order:", error);
+      toast.error("Failed to place order.");
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    setOrderData((prev) => ({
+      ...prev,
+      deliveryOption: prev.deliveryOption || "pickup",
+    }));
+  }, [setOrderData]);
 
   console.log(orderData.quantity, orderData.pages);
 
@@ -195,10 +217,10 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   };
 
   const handleDeliveryOptionChange = (event) => {
-    setOrderData({
-      ...orderData,
+    setOrderData((prevOrderData) => ({
+      ...prevOrderData,
       deliveryOption: event.target.value,
-    });
+    }));
   };
 
   useEffect(() => {
@@ -332,6 +354,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
                 // Assuming you want to keep the date in YYYY-MM-DD format in the state
                 setOrderData({ ...orderData, deadline: e.target.value });
               }}
+              required
             />
             <div className="label"></div>
           </label>
@@ -364,6 +387,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
                   className="radio lg:mr-[10px] checked:bg-blue-500"
                   checked={orderData.deliveryOption === "pickup"}
                   onChange={handleDeliveryOptionChange}
+                  required
                 />
                 <span className="label-text">Pickup</span>
               </label>
@@ -375,6 +399,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
                   className="radio lg:mr-[10px] checked:bg-blue-500"
                   checked={orderData.deliveryOption === "delivery"}
                   onChange={handleDeliveryOptionChange}
+                  required
                 />
                 <span className="label-text">Delivery on Address</span>
               </label>
@@ -449,6 +474,17 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           </button>
         </div>
       </label>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

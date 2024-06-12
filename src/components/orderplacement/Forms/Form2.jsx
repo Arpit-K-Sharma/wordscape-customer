@@ -10,7 +10,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
 
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
-      <label className="form-control max-sm:mr-5">
+      <label className="form-control">
         <p className="text-2xl font-light max-sm:text-[24px] text-zinc-900 max-sm:flex max-sm:justify-center">
           What about the cover of your book that you would want to print on?
         </p>
