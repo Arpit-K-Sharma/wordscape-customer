@@ -9,6 +9,8 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
+import { FaCar } from "react-icons/fa";
+
 import {
   FaCut,
   FaPaintBrush,
@@ -693,6 +695,20 @@ function AdminDashboard() {
                               <td className="w-1/2 text-gray-600">
                                 {selectedOrder.remarks
                                   ? selectedOrder.remarks
+                                  : "N/A"}
+                              </td>
+                            </tr>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaCar className="text-gray-600" />
+                                Delivery Option
+                              </td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.deliveryOption
+                                  ? selectedOrder.deliveryOption
                                   : "N/A"}
                               </td>
                             </tr>

@@ -404,9 +404,9 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           the order <span className="text-[red] font-semibold">may differ</span>{" "}
           from the actual total cost.
           <br />
-          <span className="text-[red] text-[30px] mb-[-10px]"> *</span>Please
+          <span className="text-[blue] text-[30px] mb-[-10px]"> *</span>Please
           note flap size within the{" "}
-          <span className="text-[red] font-semibold">remarks </span> along with
+          <span className="text-[blue] font-semibold">remarks </span> along with
           the designated size or any other special instructions (page number,
           etc.).
         </h1>

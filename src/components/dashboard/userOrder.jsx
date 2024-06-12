@@ -30,6 +30,16 @@ function UserOrder() {
   const [endDate, setEndDate] = useState(
     new Date().toISOString().split("T")[0]
   );
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+  };
+
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderDetails, setOrderDetails] = useState([]);
   const [tracking, setTracking] = useState([]);
@@ -418,6 +428,23 @@ function UserOrder() {
                         <td className="w-1/2">
                           {selectedOrder.deliveryOption
                             ? selectedOrder.deliveryOption
+                            : "N/A"}
+                        </td>
+                      </tr>
+
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <FaCar className="text-blue-500" />
+                          Deadline
+                        </td>
+                        <td className="w-1/2">
+                          {selectedOrder.deadline
+                            ? new Date(
+                                selectedOrder.deadline
+                              ).toLocaleDateString()
                             : "N/A"}
                         </td>
                       </tr>
