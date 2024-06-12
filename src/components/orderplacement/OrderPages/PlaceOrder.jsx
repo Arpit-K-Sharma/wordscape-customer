@@ -35,6 +35,7 @@ function OrderPlacement() {
     laminationRate: 0,
     bindingRate: 0,
     plateRate: 0,
+    deliveryOption: "",
   });
 
   useEffect(() => {

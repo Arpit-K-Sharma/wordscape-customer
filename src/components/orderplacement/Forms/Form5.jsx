@@ -15,6 +15,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState("Pickup");
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmitWithState = async () => {
@@ -192,6 +194,13 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       });
   };
 
+  const handleDeliveryOptionChange = (event) => {
+    setOrderData({
+      ...orderData,
+      deliveryOption: event.target.value,
+    });
+  };
+
   useEffect(() => {
     if (orderData) {
       getRateForBindingType(orderData.bindingType);
@@ -340,6 +349,38 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             {console.log("Estimated amount " + totalCost)}
             <div className="label"></div>
           </label>
+
+          <div className="form-control w-full lg:flex lg:justify-between lg:items-center lg:px-10 col-span-2">
+            <div className="label flex items-center gap-2 mb-2">
+              <FaRegAddressCard size={`25px`} color="black" />
+              <span className="label text-black">Delivery Option</span>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-10">
+              <label className="label cursor-pointer flex flex-row items-center gap-2">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="pickup"
+                  className="radio lg:mr-[10px] checked:bg-blue-500"
+                  checked={orderData.deliveryOption === "pickup"}
+                  onChange={handleDeliveryOptionChange}
+                />
+                <span className="label-text">Pickup</span>
+              </label>
+              <label className="label cursor-pointer flex flex-row items-center gap-2">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="delivery"
+                  className="radio lg:mr-[10px] checked:bg-blue-500"
+                  checked={orderData.deliveryOption === "delivery"}
+                  onChange={handleDeliveryOptionChange}
+                />
+                <span className="label-text">Delivery on Address</span>
+              </label>
+            </div>
+          </div>
+
           <label className="form-control w-full lg:ml-[20px] mb-[10px] col-span-2">
             <div className="label">
               <span className="label-text-alt">Remarks</span>
