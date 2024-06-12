@@ -35,8 +35,8 @@ function OrderPlacement() {
     bindingRate: 0,
     plateRate: 0,
     deliveryOption: "",
-    innerLamination: "",
-    outerLamination: "",
+    innerLamination: "Normal Glossy",
+    outerLamination: "Normal Glossy",
   });
 
   useEffect(() => {
