@@ -11,6 +11,8 @@ import { ToastContainer } from "react-toastify";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
+  const [file, setFile] = useState(null); // State to hold the uploaded file
+
   const [bindingCost, setBindingCost] = useState(0);
   const [laminationPrice, setLaminationPrice] = useState(0);
   const [changeCostPerKg, setChangeCostPerKg] = useState(0);
@@ -18,6 +20,10 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [totalCost, setTotalCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState("pickup");
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]); // Set the file to state
+  };
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -48,6 +54,40 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       setIsSubmitting(false);
     }
   };
+
+  // const handleSubmitWithState = async () => {
+  //   if (!orderData.deliveryOption || !orderData.deadline) {
+  //     toast.error("Please fill all required fields.");
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   formData.append("file", file); // Append the file
+  //   formData.append("data", JSON.stringify(orderData)); // Append the order data as a JSON string
+
+  //   setIsSubmitting(true);
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8081/orders",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     setIsSubmitted(true);
+  //     toast.success("Order placed successfully!");
+  //     setTimeout(() => {
+  //       setIsSubmitting(false);
+  //       setIsSubmitted(false);
+  //     }, 3000);
+  //   } catch (error) {
+  //     console.error("Error submitting order:", error);
+  //     toast.error("Failed to place order.");
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
   useEffect(() => {
     setOrderData((prev) => ({
@@ -444,6 +484,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         <input
           type="file"
           className="file-input w-full max-w-xs mx-auto mt-5 text-zinc-900"
+          onChange={handleFileChange}
         />
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/4">

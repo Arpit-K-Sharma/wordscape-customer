@@ -8,7 +8,7 @@ function Progress({ step }) {
     <div>
       <Navbar />
       <MobileMenu />
-      <div className="mt-[-30px] max-sm:mt-[-50px] text-zinc-800 mx-auto relative w-full flex justify-center max-w-full sm:max-w-xs md:max-w-lg lg:max-w-xl items-center">
+      <div className="mt-[-30px] max-sm:mt-[-50px] text-zinc-800 mx-auto relative flex justify-center max-sm:max-w-xs items-center">
         {" "}
         <div>
           <ul className="steps steps-horizontal">
@@ -16,31 +16,44 @@ function Progress({ step }) {
               className={step >= 1 ? `step step-primary` : `step`}
               data-content={step > 1 ? `✓` : `●`}
             >
-              {step == 1 && "Inner Paper"}
+              <span
+                style={{ display: "inline-block" }}
+                className="lg:w-[120px]"
+              >
+                {step == 1 && "Inner Paper"}
+              </span>
             </li>
             <li
               className={step >= 2 ? `step step-primary` : `step`}
               data-content={step > 2 ? `✓` : `●`}
             >
-              {step == 2 && "Outer Paper"}
+              <span style={{ display: "inline-block" }}>
+                {step == 2 && "Outer Paper"}
+              </span>
             </li>
             <li
               className={step >= 3 ? `step step-primary` : `step`}
               data-content={step > 3 ? `✓` : `●`}
             >
-              {step == 3 && "Quantity"}
+              <span style={{ display: "inline-block" }}>
+                {step == 3 && "Page Quantity"}
+              </span>
             </li>
             <li
               className={step >= 4 ? `step step-primary` : `step`}
               data-content={step > 4 ? `✓` : `●`}
             >
-              {step == 4 && "Extras"}
+              <span style={{ display: "inline-block" }}>
+                {step == 4 && "Extras"}
+              </span>
             </li>
             <li
               className={step >= 5 ? `step step-primary` : `step`}
               data-content={step > 5 ? `✓` : `●`}
             >
-              {step == 5 && "Confirm Order"}
+              <span style={{ display: "inline-block" }}>
+                {step == 5 && "Confirm"}
+              </span>
             </li>
           </ul>
         </div>
