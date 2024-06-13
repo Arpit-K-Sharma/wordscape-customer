@@ -91,8 +91,11 @@ function AdminDashboard() {
     }
   }, [orderDetails]);
 
+  const [orderId, setOrderId] = useState();
+
   const handleViewDetails = async (order) => {
     const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
+    setOrderId(order);
     setSelectedOrder(response.data);
     console.log(response.data);
     document.getElementById("my-drawer-4").checked = true;
@@ -342,6 +345,25 @@ function AdminDashboard() {
       window.open(url, "_blank");
     } catch (error) {
       console.error("Error fetching invoice:", error);
+    }
+  };
+  const [delivery, setDelivery] = useState(false);
+  const handleClick = async () => {
+    if (delivery) {
+      try {
+        const response = await axios.post(
+          `http://localhost:8081/delivery/${orderId}`,
+          {
+            deadline: selectedOrder.deadline,
+          }
+        );
+        console.log("Success:", response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      setDelivery(false);
+    } else {
+      setDelivery(true);
     }
   };
 
@@ -596,7 +618,10 @@ function AdminDashboard() {
                                 Binding Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.binding?.bindingType || "N/A"}
+                                {selectedOrder.binding?.bindingType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs. {selectedOrder.binding?.rate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -621,7 +646,10 @@ function AdminDashboard() {
                                 Inner Paper Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.innerPaper?.paperType || "N/A"}
+                                {selectedOrder.innerPaper?.paperType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs {selectedOrder.innerPaper?.rate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -645,7 +673,10 @@ function AdminDashboard() {
                                 Outer Paper Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.outerPaper?.paperType || "N/A"}
+                                {selectedOrder.outerPaper?.paperType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs {selectedOrder.outerPaper?.rate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -666,11 +697,32 @@ function AdminDashboard() {
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaPrint className="text-gray-600" />
-                                Lamination Type
+                                Inner Lamination Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.lamination?.laminationType ||
-                                  "N/A"}
+                                {selectedOrder.innerLamination
+                                  ?.laminationType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs{" "}
+                                  {selectedOrder.innerLamination?.rate || "N/A"}
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaPrint className="text-gray-600" />
+                                Outer Lamination Type
+                              </td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.outerLamination
+                                  ?.laminationType || "N/A"}{" "}
+                                <span className="text-black font-bold">
+                                  | Rs{" "}
+                                  {selectedOrder.outerLamination?.rate || "N/A"}
+                                </span>
                               </td>
                             </tr>
                             <tr
@@ -722,11 +774,29 @@ function AdminDashboard() {
                                 Deadline
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.deadline
-                                  ? new Date(
+                                <div className="flex gap-[5px]">
+                                  <input
+                                    type="date"
+                                    value={
                                       selectedOrder.deadline
-                                    ).toLocaleDateString()
-                                  : "N/A"}
+                                        ? new Date(selectedOrder.deadline)
+                                            .toISOString()
+                                            .split("T")[0]
+                                        : ""
+                                    }
+                                    onChange={(e) =>
+                                      setSelectedOrder({
+                                        ...selectedOrder,
+                                        deadline: e.target.value,
+                                      })
+                                    }
+                                    className="input input-bordered w-[57%] max-w-xs text-black"
+                                    disabled={!delivery}
+                                  />
+                                  <button className="btn" onClick={handleClick}>
+                                    {delivery ? "Save" : "Change"}
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                             <tr
