@@ -36,6 +36,7 @@ function OrderPlacement() {
     plateRate: 0,
     deliveryOption: "",
     innerLamination: "Normal Glossy",
+    file: "",
     outerLamination: "Normal Glossy",
   });
 

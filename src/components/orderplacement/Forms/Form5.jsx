@@ -27,67 +27,67 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmitWithState = async () => {
-    // Check if all required fields are filled
-    if (!orderData.deliveryOption) {
-      toast.error("Please select a delivery option.");
-      return; // Prevent form submission
-    }
-    if (!orderData.deadline) {
-      toast.error("Please enter a deadline.");
-      return; // Prevent form submission
-    }
-    // Add more checks as needed
-
-    setIsSubmitting(true);
-    try {
-      await handleSubmit();
-      setIsSubmitted(true);
-      toast.success("Check your email for the invoice!");
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSubmitted(false);
-      }, 3000); // Reset state after 3 seconds
-    } catch (error) {
-      console.error("Error submitting order:", error);
-      toast.error("Failed to place order.");
-      setIsSubmitting(false);
-    }
-  };
-
   // const handleSubmitWithState = async () => {
-  //   if (!orderData.deliveryOption || !orderData.deadline) {
-  //     toast.error("Please fill all required fields.");
-  //     return;
+  //   // Check if all required fields are filled
+  //   if (!orderData.deliveryOption) {
+  //     toast.error("Please select a delivery option.");
+  //     return; // Prevent form submission
   //   }
-
-  //   const formData = new FormData();
-  //   formData.append("file", file); // Append the file
-  //   formData.append("data", JSON.stringify(orderData)); // Append the order data as a JSON string
+  //   if (!orderData.deadline) {
+  //     toast.error("Please enter a deadline.");
+  //     return; // Prevent form submission
+  //   }
+  //   // Add more checks as needed
 
   //   setIsSubmitting(true);
   //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8081/orders",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
+  //     await handleSubmit();
   //     setIsSubmitted(true);
-  //     toast.success("Order placed successfully!");
+  //     toast.success("Check your email for the invoice!");
   //     setTimeout(() => {
   //       setIsSubmitting(false);
   //       setIsSubmitted(false);
-  //     }, 3000);
+  //     }, 3000); // Reset state after 3 seconds
   //   } catch (error) {
   //     console.error("Error submitting order:", error);
   //     toast.error("Failed to place order.");
   //     setIsSubmitting(false);
   //   }
   // };
+
+  const handleSubmitWithState = async () => {
+    if (!orderData.deliveryOption || !orderData.deadline) {
+      toast.error("Please fill all required fields.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file); // Append the file
+    formData.append("data", JSON.stringify(orderData)); // Append the order data as a JSON string
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/orders/file",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setIsSubmitted(true);
+      toast.success("Order placed successfully!");
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      toast.error("Failed to place order.");
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     setOrderData((prev) => ({

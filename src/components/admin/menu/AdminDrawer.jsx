@@ -17,7 +17,7 @@ function AdminDrawer() {
   };
 
   return (
-    <div className="drawer-side font-archivo z-10">
+    <div className="drawer-side font-archivo">
       <label
         htmlFor="my-drawer"
         aria-label="close sidebar"
