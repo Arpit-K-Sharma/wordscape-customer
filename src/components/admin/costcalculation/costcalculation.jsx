@@ -5,10 +5,10 @@ import "./external.css";
 import DrawerOpen from "./drawer";
 import drawertest from "./drawertest";
 import DrawerTest from "./drawertest";
-import Navbar from "../navbar/navbar";
-import PaperThickness from "../admin/menu/paperthickness/paperthickness";
-import MobileMenu from "../navbar/mobile-menu";
-import AdminDrawer from "../admin/menu/AdminDrawer";
+import Navbar from "../../navbar/navbar";
+import PaperThickness from "../menu/paperthickness/paperthickness";
+import AdminDrawer from "../../admin/menu/AdminDrawer";
+import MobileMenu from "../../navbar/mobile-menu";
 
 const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);

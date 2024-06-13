@@ -3,7 +3,6 @@
 } */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
-@import url("../fonts/satoshi.css");
 
 .open-box button {
   top: 40px;
@@ -55,7 +54,7 @@
   color: darkslategray;
 }
 
-.test-box input{
+.test-box input {
   background-color: #f3f3f3;
   color: darkslategray;
 }
@@ -124,9 +123,9 @@
   display: grid;
   margin-left: 80px;
   border-radius: 20px;
-  
+
   margin-right: 80px;
-  
+
   /* background-image: linear-gradient(to bottom, #5f74d0, #ffffff); */
 }
 
@@ -243,11 +242,10 @@ select {
   /* background-image: linear-gradient(250deg, #4c5156 0%, #3d5c9e 74%); */
 }
 
-.popup-inner p{
-    font-family: 'Archivo', sans-serif;
-    font-size: 25px;
+.popup-inner p {
+  font-family: "Archivo", sans-serif;
+  font-size: 25px;
 }
-
 
 .popup-inner .submit-btn,
 .popup-inner .cancel-btn {
@@ -279,7 +277,7 @@ select {
     width: 100%;
   }
 
-  .open-box{
+  .open-box {
     width: 100%;
   }
 
@@ -287,34 +285,33 @@ select {
     margin-left: 10px;
     margin-right: 10px;
   }
-  
+
   /* .cost-box{
     margin-left: -90px;
     margin-right: -90px;
   } */
 
-  .cost-box-m{
-        margin-left: -60px;
-        margin-right: -60px;
-    }
+  .cost-box-m {
+    margin-left: -60px;
+    margin-right: -60px;
+  }
 
-  
-  .empty-box{
+  .empty-box {
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
-  .cost-container{
+  .cost-container {
     margin-left: 10px;
     margin-right: 10px;
   }
 
-  .cost-box{
+  .cost-box {
     margin-left: 10px;
     margin-right: 10px;
   }
 
-  .cost-box-1{
+  .cost-box-1 {
     margin-left: 10px;
     margin-right: 10px;
   }

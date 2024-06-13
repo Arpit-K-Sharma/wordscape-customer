@@ -98,8 +98,8 @@ function UserOrder() {
     <div className="font-archivo">
       <Menu />
 
-      <div className="flex flex-col items-center gap-5 text-blue-700 mb-9 px-4 max-sm:text-center">
-        <h1 className="font-bold text-4xl mt-5 max-sm:text-3xl">
+      <div className="flex flex-col items-center gap-5 mb-9 px-4 max-sm:text-center">
+        <h1 className="font-bold text-5xl mt-5 max-sm:text-3xl text-blue-700">
           Orders Summary
         </h1>
         <div className="flex gap-5 max-sm:flex-col max-sm:items-center">
@@ -181,10 +181,10 @@ function UserOrder() {
         <h1 className="font-bold text-4xl max-sm:text-3xl">Order Status</h1>
       </div>
 
-      <div className="overflow-x-auto w-[83%] h-[300px] ml-[9%] mt-[10px] shadow-xl rounded-lg max-sm:w-[95%] max-sm:ml-[2.5%] max-sm:h-[400px]">
+      <div className="overflow-x-auto w-[83%] h-[300px] ml-[9%] mb-[5%] mt-[10px] shadow-xl rounded-lg max-sm:w-[95%] max-sm:ml-[2.5%] max-sm:h-[400px]">
         <table className="table w-full">
           <thead>
-            <tr className="bg-blue-500 text-white font-semibold text-[15px] text-slate-800">
+            <tr className="bg-zinc-700 text-white font-semibold text-[15px] text-slate-800">
               <th>Order ID</th>
               <th>Date</th>
               <th>Delivery</th>
