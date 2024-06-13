@@ -16,7 +16,7 @@ function PaperUnit({ data }) {
         size: "",
         numberOfPages: "",
         printrun: "",
-        side: "singleside",
+        side: [],
       },
       papersData1: [
         {
@@ -111,7 +111,7 @@ function PaperUnit({ data }) {
           size: "",
           numberOfPages: "",
           printrun: "",
-          side: "singleside",
+          side: [],
         },
         papersData1: data.paperData1 || [],
         papersData2: data.paperData2 || [],
@@ -143,7 +143,7 @@ function PaperUnit({ data }) {
         paperData3: formData.papersData3,
       },
     };
-
+    console.log(papersData)
     Cookies.set("PaperUnitsData", JSON.stringify(papersData));
     document.getElementById("my_modal_10").close();
   };
@@ -195,8 +195,19 @@ function PaperUnit({ data }) {
     };
     const updatedPapersData3 = [...papersData3, newRow];
     setValue("papersData3", updatedPapersData3);
-  };
+  }; 
 
+  const handleCheckboxChange = (value, checked) => {
+    const currentValues = getValues("paperData0.side");
+    if (checked) {
+      setValue("paperData0.side", [...currentValues, value]);
+    } else {
+      setValue(
+        "paperData0.side",
+        currentValues.filter((v) => v !== value)
+      );
+    }
+  };
   return (
     <>
       <button
@@ -208,10 +219,7 @@ function PaperUnit({ data }) {
           <AiOutlineCheckCircle size={24} color="green" />
         ) : null}
       </button>
-      <dialog
-        id="my_modal_10"
-        className="modal flex h-[100%] ml-[50%] bg-white"
-      >
+      <dialog id="my_modal_10" className="modal flex h-[100%] ml-[50%]">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none overflow-y-scroll ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[10px]">Paper Unit</h3>
@@ -480,11 +488,11 @@ function PaperUnit({ data }) {
                       render={({ field }) => (
                         <>
                           <input
-                            {...field}
-                            type="radio"
+                            type="checkbox"
                             value="singleside"
                             className="h-6 w-6"
-                            checked={field.value === "singleside"}
+                            checked={field.value.includes("singleside")}
+                            onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
                           />
                           <span className="ml-1 mr-5">Single Side</span>
                         </>
@@ -500,11 +508,11 @@ function PaperUnit({ data }) {
                       render={({ field }) => (
                         <>
                           <input
-                            {...field}
-                            type="radio"
+                            type="checkbox"
                             value="bothside"
                             className="h-6 w-8"
-                            checked={field.value === "bothside"}
+                            checked={field.value.includes("bothside")}
+                            onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
                           />
                           <span className="ml-1">Both Side</span>
                         </>
