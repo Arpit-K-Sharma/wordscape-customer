@@ -58,14 +58,14 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
           ))}
         </select>
         <br />
-        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
+        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center ">
           <NavLink to="/order/1">
-            <button className="btn bg-zinc-900 hover:bg-zinc-600 hover:text-white  w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+            <button className="btn max-lg:w-full bg-zinc-900 hover:bg-zinc-600 hover:text-white  w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>
           </NavLink>
           <NavLink to="/order/3">
-            <button className="btn bg-blue-600 text-white btn-primary w-[280px] mt-5">
+            <button className="btn bg-blue-600 max-lg:w-full text-white btn-primary w-[280px] mt-5">
               Next
             </button>
           </NavLink>

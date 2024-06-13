@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
-  const [file, setFile] = useState(null); // State to hold the uploaded file
+  const [pdfFile, setFile] = useState(null); // State to hold the uploaded file
 
   const [bindingCost, setBindingCost] = useState(0);
   const [laminationPrice, setLaminationPrice] = useState(0);
@@ -19,69 +19,38 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPdfSubmitting, setIsPdfSubmitting] = useState(false);
   const [deliveryOption, setDeliveryOption] = useState("pickup");
+  const [isPdfDone, setIsPdfDone] = useState(true);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]); // Set the file to state
   };
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isPdfSubmitted, setIsPdfSubmitted] = useState(false);
 
-  // const handleSubmitWithState = async () => {
-  //   // Check if all required fields are filled
-  //   if (!orderData.deliveryOption) {
-  //     toast.error("Please select a delivery option.");
-  //     return; // Prevent form submission
-  //   }
-  //   if (!orderData.deadline) {
-  //     toast.error("Please enter a deadline.");
-  //     return; // Prevent form submission
-  //   }
-  //   // Add more checks as needed
-
-  //   setIsSubmitting(true);
-  //   try {
-  //     await handleSubmit();
-  //     setIsSubmitted(true);
-  //     toast.success("Check your email for the invoice!");
-  //     setTimeout(() => {
-  //       setIsSubmitting(false);
-  //       setIsSubmitted(false);
-  //     }, 3000); // Reset state after 3 seconds
-  //   } catch (error) {
-  //     console.error("Error submitting order:", error);
-  //     toast.error("Failed to place order.");
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-  const handleSubmitWithState = async () => {
-    if (!orderData.deliveryOption || !orderData.deadline) {
-      toast.error("Please fill all required fields.");
-      return;
+  const handleSubmitData = async () => {
+    // Check if all required fields are filled
+    if (!orderData.deliveryOption) {
+      toast.error("Please select a delivery option.");
+      return; // Prevent form submission
     }
-
-    const formData = new FormData();
-    formData.append("file", file); // Append the file
-    formData.append("data", JSON.stringify(orderData)); // Append the order data as a JSON string
+    if (!orderData.deadline) {
+      toast.error("Please enter a deadline.");
+      return; // Prevent form submission
+    }
+    // Add more checks as needed
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post(
-        "http://localhost:8081/orders/file",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await handleSubmit();
       setIsSubmitted(true);
-      toast.success("Order placed successfully!");
+      toast.success("Check your email for the invoice!");
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(false);
-      }, 3000);
+      }, 3000); // Reset state after 3 seconds
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error("Failed to place order.");
@@ -89,10 +58,62 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     }
   };
 
+  const hanndlepdfUpload = async () => {
+    if (!orderData.deliveryOption || !orderData.deadline) {
+      toast.error("Please fill all required fields.");
+      return;
+    }
+
+    // Ensure the pdfFile state is holding the actual file
+    if (!pdfFile) {
+      toast.error("Please upload a PDF file.");
+      return;
+    }
+
+    setIsPdfDone(false);
+
+    const updatedOrderData = {
+      ...orderData,
+      pdfFile: pdfFile.filename,
+    };
+
+    const formData = new FormData();
+    formData.append("pdfFile", pdfFile); // Append the actual file from state
+    formData.append("data", JSON.stringify(updatedOrderData)); // Optionally append other order data as a JSON string
+
+    setIsPdfSubmitting(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/orders/files",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.data.filename) {
+        setOrderData({ ...orderData, pdfFile: response.data.filename });
+      }
+      setIsPdfSubmitted(true);
+      // toast.success("PDF Uploaded Successfully");
+      setTimeout(() => {
+        setIsPdfSubmitting(false);
+        setIsPdfSubmitted(false);
+        setIsPdfDone(true);
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      toast.error("Failed to place order.");
+      setIsPdfSubmitted(false);
+    }
+  };
+
   useEffect(() => {
     setOrderData((prev) => ({
       ...prev,
       deliveryOption: prev.deliveryOption || "pickup",
+      // pdfFile: pdfFile.name,
     }));
   }, [setOrderData]);
 
@@ -479,25 +500,47 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           (page number, etc.).
         </h1>
         <h1 className="text-m font-bold mt-[10px] text-zinc-900">
-          Upload the PDF file for Printing here
+          Upload the PDF file for Printing here{" "}
         </h1>
         <input
           type="file"
           className="file-input w-full max-w-xs mx-auto mt-5 text-zinc-900"
           onChange={handleFileChange}
         />
+        <span className="italic text-gray-400">Optional</span>
+        <button
+          className={`btn btn-primary max-lg:w-full w-[280px] lg:mx-auto mt-5 border-none justify-center text-white ${
+            isPdfSubmitting ? "bg-blue-600" : "bg-blue-500 hover:bg-blue-800"
+          }`}
+          onClick={hanndlepdfUpload}
+          disabled={isPdfSubmitting || isPdfSubmitted}
+        >
+          {isPdfSubmitting ? (
+            <>
+              <span className="loading loading-spinner loading-md text-white mr-2"></span>
+              Uploading your PDF...
+            </>
+          ) : isPdfSubmitting ? (
+            <>
+              <span className="text-white mr-2">✓</span>
+              Order Confirmed
+            </>
+          ) : (
+            "Upload PDF"
+          )}
+        </button>
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/4">
-            <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+            <button className="btn max-lg:w-full btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>
           </NavLink>
           <button
-            className={`btn btn-primary w-[280px] mt-5 border-none text-white ${
-              isSubmitted ? "bg-blue-600" : "bg-green-700 hover:bg-blue-600"
+            className={`btn btn-primary max-lg:w-full w-[280px] mt-5 border-none text-white ${
+              isSubmitted ? "bg-green-600" : "bg-green-700 hover:bg-green-800"
             }`}
-            onClick={handleSubmitWithState}
-            disabled={isSubmitting || isSubmitted}
+            onClick={handleSubmitData}
+            disabled={isSubmitting || isSubmitted || !isPdfDone}
           >
             {isSubmitting ? (
               <>
@@ -509,23 +552,15 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
                 <span className="text-white mr-2">✓</span>
                 Order Confirmed
               </>
-            ) : (
+            ) : isPdfDone ? ( // Check if PDF is done, then render this
               "Confirm Order"
+            ) : (
+              "Upload PDF First" // Inform user to upload PDF first if not done
             )}
           </button>
         </div>
       </label>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
     </div>
   );
 };

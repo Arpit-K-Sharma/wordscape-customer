@@ -153,7 +153,10 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         </select>
         <br />
         <NavLink to="/order/2">
-          <button className="btn btn-primary mt-5 w-full" onClick={handleNext}>
+          <button
+            className="btn max-lg:w-full btn-primary mt-5 w-full"
+            onClick={handleNext}
+          >
             Next
           </button>
         </NavLink>

@@ -36,7 +36,7 @@ function OrderPlacement() {
     plateRate: 0,
     deliveryOption: "",
     innerLamination: "Normal Glossy",
-    file: "",
+    pdfFile: "",
     outerLamination: "Normal Glossy",
   });
 
