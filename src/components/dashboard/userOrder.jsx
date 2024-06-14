@@ -41,6 +41,24 @@ function UserOrder() {
       .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
   };
 
+  const handleDownloadFile = async (orderId) => {
+    console.log("the id is: " + orderId);
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/orders/files/download/${orderId}`, // Using customerId to construct the URL
+        {
+          responseType: "arraybuffer",
+        }
+      );
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderDetails, setOrderDetails] = useState([]);
   const [tracking, setTracking] = useState([]);
@@ -55,6 +73,7 @@ function UserOrder() {
 
   useEffect(() => {
     const id = localStorage.getItem("id");
+
     console.log(id);
     const fetchOrderDetails = async () => {
       try {
@@ -190,9 +209,10 @@ function UserOrder() {
               <th>Delivery</th>
               <th>Pages</th>
               <th>Qty</th>
-              <th className="w-[100px] max-sm:w-[80px]">Details</th>
-              <th className="w-[100px] max-sm:w-[80px]">Track</th>
-              <th className="w-[100px] max-sm:w-[80px]">Status</th>
+              <th>File</th>
+              <th>Details</th>
+              <th>Track</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-semibold">
@@ -208,6 +228,14 @@ function UserOrder() {
                   </td>
                   <td>{details.pages}</td>
                   <td>{details.quantity}</td>
+                  <td>
+                    <button
+                      className="btn min-h-[30px] h-[40px] max-sm:btn-sm"
+                      onClick={() => handleDownloadFile(details.orderId)}
+                    >
+                      Download
+                    </button>
+                  </td>
                   <td>
                     <button
                       className="btn min-h-[30px] h-[40px] max-sm:btn-sm"
@@ -227,6 +255,7 @@ function UserOrder() {
                       Track
                     </button>
                   </td>
+
                   <td>
                     <a
                       className={
@@ -468,6 +497,17 @@ function UserOrder() {
                         </td>
                         <td className="w-1/2">
                           {selectedOrder.customer.fullName}
+                        </td>
+                      </tr>
+                      <tr className="mb-4 text-lg" style={{ height: "50px" }}>
+                        <td className="w-1/2 flex justify-between items-center">
+                          {selectedOrder.customer.fullName}
+                          <button
+                            className="btn btn-primary ml-4"
+                            onClick={handleDownloadFile}
+                          >
+                            Download Customer File
+                          </button>
                         </td>
                       </tr>
                     </tbody>

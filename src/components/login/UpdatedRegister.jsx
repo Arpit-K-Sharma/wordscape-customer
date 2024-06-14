@@ -42,7 +42,7 @@ function UpdatedRegister() {
     axios
       .post("http://localhost:8081/customers/register", userData)
       .then((response) => {
-        console.log("Signup successful:", response.data);
+        console.log("Signup successful:", response);
         toast.success("Signed Up Successfully", {
           position: "top-right",
           autoClose: 1200,
@@ -58,7 +58,9 @@ function UpdatedRegister() {
         }, 1200);
       })
       .catch((error) => {
-        console.error("Error signing up:", error);
+        const errorMessage = error.response?.data?.message;
+        console.error("Error signing up:", error.response.data.message);
+        toast.error(errorMessage);
       });
   };
 

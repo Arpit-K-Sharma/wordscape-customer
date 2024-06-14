@@ -331,6 +331,24 @@ function AdminDashboard() {
     }
   };
 
+  const handleDownloadFile = async (orderId) => {
+    console.log("the id is: " + orderId);
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/orders/files/download/${orderId}`, // Using customerId to construct the URL
+        {
+          responseType: "arraybuffer",
+        }
+      );
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
   const handleViewInvoice = async (id) => {
     try {
       const response = await axios.get(
@@ -430,7 +448,6 @@ function AdminDashboard() {
             <div className="overflow-y-auto w-[90%] h-[100%] ml-[5%] mt-[10px] shadow-xl rounded-lg font-medium text mb-[20px]">
               <div className="overflow-x-auto w-full">
                 <table className="table w-full text-[13px]">
-                  {/* head */}
                   <thead>
                     <tr className="bg-white text-[16px] border-[#d5d4d4] text-gray-700">
                       <th className="">Order ID</th>
@@ -438,13 +455,13 @@ function AdminDashboard() {
                       <th className="">Delivery Date</th>
                       <th className="">Pages</th>
                       <th className="">Quantity</th>
-                      <th className=" w-[200px]">Order Details</th>
-                      <th className=" w-[200px]">Job Card</th>
-                      <th className=" w-[200px]">View Tracking</th>
-                      <th className=" w-[200px]">Status</th>
-                      <th className=" w-[200px]">View Invoice</th>
-
-                      <th className=" w-[200px]">Cancel Order</th>
+                      <th className="w-[200px]">Order Details</th>
+                      <th className="w-[200px]">Job Card</th>
+                      <th className="w-[200px]">View Tracking</th>
+                      <th className="w-[200px]">Status</th>
+                      <th className="w-[200px]">View Invoice</th>
+                      <th className="w-[200px]">Files</th>
+                      <th className="w-[200px]">Cancel Order</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -474,7 +491,7 @@ function AdminDashboard() {
                           <td>
                             <button
                               className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold w-[83px]"
-                              onClick={(e) => handleJobCard(details.orderId)}
+                              onClick={() => handleJobCard(details.orderId)}
                             >
                               Job card
                             </button>
@@ -517,16 +534,26 @@ function AdminDashboard() {
                           </td>
                           <td>
                             <button
-                              className=" bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold ml-5 w-[111px]"
+                              className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold ml-5 w-[111px]"
                               onClick={() => handleViewInvoice(details.orderId)}
                             >
                               View Invoice
                             </button>
                           </td>
+                          <td>
+                            <button
+                              className="bg-gray-200 hover:bg-gray-300 p-[10px] rounded-[5px] font-bold w-[107px]"
+                              onClick={() =>
+                                handleDownloadFile(details.orderId)
+                              }
+                            >
+                              Download
+                            </button>
+                          </td>
                           <td className="flex justify-center">
                             <button
-                              className=" text-indigo-500 hover:text-[red] mt-[10px]"
-                              onClick={(e) => {
+                              className="text-indigo-500 hover:text-[red] mt-[10px]"
+                              onClick={() => {
                                 handleCancel(details.orderId);
                               }}
                             >
