@@ -10,7 +10,7 @@ function PaymentTable({ data }) {
     defaultValues: {
       servicePaymentList: {
         paymentWay: "",
-        serviceRequired: "",
+        serviceRequired: [],
       },
     },
   });
@@ -23,17 +23,16 @@ function PaymentTable({ data }) {
   }, [data, setValue]);
 
   const onSubmit = (formData) => {
-    console.log(formData); // Log the form data to verify it's what you expect
+    console.log(formData);
     const jsonData = {
       servicePaymentList: {
-        paymentMethod: formData.servicePaymentList.paymentWay, // Corrected field access
-        serviceRequired: formData.servicePaymentList.serviceRequired, // Corrected field access
+        paymentMethod: formData.servicePaymentList.paymentWay,
+        serviceRequired: formData.servicePaymentList.serviceRequired,
       },
     };
     console.log("json data from payment table jsx: ", jsonData);
     Cookies.set("paymentData", JSON.stringify(jsonData));
     setPaymentdone(!paymentdone);
-
     document.getElementById("my_modal_5").close();
   };
 
@@ -87,14 +86,15 @@ function PaymentTable({ data }) {
                   <span className="ml-5 "> Credit</span>
                 </label>
               </div>
-              <p className=" font-bold flex align-center justify-center text-xl mt-[40px]">
+            </p>
+            <div>
+              <h2 className="font-bold flex align-center justify-center text-xl mt-[40px]">
                 Service Required:
-              </p>
+              </h2>
               <div className="flex items-center mt-5 align-center justify-center gap-[30px]">
                 <label className="flex">
                   <input
-                    required
-                    type="radio"
+                    type="checkbox"
                     name="serviceRequired"
                     value="Pre Press"
                     {...register("servicePaymentList.serviceRequired")}
@@ -104,7 +104,7 @@ function PaymentTable({ data }) {
                 </label>
                 <label className="px-4 flex">
                   <input
-                    type="radio"
+                    type="checkbox"
                     name="serviceRequired"
                     value="Press"
                     {...register("servicePaymentList.serviceRequired")}
@@ -114,7 +114,7 @@ function PaymentTable({ data }) {
                 </label>
                 <label className="flex">
                   <input
-                    type="radio"
+                    type="checkbox"
                     name="serviceRequired"
                     value="Post-press"
                     {...register("servicePaymentList.serviceRequired")}
@@ -123,7 +123,7 @@ function PaymentTable({ data }) {
                   <span className="ml-4"> Post-press</span>
                 </label>
               </div>
-            </p>
+            </div>
             <div className="modal-action">
               <button type="submit" className="btn hover:bg-[#376437]">
                 Done

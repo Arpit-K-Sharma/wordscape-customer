@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import { IoMdPaper } from "react-icons/io";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { HiNewspaper } from "react-icons/hi";
-import { FaRegAddressCard } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 const FourthForm = ({ orderData, setOrderData, entireData }) => {
   const {
@@ -15,7 +14,15 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
     inkTypes,
     coverTreatment,
   } = entireData;
-  console.log(coverTreatment);
+
+  const handleRemove = (data) => {
+    console.log("removing");
+    setOrderData({
+      ...orderData,
+      bindingType: orderData.bindingType.filter((item) => item !== data),
+    });
+  };
+
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control w-full max-w-xl">
@@ -60,24 +67,6 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </select>
         <br />
 
-        <div className="label text-center">
-          <span className="label-text">Outer Lamination Types</span>
-          <IoMdPaper size={`25px`} color="black" />
-        </div>
-        <select
-          className="select select-bordered text-zinc-800"
-          onChange={(e) =>
-            setOrderData({ ...orderData, laminationType: e.target.value })
-          }
-        >
-          {laminationTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.laminationType}
-            </option>
-          ))}
-        </select>
-        <br />
-
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
           <IoNewspaperSharp size={`25px`} color="black" />
@@ -85,7 +74,10 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         <select
           className="select select-bordered text-zinc-800"
           onChange={(e) =>
-            setOrderData({ ...orderData, bindingType: e.target.value })
+            setOrderData({
+              ...orderData,
+              bindingType: [...(orderData.bindingType || []), e.target.value],
+            })
           }
         >
           {bindingType.map((type) => (
@@ -94,6 +86,20 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
             </option>
           ))}
         </select>
+        <br />
+        {orderData.bindingType &&
+          Array.isArray(orderData.bindingType) &&
+          orderData.bindingType.map((data) => (
+            <button
+              key={data}
+              className="btn mt-[10px] flex justify-between items-center"
+            >
+              <div className="mt-[3px]">{data}</div>
+              <div className="w-[30px]" onClick={() => handleRemove(data)}>
+                <FaTimes size={20} color="red" />
+              </div>
+            </button>
+          ))}
         <br />
 
         <div className="label text-center content-center">
@@ -137,12 +143,12 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="lg:flex flex mb-9 max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/3">
-            <button className="btn max-lg:w-full btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+            <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>
           </NavLink>
           <NavLink to="/order/5">
-            <button className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5">
+            <button className="btn bg-blue-600 btn-primary w-[280px] mt-5">
               Next
             </button>
           </NavLink>

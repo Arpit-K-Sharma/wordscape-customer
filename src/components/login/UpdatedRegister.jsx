@@ -125,7 +125,7 @@ function UpdatedRegister() {
                   name="phoneNumber"
                   type="text"
                   minLength={10}
-                  maxLength="10" 
+                  maxLength="10"
                   pattern="\d*"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"

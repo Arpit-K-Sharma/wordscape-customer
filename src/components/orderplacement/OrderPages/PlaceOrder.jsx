@@ -26,7 +26,7 @@ function OrderPlacement() {
     pages: "",
     quantity: "",
     estimatedAmount: 0,
-    bindingType: "Center Stitch",
+    bindingType: "",
     inkType: "B/W",
     coverTreatmentType: "Die Cutting",
     date: Date.now(),
@@ -38,7 +38,6 @@ function OrderPlacement() {
     plateRate: 0,
     deliveryOption: "",
     innerLamination: "Normal Glossy",
-    pdfFile: "",
     outerLamination: "Normal Glossy",
   });
 

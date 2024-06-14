@@ -68,7 +68,7 @@ function AdminDashboard() {
   const [lastOrder, setLastOrder] = useState(null);
   const [currentProcess, setCurrentProcess] = useState("");
   const [recentId, setRecentId] = useState();
-
+  const [page, setPage] = useState(0);
   useEffect(() => {
     const recentOrder = orderDetails[orderDetails.length - 1];
     setLastOrder(recentOrder);
@@ -101,50 +101,59 @@ function AdminDashboard() {
     document.getElementById("my-drawer-4").checked = true;
   };
   const dropdownRef = useRef(null);
-
+  const [pageLimit, setPageLimit] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const id = localStorage.getItem("id");
-    console.log(id);
+    console.log("value of page" + page);
+
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/orders`);
-        const allorder = response.data;
-        const recentOrder = allorder.reduce((maxOrder, order) => {
-          return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
-        }, null);
+        const response = await axios.get(
+          `http://localhost:8081/orders?pageNumber=${page}`
+        );
+        if (response.data.length === 0) {
+          setPageLimit(true);
+          setFilteredOrder([]);
+          setFilteredOrderDetails([]);
+        } else {
+          setPageLimit(false);
+          const allorder = response.data;
+          const recentOrder = allorder.reduce((maxOrder, order) => {
+            return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
+          }, null);
 
-        handleRecentTracking(recentOrder.orderId);
-        setOrderDetails(response.data);
-        setFilteredOrder(response.data);
-        setFilteredOrderDetails(response.data);
+          handleRecentTracking(recentOrder.orderId);
+          setOrderDetails(response.data);
+          setFilteredOrder(response.data);
+          setFilteredOrderDetails(response.data);
 
-        const d = response.data;
-        let Pending = 0;
-        let Approved = 0;
-        let Completed = 0;
-        for (let index = 0; index < d.length; index++) {
-          if (d[index].status === "PENDING") {
-            Pending++;
+          let Pending = 0;
+          let Approved = 0;
+          let Completed = 0;
+          for (let index = 0; index < allorder.length; index++) {
+            if (allorder[index].status === "PENDING") {
+              Pending++;
+            }
+            if (allorder[index].status === "APPROVED") {
+              Approved++;
+            }
+            if (allorder[index].status === "COMPLETED") {
+              Completed++;
+            }
           }
-          if (d[index].status === "APPROVED") {
-            Approved++;
-          }
-          if (d[index].status === "COMPLETED") {
-            Completed++;
-          }
+          setPending(Pending);
+          setApproved(Approved);
+          setCompleted(Completed);
+          console.log(response.data);
         }
-        setPending(Pending);
-        setApproved(Approved);
-        setCompleted(Completed);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
     };
 
     fetchOrderDetails();
-  }, []);
+  }, [page]);
 
   const handleInput = (e) => {
     const value = e.target.value.toLowerCase();
@@ -565,6 +574,30 @@ function AdminDashboard() {
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            <div className="join flex mr-[80px]  justify-end">
+              <button
+                className="join-item btn bg-white"
+                onClick={(e) => {
+                  if (page > 0) {
+                    setPage(page - 1);
+                  }
+                }}
+              >
+                «
+              </button>
+              <button className="join-item btn bg-white">Page {page}</button>
+              <button
+                className="join-item btn bg-white"
+                onClick={(e) => {
+                  if (!pageLimit) {
+                    setPage(page + 1);
+                  }
+                }}
+              >
+                »
+              </button>
             </div>
             <div className="drawer drawer-end ">
               <input
