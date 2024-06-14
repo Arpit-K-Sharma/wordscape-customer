@@ -131,12 +131,15 @@ function Profile() {
                   </label>
                   <input
                     id="number"
-                    type="number"
-                    name="number"
+                    type="text" // Changed from "number" to "text"
+                    name="phoneNumber"
                     value={customerData.phoneNumber}
                     onChange={handleChange}
                     className="input input-bordered w-full mt-3 mb-6"
                     disabled={!editable}
+                    maxLength="10" // Ensures the input does not exceed 10 characters
+                    pattern="\d*" // Ensures only digits are entered
+                    title="Phone number must be 10 digits"
                   />
                   <label htmlFor="companyName" className="block mb-2">
                     Company Name:
