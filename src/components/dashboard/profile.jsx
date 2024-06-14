@@ -58,94 +58,99 @@ function Profile() {
   return (
     <>
       <Menu />
-      <div className="container mx-auto px-4 font-archivo flex flex-col md:flex-row">
-        <div className="flex flex-wrap justify-center mt-14 w-full">
-          <div className="w-full md:w-1/2 p-4 sm:p-10">
-            {/* Profile form side */}
-            <h2 className="text-2xl flex justify-center mt-2 font-archivo">
-              Your Profile
-            </h2>
-            <div className="avatar font-archivo flex justify-center items-center">
+      <header className="">
+        <section>
+          <div className="grid h-screen grid-cols-1 md:grid-cols-2">
+            {/* First column for profile details */}
+
+            {/* Second column for large avatar, hidden on small screens */}
+            <div className="hidden md:flex w-full justify-center items-center">
               <div className="w-30 rounded-full mb-5 mt-5">
                 <Avatar
                   name={customerData.fullName}
-                  size="140"
+                  size="460"
                   round={true}
                   color="black"
                 />
               </div>
             </div>
-            <div className="max-sm:p-10">
-              <div className="mt-4 mx-auto justify-center align-middle">
-                <label htmlFor="fullName" className="block mb-2">
-                  Full Name:
-                </label>
-                <input
-                  id="fullName"
-                  type="text"
-                  name="fullName"
-                  value={customerData.fullName}
-                  onChange={handleChange}
-                  className="input input-bordered w-full mt-1 mb-6 mr-5"
-                  disabled={!editable}
-                />
-                <label htmlFor="address" className="block mb-2">
-                  Address:
-                </label>
-                <input
-                  id="address"
-                  type="text"
-                  name="address"
-                  value={customerData.address}
-                  onChange={handleChange}
-                  className="input input-bordered w-full mt-3 mb-6"
-                  disabled={!editable}
-                />
-                <label htmlFor="email" className="block mb-2">
-                  Email:
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={customerData.email}
-                  onChange={handleChange}
-                  className="input input-bordered w-full mt-3 mb-6"
-                  disabled={!editable}
-                />
-                <label htmlFor="companyName" className="block mb-2">
-                  Company Name:
-                </label>
-                <input
-                  id="companyName"
-                  type="text"
-                  name="companyName"
-                  value={customerData.companyName}
-                  onChange={handleChange}
-                  className="input input-bordered w-full mt-3 mb-6"
-                  disabled={!editable}
+            <div className="container mx-auto px-4 font-archivo flex flex-col justify-center items-center w-full">
+              <div className="lg:hidden w-30 rounded-full mb-5 mt-5 ">
+                <Avatar
+                  name={customerData.fullName}
+                  size="120"
+                  round={true}
+                  color="black"
                 />
               </div>
-            </div>
-            <div className="flex justify-center mb-6">
-              <button
-                onClick={handleSaveChanges}
-                className="btn btn-primary bg-zinc-800 hover:bg-zinc-800 text-white"
-              >
-                {editable ? "Save Changes" : "Edit"}
-              </button>
+              <div className="max-sm:p-10 w-[100%] lg:pr-[10rem]">
+                <h2 className="text-5xl font-semibold flex justify-center mt-2 font-archivo">
+                  Your Profile
+                </h2>
+                <div className="mt-5 mx-auto justify-center align-middle">
+                  {/* Input fields */}
+                  <label htmlFor="fullName" className="block mb-2">
+                    Full Name:
+                  </label>
+                  <input
+                    id="fullName"
+                    type="text"
+                    name="fullName"
+                    value={customerData.fullName}
+                    onChange={handleChange}
+                    className="input input-bordered w-full mt-1 mb-6 mr-5"
+                    disabled={!editable}
+                  />
+                  <label htmlFor="address" className="block mb-2">
+                    Address:
+                  </label>
+                  <input
+                    id="address"
+                    type="text"
+                    name="address"
+                    value={customerData.address}
+                    onChange={handleChange}
+                    className="input input-bordered w-full mt-3 mb-6"
+                    disabled={!editable}
+                  />
+                  <label htmlFor="email" className="block mb-2">
+                    Email:
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={customerData.email}
+                    onChange={handleChange}
+                    className="input input-bordered w-full mt-3 mb-6"
+                    disabled={!editable}
+                  />
+                  <label htmlFor="companyName" className="block mb-2">
+                    Company Name:
+                  </label>
+                  <input
+                    id="companyName"
+                    type="text"
+                    name="companyName"
+                    value={customerData.companyName}
+                    onChange={handleChange}
+                    className="input input-bordered w-full mt-3 mb-6"
+                    disabled={!editable}
+                  />
+                </div>
+                <div className="flex justify-center mb-6">
+                  <button
+                    onClick={handleSaveChanges}
+                    className="btn btn-primary bg-zinc-800 hover:bg-zinc-800 text-white text-m w-full bg:bg-zinc-800 hover:bg-zinc-600"
+                  >
+                    {editable ? "Save Changes" : "Update"}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="max-sm:invisible hidden w-full md:w-1/2 p-4 sm:p-10 bg-white h-auto flex justify-center items-center">
-            <Avatar
-              name={customerData.fullName}
-              size="540"
-              round={false}
-              color="black"
-            />
-          </div>
-        </div>
-      </div>
+        </section>
+      </header>
     </>
   );
 }

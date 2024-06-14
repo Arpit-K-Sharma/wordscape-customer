@@ -55,7 +55,7 @@ function OrderStatusList({ orderDetails }) {
 
   const sortedOrderDetails = [...orderDetails]
     .sort((a, b) => a.orderId - b.orderId)
-    .slice(0, 5);
+    .slice(0, 2);
 
   return (
     <>
