@@ -499,17 +499,6 @@ function UserOrder() {
                           {selectedOrder.customer.fullName}
                         </td>
                       </tr>
-                      <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                        <td className="w-1/2 flex justify-between items-center">
-                          {selectedOrder.customer.fullName}
-                          <button
-                            className="btn btn-primary ml-4"
-                            onClick={handleDownloadFile}
-                          >
-                            Download Customer File
-                          </button>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
