@@ -111,18 +111,18 @@ function AdminDashboard() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/orders`);
-        const allorder = response.data;
+        const allorder = response.data.response;
         const recentOrder = allorder.reduce((maxOrder, order) => {
           return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
         }, null);
 
         handleRecentTracking(recentOrder.orderId);
-        setRecentOrders(response.data);
-        setOrderDetails(response.data);
-        setFilteredOrder(response.data.sort((a, b) => a.orderId - b.orderId));
-        setFilteredOrderDetails(response.data);
+        setRecentOrders(allorder);
+        setOrderDetails(allorder);
+        setFilteredOrder(allorder.sort((a, b) => a.orderId - b.orderId));
+        setFilteredOrderDetails(allorder);
 
-        const d = response.data;
+        const d = allorder;
         let Pending = 0;
         let Approved = 0;
         let Completed = 0;
@@ -140,7 +140,7 @@ function AdminDashboard() {
         setPending(Pending);
         setApproved(Approved);
         setCompleted(Completed);
-        console.log(response.data);
+        console.log(allorder);
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
