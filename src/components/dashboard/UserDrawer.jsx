@@ -36,12 +36,13 @@ function UserDrawer() {
             />
           </NavLink>
         </li>
+
+        <br></br>
         <li>
           <NavLink to="/user/orders">
             <p className="text-xl font-light">Order Summary</p>
           </NavLink>
         </li>
-        <br></br>
         <li>
           <NavLink to="/user/edit">
             <p className="text-xl mb-3 font-light">Profile</p>
