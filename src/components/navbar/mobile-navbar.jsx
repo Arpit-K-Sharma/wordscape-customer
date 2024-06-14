@@ -44,7 +44,7 @@ function MobileNavbar() {
             alt="Logo"
             className="mx-auto my-5"
           />{" "}
-          <h3 className="text-center my-7 text-xl">
+          <h3 className="text-center my-7 text-xl h-[50vh]">
             <div className="">
               <h1 className="text-b1 mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto w-[50%] text-center font-bold font-archivo max-sm:text-[35px]">
                 All your printing needs in{" "}

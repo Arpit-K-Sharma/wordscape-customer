@@ -9,6 +9,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
+import Navbar from "../../navbar/navbar";
+import MobileMenu from "../../navbar/mobile-menu";
 
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
@@ -216,66 +218,72 @@ function OrderPlacement() {
   // };
 
   return (
-    <div>
-      <Progress step={step} />
-      <div className="text-slate-200 mx-auto relative text-white">
-        <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
-          {step == 1 ? (
-            <FirstForm
-              entireData={entireData}
-              orderData={orderData}
-              setOrderData={setOrderData}
-            />
-          ) : (
-            <></>
-          )}
+    <>
+      <Navbar />
+      <MobileMenu />
+      <div className="">
+        <div>
+          <Progress step={step} />
+          <div className="text-slate-200 mx-auto relative text-white">
+            <div className="flex justify-center max-sm:justify-center max-sm:p-10 max-sm:flex max-sm:flex-col">
+              {step == 1 ? (
+                <FirstForm
+                  entireData={entireData}
+                  orderData={orderData}
+                  setOrderData={setOrderData}
+                />
+              ) : (
+                <></>
+              )}
 
-          {step == 2 ? (
-            <SecondForm
-              orderData={orderData}
-              entireData={entireData}
-              setOrderData={setOrderData}
-            />
-          ) : (
-            <></>
-          )}
+              {step == 2 ? (
+                <SecondForm
+                  orderData={orderData}
+                  entireData={entireData}
+                  setOrderData={setOrderData}
+                />
+              ) : (
+                <></>
+              )}
 
-          {step == 3 ? (
-            <ThirdForm
-              orderData={orderData}
-              setOrderData={setOrderData}
-              // paperTypes={orderData.fetchedPaperTypes}
-              // selectedThickness={orderData.selectedThickness}
-              // setSelectedThickness={setOrderData}
-              // paperSizeData={orderData.paperSizeData}
-              // paperThicknessData={orderData.paperThicknessData}
-            />
-          ) : (
-            <></>
-          )}
+              {step == 3 ? (
+                <ThirdForm
+                  orderData={orderData}
+                  setOrderData={setOrderData}
+                  // paperTypes={orderData.fetchedPaperTypes}
+                  // selectedThickness={orderData.selectedThickness}
+                  // setSelectedThickness={setOrderData}
+                  // paperSizeData={orderData.paperSizeData}
+                  // paperThicknessData={orderData.paperThicknessData}
+                />
+              ) : (
+                <></>
+              )}
 
-          {step == 4 ? (
-            <FourthForm
-              orderData={orderData}
-              entireData={entireData}
-              setOrderData={setOrderData}
-            />
-          ) : (
-            <></>
-          )}
+              {step == 4 ? (
+                <FourthForm
+                  orderData={orderData}
+                  entireData={entireData}
+                  setOrderData={setOrderData}
+                />
+              ) : (
+                <></>
+              )}
 
-          {step == 5 ? (
-            <FifthForm
-              orderData={orderData}
-              setOrderData={setOrderData}
-              handleSubmit={handleSubmit}
-            />
-          ) : (
-            <></>
-          )}
+              {step == 5 ? (
+                <FifthForm
+                  orderData={orderData}
+                  setOrderData={setOrderData}
+                  handleSubmit={handleSubmit}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

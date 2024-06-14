@@ -11,6 +11,7 @@ function Profile() {
     address: "",
     email: "",
     companyName: "",
+    phoneNumber: "",
     status: false,
   });
   const [editable, setEditable] = useState(false);
@@ -60,7 +61,7 @@ function Profile() {
       <Menu />
       <header className="">
         <section>
-          <div className="grid h-screen grid-cols-1 md:grid-cols-2">
+          <div className="grid h-screen grid-cols-1 md:grid-cols-2 lg:mt-[-6%]">
             {/* First column for profile details */}
 
             {/* Second column for large avatar, hidden on small screens */}
@@ -121,6 +122,18 @@ function Profile() {
                     type="email"
                     name="email"
                     value={customerData.email}
+                    onChange={handleChange}
+                    className="input input-bordered w-full mt-3 mb-6"
+                    disabled={!editable}
+                  />
+                  <label htmlFor="number" className="block mb-2">
+                    Phone Number:
+                  </label>
+                  <input
+                    id="number"
+                    type="number"
+                    name="number"
+                    value={customerData.phoneNumber}
                     onChange={handleChange}
                     className="input input-bordered w-full mt-3 mb-6"
                     disabled={!editable}

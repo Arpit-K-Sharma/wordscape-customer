@@ -6,8 +6,6 @@ import MobileMenu from "../../navbar/mobile-menu";
 function Progress({ step }) {
   return (
     <div>
-      <Navbar />
-      <MobileMenu />
       <div className="mt-[-30px] max-sm:mt-[-50px] text-zinc-800 mx-auto relative flex justify-center max-sm:max-w-xs items-center">
         {" "}
         <div>

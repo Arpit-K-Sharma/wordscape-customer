@@ -21,7 +21,7 @@ function Navbar() {
   const isAdmin = Cookies.get("adminToken");
 
   return (
-    <div className="navbar bg-zinc-900 max-lg:hidden text-white font-archivo">
+    <div className="navbar lg:h-[5vh] bg-zinc-900 max-lg:hidden text-white font-archivo">
       <div className="navbar-start ml-5">
         <NavLink to="/">
           <img
