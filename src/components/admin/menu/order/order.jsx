@@ -98,13 +98,11 @@ function AdminDashboard() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/orders?pageNumber=${page}&sortField=date&sortDirection=${sortDirection}`
+          `http://localhost:8081/orders?pageNumber=${page}&sortField=date&sortDirection=${
+            sortDirection.split("_")[1]
+          }`
         );
-        console.log(response.data);
-        console.log(
-          "Response of Date: " + JSON.stringify(response.data.response)
-        );
-        // Set your state with the fetched data here
+        setFilteredOrderDetails(response.data.response);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
@@ -117,8 +115,8 @@ function AdminDashboard() {
     setIsEditable(!isEditable); // Toggle the editability state
   };
 
-  const handleSort = (direction) => {
-    setSortDirection(direction);
+  const handleSort = (field, newDirection) => {
+    setSortDirection(`${field}_${newDirection}`);
   };
 
   const [orderId, setOrderId] = useState();
@@ -132,6 +130,7 @@ function AdminDashboard() {
   const dropdownRef = useRef(null);
   const [pageLimit, setPageLimit] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const id = localStorage.getItem("id");
     console.log(page);
@@ -519,9 +518,29 @@ function AdminDashboard() {
                     <tr className="bg-white text-[16px] border-[#d5d4d4] text-gray-700">
                       <th className="">Order ID</th>
                       <th className="">
-                        Date
-                        <button onClick={() => handleSort("asc")}>↑</button>
-                        <button onClick={() => handleSort("desc")}>↓</button>
+                        <button
+                          onClick={() =>
+                            handleSort(
+                              "date",
+                              sortDirection === "date_asc" ? "desc" : "asc"
+                            )
+                          }
+                        >
+                          Date
+                          <span
+                            style={{
+                              color: ["date_asc", "date_desc"].includes(
+                                sortDirection
+                              )
+                                ? sortDirection === "date_asc"
+                                  ? "green"
+                                  : "blue"
+                                : "black",
+                            }}
+                          >
+                            {sortDirection === "date_asc" ? "↑" : "↓"}
+                          </span>
+                        </button>
                       </th>
                       <th className="">Delivery Date</th>
                       <th className="">Pages</th>
