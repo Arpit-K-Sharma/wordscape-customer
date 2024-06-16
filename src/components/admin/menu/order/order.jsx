@@ -30,6 +30,9 @@ function AdminDashboard() {
     const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 30));
     return pastDate.toISOString().split("T")[0];
   });
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [isEditable, setIsEditable] = useState(false); // State to manage editability of the input
+
   const [filteredOrderDetails, setFilteredOrderDetails] = useState([]);
   const [filteredOrder, setFilteredOrder] = useState([]);
   const [endDate, setEndDate] = useState(
@@ -91,13 +94,39 @@ function AdminDashboard() {
     }
   }, [orderDetails]);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/orders?pageNumber=${page}&sortField=date&sortDirection=${sortDirection}`
+        );
+        console.log(response.data);
+        console.log(
+          "Response of Date: " + JSON.stringify(response.data.response)
+        );
+        // Set your state with the fetched data here
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    fetchOrders();
+  }, [page, sortDirection]);
+
+  const toggleEdit = () => {
+    setIsEditable(!isEditable); // Toggle the editability state
+  };
+
+  const handleSort = (direction) => {
+    setSortDirection(direction);
+  };
+
   const [orderId, setOrderId] = useState();
 
   const handleViewDetails = async (order) => {
     const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
     setOrderId(order);
-    setSelectedOrder(response.data.response);
-    console.log(response.data.response);
+    setSelectedOrder(response.data);
     document.getElementById("my-drawer-4").checked = true;
   };
   const dropdownRef = useRef(null);
@@ -394,6 +423,35 @@ function AdminDashboard() {
     }
   };
 
+  const updateDeadline = async () => {
+    if (!selectedOrder.orderId) {
+      alert("Order ID is missing.");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8081/jobCard/updateDeadline/${selectedOrder.orderId}`,
+        {
+          deadline: selectedOrder.deadline,
+        }
+      );
+      if (response.status === 200) {
+        console.log("Update successful:", response.data);
+        alert("Deadline updated successfully!");
+        // Optionally, refresh the data or update state here
+      } else {
+        console.error("Update failed:", response.status);
+        // alert("Failed to update deadline. Please try again.");
+      }
+    } catch (error) {
+      console.error("Failed to update deadline:", error);
+      // alert(
+      //   "Failed to update deadline. Please check the console for more details."
+      // );
+    }
+  };
+
   return (
     <div className="drawer h-screen bg-gray-100">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -460,7 +518,11 @@ function AdminDashboard() {
                   <thead>
                     <tr className="bg-white text-[16px] border-[#d5d4d4] text-gray-700">
                       <th className="">Order ID</th>
-                      <th className="">Date</th>
+                      <th className="">
+                        Date
+                        <button onClick={() => handleSort("asc")}>↑</button>
+                        <button onClick={() => handleSort("desc")}>↓</button>
+                      </th>
                       <th className="">Delivery Date</th>
                       <th className="">Pages</th>
                       <th className="">Quantity</th>
@@ -611,8 +673,10 @@ function AdminDashboard() {
                   <h1 className="text-3xl mb-4 mt-5 flex justify-center text-gray-800">
                     Order Details
                   </h1>
+
                   {selectedOrder && (
                     <>
+                      {console.log("SELECTED ORDER" + selectedOrder)}
                       <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px]">
                         <table className="table-auto w-full ml-[20px]">
                           <tbody>
@@ -678,10 +742,10 @@ function AdminDashboard() {
                                 Binding Type
                               </td>
                               <td className="w-1/2 text-gray-600">
-                                {selectedOrder.binding?.bindingType || "N/A"}{" "}
-                                <span className="text-black font-bold">
+                                {selectedOrder.binding || "N/A"}{" "}
+                                {/* <span className="text-black font-bold">
                                   | Rs. {selectedOrder.binding?.rate || "N/A"}
-                                </span>
+                                </span> */}
                               </td>
                             </tr>
                             <tr
@@ -851,10 +915,15 @@ function AdminDashboard() {
                                       })
                                     }
                                     className="input input-bordered w-[57%] max-w-xs text-black"
-                                    disabled={!delivery}
+                                    disabled={!isEditable} // Controlled by isEditable state
                                   />
-                                  <button className="btn" onClick={handleClick}>
-                                    {delivery ? "Save" : "Change"}
+                                  <button
+                                    className="btn"
+                                    onClick={
+                                      isEditable ? updateDeadline : toggleEdit
+                                    }
+                                  >
+                                    {isEditable ? "Save" : "Change"}
                                   </button>
                                 </div>
                               </td>

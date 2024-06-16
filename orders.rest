@@ -39,4 +39,8 @@ Content-Type: application/json
 GET http://localhost:8081/customers
 Content-Type: application/json
 
+### Get Job Card Orders
+GET http://localhost:8081/jobCard/4
+Content-Type: application/json
+
 

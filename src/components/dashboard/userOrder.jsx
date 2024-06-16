@@ -347,9 +347,7 @@ function UserOrder() {
                           <FaBook className="text-purple-500" />
                           Binding Type
                         </td>
-                        <td className="w-1/2">
-                          {selectedOrder.binding.bindingType}
-                        </td>
+                        <td className="w-1/2">{selectedOrder.binding}</td>
                       </tr>
                       <tr
                         className="mb-4 text-lg border-b-[0.5px] border-[#303031]"

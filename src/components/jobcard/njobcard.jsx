@@ -32,8 +32,8 @@ function NJobCard() {
     axios
       .get("http://localhost:8081/orders")
       .then((response) => {
-        setOrders(response.data);
-        setFilteredOrder(response.data);
+        setOrders(response.data.response);
+        setFilteredOrder(response.data.response);
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
