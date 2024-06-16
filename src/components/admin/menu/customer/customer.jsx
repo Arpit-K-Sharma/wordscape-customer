@@ -8,7 +8,7 @@ function Customers() {
 
   function getCustomers() {
     axios
-      .get("http://localhost:8081/orders/customers")
+      .get("http://localhost:8081/customers")
       .then((response) => {
         setCustomerDataState(response.data.response);
       })
@@ -23,23 +23,58 @@ function Customers() {
 
   const handleEdit = (e, data) => {
     e.preventDefault();
+    console.log("Form values:", {
+      fullName: e.target.elements.fullName.value,
+      status: e.target.elements.status.value,
+    });
+
     const updatedData = customerDataState.map((item) => {
       if (item.customerId === data.customerId) {
-        return {
+        const updatedItem = {
           ...item,
           fullName: e.target.elements.fullName.value,
           address: e.target.elements.address.value,
           email: e.target.elements.email.value,
           companyName: e.target.elements.companyName.value,
-          status: e.target.elements.status.checked,
+          status: e.target.elements.status.value === "true",
         };
+
+        axios
+          .put(
+            `http://localhost:8081/customers/${data.customerId}`,
+            updatedItem
+          )
+          .then((response) => {
+            console.log("Update successful:", response.data);
+            // Refresh the customer data
+            getCustomers();
+          })
+          .catch((error) => {
+            console.error("Error updating customer:", error);
+          });
+
+        return updatedItem;
       }
       return item;
     });
+
     setCustomerDataState(updatedData);
     setEditingData(null);
-    console.log("Data saved successfully!");
   };
+
+  const handleUpdate = (customerId, updatedData) => {
+    axios
+      .put(`http://localhost:8081/customers/${customerId}`, updatedData)
+      .then((response) => {
+        getCustomers(); // Refresh customer data
+      })
+      .catch((error) => {
+        console.error("Error updating customer:", error);
+      });
+    setEditingData(null); // Reset editing state after save
+  };
+
+  // Part of the form where the user selects the status
 
   const handleAddCustomer = (e) => {
     e.preventDefault();
@@ -177,10 +212,12 @@ function Customers() {
                           <select
                             name="status"
                             className="input input-bordered"
+                            defaultValue={row.status ? "true" : "false"}
                           >
-                            <option value={true}>Active</option>
-                            <option value={false}>Inactive</option>
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
                           </select>
+                          ;
                         </form>
                       ) : (
                         <span>{row.status ? "Active" : "Inactive"}</span>

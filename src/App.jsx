@@ -48,15 +48,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MobileLanding />} />
-        <Route path="/web" element={<WebLanding />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<UpdatedLogin />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register" element={<SignUp />} />
         <Route path="/signup" element={<UpdatedRegister />} />
         <Route path="/about-us" element={<AboutUs />} />
-
-        <Route path="/login/admin" element={<AdminLogin />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -78,10 +73,7 @@ function App() {
           <Route path="/order/:step" element={<OrderPlacement />} />
           <Route path="/user/orders" element={<UserOrder />} />
           <Route path="/user/edit" element={<Profile />} />
-          {/* <Route path="/dashboard/orderdetail" element={<OrderDetails />} /> */}
         </Route>
-
-        <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/staff/dashboard" element={<StaffDashboard />} />
         <Route path="/staff/paper" element={<StaffPaper />} />
