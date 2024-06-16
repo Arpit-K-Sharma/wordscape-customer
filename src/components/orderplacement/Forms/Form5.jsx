@@ -50,7 +50,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(false);
-      }, 3000); // Reset state after 3 seconds
+      }, 3000);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error("Failed to place order.");
@@ -506,6 +506,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           type="file"
           className="file-input w-full max-w-xs mx-auto mt-5 text-zinc-900"
           onChange={handleFileChange}
+          accept=".pdf"
         />
         <span className="italic text-gray-400">Optional</span>
         <button
@@ -555,7 +556,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
             ) : isPdfDone ? ( // Check if PDF is done, then render this
               "Confirm Order"
             ) : (
-              "Upload PDF First" // Inform user to upload PDF first if not done
+              "PDF is being uploaded" // Inform user to upload PDF first if not done
             )}
           </button>
         </div>

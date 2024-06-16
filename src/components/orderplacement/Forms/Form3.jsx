@@ -23,6 +23,7 @@ const ThirdForm = ({ orderData, setOrderData }) => {
           className="input input-bordered text-zinc-900"
           type="number"
           value={pages}
+          required
           onChange={(e) =>
             setOrderData({ ...orderData, pages: parseInt(e.target.value) })
           }
@@ -42,6 +43,7 @@ const ThirdForm = ({ orderData, setOrderData }) => {
           className="input input-bordered text-zinc-900"
           type="number"
           value={quantity}
+          required
           onChange={(e) =>
             setOrderData({ ...orderData, quantity: parseInt(e.target.value) })
           }
@@ -58,7 +60,10 @@ const ThirdForm = ({ orderData, setOrderData }) => {
             </button>
           </NavLink>
           <NavLink to="/order/4">
-            <button className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5">
+            <button
+              className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5"
+              disabled={!pages || !quantity} // Disable button if pages or quantity is not entered
+            >
               Next
             </button>
           </NavLink>

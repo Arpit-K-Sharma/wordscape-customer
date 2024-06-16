@@ -526,7 +526,7 @@ function AdminDashboard() {
                             )
                           }
                         >
-                          Date
+                          Date{" "}
                           <span
                             style={{
                               color: ["date_asc", "date_desc"].includes(
@@ -535,7 +535,8 @@ function AdminDashboard() {
                                 ? sortDirection === "date_asc"
                                   ? "green"
                                   : "blue"
-                                : "black",
+                                : "blue",
+                              fontWeight: "500",
                             }}
                           >
                             {sortDirection === "date_asc" ? "↑" : "↓"}

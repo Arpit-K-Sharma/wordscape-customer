@@ -16,7 +16,7 @@ function MobileNavbar() {
 
   const handleLogout = () => {
     Cookies.remove("userToken");
-    // Cookies.remove("adminToken");
+    Cookies.remove("adminToken");
     localStorage.removeItem("id");
     navigate("/");
   };

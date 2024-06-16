@@ -8,7 +8,7 @@ function Customers() {
 
   function getCustomers() {
     axios
-      .get("http://localhost:8081/customers")
+      .get("http://localhost:8081/orders/customers")
       .then((response) => {
         setCustomerDataState(response.data.response);
       })

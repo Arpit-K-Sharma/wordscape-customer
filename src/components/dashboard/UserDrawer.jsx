@@ -9,6 +9,7 @@ function UserDrawer() {
 
   const handleLogout = () => {
     Cookies.remove("userToken");
+    Cookies.remove("adminToken");
     localStorage.removeItem("id");
     isLogout(true);
   };

@@ -69,8 +69,12 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
+
           <IoNewspaperSharp size={`25px`} color="black" />
         </div>
+        <span className="text-xs text-gray-500 mb-5">
+          *multiple, please select one from the dropdown
+        </span>
         <select
           className="select select-bordered text-zinc-800"
           onChange={(e) =>
@@ -143,12 +147,15 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="lg:flex flex mb-9 max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/3">
-            <button className="btn btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+            <button className="btn btn-primary max-lg:w-full w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>
           </NavLink>
           <NavLink to="/order/5">
-            <button className="btn bg-blue-600 btn-primary w-[280px] mt-5">
+            <button
+              className="btn bg-blue-600 max-lg:w-full btn-primary w-[280px] mt-5"
+              disabled={orderData.bindingType.length === 0} // Ensure this array is not empty
+            >
               Next
             </button>
           </NavLink>

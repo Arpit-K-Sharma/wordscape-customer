@@ -148,14 +148,13 @@ function Signin() {
       if (response.data && response.data.token) {
         const token = response.data.token;
         Cookies.set("token", token, { expires: 7 });
-
         try {
           const decoded = jwtDecode(token);
           console.log("Decoded Token:", decoded);
 
           if (decoded.id) {
             console.log("id:", decoded.id);
-            localStorage.setItem("id", decoded.id);
+            // localStorage.setItem("id", decoded.id);
             toast.success("Signed In Successfully", {
               position: "top-right",
               autoClose: 2000,

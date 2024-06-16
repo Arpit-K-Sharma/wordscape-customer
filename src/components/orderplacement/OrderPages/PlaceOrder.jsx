@@ -14,10 +14,9 @@ import MobileMenu from "../../navbar/mobile-menu";
 
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
-    name: "",
-    email: "",
+    // name: "",
     address: "",
-    companyName: "",
+    // companyName: "",
     innerPaperType: "Art Paper",
     innerPaperThickness: 100,
     outerPaperType: "Art Paper",
@@ -186,9 +185,9 @@ function OrderPlacement() {
   const handleSubmit = async () => {
     try {
       // console.log("Test");
-      // console.log(orderData);
+      // console.log(order Data);
       const id = localStorage.getItem("id");
-      console.log(id);
+      // console.log(id);
       const response = await axios.post(
         `http://localhost:8081/orders/${id}`,
         orderData
