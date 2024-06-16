@@ -96,8 +96,8 @@ function AdminDashboard() {
   const handleViewDetails = async (order) => {
     const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
     setOrderId(order);
-    setSelectedOrder(response.data);
-    console.log(response.data);
+    setSelectedOrder(response.data.response);
+    console.log(response.data.response);
     document.getElementById("my-drawer-4").checked = true;
   };
   const dropdownRef = useRef(null);
@@ -105,7 +105,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   useEffect(() => {
     const id = localStorage.getItem("id");
-    console.log("value of page" + page);
+    console.log(page);
 
     const fetchOrderDetails = async () => {
       try {
@@ -118,15 +118,15 @@ function AdminDashboard() {
           setFilteredOrderDetails([]);
         } else {
           setPageLimit(false);
-          const allorder = response.data;
+          const allorder = response.data.response;
           const recentOrder = allorder.reduce((maxOrder, order) => {
             return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
           }, null);
 
           handleRecentTracking(recentOrder.orderId);
-          setOrderDetails(response.data);
-          setFilteredOrder(response.data);
-          setFilteredOrderDetails(response.data);
+          setOrderDetails(allorder);
+          setFilteredOrder(allorder);
+          setFilteredOrderDetails(allorder);
 
           let Pending = 0;
           let Approved = 0;

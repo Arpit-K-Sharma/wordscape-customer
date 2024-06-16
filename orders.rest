@@ -35,4 +35,8 @@ Content-Type: application/json
 GET http://localhost:8081/orders?pageNumber=0
 Content-Type: application/json
 
+### Get all Customers
+GET http://localhost:8081/customers
+Content-Type: application/json
+
 

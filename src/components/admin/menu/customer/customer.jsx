@@ -10,7 +10,7 @@ function Customers() {
     axios
       .get("http://localhost:8081/customers")
       .then((response) => {
-        setCustomerDataState(response.data);
+        setCustomerDataState(response.data.response);
       })
       .catch((error) => {
         console.log("Error fetching data:", error);
