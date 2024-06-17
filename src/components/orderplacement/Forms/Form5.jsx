@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 import { FaIndustry, FaCalendar } from "react-icons/fa6";
 import { FaRegAddressCard } from "react-icons/fa";
 import { CiStickyNote } from "react-icons/ci";

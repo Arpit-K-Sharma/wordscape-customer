@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StaffDrawer from "../StaffDrawer";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 
 function StaffPaper() {
   const [editingData, setEditingData] = useState(null);

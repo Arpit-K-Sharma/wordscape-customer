@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminDrawer from "../AdminDrawer";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 
 function Lamination() {
   const [editingData, setEditingData] = useState(null);

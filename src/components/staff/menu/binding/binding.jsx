@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import StaffDrawer from "../StaffDrawer";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 import { useEffect } from "react";
 
 function StaffBinding() {

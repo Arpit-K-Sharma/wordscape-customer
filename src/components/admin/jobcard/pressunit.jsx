@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 
 function PressUnits({ data }) {
   const { register, handleSubmit, reset, watch } = useForm({

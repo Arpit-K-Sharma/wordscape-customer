@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";

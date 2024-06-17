@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import StaffDrawer from "../StaffDrawer";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 
 function StaffCoverTreatment() {
   const [editingData, setEditingData] = useState(null);

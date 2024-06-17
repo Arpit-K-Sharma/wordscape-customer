@@ -3,7 +3,7 @@ import StaffDrawer from "./menu/StaffDrawer";
 import React, { useState, useEffect } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import axios from "../../components/axiosInstance";
+import axios from "../axiosInstance";
 
 function StaffDashboard() {
   const [startDate, setStartDate] = useState(() => {

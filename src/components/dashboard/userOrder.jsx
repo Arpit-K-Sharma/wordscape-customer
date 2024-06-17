@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Menu from "./menu";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import axios from "../../components/axiosInstance";
+import axios from "../axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";

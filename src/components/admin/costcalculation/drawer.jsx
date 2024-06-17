@@ -1,7 +1,7 @@
 import { Drawer, ButtonToolbar, Button, Placeholder } from "rsuite";
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 import "./external.css";
 
 // axios

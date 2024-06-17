@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminDrawer from "../AdminDrawer";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 
 function Users() {
   const [editingData, setEditingData] = useState(null);

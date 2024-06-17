@@ -8,7 +8,7 @@ import PaperUnit from "./paperunit";
 import Bindery from "./bindery";
 import PressUnits from "./pressunit";
 import JobcardMenu from "./jobcardMenu";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 import { NavLink, useLocation } from "react-router-dom";
 import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";

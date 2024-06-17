@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import "../styles/cost-calc.css";
-import axios from "../../components/axiosInstance";
+import axios from "../../axiosInstance";
 import "./external.css";
 import DrawerOpen from "./drawer";
 import drawertest from "./drawertest";

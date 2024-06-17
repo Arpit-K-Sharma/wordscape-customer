@@ -3,7 +3,7 @@ import AdminDrawer from "./menu/AdminDrawer";
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle, FaTrash } from "react-icons/fa";
-import axios from "../../components/axiosInstance";
+import axios from "../axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";

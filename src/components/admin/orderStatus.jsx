@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../components/axiosInstance";
+import axios from "../axiosInstance";
 import Avatar from "react-avatar";
 
 function OrderStatusList({ orderDetails }) {

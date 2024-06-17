@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../components/axiosInstance";
+import axios from "../../../axiosInstance";
 import StaffDrawer from "../StaffDrawer";
 
 function StaffOrders() {
