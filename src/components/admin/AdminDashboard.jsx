@@ -166,9 +166,7 @@ function AdminDashboard() {
   const handleTracking = async (id) => {
     console.log(id);
     try {
-      const response = await axios.get(
-        `/projectTracking/${id}`
-      );
+      const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
       const updatedSteps = steps.map((step) => ({
@@ -185,9 +183,7 @@ function AdminDashboard() {
   const handleRecentTracking = async (id) => {
     setRecentId(id);
     try {
-      const response = await axios.get(
-        `/projectTracking/${id}`
-      );
+      const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
       const updatedSteps = recentSteps.map((step) => ({
@@ -210,10 +206,7 @@ function AdminDashboard() {
     console.log(stepData);
 
     try {
-      await axios.post(
-        `/projectTracking/${orderid}`,
-        stepData
-      );
+      await axios.post(`/projectTracking/${orderid}`, stepData);
       console.log("Data sent successfully");
     } catch (error) {
       console.error("Error sending data:", error);

@@ -4,7 +4,7 @@ import logo from "../images/logo/LogoOnly.png";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import books from "../images/logo/books.jpeg";
+import books from "../images/logo/books.jpg";
 
 function UpdatedRegister() {
   const navigate = useNavigate();

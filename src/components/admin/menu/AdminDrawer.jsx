@@ -9,9 +9,7 @@ function AdminDrawer() {
   const [logout, isLogout] = React.useState(false);
 
   const handleLogout = () => {
-    Cookies.remove("adminToken");
-    Cookies.remove("userToken");
-    localStorage.removeItem("id");
+    Cookies.remove("accessToken");
     isLogout(true);
     Navigate("/");
   };

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
 import { FaIndustry, FaCalendar } from "react-icons/fa6";
@@ -8,6 +8,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { get } from "react-hook-form";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
@@ -50,7 +51,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(false);
-      }, 3000);
+        navigate("/user/orders");
+      }, 1200);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error("Failed to place order.");
@@ -94,14 +96,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       );
       if (response.data.filename) {
         setOrderData({ ...orderData, pdfFile: response.data.filename });
-      }
-      setIsPdfSubmitted(true);
-      // toast.success("PDF Uploaded Successfully");
-      setTimeout(() => {
         setIsPdfSubmitting(false);
         setIsPdfSubmitted(false);
         setIsPdfDone(true);
-      }, 3000);
+      }
+
+      // toast.success("PDF Uploaded Successfully");
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error("Failed to place order.");
@@ -331,6 +331,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     outerChangeCostPerKg,
     orderData,
   ]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setOrderData({

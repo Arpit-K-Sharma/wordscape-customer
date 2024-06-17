@@ -10,7 +10,6 @@ function MobileMenu() {
 
   const handleLogout = () => {
     Cookies.remove("accessToken");
-    localStorage.removeItem("id");
     navigate("/");
   };
 

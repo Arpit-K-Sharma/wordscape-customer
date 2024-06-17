@@ -12,9 +12,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    Cookies.remove("userToken");
-    Cookies.remove("adminToken");
-    localStorage.removeItem("id");
+    Cookies.remove("accessToken");
     navigate("/");
   };
 

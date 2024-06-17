@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
-import books from "../images/logo/books.jpeg";
+import books from "../images/logo/books.jpg";
 import logo from "../images/logo/LogoOnly.png";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";

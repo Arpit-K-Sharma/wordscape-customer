@@ -220,7 +220,7 @@ function Costbreakdown() {
               placeholder="Issue By"
             />
           </div>
-          <div className="p-4 mt-[20px]">
+          {/* <div className="p-4 mt-[20px]">
             <h2 className="font-semibold mb-[10px]">Project Details:</h2>
             <div className="flex justify-between">
               <div>
@@ -466,7 +466,7 @@ function Costbreakdown() {
             <div className="flex justify-end mt-[5px]" onClick={handleAdd2}>
               <MdAdd size={30} color="green" />
             </div>
-          </div>
+          </div> */}
         </div>
       </dialog>
     </>

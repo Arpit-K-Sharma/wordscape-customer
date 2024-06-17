@@ -8,9 +8,7 @@ function UserDrawer() {
   const [logout, isLogout] = React.useState(false);
 
   const handleLogout = () => {
-    Cookies.remove("userToken");
-    Cookies.remove("adminToken");
-    localStorage.removeItem("id");
+    Cookies.remove("accessToken");
     isLogout(true);
   };
 

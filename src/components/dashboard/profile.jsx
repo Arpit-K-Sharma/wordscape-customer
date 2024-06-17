@@ -4,7 +4,6 @@ import Avatar from "react-avatar";
 import Menu from "./menu";
 
 function Profile() {
-  const userId = localStorage.getItem("id");
   const [customerData, setCustomerData] = useState({
     customerId: null,
     fullName: "",
@@ -18,7 +17,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`/customers/${userId}`)
+      .get(`/customers/self`)
       .then((response) => {
         console.log(response.data);
         setCustomerData(response.data);

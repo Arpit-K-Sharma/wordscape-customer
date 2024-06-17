@@ -72,13 +72,9 @@ function UserOrder() {
   };
 
   useEffect(() => {
-    const id = localStorage.getItem("id");
-    console.log(id);
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(
-          `/orders/customer/${id}`
-        );
+        const response = await axios.get(`/orders/customer`);
         setOrderDetails(response.data);
         const d = response.data;
         let Pending = 0;
