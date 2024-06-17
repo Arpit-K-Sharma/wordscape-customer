@@ -24,7 +24,7 @@ GET http://localhost:8081/jobCard/4
 Content-Type: application/json
 
 ### Get Customer Order
-GET http://localhost:8081/orders/customer/2
+GET http://localhost:8081/orders/customer/
 Content-Type: application/json
 
 ### Get ALL Orders

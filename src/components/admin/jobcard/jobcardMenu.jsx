@@ -169,9 +169,19 @@ function JobcardMenu({ orderId }) {
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
                       <FaPrint className="text-red-500" />
-                      Lamination Type
+                      Inner Lamination Type
                     </td>
-                    <td className="w-1/2">{orderDetails.laminationType}</td>
+                    <td className="w-1/2">{orderDetails.innerLamination}</td>
+                  </tr>
+                  <tr
+                    className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                    style={{ height: "50px" }}
+                  >
+                    <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                      <FaPrint className="text-red-500" />
+                      Outer Lamination Type
+                    </td>
+                    <td className="w-1/2">{orderDetails.outerLamination}</td>
                   </tr>
                   <tr
                     className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
