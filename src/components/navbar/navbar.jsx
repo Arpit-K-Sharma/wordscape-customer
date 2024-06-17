@@ -6,6 +6,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { isLoggedIn, isAdmin } from "../../utility/util";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -16,9 +17,6 @@ function Navbar() {
     localStorage.removeItem("id");
     navigate("/");
   };
-
-  const isLoggedIn = Cookies.get("userToken");
-  const isAdmin = Cookies.get("adminToken");
 
   return (
     <div className="navbar lg:h-[5vh] bg-zinc-900 max-lg:hidden text-white font-archivo">
@@ -39,7 +37,7 @@ function Navbar() {
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
-            {isLoggedIn && (
+            {isLoggedIn() && (
               <li>
                 <NavLink to="/user/orders">
                   <a>Dashboard</a>
@@ -47,7 +45,7 @@ function Navbar() {
               </li>
             )}
 
-            {isAdmin && (
+            {isAdmin() && (
               <li>
                 <NavLink to="/admin/dashboard">
                   <a>Admin Dashboard</a>
@@ -55,7 +53,7 @@ function Navbar() {
               </li>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn() && (
               <li>
                 <NavLink to="/order/1">
                   <a>Place an order</a>
@@ -64,7 +62,7 @@ function Navbar() {
             )}
           </ul>
         </div>
-        {isLoggedIn ? (
+        {isLoggedIn() ? (
           <a
             className="mr-[25px] text-white flex items-center cursor-pointer"
             onClick={handleLogout}

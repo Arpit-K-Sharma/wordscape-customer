@@ -3,15 +3,13 @@ import logo from "../images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { isAdmin, isLoggedIn } from "../../utility/util";
 
 function MobileMenu() {
-  const isLoggedIn = Cookies.get("userToken") !== undefined;
   const navigate = useNavigate();
-  const isAdmin = Cookies.get("adminToken");
 
   const handleLogout = () => {
-    Cookies.remove("userToken");
-    Cookies.remove("adminToken");
+    Cookies.remove("accessToken");
     localStorage.removeItem("id");
     navigate("/");
   };
@@ -54,7 +52,7 @@ function MobileMenu() {
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
 
-          {isLoggedIn && (
+          {isLoggedIn() && (
             <li>
               <NavLink to="/user/orders">
                 <p className="text-xl mb-3 font-light">Dashboard</p>
@@ -62,7 +60,7 @@ function MobileMenu() {
             </li>
           )}
 
-          {isAdmin && (
+          {isAdmin() && (
             <li>
               <NavLink to="/admin/dashboard">
                 <p className="text-xl mb-3 font-light">Admin Dashboard</p>
@@ -70,7 +68,9 @@ function MobileMenu() {
             </li>
           )}
 
-          {isLoggedIn && (
+          {isLoggedIn()}
+
+          {isLoggedIn() && (
             <NavLink to="/order/1">
               <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
                 Place an Order
@@ -85,14 +85,14 @@ function MobileMenu() {
           {/* <li>
             <p className="text-xl mb-3 font-light">Statement</p>
           </li> */}
-          {!isLoggedIn && (
+          {!isLoggedIn() && (
             <li>
               <NavLink to="/login">
                 <p className="text-xl mb-3 font-light">Login</p>
               </NavLink>
             </li>
           )}
-          {isLoggedIn && (
+          {isLoggedIn() && (
             <li>
               <p className="text-xl mb-3 font-light" onClick={handleLogout}>
                 Logout

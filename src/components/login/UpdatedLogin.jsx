@@ -31,7 +31,7 @@ function Signin() {
 
       if (response.data && response.data.token) {
         const token = response.data.token;
-        Cookies.set("userToken", token, { expires: 7 });
+        Cookies.set("accessToken", token, { expires: 7 });
 
         try {
           const decoded = jwtDecode(token);
@@ -97,14 +97,14 @@ function Signin() {
 
       if (response.data && response.data.token) {
         const token = response.data.token;
-        Cookies.set("adminToken", token, { expires: 7 }); // Save admin token with "adminToken" name
+        Cookies.set("accessToken", token, { expires: 7 }); // Save admin token with "adminToken" name
 
         try {
           const decoded = jwtDecode(token);
-          console.log("Decoded Token:", decoded);
+          console.log("Decoded Token: ", decoded);
 
           if (decoded.id) {
-            console.log("id:", decoded.id);
+            console.log("id of decoded:", decoded.id);
             localStorage.setItem("id", decoded.id);
             setTimeout(() => {
               setIsAdmin(true);
@@ -147,7 +147,7 @@ function Signin() {
 
       if (response.data && response.data.token) {
         const token = response.data.token;
-        Cookies.set("token", token, { expires: 7 });
+        Cookies.set("accessToken", token, { expires: 7 });
         try {
           const decoded = jwtDecode(token);
           console.log("Decoded Token:", decoded);

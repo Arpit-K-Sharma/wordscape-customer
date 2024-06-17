@@ -5,12 +5,12 @@ import SecondForm from "../Forms/Form2";
 import ThirdForm from "../Forms/Form3";
 import FourthForm from "../Forms/Form4";
 import FifthForm from "../Forms/Form5";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../../navbar/navbar";
 import MobileMenu from "../../navbar/mobile-menu";
+import axios from "../../axiosInstance";
 
 function OrderPlacement() {
   const [orderData, setOrderData] = useState({
@@ -79,7 +79,7 @@ function OrderPlacement() {
 
   const getInnerPaperType = () => {
     axios
-      .get("http://localhost:8081/papers")
+      .get("/papers")
       .then((response) => {
         // Sort the data by paperId in ascending order
         const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
@@ -101,7 +101,7 @@ function OrderPlacement() {
 
   const getPaperThicknesses = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/paperThickness");
+      const response = await axios.get("/paperThickness");
       if (response) {
         const sortedData = response.data.sort(
           (a, b) => a.thicknessId - b.thicknessId
@@ -118,7 +118,7 @@ function OrderPlacement() {
 
   const getPaperSizes = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/paperSizes");
+      const response = await axios.get("/paperSizes");
       if (response) {
         const sortedData = response.data.sort((a, b) => a.sizeId - b.sizeId);
         console.log("Sorted data");
@@ -135,7 +135,7 @@ function OrderPlacement() {
 
   const getInks = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/inks");
+      const response = await axios.get("/inks");
       if (response) {
         const sortedData = response.data.sort((a, b) => a.inkId - b.inkId);
         setEntireData((prevEntireData) => ({
@@ -150,7 +150,7 @@ function OrderPlacement() {
 
   const getLamination = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/laminations");
+      const response = await axios.get("/laminations");
       const sortedData = response.data.sort(
         (a, b) => a.laminationId - b.laminationId
       );
@@ -167,7 +167,7 @@ function OrderPlacement() {
 
   const getBinding = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/bindings");
+      const response = await axios.get("/bindings");
       const sortedData = response.data.sort(
         (a, b) => a.bindingId - b.bindingId
       );
@@ -186,12 +186,9 @@ function OrderPlacement() {
     try {
       // console.log("Test");
       // console.log(order Data);
-      const id = localStorage.getItem("id");
+      // const id = localStorage.getItem("id");
       // console.log(id);
-      const response = await axios.post(
-        `http://localhost:8081/orders/${id}`,
-        orderData
-      );
+      const response = await axios.post(`/orders`, orderData);
       console.log("Order placed successfully", response.data);
       toast.success(
         "Order placed successfully. Thank you for ordering through WordScape."
