@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import "../styles/cost-calc.css";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import "./external.css";
 import DrawerOpen from "./drawer";
 import drawertest from "./drawertest";
@@ -87,7 +87,7 @@ const CostCalculation = () => {
 
   const getInks = () => {
     axios
-      .get("http://localhost:8081/inks")
+      .get("/inks")
       .then((response) => {
         setInks(response.data);
       })
@@ -98,7 +98,7 @@ const CostCalculation = () => {
 
   const getRatePlate = (plateSize) => {
     axios
-      .get("http://localhost:8081/plates")
+      .get("/plates")
       .then((response) => {
         // Find the plate with the matching size in the response data
         const plate = response.data.find(
@@ -142,7 +142,7 @@ const CostCalculation = () => {
 
   const getPlates = () => {
     axios
-      .get("http://localhost:8081/plates")
+      .get("/plates")
       .then((response) => {
         // Extract plate sizes from response data
         const fetchedPlateSizes = response.data.map((plate) => ({
@@ -159,7 +159,7 @@ const CostCalculation = () => {
 
   const getThickness = () => {
     axios
-      .get("http://localhost:8081/paperThickness")
+      .get("/paperThickness")
       .then((response) => {
         // Update the state with fetched paper thickness data
         setPaperThicknesses(response.data);
@@ -171,7 +171,7 @@ const CostCalculation = () => {
 
   const getOuterPaperThickness = () => {
     axios
-      .get("http://localhost:8081/paperThickness") // Adjust URL accordingly
+      .get("/paperThickness") // Adjust URL accordingly
       .then((response) => {
         // Assuming the response data is an array of thickness values
         setOuterPaperThickness(response.data);
@@ -183,7 +183,7 @@ const CostCalculation = () => {
 
   const getPaperSizes = () => {
     axios
-      .get("http://localhost:8081/paperSizes")
+      .get("/paperSizes")
       .then((response) => {
         // Extract paper sizes from response data
         const fetchedPaperSizes = response.data.map((size) => ({
@@ -200,7 +200,7 @@ const CostCalculation = () => {
 
   const getPaper = () => {
     axios
-      .get("http://localhost:8081/papers")
+      .get("/papers")
       .then((response) => {
         setPaperType(response.data);
       })
@@ -211,7 +211,7 @@ const CostCalculation = () => {
 
   const getOuterPaper = () => {
     axios
-      .get("http://localhost:8081/papers") // Adjust the URL accordingly
+      .get("/papers") // Adjust the URL accordingly
       .then((response) => {
         setOuterPaperType(response.data);
       })
@@ -221,7 +221,7 @@ const CostCalculation = () => {
   };
   const getLamination = () => {
     axios
-      .get("http://localhost:8081/laminations")
+      .get("/laminations")
       .then((response) => {
         // Map the response data to include both laminationId and laminationType
         const laminationTypes = response.data.map(
@@ -237,7 +237,7 @@ const CostCalculation = () => {
 
   const getCoverTreatment = () => {
     axios
-      .get("http://localhost:8081/coverTreatments")
+      .get("/coverTreatments")
       .then((response) => {
         const covertreatmentTypes = response.data.map(
           (covertreatment) => covertreatment.coverTreatmentType
@@ -251,7 +251,7 @@ const CostCalculation = () => {
 
   const getBinding = () => {
     axios
-      .get("http://localhost:8081/bindings")
+      .get("/bindings")
       .then((response) => {
         // Extract binding types from response data
         const bindingTypes = response.data.map(
@@ -269,7 +269,7 @@ const CostCalculation = () => {
   const getRateForPaper = (selectedPaperType) => {
     // Fetch the paper rates from the database
     axios
-      .get("http://localhost:8081/papers") // Adjust the URL to match your API endpoint
+      .get("/papers") // Adjust the URL to match your API endpoint
       .then((response) => {
         // Find the selected paper type in the response data
         const selectedPaper = response.data.find(
@@ -301,7 +301,7 @@ const CostCalculation = () => {
     if (outerSelectedPaperType) {
       console.log("Outer Paper Type test:", outerSelectedPaperType);
       axios
-        .get("http://localhost:8081/papers") // Adjust the URL to match your API endpoint
+        .get("/papers") // Adjust the URL to match your API endpoint
         .then((response) => {
           // Find the selected paper type in the response data
           const outPaper = response.data.find(
@@ -331,7 +331,7 @@ const CostCalculation = () => {
   const getRateForBindingType = (selectedBindingType) => {
     // Fetch the binding types and rates from the database
     axios
-      .get("http://localhost:8081/bindings")
+      .get("/bindings")
       .then((response) => {
         // Find the selected binding type in the response data
         const selectedBinding = response.data.find(
@@ -359,7 +359,7 @@ const CostCalculation = () => {
 
   const getRateForLaminationType = (selectedLaminationType) => {
     axios
-      .get("http://localhost:8081/laminations")
+      .get("/laminations")
       .then((response) => {
         const selectedLamination = response.data.find(
           (lamination) => lamination.laminationType === selectedLaminationType
@@ -384,7 +384,7 @@ const CostCalculation = () => {
   const getRateForCoverTreatment = (selectedCoverTreatmentType) => {
     // Fetch the cover treatments and rates from the database
     axios
-      .get("http://localhost:8081/coverTreatments")
+      .get("/coverTreatments")
       .then((response) => {
         // Find the selected cover treatment type in the response data
         const selectedCoverTreatment = response.data.find(
@@ -489,7 +489,7 @@ const CostCalculation = () => {
 
     // Fetch the plate cost data
     axios
-      .get("http://localhost:8081/plates")
+      .get("/plates")
       .then((response) => {
         const plateCostData = response.data;
         // Selected plate size

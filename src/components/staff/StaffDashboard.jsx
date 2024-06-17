@@ -3,7 +3,7 @@ import StaffDrawer from "./menu/StaffDrawer";
 import React, { useState, useEffect } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function StaffDashboard() {
   const [startDate, setStartDate] = useState(() => {
@@ -32,7 +32,7 @@ function StaffDashboard() {
   const [orderid, setOrderid] = useState();
 
   const handleViewDetails = async (order) => {
-    const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
+    const response = await axios.get(`/jobCard/${order}`);
     console.log(response.data);
     console.log(order);
     setSelectedOrder(order);
@@ -44,7 +44,7 @@ function StaffDashboard() {
     console.log(id);
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/orders`);
+        const response = await axios.get(`/orders`);
         setOrderDetails(response.data);
 
         const d = response.data;
@@ -78,7 +78,7 @@ function StaffDashboard() {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8081/projectTracking/${id}`
+        `/projectTracking/${id}`
       );
       const trackingData = response.data;
 
@@ -120,7 +120,7 @@ function StaffDashboard() {
 
     try {
       await axios.post(
-        `http://localhost:8081/projectTracking/${orderid}`,
+        `/projectTracking/${orderid}`,
         stepData
       );
       console.log("Data sent successfully");

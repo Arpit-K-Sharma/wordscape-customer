@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StaffDrawer from "../StaffDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function StaffPaperSize() {
   const [editingData, setEditingData] = useState(null);
@@ -8,7 +8,7 @@ function StaffPaperSize() {
 
   function getPaperSizes() {
     axios
-      .get("http://localhost:8081/paperSizes")
+      .get("/paperSizes")
       .then((response) => {
         // Sort the data by paperSizeId in ascending order
         const sortedData = response.data.sort(
@@ -31,7 +31,7 @@ function StaffPaperSize() {
     const paperSize = e.target.elements.paperSize.value;
     const dimensions = e.target.elements.dimensions.value;
     axios
-      .post("http://localhost:8081/paperSizes", {
+      .post("/paperSizes", {
         paperSize,
         dimensions,
       })
@@ -50,7 +50,7 @@ function StaffPaperSize() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/paperSizes/${id}`, updatedData)
+      .put(`/paperSizes/${id}`, updatedData)
       .then((response) => {
         console.log("Paper size updated successfully:", response.data);
         getPaperSizes(); // Refresh paper size data

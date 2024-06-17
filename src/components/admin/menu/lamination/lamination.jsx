@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminDrawer from "../AdminDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function Lamination() {
   const [editingData, setEditingData] = useState(null);
@@ -8,7 +8,7 @@ function Lamination() {
 
   function getLamination() {
     axios
-      .get("http://localhost:8081/laminations")
+      .get("/laminations")
       .then((response) => {
         // Sort the data by laminationId in ascending order
         const sortedData = response.data.sort(
@@ -30,7 +30,7 @@ function Lamination() {
     const laminationType = e.target.elements.laminationType.value;
     const rate = parseFloat(e.target.elements.rate.value);
     axios
-      .post("http://localhost:8081/laminations", {
+      .post("/laminations", {
         laminationType,
         rate,
       })
@@ -49,7 +49,7 @@ function Lamination() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/laminations/${id}`, updatedData)
+      .put(`/laminations/${id}`, updatedData)
       .then((response) => {
         console.log("Lamination updated successfully:", response.data);
         getLamination(); // Refresh lamination data

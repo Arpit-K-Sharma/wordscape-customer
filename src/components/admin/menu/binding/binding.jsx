@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
-import axios from "axios";
 import { useEffect } from "react";
+import axios from "../../../axiosInstance";
 
 function Binding() {
   const [editingData, setEditingData] = useState(null);
@@ -10,7 +10,7 @@ function Binding() {
 
   function getBinding() {
     axios
-      .get("http://localhost:8081/bindings")
+      .get("/bindings")
       .then((response) => {
         // Sort the data by bindingId in ascending order
         const sortedData = response.data.sort(
@@ -33,7 +33,7 @@ function Binding() {
     const bindingType = e.target.elements.bindingType.value;
     const rate = parseFloat(e.target.elements.rate.value);
     axios
-      .post("http://localhost:8081/bindings", {
+      .post("/bindings", {
         bindingType,
         rate,
       })
@@ -52,7 +52,7 @@ function Binding() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/bindings/${id}`, {
+      .put(`/bindings/${id}`, {
         bindingType: updatedData.bindingType,
         rate: updatedData.rate,
       })

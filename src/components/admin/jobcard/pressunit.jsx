@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function PressUnits({ data }) {
   const { register, handleSubmit, reset, watch } = useForm({
@@ -87,7 +87,7 @@ function PressUnits({ data }) {
     };
 
     const orderId = 4;
-    const url = `http://localhost:8081/jobCard/${orderId}`;
+    const url = `/jobCard/${orderId}`;
     console.log(cookiesData);
 
     try {

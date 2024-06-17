@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { FaIndustry, FaCalendar } from "react-icons/fa6";
 import { FaRegAddressCard } from "react-icons/fa";
 import { CiStickyNote } from "react-icons/ci";
@@ -84,7 +84,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     setIsPdfSubmitting(true);
     try {
       const response = await axios.post(
-        "http://localhost:8081/orders/files",
+        "/orders/files",
         formData,
         {
           headers: {
@@ -160,7 +160,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const getRateForBindingType = (selectedBindingType) => {
     axios
-      .get("http://localhost:8081/bindings")
+      .get("/bindings")
       .then((response) => {
         const selectedBinding = response.data.find(
           (binding) => binding.bindingType === selectedBindingType
@@ -185,7 +185,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const getRateForLaminationType = (selectedLaminationType) => {
     axios
-      .get("http://localhost:8081/laminations")
+      .get("/laminations")
       .then((response) => {
         const selectedLamination = response.data.find(
           (lamination) => lamination.laminationType === selectedLaminationType
@@ -209,7 +209,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const getRatePlate = (plateSize) => {
     axios
-      .get("http://localhost:8081/plates")
+      .get("/plates")
       .then((response) => {
         const plate = response.data.find(
           (plate) => plate.plateSize === plateSize
@@ -229,7 +229,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const getRatePaper = (selectedPaperType) => {
     axios
-      .get("http://localhost:8081/papers")
+      .get("/papers")
       .then((response) => {
         const paper = response.data.find(
           (paper) => paper.paperType === selectedPaperType
@@ -254,7 +254,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   const getOuterPaperRate = (selectedOuterPaperType) => {
     axios
-      .get("http://localhost:8081/papers")
+      .get("/papers")
       .then((response) => {
         const outerPaper = response.data.find(
           (paper) => paper.paperType === selectedOuterPaperType

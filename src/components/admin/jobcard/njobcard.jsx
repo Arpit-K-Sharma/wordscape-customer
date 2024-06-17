@@ -8,7 +8,7 @@ import PaperUnit from "./paperunit";
 import Bindery from "./bindery";
 import PressUnits from "./pressunit";
 import JobcardMenu from "./jobcardMenu";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { NavLink, useLocation } from "react-router-dom";
 import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
@@ -30,7 +30,7 @@ function NJobCard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/orders")
+      .get("/orders")
       .then((response) => {
         setOrders(response.data.response);
         setFilteredOrder(response.data.response);
@@ -45,7 +45,7 @@ function NJobCard() {
       handleOrderChange(ordersId);
       const fetchJobCard = async () => {
         const response = await axios.get(
-          `http://localhost:8081/jobCard/${ordersId}`
+          `/jobCard/${ordersId}`
         );
         console.log(response.data);
         setJobCard(response.data);

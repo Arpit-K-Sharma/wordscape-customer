@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import Avatar from "react-avatar";
 
 function OrderStatusList({ orderDetails }) {
@@ -12,7 +12,7 @@ function OrderStatusList({ orderDetails }) {
       for (const order of orderDetails) {
         try {
           const response = await axios.get(
-            `http://localhost:8081/projectTracking/${order.orderId}`
+            `/projectTracking/${order.orderId}`
           );
           const data = response.data;
           trackingResults[order.orderId] = getLastCompletedStage(data);

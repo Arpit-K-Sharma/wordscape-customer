@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Menu from "./menu";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
@@ -45,7 +45,7 @@ function UserOrder() {
     console.log("the id is: " + orderId);
     try {
       const response = await axios.get(
-        `http://localhost:8081/orders/files/download/${orderId}`, // Using customerId to construct the URL
+        `/orders/files/download/${orderId}`, // Using customerId to construct the URL
         {
           responseType: "arraybuffer",
         }
@@ -77,7 +77,7 @@ function UserOrder() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/orders/customer/${id}`
+          `/orders/customer/${id}`
         );
         setOrderDetails(response.data);
         const d = response.data;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminDrawer from "../AdminDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function Users() {
   const [editingData, setEditingData] = useState(null);
@@ -8,7 +8,7 @@ function Users() {
 
   function getUsers() {
     axios
-      .get("http://localhost:8081/users")
+      .get("/users")
       .then((response) => {
         setUserDataState(response.data);
       })
@@ -47,7 +47,7 @@ function Users() {
     const email = e.target.elements.email.value;
     // const status = e.target.elements.status.checked;
     axios
-      .post("http://localhost:8081/users", {
+      .post("/users", {
         username,
         password,
         email,

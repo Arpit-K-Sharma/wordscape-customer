@@ -1,7 +1,7 @@
 import { Drawer, ButtonToolbar, Button, Placeholder } from "rsuite";
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import "./external.css";
 
 // axios
@@ -78,7 +78,7 @@ const DrawerOpen = ({
 
   const sendOrder = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8081/order", data);
+      const response = await axios.post("/order", data);
       console.log("Order sent successfully:", response.data);
       // Handle successful response (e.g., show a success message)
     } catch (error) {

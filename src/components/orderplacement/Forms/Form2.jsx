@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { FaRegNewspaper } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { GiPapers } from "react-icons/gi";

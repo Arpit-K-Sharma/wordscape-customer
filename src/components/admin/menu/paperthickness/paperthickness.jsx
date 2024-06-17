@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminDrawer from "../AdminDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function PaperThickness() {
   const [editingData, setEditingData] = useState(null);
@@ -8,7 +8,7 @@ function PaperThickness() {
 
   function getPaperThicknesses() {
     axios
-      .get("http://localhost:8081/paperThickness")
+      .get("/paperThickness")
       .then((response) => {
         // Sort the data by thicknessId in ascending order
         const sortedData = response.data.sort(
@@ -30,7 +30,7 @@ function PaperThickness() {
     e.preventDefault();
     const thickness = parseInt(e.target.elements.thickness.value);
     axios
-      .post("http://localhost:8081/paperThickness", {
+      .post("/paperThickness", {
         thickness,
       })
       .then((response) => {
@@ -48,7 +48,7 @@ function PaperThickness() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/paperThickness/${id}`, updatedData)
+      .put(`/paperThickness/${id}`, updatedData)
       .then((response) => {
         console.log("Paper thickness updated successfully:", response.data);
         getPaperThicknesses(); // Refresh paper thickness data

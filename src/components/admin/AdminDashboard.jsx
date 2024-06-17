@@ -3,7 +3,7 @@ import AdminDrawer from "./menu/AdminDrawer";
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle, FaTrash } from "react-icons/fa";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
@@ -90,7 +90,7 @@ function AdminDashboard() {
   }, [orderDetails]);
 
   const handleViewDetails = async (order) => {
-    const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
+    const response = await axios.get(`/jobCard/${order}`);
     setSelectedOrder(response.data);
     console.log(response.data);
     document.getElementById("my-drawer-4").checked = true;
@@ -98,7 +98,7 @@ function AdminDashboard() {
   const [filteredOrderCost, setFilteredOrderCost] = useState();
 
   const handleViewDetail = async (id) => {
-    const response = await axios.get(`http://localhost:8081/orders/${id}`);
+    const response = await axios.get(`/orders/${id}`);
     console.log(response.data);
     setFilteredOrderCost(response.data);
     document.getElementById("my-drawer-4").checked = true;
@@ -113,7 +113,7 @@ function AdminDashboard() {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/orders`);
+        const response = await axios.get(`/orders`);
         const allorder = response.data.response;
         const recentOrder = allorder.reduce((maxOrder, order) => {
           return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
@@ -167,7 +167,7 @@ function AdminDashboard() {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8081/projectTracking/${id}`
+        `/projectTracking/${id}`
       );
       const trackingData = response.data;
 
@@ -186,7 +186,7 @@ function AdminDashboard() {
     setRecentId(id);
     try {
       const response = await axios.get(
-        `http://localhost:8081/projectTracking/${id}`
+        `/projectTracking/${id}`
       );
       const trackingData = response.data;
 
@@ -211,7 +211,7 @@ function AdminDashboard() {
 
     try {
       await axios.post(
-        `http://localhost:8081/projectTracking/${orderid}`,
+        `/projectTracking/${orderid}`,
         stepData
       );
       console.log("Data sent successfully");
@@ -311,7 +311,7 @@ function AdminDashboard() {
   };
   const handleCancel = async (id) => {
     try {
-      await axios.put(`http://localhost:8081/orders/cancel/${id}`);
+      await axios.put(`/orders/cancel/${id}`);
       console.log("Order Cancelled successfully");
     } catch (error) {
       console.error("Error Cancelling Order:", error);

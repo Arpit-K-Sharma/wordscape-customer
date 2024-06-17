@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import AdminDrawer from "../AdminDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function CoverTreatment() {
   const [editingData, setEditingData] = useState(null);
@@ -9,7 +9,7 @@ function CoverTreatment() {
 
   function getCoverTreatments() {
     axios
-      .get("http://localhost:8081/coverTreatments")
+      .get("/coverTreatments")
       .then((response) => {
         const sortedData = response.data.sort(
           (a, b) => a.coverTreatmentId - b.coverTreatmentId
@@ -30,7 +30,7 @@ function CoverTreatment() {
     const coverTreatmentType = e.target.elements.coverTreatmentType.value;
     const rate = parseFloat(e.target.elements.rate.value);
     axios
-      .post("http://localhost:8081/coverTreatments", {
+      .post("/coverTreatments", {
         coverTreatmentType,
         rate,
       })
@@ -46,7 +46,7 @@ function CoverTreatment() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/coverTreatments/${id}`, {
+      .put(`/coverTreatments/${id}`, {
         coverTreatmentType: updatedData.coverTreatmentType,
         rate: updatedData.rate,
       })

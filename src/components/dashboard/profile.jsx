@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import Avatar from "react-avatar";
 import Menu from "./menu";
 
@@ -18,7 +18,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/customers/${userId}`)
+      .get(`/customers/${userId}`)
       .then((response) => {
         console.log(response.data);
         setCustomerData(response.data);
@@ -41,7 +41,7 @@ function Profile() {
       console.log("Changes saved!", customerData);
       axios
         .put(
-          `http://localhost:8081/customers/${customerData.customerId}`,
+          `/customers/${customerData.customerId}`,
           customerData
         )
         .then((response) => {

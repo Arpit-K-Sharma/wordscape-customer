@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
@@ -22,7 +22,7 @@ function JobcardMenu({ orderId }) {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/orders/${orderId}`
+          `/orders/${orderId}`
         );
         console.log(response.data);
         setOrderDetails(response.data);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StaffDrawer from "../StaffDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function StaffPaper() {
   const [editingData, setEditingData] = useState(null);
@@ -8,7 +8,7 @@ function StaffPaper() {
 
   function getPaper() {
     axios
-      .get("http://localhost:8081/papers")
+      .get("/papers")
       .then((response) => {
         // Sort the data by paperId in ascending order
         const sortedData = response.data.sort(
@@ -32,7 +32,7 @@ function StaffPaper() {
     const paperType = e.target.elements.paperType.value;
     const rate = parseFloat(e.target.elements.rate.value);
     axios
-      .post("http://localhost:8081/papers", {
+      .post("/papers", {
         paperType,
         rate,
       })
@@ -51,7 +51,7 @@ function StaffPaper() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/papers/${id}`, updatedData)
+      .put(`/papers/${id}`, updatedData)
       .then((response) => {
         console.log("Paper updated successfully:", response.data);
         getPaper(); // Refresh paper data

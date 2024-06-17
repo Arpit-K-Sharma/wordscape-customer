@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import StaffDrawer from "../StaffDrawer";
 
 function StaffOrders() {
@@ -17,7 +17,7 @@ function StaffOrders() {
   const [orderid, setOrderid] = useState();
   useEffect(() => {
     axios
-      .get("http://localhost:8081/orders")
+      .get("/orders")
       .then((response) => {
         setOrders(response.data);
       })
@@ -28,7 +28,7 @@ function StaffOrders() {
 
   const handleViewInvoice = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8081/orders/invoice/${id}`, {
+      const response = await axios.get(`/orders/invoice/${id}`, {
         responseType: "arraybuffer",
       });
 
@@ -77,7 +77,7 @@ function StaffOrders() {
     console.log(stepData);
 
     try {
-      await axios.post(`http://localhost:8081/projectTracking/${orderid}`, stepData);
+      await axios.post(`/projectTracking/${orderid}`, stepData);
       console.log("Data sent successfully");
     } catch (error) {
       console.error("Error sending data:", error);
@@ -87,7 +87,7 @@ function StaffOrders() {
   const handleTracking = async (id) => {
     console.log(id)
     try {
-      const response = await axios.get(`http://localhost:8081/projectTracking/${id}`);
+      const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
       const updatedSteps = steps.map(step => ({

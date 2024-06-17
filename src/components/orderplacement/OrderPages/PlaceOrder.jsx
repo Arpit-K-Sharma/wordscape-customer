@@ -62,7 +62,7 @@ function OrderPlacement() {
 
   const getCoverTreatment = () => {
     axios
-      .get("http://localhost:8081/coverTreatments")
+      .get("/coverTreatments")
       .then((response) => {
         const sortedData = response.data.sort(
           (a, b) => a.coverTreatmentId - b.coverTreatmentId

@@ -3,7 +3,7 @@ import AdminDrawer from "../AdminDrawer";
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle, FaTrash } from "react-icons/fa";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 import { IoMdTimer } from "react-icons/io";
 import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
@@ -98,7 +98,7 @@ function AdminDashboard() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/orders?pageNumber=${page}&sortField=date&sortDirection=${
+          `/orders?pageNumber=${page}&sortField=date&sortDirection=${
             sortDirection.split("_")[1]
           }`
         );
@@ -122,7 +122,7 @@ function AdminDashboard() {
   const [orderId, setOrderId] = useState();
 
   const handleViewDetails = async (order) => {
-    const response = await axios.get(`http://localhost:8081/jobCard/${order}`);
+    const response = await axios.get(`/jobCard/${order}`);
     setOrderId(order);
     setSelectedOrder(response.data);
     document.getElementById("my-drawer-4").checked = true;
@@ -138,7 +138,7 @@ function AdminDashboard() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/orders?pageNumber=${page}`
+          `/orders?pageNumber=${page}`
         );
         if (response.data.length === 0) {
           setPageLimit(true);
@@ -198,7 +198,7 @@ function AdminDashboard() {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8081/projectTracking/${id}`
+        `/projectTracking/${id}`
       );
       const trackingData = response.data;
 
@@ -217,7 +217,7 @@ function AdminDashboard() {
     setRecentId(id);
     try {
       const response = await axios.get(
-        `http://localhost:8081/projectTracking/${id}`
+        `/projectTracking/${id}`
       );
       const trackingData = response.data;
 
@@ -242,7 +242,7 @@ function AdminDashboard() {
 
     try {
       await axios.post(
-        `http://localhost:8081/projectTracking/${orderid}`,
+        `/projectTracking/${orderid}`,
         stepData
       );
       console.log("Data sent successfully");
@@ -350,7 +350,7 @@ function AdminDashboard() {
 
   const handleDelete = async () => {
     try {
-      await axios.put(`http://localhost:8081/orders/cancel/${deleteOrder}`);
+      await axios.put(`/orders/cancel/${deleteOrder}`);
       console.log("Order Cancelled successfully");
 
       const filtered = [];
@@ -372,7 +372,7 @@ function AdminDashboard() {
     console.log("the id is: " + orderId);
     try {
       const response = await axios.get(
-        `http://localhost:8081/orders/files/download/${orderId}`, // Using customerId to construct the URL
+        `/orders/files/download/${orderId}`, // Using customerId to construct the URL
         {
           responseType: "arraybuffer",
         }
@@ -389,7 +389,7 @@ function AdminDashboard() {
   const handleViewInvoice = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/orders/invoice/${id}`,
+        `/orders/invoice/${id}`,
         {
           responseType: "arraybuffer",
         }
@@ -407,7 +407,7 @@ function AdminDashboard() {
     if (delivery) {
       try {
         const response = await axios.post(
-          `http://localhost:8081/delivery/${orderId}`,
+          `/delivery/${orderId}`,
           {
             deadline: selectedOrder.deadline,
           }
@@ -430,7 +430,7 @@ function AdminDashboard() {
 
     try {
       const response = await axios.put(
-        `http://localhost:8081/jobCard/updateDeadline/${selectedOrder.orderId}`,
+        `/jobCard/updateDeadline/${selectedOrder.orderId}`,
         {
           deadline: selectedOrder.deadline,
         }

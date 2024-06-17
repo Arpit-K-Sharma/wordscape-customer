@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import StaffDrawer from "../StaffDrawer";
-import axios from "axios";
+import axios from "../../components/axiosInstance";
 
 function StaffPlate() {
   const [editingData, setEditingData] = useState(null);
@@ -11,7 +11,7 @@ function StaffPlate() {
 
   function getInks() {
     axios
-      .get("http://localhost:8081/inks")
+      .get("/inks")
       .then((response) => {
         setInkDataState(response.data);
       })
@@ -22,7 +22,7 @@ function StaffPlate() {
 
   function getPlates() {
     axios
-      .get("http://localhost:8081/plates")
+      .get("/plates")
       .then((response) => {
         setPlateDataState(response.data);
       })
@@ -43,7 +43,7 @@ function StaffPlate() {
     const inkRate = parseFloat(e.target.elements.inkRate.value);
 
     axios
-      .post("http://localhost:8081/plates", {
+      .post("/plates", {
         plateSize,
         plateRate,
         inkRate,
@@ -82,7 +82,7 @@ function StaffPlate() {
     const inkType = e.target.elements.inkType.value;
 
     axios
-      .post("http://localhost:8081/inks", {
+      .post("/inks", {
         inkType,
       })
       .then((response) => {
@@ -100,7 +100,7 @@ function StaffPlate() {
 
   const handleUpdate = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/plates/${id}`, updatedData)
+      .put(`/plates/${id}`, updatedData)
       .then((response) => {
         console.log("Plate updated successfully:", response.data);
         getPlates(); // Refresh plate data
@@ -116,7 +116,7 @@ function StaffPlate() {
 
   const handleUpdateInk = (id, updatedData) => {
     axios
-      .put(`http://localhost:8081/inks/${id}`, updatedData)
+      .put(`/inks/${id}`, updatedData)
       .then((response) => {
         console.log("Ink updated successfully:", response.data);
         getInks();
