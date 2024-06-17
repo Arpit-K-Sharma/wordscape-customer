@@ -39,10 +39,7 @@ function Profile() {
     if (editable) {
       console.log("Changes saved!", customerData);
       axios
-        .put(
-          `/customers/${customerData.customerId}`,
-          customerData
-        )
+        .put(`/customers`, customerData)
         .then((response) => {
           console.log("Customer data updated successfully:", response.data);
           setEditable(false);
