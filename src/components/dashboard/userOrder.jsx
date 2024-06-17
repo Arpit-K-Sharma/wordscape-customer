@@ -73,7 +73,6 @@ function UserOrder() {
 
   useEffect(() => {
     const id = localStorage.getItem("id");
-
     console.log(id);
     const fetchOrderDetails = async () => {
       try {

@@ -19,7 +19,7 @@ import Plate from "./components/admin/menu/plate/plate";
 import CostCalculation from "./components/admin/costcalculation/costcalculation";
 import OrderPlacement from "./components/orderplacement/OrderPages/PlaceOrder";
 // import DashboardTasks from "./components/dashboard/DashboardTasks";
-import NJobCard from "./components/jobcard/njobcard";
+import NJobCard from "./components/admin/jobcard/njobcard";
 import PaperSize from "./components/admin/menu/papersize/papersize.jsx";
 import PaperThickness from "./components/admin/menu/paperthickness/paperthickness.jsx";
 import Orders from "./components/admin/menu/order/order.jsx";

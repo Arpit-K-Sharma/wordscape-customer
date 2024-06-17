@@ -132,7 +132,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const id = localStorage.getItem("id");
+    // const id = localStorage.getItem("id");
     console.log(page);
 
     const fetchOrderDetails = async () => {

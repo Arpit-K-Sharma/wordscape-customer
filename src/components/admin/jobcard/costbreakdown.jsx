@@ -1,10 +1,44 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdAdd } from "react-icons/md";
+import Cookies from "js-cookie";
 
 function Costbreakdown() {
   const [costdone, setCostdone] = useState(false);
   const [vendors, setVendors] = useState([1, 2, 3, 4, 5]);
+  const [costCalculation, setCostCalculation] = useState({
+    plates: "",
+    printing: "",
+    paper: "",
+    coverPaper: "",
+    innerPaper: "",
+    otherPaper: "",
+    lamination: "",
+    binding: "",
+    finishing: "",
+    extraCharges: "",
+    subTotal: "",
+    vat: "",
+    grandTotal: "",
+    preparedBy: "",
+    approvedBy: "",
+  });
+
+  useEffect(() => {
+    const storedData = Cookies.get("costCalculation");
+    if (storedData) {
+      setCostCalculation(JSON.parse(storedData));
+    } else {
+      Cookies.set("costCalculation", JSON.stringify(costCalculation));
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedData = { ...costCalculation, [name]: value };
+    setCostCalculation(updatedData);
+    Cookies.set("costCalculation", JSON.stringify(updatedData));
+  };
 
   const handleAdd1 = () => {
     setVendors((prevVendors) => [...prevVendors, vendors.length + 1]);
@@ -31,70 +65,121 @@ function Costbreakdown() {
           <h3 className="font-bold text-xl">Cost Calculation</h3>
           <div className="grid w-full gap-4">
             <input
-              className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none  focus:border-black"
+              type="text"
+              name="plates"
+              id="plates"
+              className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Plates"
+              // value={currentData.plates}
+              onChange={handleChange}
             />
             <input
+              type="text"
+              id="printing"
+              name="printing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Printing"
+              onChange={handleChange}
             />
             <input
+              id="paper"
+              name="paper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Paper"
+              onChange={handleChange}
             />
             <input
+              id="coverPaper"
+              name="coverPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Cover Paper"
+              onChange={handleChange}
             />
             <input
+              id="innerPaper"
+              name="innerPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Inner Paper"
+              onChange={handleChange}
             />
             <input
+              id="otherPaper"
+              name="otherPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Other Paper"
+              onChange={handleChange}
             />
             <input
+              id="lamination"
+              name="lamination"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Lamination"
+              onChange={handleChange}
             />
             <input
+              id="binding"
+              name="binding"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Binding"
+              onChange={handleChange}
             />
             <input
+              id="finishing"
+              name="finishing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Finishing"
+              onChange={handleChange}
             />
             <input
-              className="w-full border-b-2 pt-[20px] border-gray-400  focus:outline-none focus:border-black"
+              id="extraCharges"
+              name="extraCharge"
+              className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Extra Charges"
+              onChange={handleChange}
             />
             <input
               className="w-full border-b-2 pt-[20px] border-gray-400  focus:outline-none focus:border-black"
               placeholder="Delivery Charges"
+              id="deliveryCharges"
+              name="deliveryCharges"
+              onChange={handleChange}
             />
 
             <input
+              id="subTotal"
+              name="subTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
               placeholder="Sub Total"
+              onChange={handleChange}
             />
             <input
+              id="vat"
+              name="vat"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Vat 13%"
+              onChange={handleChange}
             />
             <input
+              id="grandTotal"
+              name="grandTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
               placeholder="Grand Total"
+              onChange={handleChange}
             />
             <div className="flex gap-[20px] mt-[20px]">
               <input
+                id="preparedBy"
+                name="preparedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Prepared By"
+                onChange={handleChange}
               />
               <input
+                id="approvedBy"
+                name="approvedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Approved By"
+                onChange={handleChange}
               />
             </div>
           </div>

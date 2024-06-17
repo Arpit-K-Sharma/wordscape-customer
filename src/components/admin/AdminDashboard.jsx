@@ -60,7 +60,7 @@ function AdminDashboard() {
     { name: "Delivery", active: false, key: "delivery" },
     { name: "End", active: false, key: "end" },
   ]);
-  const [orderid, setOrderid] = useState();
+  const [order, setOrderid] = useState();
   const [lastOrderStatus, setLastOrderStatus] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [lastOrder, setLastOrder] = useState(null);
@@ -96,6 +96,7 @@ function AdminDashboard() {
     document.getElementById("my-drawer-4").checked = true;
   };
   const [filteredOrderCost, setFilteredOrderCost] = useState();
+
   const handleViewDetail = async (id) => {
     const response = await axios.get(`http://localhost:8081/orders/${id}`);
     console.log(response.data);
@@ -105,9 +106,11 @@ function AdminDashboard() {
   const dropdownRef = useRef(null);
   const [recentOrders, setRecentOrders] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
-    const id = localStorage.getItem("id");
-    console.log(id);
+    // const id = localStorage.getItem("id");
+    // console.log(id);
+
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/orders`);

@@ -10,7 +10,7 @@ import PressUnits from "./pressunit";
 import JobcardMenu from "./jobcardMenu";
 import axios from "axios";
 import { NavLink, useLocation } from "react-router-dom";
-import AdminDrawer from "../admin/menu/AdminDrawer";
+import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
 
 function NJobCard() {

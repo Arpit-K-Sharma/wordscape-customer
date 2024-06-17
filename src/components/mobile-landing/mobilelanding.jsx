@@ -6,8 +6,8 @@ import MobileNavbar from "../navbar/mobile-navbar";
 function MobileLanding() {
   return (
     <div className="bg-zinc-800 h-[100vh] ">
-      <Navbar/>
-      <MobileNavbar/>
+      <Navbar />
+      <MobileNavbar />
     </div>
   );
 }
