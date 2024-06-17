@@ -42,6 +42,7 @@ import ProtectedUser from "./components/protectedUser.jsx";
 import UpdatedLogin from "./components/login/UpdatedLogin.jsx";
 import UpdatedRegister from "./components/login/UpdatedRegister.jsx";
 import AboutUs from "./components/navbar/about-us.jsx";
+import NotFoundPage from "./components/NotFoundPage.jsx";
 
 function App() {
   return (
@@ -74,6 +75,8 @@ function App() {
           <Route path="/user/orders" element={<UserOrder />} />
           <Route path="/user/edit" element={<Profile />} />
         </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
 
         <Route path="/staff/dashboard" element={<StaffDashboard />} />
         <Route path="/staff/paper" element={<StaffPaper />} />
