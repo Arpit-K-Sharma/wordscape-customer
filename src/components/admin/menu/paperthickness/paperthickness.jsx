@@ -74,7 +74,7 @@ function PaperThickness() {
   };
 
   return (
-    <div className="drawer">
+    <div className="drawer font-archivo">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label

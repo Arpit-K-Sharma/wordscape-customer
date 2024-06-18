@@ -5,6 +5,9 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import books from "../images/logo/books.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function UpdatedRegister() {
   const navigate = useNavigate();
@@ -12,17 +15,39 @@ function UpdatedRegister() {
     fullName: null,
     email: null,
     password: null,
+    confirmPassword: null,
     address: null,
     phoneNumber: null,
   });
+  const [validationErrors, setValidationErrors] = useState({
+    minLength: false,
+    hasUpperCase: false,
+    hasLowerCase: false,
+    hasNumber: false,
+    hasSpecialChar: false,
+  });
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    if (name === "password") {
+      validatePassword(value);
+    }
+  };
+
+  const validatePassword = (password) => {
+    const errors = {
+      minLength: password.length >= 8,
+      hasUpperCase: /[A-Z]/.test(password),
+      hasLowerCase: /[a-z]/.test(password),
+      hasNumber: /\d/.test(password),
+      hasSpecialChar: /[!@#$%^&*]/.test(password),
+    };
+    setValidationErrors(errors);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform validation checks here
     if (formData.password === formData.confirmPassword) {
       const userData = {
         fullName: formData.fullName,
@@ -33,7 +58,6 @@ function UpdatedRegister() {
       };
       signUpUser(userData);
     } else {
-      console.log("Password mismatch");
       toast.error("Password mismatch");
     }
   };
@@ -42,7 +66,6 @@ function UpdatedRegister() {
     axios
       .post("http://localhost:8081/customers/register", userData)
       .then((response) => {
-        console.log("Signup successful:", response);
         toast.success("Signed Up Successfully", {
           position: "top-right",
           autoClose: 1200,
@@ -59,7 +82,6 @@ function UpdatedRegister() {
       })
       .catch((error) => {
         const errorMessage = error.response?.data?.message;
-        console.error("Error signing up:", error.response.data.message);
         toast.error(errorMessage);
       });
   };
@@ -79,7 +101,6 @@ function UpdatedRegister() {
             <h2 className="text-2xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto">
               Sign Up
             </h2>
-            {/* <h5 className="mb-8">Enter your details to sign up</h5> */}
           </div>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -164,11 +185,71 @@ function UpdatedRegister() {
                   value={formData.password || ""}
                   onChange={handleInputChange}
                 />
-                <ul className="mt-[20px] text-sm text-gray-600 list-disc list-inside">
-                  <li>At least 8 characters long</li>
-                  <li>Include uppercase & lowercase letters</li>
-                  <li>Add numbers (0-9)</li>
-                  <li>Use special characters (!@#$%^&*)</li>
+                <ul className="mt-[20px] text-sm text-gray-600 list-none">
+                  <li
+                    className={
+                      validationErrors.minLength
+                        ? "text-green-500"
+                        : "text-black"
+                    }
+                  >
+                    {" "}
+                    <FontAwesomeIcon
+                      icon={validationErrors.minLength ? faCheck : faTimes}
+                    />{" "}
+                    At least 8 characters long
+                  </li>
+                  <li
+                    className={
+                      validationErrors.hasUpperCase
+                        ? "text-green-500"
+                        : "text-black"
+                    }
+                  >
+                    {" "}
+                    <FontAwesomeIcon
+                      icon={validationErrors.hasUpperCase ? faCheck : faTimes}
+                    />{" "}
+                    Include uppercase letters
+                  </li>
+                  <li
+                    className={
+                      validationErrors.hasLowerCase
+                        ? "text-green-500"
+                        : "text-black"
+                    }
+                  >
+                    {" "}
+                    <FontAwesomeIcon
+                      icon={validationErrors.hasLowerCase ? faCheck : faTimes}
+                    />{" "}
+                    Include lowercase letters
+                  </li>
+                  <li
+                    className={
+                      validationErrors.hasNumber
+                        ? "text-green-500"
+                        : "text-black"
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={validationErrors.hasNumber ? faCheck : faTimes}
+                    />{" "}
+                    Add numbers (0-9)
+                  </li>
+                  <li
+                    className={
+                      validationErrors.hasSpecialChar
+                        ? "text-green-500"
+                        : "text-black"
+                    }
+                  >
+                    {" "}
+                    <FontAwesomeIcon
+                      icon={validationErrors.hasSpecialChar ? faCheck : faTimes}
+                    />{" "}
+                    Use special characters (!@#$%^&*)
+                  </li>
                 </ul>
               </div>
               <div className="form-control w-full">
@@ -200,9 +281,7 @@ function UpdatedRegister() {
             <h1 className="text-center">
               Already have an account?{" "}
               <NavLink to="/login">
-                <a href="" className="text-slate-600">
-                  Login
-                </a>
+                <span className="text-slate-600">Login</span>
               </NavLink>
             </h1>
           </form>

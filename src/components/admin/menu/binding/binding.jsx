@@ -95,10 +95,8 @@ function Binding() {
             alt="menu--v1"
           />
         </label>
-        <div className="p-7 text-zinc-900">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
-            Binding
-          </h1>
+        <div className="p-7 text-zinc-900 font-archivo">
+          <h1 className="text-center mx-auto text-5xl mt-[-40px]">Binding</h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>

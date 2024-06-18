@@ -74,7 +74,7 @@ function Paper() {
   };
 
   return (
-    <div className="drawer">
+    <div className="drawer font-archivo">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
@@ -89,7 +89,7 @@ function Paper() {
           />
         </label>
         <div className="p-7 text-zinc-800">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+          <h1 className="text-center mx-auto text-5xl font-archivo mt-[-40px]">
             Papers
           </h1>
           <div className="overflow-x-auto mt-[80px]">

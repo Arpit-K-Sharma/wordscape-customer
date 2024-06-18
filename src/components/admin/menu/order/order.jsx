@@ -444,7 +444,7 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="drawer h-screen bg-gray-100">
+    <div className="drawer h-screen font-archivo bg-gray-100">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
