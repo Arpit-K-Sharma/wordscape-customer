@@ -7,6 +7,7 @@ import { IoCall } from "react-icons/io5";
 
 import Navbar from "../navbar/navbar";
 import MobileMenu from "./mobile-menu";
+import Footer from "./footer";
 
 export default function Contactuspage() {
   return (
@@ -90,6 +91,7 @@ export default function Contactuspage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

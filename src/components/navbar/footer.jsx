@@ -17,10 +17,10 @@ function Footer() {
           <a className="link link-hover">About us</a>
         </NavLink>
         <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <NavLink to="/faq">
+        {/* <a className="link link-hover">Jobs</a> */}
+        {/* <NavLink to="/faq">
           <a className="link link-hover">FAQ</a>
-        </NavLink>
+        </NavLink> */}
       </nav>
       <nav>
         <h6 className="footer-title text-xl">Social</h6>

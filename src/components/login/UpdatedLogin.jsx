@@ -299,10 +299,10 @@ function Signin() {
           </form>
         </div>
       </div>
-      <div className="bg-slate-200 hidden md:block max-h-screen">
+      <div className="bg-slate-200 lg:block hidden md:max-h-screen md:overflow-hidden">
         <img
           src={books}
-          className="lg:h-full max-h-full w-full object-cover"
+          className="fixed h-full w-full object-cover"
           alt="Books"
         />
       </div>
