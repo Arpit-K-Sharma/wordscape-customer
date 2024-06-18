@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
 import AdminDrawer from "../AdminDrawer";
 import axios from "../../../axiosInstance";
+import { FaTrash } from "react-icons/fa";
+import { FaUndo } from "react-icons/fa";
 
 function Customers() {
   const [editingData, setEditingData] = useState(null);
   const [customerDataState, setCustomerDataState] = useState([]);
+  const [deleteOrder, setDeleteOrder] = useState();
+  const [undoOrder, setUndoOrder] = useState();
+  const [page, setPage] = useState(0);
+  const [pageLimit, setPageLimit] = useState();
 
   function getCustomers() {
     axios
-      .get("/customers")
+      .get(`/customers?pageNumber=${page}`)
       .then((response) => {
         setCustomerDataState(response.data.response);
+        console.log(response.data.response);
+        const result = Math.ceil(response.data.totalElements / 1);
+        console.log(result);
+        setPageLimit(result - 1);
       })
       .catch((error) => {
         console.log("Error fetching data:", error);
@@ -19,27 +29,7 @@ function Customers() {
 
   useEffect(() => {
     getCustomers();
-  }, []);
-
-  const handleEdit = (e, data) => {
-    e.preventDefault();
-    const updatedData = customerDataState.map((item) => {
-      if (item.customerId === data.customerId) {
-        return {
-          ...item,
-          fullName: e.target.elements.fullName.value,
-          address: e.target.elements.address.value,
-          email: e.target.elements.email.value,
-          companyName: e.target.elements.companyName.value,
-          status: e.target.elements.status.checked,
-        };
-      }
-      return item;
-    });
-    setCustomerDataState(updatedData);
-    setEditingData(null);
-    console.log("Data saved successfully!");
-  };
+  }, [page]);
 
   const handleAddCustomer = (e) => {
     e.preventDefault();
@@ -67,6 +57,24 @@ function Customers() {
       })
       .catch((error) => {
         console.error("Error adding customer:", error);
+      });
+  };
+
+  const handleCancel = (id) => {
+    document.getElementById("my_modals_2").showModal();
+    setDeleteOrder(id);
+  };
+
+  const handleDelete = () => {
+    axios
+      .put(`http://localhost:8081/customers/deactivate/${deleteOrder}`)
+      .then((response) => {
+        document.getElementById("my_modals_2").close();
+        console.log(response.data);
+        getCustomers(); // Refresh the customer list after deletion
+      })
+      .catch((error) => {
+        console.error("Error deactivating customer:", error);
       });
   };
 
@@ -99,7 +107,6 @@ function Customers() {
                   <th className="w-[120px]">Email</th>
                   <th className="w-[120px]">Company Name</th>
                   <th className="w-[60px]">Status</th>
-                  <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,104 +114,58 @@ function Customers() {
                   <tr key={row.customerId}>
                     <td className="text-wrap">{row.customerId}</td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <input
-                            type="text"
-                            name="fullName"
-                            className="input input-bordered"
-                            defaultValue={row.fullName}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.fullName}</span>
-                      )}
+                      <span>{row.fullName}</span>
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <input
-                            type="text"
-                            name="address"
-                            className="input input-bordered"
-                            defaultValue={row.address}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.address}</span>
-                      )}
+                      <span>{row.address}</span>
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <input
-                            type="email"
-                            name="email"
-                            className="input input-bordered"
-                            defaultValue={row.email}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.email}</span>
-                      )}
+                      <span>{row.email}</span>
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <input
-                            type="text"
-                            name="companyName"
-                            className="input input-bordered"
-                            defaultValue={row.companyName}
-                            required
-                          />
-                        </form>
-                      ) : (
-                        <span>{row.companyName}</span>
-                      )}
+                      <span>{row.companyName}</span>
                     </td>
                     <td className="text-wrap">
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <form onSubmit={(e) => handleEdit(e, row)}>
-                          <select
-                            name="status"
-                            className="input input-bordered"
-                          >
-                            <option value={true}>Active</option>
-                            <option value={false}>Inactive</option>
-                          </select>
-                        </form>
-                      ) : (
-                        <span>{row.status ? "Active" : "Inactive"}</span>
-                      )}
-                    </td>
-                    <td>
-                      {editingData &&
-                      editingData.customerId === row.customerId ? (
-                        <button className="btn btn-neutral" type="submit">
-                          Save
-                        </button>
-                      ) : (
+                      {row.status === true ? (
                         <button
-                          className="btn btn-neutral"
-                          onClick={() => setEditingData(row)}
+                          className="text-indigo-500 hover:text-[red] mt-[10px]"
+                          onClick={() => handleCancel(row.customerId)}
                         >
-                          Edit
+                          <FaTrash size={20} />
                         </button>
+                      ) : (
+                        "Inactive"
                       )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <div className="join flex  mt-[20px] justify-center">
+              <button
+                className="join-item btn bg-white"
+                onClick={(e) => {
+                  if (page > 0) {
+                    setPage(page - 1);
+                  }
+                }}
+              >
+                «
+              </button>
+              <button className="join-item btn bg-white">
+                Page {page + 1}
+              </button>
+              <button
+                className="join-item btn bg-white"
+                onClick={(e) => {
+                  if (pageLimit > page) {
+                    setPage(page + 1);
+                  }
+                }}
+              >
+                »
+              </button>
+            </div>
             <br></br>
 
             <dialog id="my_modal_3" className="modal">
@@ -253,6 +214,29 @@ function Customers() {
                     </button>
                   </form>
                 </p>
+              </div>
+            </dialog>
+
+            <dialog id="my_modals_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Alert!</h3>
+                <p className="py-4">
+                  Do you really want to delete this customer?
+                </p>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn">Close</button>
+                    <button
+                      className="btn ml-[20px] hover:bg-[red] hover:text-white"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDelete();
+                      }}
+                    >
+                      Yes
+                    </button>
+                  </form>
+                </div>
               </div>
             </dialog>
           </div>

@@ -59,10 +59,10 @@ const ThirdForm = ({ orderData, setOrderData }) => {
               Previous
             </button>
           </NavLink>
-          <NavLink to="/order/4">
+          <NavLink to={!pages || !quantity ? "#" : "/order/4"}>
             <button
               className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5"
-              disabled={!pages || !quantity} // Disable button if pages or quantity is not entered
+              disabled={!pages || !quantity}
             >
               Next
             </button>

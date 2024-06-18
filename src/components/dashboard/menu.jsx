@@ -11,14 +11,12 @@ function Menu() {
           htmlFor="my-drawer"
           className="btn mx-1 my-1 bg-black text-white drawer-button mt-8 ml-5"
         >
-          <NavLink to="/">
-            <img
-              width="26"
-              height="26"
-              src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
-              alt="menu--v1"
-            />
-          </NavLink>
+          <img
+            width="26"
+            height="26"
+            src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
+            alt="menu--v1"
+          />
           <p className="text-xl">Menu</p>
         </label>
         {/* <div className="fixed mt-[15px] top-[-0.5px] left-[1100px] flex items-center px-4 py-2">

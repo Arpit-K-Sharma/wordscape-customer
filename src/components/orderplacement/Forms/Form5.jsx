@@ -85,15 +85,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
     setIsPdfSubmitting(true);
     try {
-      const response = await axios.post(
-        "/orders/files",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("/orders/files", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.data.filename) {
         setOrderData({ ...orderData, pdfFile: response.data.filename });
         setIsPdfSubmitting(false);
@@ -418,6 +414,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               }}
               required
             />
+            {!deadline && (
+              <p className="text-red-500 text-sm mt-1">
+                Please fill the deadline.
+              </p>
+            )}
             <div className="label"></div>
           </label>
           <label className="form-control w-full max-w-xs lg:ml-[20px] mb-[10px] ">

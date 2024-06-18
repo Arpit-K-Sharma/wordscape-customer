@@ -72,6 +72,8 @@ function AdminDashboard() {
   const [currentProcess, setCurrentProcess] = useState("");
   const [recentId, setRecentId] = useState();
   const [page, setPage] = useState(0);
+  const [pageLimit, setPageLimit] = useState();
+
   useEffect(() => {
     const recentOrder = orderDetails[orderDetails.length - 1];
     setLastOrder(recentOrder);
@@ -128,7 +130,6 @@ function AdminDashboard() {
     document.getElementById("my-drawer-4").checked = true;
   };
   const dropdownRef = useRef(null);
-  const [pageLimit, setPageLimit] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -137,15 +138,14 @@ function AdminDashboard() {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(
-          `/orders?pageNumber=${page}`
-        );
+        const response = await axios.get(`/orders?pageNumber=${page}`);
         if (response.data.length === 0) {
-          setPageLimit(true);
           setFilteredOrder([]);
           setFilteredOrderDetails([]);
         } else {
-          setPageLimit(false);
+          const result = Math.ceil(response.data.totalElements / 10);
+          console.log(result); //change this accordingly
+          setPageLimit(result - 1);
           const allorder = response.data.response;
           const recentOrder = allorder.reduce((maxOrder, order) => {
             return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
@@ -197,9 +197,7 @@ function AdminDashboard() {
   const handleTracking = async (id) => {
     console.log(id);
     try {
-      const response = await axios.get(
-        `/projectTracking/${id}`
-      );
+      const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
       const updatedSteps = steps.map((step) => ({
@@ -216,9 +214,7 @@ function AdminDashboard() {
   const handleRecentTracking = async (id) => {
     setRecentId(id);
     try {
-      const response = await axios.get(
-        `/projectTracking/${id}`
-      );
+      const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
       const updatedSteps = recentSteps.map((step) => ({
@@ -241,10 +237,7 @@ function AdminDashboard() {
     console.log(stepData);
 
     try {
-      await axios.post(
-        `/projectTracking/${orderid}`,
-        stepData
-      );
+      await axios.post(`/projectTracking/${orderid}`, stepData);
       console.log("Data sent successfully");
     } catch (error) {
       console.error("Error sending data:", error);
@@ -388,12 +381,9 @@ function AdminDashboard() {
 
   const handleViewInvoice = async (id) => {
     try {
-      const response = await axios.get(
-        `/orders/invoice/${id}`,
-        {
-          responseType: "arraybuffer",
-        }
-      );
+      const response = await axios.get(`/orders/invoice/${id}`, {
+        responseType: "arraybuffer",
+      });
 
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
@@ -406,12 +396,9 @@ function AdminDashboard() {
   const handleClick = async () => {
     if (delivery) {
       try {
-        const response = await axios.post(
-          `/delivery/${orderId}`,
-          {
-            deadline: selectedOrder.deadline,
-          }
-        );
+        const response = await axios.post(`/delivery/${orderId}`, {
+          deadline: selectedOrder.deadline,
+        });
         console.log("Success:", response.data);
       } catch (error) {
         console.error("Error:", error);
@@ -669,11 +656,13 @@ function AdminDashboard() {
               >
                 «
               </button>
-              <button className="join-item btn bg-white">Page {page}</button>
+              <button className="join-item btn bg-white">
+                Page {page + 1}
+              </button>
               <button
                 className="join-item btn bg-white"
                 onClick={(e) => {
-                  if (!pageLimit) {
+                  if (pageLimit > page) {
                     setPage(page + 1);
                   }
                 }}

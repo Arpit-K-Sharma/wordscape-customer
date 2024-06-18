@@ -151,10 +151,10 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               Previous
             </button>
           </NavLink>
-          <NavLink to="/order/5">
+          <NavLink to={orderData.bindingType.length === 0 ? "#" : "/order/5"}>
             <button
               className="btn bg-blue-600 max-lg:w-full btn-primary w-[280px] mt-5"
-              disabled={orderData.bindingType.length === 0} // Ensure this array is not empty
+              disabled={orderData.bindingType.length === 0}
             >
               Next
             </button>

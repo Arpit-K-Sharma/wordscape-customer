@@ -41,7 +41,9 @@ const DrawerTest = ({
         <ul className="menu p-4 w-80 min-h-full bg-gray-200 text-gray-800">
           {/* Sidebar content here */}
           <li>
-            <h1 className="text-3xl mb-4 font-bold mt-5 mb-5 text-archivo">Cost Breakdown</h1>
+            <h1 className="text-3xl mb-4 font-bold mt-5 mb-5 text-archivo">
+              Cost Breakdown
+            </h1>
             <h3 className="text-xl font-semibold mb-2">Paper</h3>
             <p>
               Total Number of Pages: <b>{pages}</b>
@@ -56,14 +58,14 @@ const DrawerTest = ({
               Inner paper thickness: <b>{selectedPaperThickness}</b> gsm
             </p>
             <p>
-              Total Sheets: <b>{totalSheets}</b>
+              Total Sheets: <b>{totalReams * 500}</b>
             </p>
             <p>
               Total Reams: <b>{totalReams}</b>
             </p>
-            <p>
+            {/* <p>
               Cost of Reams: Rs. <b>{costReam}</b>
-            </p>
+            </p> */}
             <p>
               Unit cost for paper type (per kg): Rs. <b>{changeCostPerKg}</b>
             </p>
@@ -78,6 +80,7 @@ const DrawerTest = ({
             </p>
             <p>
               Total packet: <b>{totalPacket}</b>
+              {/* {console.log("TOTAL" + totalPacket)} */}
             </p>
           </li>
           <li>
@@ -88,14 +91,14 @@ const DrawerTest = ({
             <p>
               Ink Details: <b>{selectedInkType}</b>
             </p>
-            <p>
+            {/* <p>
               Cost of Ink: Rs. <b>{inkCost * 4}</b>
-            </p>
+            </p> */}
           </li>
           <li>
             <h3 className="text-xl font-semibold mb-2">Binding</h3>
             <p>
-              Selected binding type: Rs. <b>{selectedBindingType}</b>
+              Selected binding type: <b>{selectedBindingType}</b>
             </p>
           </li>
           <li>

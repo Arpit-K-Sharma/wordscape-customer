@@ -457,7 +457,8 @@ const CostCalculation = () => {
   }
 
   function totalPacket(quantity) {
-    return Math.ceil(totalSheets(quantity, 4) / 100);
+    const sheets = (4 * quantity) / 16;
+    return Math.ceil(sheets / 100);
   }
 
   console.log("The number of packets required are " + totalPacket(quantity));
@@ -562,6 +563,7 @@ const CostCalculation = () => {
                 laminationCost={laminationPrice}
                 outerPaperPrice={outerPaperPrice}
                 totalCost={totalCost}
+                totalPacket={totalPacket(quantity)}
               />
               {/* <DrawerTest
                 plateSize={plateSize}

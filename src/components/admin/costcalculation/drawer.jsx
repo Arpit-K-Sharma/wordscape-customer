@@ -89,13 +89,13 @@ const DrawerOpen = ({
 
   const handleClickSendOrder = async () => {
     const orderData = {
-      customerName: "Sarthak Shrestha", 
-      customerEmail: "ssarthak20@tbc.edu.np", 
+      customerName: "Sarthak Shrestha",
+      customerEmail: "ssarthak20@tbc.edu.np",
       paperSize: paperSize,
       pages: pages,
-      quantity: quantity, 
+      quantity: quantity,
       bindingType: selectedBindingType,
-      coverTreatment: "Die Cutting", 
+      coverTreatment: "Die Cutting",
       innerPaperType: selectedPaperType,
       innerPaperThickness: selectedPaperThickness,
       outerPaperType: outerSelectedPaperType,
@@ -105,11 +105,9 @@ const DrawerOpen = ({
       inkType: selectedInkType,
       extraNotes: "Here you go king",
     };
-  
+
     await sendOrder(orderData);
   };
-  
-
 
   return (
     <>
@@ -191,9 +189,17 @@ const DrawerOpen = ({
             <p>
               Cover paper thickness: <b>{selectedOuterPaperThickness} gsm</b>
             </p>
+            <p>
+              Number of Cover Papges: <b>{quantity * 4}</b>
+            </p>
 
             <p>
+              {console.log("TOTAL PACKET " + totalPacket)}
               Total packet: <b>{totalPacket}</b>
+            </p>
+            <p>
+              {console.log("TOTAL PACKET " + totalPacket)}
+              Cost of Packet: <b>{totalPacket}</b>
             </p>
             <br></br>
             <h3>Plate Details</h3>
