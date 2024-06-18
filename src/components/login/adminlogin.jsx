@@ -17,9 +17,7 @@ function AdminLogin() {
         </h1>
         <label className="form-control w-full max-w-xs mt-5">
           <div className="label">
-            <span className="label-text text-white">
-              Administrator Email
-            </span>
+            <span className="label-text text-white">Administrator Email</span>
           </div>
           <input
             type="text"
@@ -27,6 +25,7 @@ function AdminLogin() {
             className="input input-bordered w-full max-w-xs"
           />
         </label>
+        {/* <p></p> */}
         <label className="form-control w-full max-w-xs mt-5">
           <div className="label">
             <span className="label-text text-white">
@@ -38,7 +37,6 @@ function AdminLogin() {
             placeholder="Password"
             className="input input-bordered w-full max-w-xs"
           />
-          
         </label>
         <button className="btn mt-5">Login</button>
       </div>
