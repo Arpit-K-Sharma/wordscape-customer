@@ -3,7 +3,7 @@ import { NavLink, Navigate } from "react-router-dom";
 import logo from "../../images/logo/LogoOnly.png";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function AdminDrawer() {
   const [logout, isLogout] = React.useState(false);
@@ -13,6 +13,58 @@ function AdminDrawer() {
     isLogout(true);
     Navigate("/");
   };
+
+  const toggleDropdown = (dropdownName) => {
+    if (openDropdown === dropdownName) {
+      setOpenDropdown(null); // Close the dropdown if it's already open
+    } else {
+      setOpenDropdown(dropdownName); // Open the clicked dropdown
+    }
+  };
+
+  const paperFeaturesRef = useRef(null);
+  const outerFeaturesRef = useRef(null);
+  const userSetupRef = useRef(null);
+  const tasksRef = useRef(null);
+  const statementsRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        paperFeaturesRef.current &&
+        !paperFeaturesRef.current.contains(event.target)
+      ) {
+        paperFeaturesRef.current.removeAttribute("open");
+      }
+      if (
+        outerFeaturesRef.current &&
+        !outerFeaturesRef.current.contains(event.target)
+      ) {
+        outerFeaturesRef.current.removeAttribute("open");
+      }
+      if (
+        userSetupRef.current &&
+        !userSetupRef.current.contains(event.target)
+      ) {
+        userSetupRef.current.removeAttribute("open");
+      }
+      if (tasksRef.current && !tasksRef.current.contains(event.target)) {
+        tasksRef.current.removeAttribute("open");
+      }
+      if (
+        statementsRef.current &&
+        !statementsRef.current.contains(event.target)
+      ) {
+        statementsRef.current.removeAttribute("open");
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="drawer-side font-archivo">
@@ -40,7 +92,10 @@ function AdminDrawer() {
         </li>
         <br />
 
-        <details className="dropdown dropdown-bottom font-archivo ">
+        <details
+          ref={paperFeaturesRef}
+          className="dropdown dropdown-bottom font-archivo "
+        >
           <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px]">
             Paper Feature
           </summary>
@@ -63,7 +118,10 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details className="dropdown dropdown-bottom font-archivo ">
+        <details
+          ref={outerFeaturesRef}
+          className="dropdown dropdown-bottom font-archivo "
+        >
           <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px]">
             Outer Feature
           </summary>
@@ -91,7 +149,10 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details className="dropdown dropdown-bottom font-archivo">
+        <details
+          ref={userSetupRef}
+          className="dropdown dropdown-bottom font-archivo "
+        >
           <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
             User Setup
           </summary>
@@ -109,7 +170,10 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details className="dropdown dropdown-bottom font-archivo">
+        <details
+          ref={tasksRef}
+          className="dropdown dropdown-bottom font-archivo "
+        >
           <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
             Tasks
           </summary>
@@ -127,7 +191,10 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details className="dropdown dropdown-bottom font-archivo">
+        <details
+          ref={statementsRef}
+          className="dropdown dropdown-bottom font-archivo "
+        >
           <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
             Statements
           </summary>

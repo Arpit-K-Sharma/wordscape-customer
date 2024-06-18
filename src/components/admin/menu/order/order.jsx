@@ -652,7 +652,7 @@ function AdminDashboard() {
 
             <div className="join flex mr-[80px]  justify-end">
               <button
-                className="join-item btn bg-white"
+                className="join-item btn bg-white mb-7"
                 onClick={(e) => {
                   if (page > 0) {
                     setPage(page - 1);
