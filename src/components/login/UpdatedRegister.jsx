@@ -102,7 +102,7 @@ function UpdatedRegister() {
             </h2>
           </div>
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-sm:mt-5">
               <div className="form-control w-full">
                 <label htmlFor="fullName" className="label">
                   <span className="label-text text-black">Full Name</span>
@@ -117,7 +117,7 @@ function UpdatedRegister() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
+              <div className="form-control w-full lg:ml-9 max-sm:mx-auto max-sm:mt-5">
                 <label htmlFor="email" className="label">
                   <span className="label-text text-black">Email address</span>
                 </label>
@@ -153,7 +153,7 @@ function UpdatedRegister() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="form-control w-full lg:ml-9 max-sm:mx-auto">
+              <div className="form-control w-full lg:ml-9 max-sm:mx-auto max-sm:mt-5">
                 <label htmlFor="address" className="label">
                   <span className="label-text text-black">Address</span>
                 </label>
@@ -168,7 +168,7 @@ function UpdatedRegister() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-4 max-sm:mt-5">
               <div className="form-control w-full">
                 <label htmlFor="password" className="label">
                   <span className="label-text text-gray-700">Password</span>
@@ -252,7 +252,7 @@ function UpdatedRegister() {
                   </li>
                 </ul>
               </div>
-              <div className="form-control w-full">
+              <div className="form-control w-full max-sm:mt-5">
                 <label htmlFor="confirmPassword" className="label">
                   <span className="label-text text-gray-700">
                     Confirm Password
@@ -273,7 +273,7 @@ function UpdatedRegister() {
             <div>
               <button
                 type="submit"
-                className="btn btn-neutral w-full hover:text-white"
+                className="btn btn-neutral w-full hover:text-white max-sm:mt-5"
               >
                 Sign up
               </button>
