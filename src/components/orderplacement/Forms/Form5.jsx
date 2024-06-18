@@ -48,7 +48,9 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     try {
       await handleSubmit();
       setIsSubmitted(true);
-      toast.success("Check your email for the invoice!");
+      toast.success("Check your email for the invoice!", {
+        pauseOnHover: "false",
+      });
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(false);
@@ -96,7 +98,9 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         setIsPdfSubmitting(false);
         setIsPdfSubmitted(false);
         setIsPdfDone(true);
-        toast.success("PDF Uploaded Successfully");
+        toast.success("PDF Uploaded Successfully", {
+          pauseOnHover: false,
+        });
       }
 
       // toast.success("PDF Uploaded Successfully");
@@ -565,7 +569,6 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           </button>
         </div>
       </label>
-      <ToastContainer />
     </div>
   );
 };
