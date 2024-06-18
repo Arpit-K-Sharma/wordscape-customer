@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "../axiosInstance";
 import Avatar from "react-avatar";
 import Menu from "./menu";
+import { toast, ToastContainer } from "react-toastify";
 
 function Profile() {
+  const [showToast, setShowToast] = useState(false);
+
   const [customerData, setCustomerData] = useState({
     customerId: null,
     fullName: "",
@@ -43,6 +46,7 @@ function Profile() {
         .then((response) => {
           console.log("Customer data updated successfully:", response.data);
           setEditable(false);
+          toast.success("Successfully Updated");
         })
         .catch((error) => {
           console.error("Error updating customer data:", error);
@@ -155,7 +159,7 @@ function Profile() {
                     onClick={handleSaveChanges}
                     className="btn btn-primary bg-zinc-800 hover:bg-zinc-800 text-white text-m w-full bg:bg-zinc-800 hover:bg-zinc-600"
                   >
-                    {editable ? "Save Changes" : "Update"}
+                    {editable ? "Save Changes" : "Edit"}
                   </button>
                 </div>
               </div>
@@ -163,6 +167,7 @@ function Profile() {
           </div>
         </section>
       </header>
+      <ToastContainer />
     </>
   );
 }

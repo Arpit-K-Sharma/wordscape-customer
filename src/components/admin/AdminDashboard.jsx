@@ -4,22 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle, FaTrash } from "react-icons/fa";
 import axios from "../axiosInstance";
-import { IoMdTimer } from "react-icons/io";
-import { SlSizeActual } from "react-icons/sl";
-import { SiPowerpages } from "react-icons/si";
-import { RiNumbersFill } from "react-icons/ri";
-import { FaBook } from "react-icons/fa";
-import { FaDollarSign } from "react-icons/fa";
-import Avatar from "react-avatar";
-import {
-  FaCut,
-  FaPaintBrush,
-  FaLayerGroup,
-  FaPrint,
-  FaTint,
-  FaComment,
-  FaUser,
-} from "react-icons/fa";
+
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
 import OrderStatusList from "./orderStatus";
