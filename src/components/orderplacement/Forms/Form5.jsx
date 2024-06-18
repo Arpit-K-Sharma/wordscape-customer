@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
   const [pdfFile, setFile] = useState(null); // State to hold the uploaded file
+  const [showDeadlineError, setShowDeadlineError] = useState(false);
 
   const [bindingCost, setBindingCost] = useState(0);
   const [laminationPrice, setLaminationPrice] = useState(0);
@@ -38,7 +39,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       return; // Prevent form submission
     }
     if (!orderData.deadline) {
-      toast.error("Please enter a deadline.");
+      setShowDeadlineError(true);
       return; // Prevent form submission
     }
     // Add more checks as needed
@@ -414,7 +415,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
               }}
               required
             />
-            {!deadline && (
+            {showDeadlineError && (
               <p className="text-red-500 text-sm mt-1">
                 Please fill the deadline.
               </p>

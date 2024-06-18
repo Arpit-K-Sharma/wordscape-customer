@@ -24,6 +24,7 @@ function Paper() {
     getPaper();
   }, []);
 
+  // Update the handleAddPaper function to close the dialog after adding
   const handleAddPaper = (e) => {
     e.preventDefault();
     const paperType = e.target.elements.paperType.value;
@@ -36,6 +37,7 @@ function Paper() {
       .then((response) => {
         setPaperDataState((prevData) => [...prevData, response.data]);
         console.log("Paper added successfully!");
+        document.getElementById("my_modal_3").close(); // Close the dialog
         return true;
       })
       .then((status) => {
