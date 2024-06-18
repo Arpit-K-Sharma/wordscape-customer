@@ -16,7 +16,9 @@ function Footer() {
         <NavLink to="/about-us">
           <a className="link link-hover">About us</a>
         </NavLink>
-        <a className="link link-hover">Contact</a>
+        <NavLink to="/contact-us">
+          <a className="link link-hover">Contact Us</a>
+        </NavLink>
         {/* <a className="link link-hover">Jobs</a> */}
         {/* <NavLink to="/faq">
           <a className="link link-hover">FAQ</a>

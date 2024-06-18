@@ -206,7 +206,7 @@ function Signin() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen font-archivo">
-      <div className="bg-zinc-50 p-8 md:p-16 flex items-center">
+      <div className=" p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto w-[450px]">
           <NavLink to="/">
             <img
@@ -299,7 +299,7 @@ function Signin() {
           </form>
         </div>
       </div>
-      <div className="bg-slate-200 lg:block hidden md:max-h-screen md:overflow-hidden">
+      <div className=" lg:block hidden md:max-h-screen md:overflow-hidden">
         <img
           src={books}
           className="fixed h-full w-full object-cover"

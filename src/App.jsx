@@ -43,6 +43,7 @@ import UpdatedLogin from "./components/login/UpdatedLogin.jsx";
 import UpdatedRegister from "./components/login/UpdatedRegister.jsx";
 import AboutUs from "./components/navbar/about-us.jsx";
 import NotFoundPage from "./components/NotFoundPage.jsx";
+import Contactuspage from "./components/navbar/contact-us.jsx";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/login" element={<UpdatedLogin />} />
         <Route path="/signup" element={<UpdatedRegister />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<Contactuspage />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
