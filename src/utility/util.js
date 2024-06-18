@@ -17,5 +17,10 @@ export const isAdmin = () => {
 };
 
 export const isLoggedIn = () => {
+  const token = Cookies.get("accessToken");
+  return token ? true : false;
+};
+
+export const isCustomer = () => {
   return getRoleFromToken() === "ROLE_CUSTOMER";
 };

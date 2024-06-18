@@ -2,10 +2,10 @@ import React from "react";
 import { Navigate, Outlet } from "react-router";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { isLoggedIn } from "../utility/util";
+import { isCustomer } from "../utility/util";
 
 function ProtectedUser() {
-  if (isLoggedIn()) {
+  if (isCustomer()) {
     return <Outlet />;
   } else {
     return <Navigate to="/" replace />;

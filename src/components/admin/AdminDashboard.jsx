@@ -310,7 +310,7 @@ function AdminDashboard() {
             src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
             alt="menu--v1"
           />
-
+          <p className="text-xl">Menu</p>
           {/* <NavLink to="/admin/dashboard">
             <p className="text-xl">Menu</p>
           </NavLink> */}
