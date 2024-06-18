@@ -37,6 +37,7 @@ function CoverTreatment() {
       .then((response) => {
         setCoverTreatmentData((prevData) => [...prevData, response.data]);
         console.log("Cover treatment added successfully!");
+        document.getElementById("my_modal_3").close();
         getCoverTreatments();
       })
       .catch((error) => {

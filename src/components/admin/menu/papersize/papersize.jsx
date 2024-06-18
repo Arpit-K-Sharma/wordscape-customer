@@ -38,6 +38,7 @@ function PaperSize() {
       .then((response) => {
         setPaperSizeDataState((prevData) => [...prevData, response.data]);
         console.log("Paper size added successfully!");
+        document.getElementById("my_modal_3").close();
         return true;
       })
       .then((status) => {

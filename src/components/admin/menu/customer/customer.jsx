@@ -18,7 +18,7 @@ function Customers() {
       .then((response) => {
         setCustomerDataState(response.data.response);
         console.log(response.data.response);
-        const result = Math.ceil(response.data.totalElements / 1);
+        const result = Math.ceil(response.data.totalElements / 10);
         console.log(result);
         setPageLimit(result - 1);
       })

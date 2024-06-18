@@ -11,9 +11,7 @@ function OrderStatusList({ orderDetails }) {
       const trackingResults = {};
       for (const order of orderDetails) {
         try {
-          const response = await axios.get(
-            `/projectTracking/${order.orderId}`
-          );
+          const response = await axios.get(`/projectTracking/${order.orderId}`);
           const data = response.data;
           trackingResults[order.orderId] = getLastCompletedStage(data);
         } catch (error) {

@@ -88,6 +88,7 @@ function Plate() {
       .then((response) => {
         setInkDataState((prevData) => [...prevData, response.data]);
         console.log("Ink added successfully!");
+        document.getElementById("my_modal_3").close();
         return true;
       })
       .then((status) => {

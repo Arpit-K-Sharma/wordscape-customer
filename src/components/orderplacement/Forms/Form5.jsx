@@ -96,6 +96,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         setIsPdfSubmitting(false);
         setIsPdfSubmitted(false);
         setIsPdfDone(true);
+        toast.success("PDF Uploaded Successfully");
       }
 
       // toast.success("PDF Uploaded Successfully");
