@@ -176,7 +176,7 @@ function Lamination() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-black text-[20px]">
                     x
                   </button>
                 </form>

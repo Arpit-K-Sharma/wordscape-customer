@@ -64,7 +64,9 @@ function StaffPaperThickness() {
 
   const handleSave = (row) => {
     const updatedData = {
-      thickness: parseInt(document.getElementById(`thickness_${row.thicknessId}`).value),
+      thickness: parseInt(
+        document.getElementById(`thickness_${row.thicknessId}`).value
+      ),
     };
     handleUpdate(row.thicknessId, updatedData);
     setEditingData(null); // Reset editing state after save
@@ -74,7 +76,10 @@ function StaffPaperThickness() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <img
             width="26"
             height="26"
@@ -83,7 +88,9 @@ function StaffPaperThickness() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Paper Thicknesses</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+            Paper Thicknesses
+          </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
@@ -98,7 +105,8 @@ function StaffPaperThickness() {
                   <tr key={row.thicknessId}>
                     <td className="text-wrap">{row.thicknessId}</td>
                     <td className="text-wrap">
-                      {editingData && editingData.thicknessId === row.thicknessId ? (
+                      {editingData &&
+                      editingData.thicknessId === row.thicknessId ? (
                         <form onSubmit={(e) => handleSave(e, row)}>
                           <input
                             type="number"
@@ -114,7 +122,8 @@ function StaffPaperThickness() {
                       )}
                     </td>
                     <td>
-                      {editingData && editingData.thicknessId === row.thicknessId ? (
+                      {editingData &&
+                      editingData.thicknessId === row.thicknessId ? (
                         <button
                           className="btn btn-neutral"
                           onClick={() => handleSave(row)}
@@ -144,11 +153,13 @@ function StaffPaperThickness() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-black text-[20px]">
                     x
                   </button>
                 </form>
-                <h3 className="font-bold mt-5 mb-2 text-lg">Add Paper Thickness</h3>
+                <h3 className="font-bold mt-5 mb-2 text-lg">
+                  Add Paper Thickness
+                </h3>
                 <p className="py-4">
                   <form onSubmit={handleAddPaperThickness}>
                     <input

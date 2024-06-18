@@ -11,16 +11,13 @@ function StaffPaper() {
       .get("/papers")
       .then((response) => {
         // Sort the data by paperId in ascending order
-        const sortedData = response.data.sort(
-          (a, b) => a.paperId - b.paperId
-        );
+        const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
         setPaperDataState(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }
-
 
   // Fetching paper data from the backend
   useEffect(() => {
@@ -68,7 +65,7 @@ function StaffPaper() {
   const handleSave = (row) => {
     const updatedData = {
       paperType: document.getElementById(`paper_type_${row.paperId}`).value,
-      rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value)
+      rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value),
     };
     handleUpdate(row.paperId, updatedData);
     setEditingData(null); // Reset editing state after save
@@ -78,7 +75,10 @@ function StaffPaper() {
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn mx-1 my-1 drawer-button mt-8 ml-5">
+        <label
+          htmlFor="my-drawer"
+          className="btn mx-1 my-1 drawer-button mt-8 ml-5"
+        >
           <img
             width="26"
             height="26"
@@ -87,7 +87,9 @@ function StaffPaper() {
           />
         </label>
         <div className="p-7 text-slate-200">
-          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">Papers</h1>
+          <h1 className="text-center mx-auto text-5xl text-archivo mt-[-40px]">
+            Papers
+          </h1>
           <div className="overflow-x-auto mt-[80px]">
             <table className="table w-2/3 mx-auto my-auto">
               <thead>
@@ -165,8 +167,8 @@ function StaffPaper() {
             <dialog id="my_modal_3" className="modal">
               <div className="modal-box w-[340px]">
                 <form method="dialog">
-                  <button className="btn btn-m btn-ghost absolute left-[290px] top-2 text-red-200 text-[13px]">
-                    x
+                  <button className="btn btn-m btn-ghost absolute left-[290px] top tex-black text-[65px]">
+                    X
                   </button>
                 </form>
                 <h3 className="font-bold mt-5 mb-2 text-lg">Add Paper Type</h3>
