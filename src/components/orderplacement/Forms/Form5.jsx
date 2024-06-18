@@ -287,14 +287,12 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   };
 
   useEffect(() => {
-    if (orderData) {
-      getRateForBindingType(orderData.bindingType);
-      getRateForLaminationType(orderData.laminationType);
-      getRatePlate("18 X 24");
-      getRatePaper(orderData.innerPaperType);
-      getOuterPaperRate(orderData.outerPaperType);
-    }
-  }, [orderData]);
+    getRateForBindingType(orderData.bindingType);
+    getRateForLaminationType(orderData.laminationType);
+    getRatePlate("18 X 24");
+    getRatePaper(orderData.innerPaperType);
+    getOuterPaperRate(orderData.outerPaperType);
+  }, []);
 
   useEffect(() => {
     if (orderData) {
@@ -371,8 +369,6 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
                 For which company is this for?
               </span>
               <FaIndustry size={`25px`} color="black" />
-
-              {console.log("Estimated amount is Rs. " + estimatedAmount)}
             </div>
             <input
               type="text"

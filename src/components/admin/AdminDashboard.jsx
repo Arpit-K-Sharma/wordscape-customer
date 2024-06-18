@@ -304,14 +304,13 @@ function AdminDashboard() {
           htmlFor="my-drawer"
           className="btn mx-1 my-1 drawer-button mt-8 ml-5 bg-gray-300 border-gray-100 text-[#201f1f] hover:bg-gray-200 hover:border-gray-100"
         >
-          <NavLink to="/admin/dashboard">
-            <img
-              width="26"
-              height="26"
-              src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
-              alt="menu--v1"
-            />
-          </NavLink>
+          <img
+            width="26"
+            height="26"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
+            alt="menu--v1"
+          />
+
           {/* <NavLink to="/admin/dashboard">
             <p className="text-xl">Menu</p>
           </NavLink> */}
