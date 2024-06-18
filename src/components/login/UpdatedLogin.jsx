@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import books from "../images/logo/books.jpg";
 import logo from "../images/logo/LogoOnly.png";
-import axios from "axios";
+import axios from "../axiosInstance";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
@@ -19,7 +19,7 @@ function Signin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,
@@ -85,7 +85,7 @@ function Signin() {
 
   const handleAdminLogin = async (e) => {
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,
@@ -135,7 +135,7 @@ function Signin() {
 
   const handleEmployeeLogin = async (e) => {
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,

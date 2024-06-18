@@ -1,7 +1,7 @@
 import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosInstance";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -20,7 +20,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,
@@ -81,7 +81,7 @@ function Login() {
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,
@@ -142,7 +142,7 @@ function Login() {
   const handleEmployeeLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8081/home/login";
+      const url = "/home/login";
       const data = {
         email: email,
         password: password,

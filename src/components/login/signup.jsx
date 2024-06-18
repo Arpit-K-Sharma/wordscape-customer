@@ -2,7 +2,7 @@ import React from "react";
 import logo from ".././images/logo/LogoOnly.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance";
 import Navbar from "../navbar/navbar";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -44,7 +44,7 @@ function SignUp() {
 
   const signUpUser = (userData) => {
     axios
-      .post("http://localhost:8081/customers/register", userData)
+      .post("/customers/register", userData)
       .then((response) => {
         console.log("Signup successful:", response.data);
         toast.success("Signed Up Successfully", {

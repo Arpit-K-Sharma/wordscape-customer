@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../images/logo/LogoOnly.png";
-import axios from "axios";
+import axios from "../axiosInstance";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import books from "../images/logo/books.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function UpdatedRegister() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: null,
-    email: null,
-    password: null,
-    confirmPassword: null,
-    address: null,
-    phoneNumber: null,
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+    phoneNumber: "",
   });
   const [validationErrors, setValidationErrors] = useState({
     minLength: false,
@@ -64,7 +63,7 @@ function UpdatedRegister() {
 
   const signUpUser = (userData) => {
     axios
-      .post("http://localhost:8081/customers/register", userData)
+      .post("/customers/register", userData)
       .then((response) => {
         toast.success("Signed Up Successfully", {
           position: "top-right",
@@ -92,7 +91,7 @@ function UpdatedRegister() {
         <div className="max-w-md mx-auto">
           <NavLink to="/">
             <img
-              className="mx-auto my-1 mb-5 sm:w-32 max-sm:h-[200px] lg:h-[100px]"
+              className="mx-auto my-1 mb-5 sm:w-32 lg:h-[100px]"
               src={logo}
               alt="Logo"
             />
@@ -114,7 +113,7 @@ function UpdatedRegister() {
                   type="text"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.fullName || ""}
+                  value={formData.fullName}
                   onChange={handleInputChange}
                 />
               </div>
@@ -131,7 +130,7 @@ function UpdatedRegister() {
                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                   title="Please enter a valid email address"
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.email || ""}
+                  value={formData.email}
                   onChange={handleInputChange}
                 />
               </div>
@@ -150,7 +149,7 @@ function UpdatedRegister() {
                   pattern="\d*"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.phoneNumber || ""}
+                  value={formData.phoneNumber}
                   onChange={handleInputChange}
                 />
               </div>
@@ -164,7 +163,7 @@ function UpdatedRegister() {
                   type="text"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.address || ""}
+                  value={formData.address}
                   onChange={handleInputChange}
                 />
               </div>
@@ -179,75 +178,76 @@ function UpdatedRegister() {
                   name="password"
                   type="password"
                   minLength={8}
-                  autoComplete="password"
+                  autoComplete="new-password"
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.password || ""}
+                  value={formData.password}
                   onChange={handleInputChange}
                 />
-                <ul className="mt-[20px] text-sm text-gray-600 list-none">
+                <ul className="mt-5 text-sm text-gray-600 list-none">
                   <li
-                    className={
+                    className={`flex items-center ${
                       validationErrors.minLength
                         ? "text-green-500"
                         : "text-black"
-                    }
+                    }`}
                   >
-                    {" "}
                     <FontAwesomeIcon
                       icon={validationErrors.minLength ? faCheck : faTimes}
-                    />{" "}
+                      className="mr-1"
+                    />
                     At least 8 characters long
                   </li>
                   <li
-                    className={
+                    className={`flex items-center ${
                       validationErrors.hasUpperCase
                         ? "text-green-500"
                         : "text-black"
-                    }
+                    }`}
                   >
-                    {" "}
                     <FontAwesomeIcon
                       icon={validationErrors.hasUpperCase ? faCheck : faTimes}
-                    />{" "}
+                      className="mr-1"
+                    />
                     Include uppercase letters
                   </li>
                   <li
-                    className={
+                    className={`flex items-center ${
                       validationErrors.hasLowerCase
                         ? "text-green-500"
                         : "text-black"
-                    }
+                    }`}
                   >
-                    {" "}
                     <FontAwesomeIcon
                       icon={validationErrors.hasLowerCase ? faCheck : faTimes}
-                    />{" "}
+                      className="mr-1"
+                    />
                     Include lowercase letters
                   </li>
                   <li
-                    className={
+                    className={`flex items-center ${
                       validationErrors.hasNumber
                         ? "text-green-500"
                         : "text-black"
-                    }
+                    }`}
                   >
                     <FontAwesomeIcon
                       icon={validationErrors.hasNumber ? faCheck : faTimes}
-                    />{" "}
+                      className="mr-1"
+                    />
                     Add numbers (0-9)
                   </li>
                   <li
-                    className={
+                    className={`flex items-center ${
                       validationErrors.hasSpecialChar
                         ? "text-green-500"
                         : "text-black"
-                    }
+                    }`}
                   >
-                    {" "}
                     <FontAwesomeIcon
                       icon={validationErrors.hasSpecialChar ? faCheck : faTimes}
-                    />{" "}
+                      className="mr-1"
+                    />
                     Use special characters (!@#$%^&*)
                   </li>
                 </ul>
@@ -265,7 +265,7 @@ function UpdatedRegister() {
                   minLength={8}
                   required
                   className="input input-bordered w-full bg-white text-gray-900"
-                  value={formData.confirmPassword || ""}
+                  value={formData.confirmPassword}
                   onChange={handleInputChange}
                 />
               </div>
@@ -287,8 +287,12 @@ function UpdatedRegister() {
           </form>
         </div>
       </div>
-      <div className="bg-slate-200 hidden md:block max-h-screen overflow-hidden">
-        <img src={books} className="h-full w-full object-cover" alt="Books" />
+      <div className="bg-slate-200 lg:block hidden md:max-h-screen md:overflow-hidden">
+        <img
+          src={books}
+          className="fixed h-full w-full object-cover"
+          alt="Books"
+        />
       </div>
       <ToastContainer />
     </div>

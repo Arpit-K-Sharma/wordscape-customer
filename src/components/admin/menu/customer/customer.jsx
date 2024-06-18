@@ -67,7 +67,7 @@ function Customers() {
 
   const handleDelete = () => {
     axios
-      .put(`http://localhost:8081/customers/deactivate/${deleteOrder}`)
+      .put(`/customers/deactivate/${deleteOrder}`)
       .then((response) => {
         document.getElementById("my_modals_2").close();
         console.log(response.data);
