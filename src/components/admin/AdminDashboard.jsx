@@ -98,7 +98,7 @@ function AdminDashboard() {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`/orders`);
+        const response = await axios.get(`/orders?pageSize=5`);
         const allorder = response.data.response;
         const recentOrder = allorder.reduce((maxOrder, order) => {
           return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
@@ -297,7 +297,7 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="drawer h-[250%] bg-gray-100">
+    <div className="drawer  bg-gray-100 h-screen">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
@@ -312,7 +312,9 @@ function AdminDashboard() {
               alt="menu--v1"
             />
           </NavLink>
-          <p className="text-xl">Menu</p>
+          {/* <NavLink to="/admin/dashboard">
+            <p className="text-xl">Menu</p>
+          </NavLink> */}
         </label>
         {/* <div className="fixed mt-[15px] top-[-0.5px] left-[1100px] flex items-center px-4 py-2">
           <div className="alert alert-info bg-zinc-900 text-white border-0">

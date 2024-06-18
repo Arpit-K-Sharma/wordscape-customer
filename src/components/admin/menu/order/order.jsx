@@ -11,6 +11,7 @@ import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
 import { FaCar } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 
 import {
   FaCut,
@@ -361,21 +362,25 @@ function AdminDashboard() {
     }
   };
 
+  // Add a toast message if the file doesn't exist in handleDownloadFile
   const handleDownloadFile = async (orderId) => {
     console.log("the id is: " + orderId);
     try {
-      const response = await axios.get(
-        `/orders/files/download/${orderId}`, // Using customerId to construct the URL
-        {
-          responseType: "arraybuffer",
-        }
-      );
+      const response = await axios.get(`/orders/files/download/${orderId}`, {
+        responseType: "arraybuffer",
+      });
+
+      if (response.data.byteLength === 0) {
+        toast.error("PDF wasn't uploaded by Customer");
+        return;
+      }
 
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");
     } catch (error) {
       console.error("Error downloading file:", error);
+      toast.error("PDF does not exist.");
     }
   };
 
@@ -1030,6 +1035,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <AdminDrawer />
     </div>
   );

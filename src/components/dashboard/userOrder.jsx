@@ -9,6 +9,7 @@ import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -56,6 +57,7 @@ function UserOrder() {
       window.open(url, "_blank");
     } catch (error) {
       console.error("Error downloading file:", error);
+      toast.error("PDF not found.");
     }
   };
 
@@ -500,6 +502,7 @@ function UserOrder() {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box overflow-hidden max-w-[55%]">
           <div className="">
@@ -562,6 +565,7 @@ function UserOrder() {
               </li>
             </ul>
           </div>
+
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Close</button>
