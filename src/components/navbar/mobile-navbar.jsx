@@ -112,7 +112,9 @@ function MobileNavbar() {
                 className="mx-auto my-1 mb-5"
               />
             </NavLink>
-            <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
+            <p className="text-2xl mb-[30px] font-semibold font-archivo">
+              WordScape
+            </p>
           </li>
           {isLoggedIn() && (
             <li>

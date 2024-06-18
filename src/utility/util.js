@@ -8,7 +8,7 @@ export const getRoleFromToken = () => {
     console.log("DECODED " + decoded);
     return decoded.roles[0];
   } else {
-    return false;
+    return Cookies.remove("accessToken");
   }
 };
 

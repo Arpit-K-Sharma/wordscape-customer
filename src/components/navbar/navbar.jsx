@@ -60,7 +60,7 @@ function Navbar() {
             )}
           </ul>
         </div>
-        {isLoggedIn() ? (
+        {isLoggedIn() || isAdmin() ? (
           <a
             className="mr-[25px] text-white flex items-center cursor-pointer"
             onClick={handleLogout}
