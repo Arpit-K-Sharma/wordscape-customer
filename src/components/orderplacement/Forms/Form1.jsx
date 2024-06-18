@@ -31,9 +31,9 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   };
 
   return (
-    <div className="lg:mt-6 lg:mb-6 text-zinc-800 ">
+    <div className="lg:mt-6 lg:mb-6 text-zinc-800 font-archivo">
       <label className="form-control ">
-        <p className="text-2xl font-light max-sm:text-[24px]">
+        <p className="text-2xl font-light max-sm:text-[24px] font-archivo">
           Start placing your order with the paper size, type, and its thickness
         </p>
         <br />
