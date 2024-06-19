@@ -6,7 +6,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { isLoggedIn, isAdmin } from "../../utility/util";
+import { isLoggedIn, isAdmin, isCustomer } from "../../utility/util";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Navbar() {
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
-            {isLoggedIn() && (
+            {isCustomer() && (
               <li>
                 <NavLink to="/user/orders">
                   <a>Dashboard</a>
@@ -51,7 +51,7 @@ function Navbar() {
               </li>
             )}
 
-            {isLoggedIn() && (
+            {isCustomer() && (
               <li>
                 <NavLink to="/order/1">
                   <a>Place an order</a>
