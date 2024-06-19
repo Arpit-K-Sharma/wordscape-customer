@@ -275,7 +275,6 @@ function Signin() {
               >
                 <option value="ROLE_CUSTOMER">Customer</option>
                 <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_USER">Employee</option>
               </select>
             </div>
             <div className="text-sm">

@@ -1,15 +1,18 @@
 import React from "react";
 import Printer from "../images/printer.png";
-import NumberRolling from "../navbar/NumberRolling";
+import NumberRolling from "./NumberRolling";
 import Footer from "../navbar/footer";
 import Navbar from "../navbar/navbar";
+import MobileMenu from "../navbar/mobile-menu";
 
 const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col lg:flex-row h-full lg:h-screen font-archivo bg-gray-100">
-        <div className="w-full lg:w-1/3 bg-gray-100 flex items-center justify-center p-4 lg:p-0">
+      <MobileMenu />
+
+      <div className="flex flex-col lg:flex-row h-full lg:h-screen font-archivo">
+        <div className="w-full lg:w-1/3  flex items-center justify-center p-4 lg:p-0">
           <div className="flex flex-col w-full h-full lg:h-screen">
             <h1 className="text-black font-semibold text-3xl lg:text-5xl lg:pl-[45px] lg:ml-[10px] lg:pt-[150px] lg:pb-[40px] text-left max-sm:pt-[20px] max-sm:pb-[20px] max-sm:text-center max-sm:font-[700] max-sm:px-[10px]">
               We are built differently and exceptionally

@@ -2,13 +2,8 @@ import { useState } from "react";
 
 import "./App.css";
 import HomePage from "./components/home";
-import SignIn from "./components/login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Route correctly
-import Dashboard from "./components/dashboard/UserDrawer";
 import MobileLanding from "./components/mobile-landing/mobilelanding";
-import WebLanding from "./components/landing/landing";
-import SignUp from "./components/login/signup";
-import AdminLogin from "./components/login/adminlogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminCustomer from "./components/admin/menu/customer/customer";
 import Paper from "./components/admin/menu/paper/paper";
