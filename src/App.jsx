@@ -42,6 +42,7 @@ import Contactuspage from "./components/footer/contact-us.jsx";
 import FAQ from "./components/navbar/faq.jsx";
 import ForgotPassword from "./components/otp/ForgotPassword.jsx";
 import OTPForm from "./components/otp/Otp.jsx";
+import ProtectedStaff from "./components/protectedStaff.jsx";
 
 function App() {
   return (

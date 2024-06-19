@@ -50,7 +50,7 @@ function Navbar() {
 
             {isEmployee() && (
               <li>
-                <NavLink to="/staff/dashboard">
+                <NavLink to="/admin/dashboard">
                   <a>Staff Dashboard</a>
                 </NavLink>
               </li>
