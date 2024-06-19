@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineClockCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { FaCheckCircle, FaTrash } from "react-icons/fa";
 import axios from "../axiosInstance";
+import { isAdmin, isEmployee } from "../../utility/util";
 
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -323,9 +324,15 @@ function AdminDashboard() {
         <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
             <div className="flex justify-center text-slate-200 mb-9">
-              <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
-                Admin Dashboard
-              </h1>
+              {isAdmin() ? (
+                <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
+                  Admin Dashboard
+                </h1>
+              ) : (
+                <h1 className="font-bold text-5xl max-sm:text-xl mx-auto text-blue-800">
+                  Employee Dashboard
+                </h1>
+              )}
 
               {/* <h2 className="font-bold text-4xl">Orders Summary</h2> */}
               {/* <div className="flex gap-5">

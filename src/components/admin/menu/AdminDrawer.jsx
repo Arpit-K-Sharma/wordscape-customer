@@ -4,6 +4,7 @@ import logo from "../../images/logo/LogoOnly.png";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useState, useRef, useEffect } from "react";
+import { isAdmin } from "../../../utility/util";
 
 function AdminDrawer() {
   const [logout, isLogout] = React.useState(false);
@@ -149,26 +150,28 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details
-          ref={userSetupRef}
-          className="dropdown dropdown-bottom font-archivo "
-        >
-          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
-            User Setup
-          </summary>
-          <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
-            <li>
-              <NavLink to="/admin/users">
-                <p className="text-xl mb-3 font-light">Staffs</p>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/admin/customer">
-                <p className="text-xl mb-3 font-light">Customers</p>
-              </NavLink>
-            </li>
-          </ul>
-        </details>
+        {isAdmin() && (
+          <details
+            ref={userSetupRef}
+            className="dropdown dropdown-bottom font-archivo "
+          >
+            <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
+              User Setup
+            </summary>
+            <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
+              <li>
+                <NavLink to="/admin/users">
+                  <p className="text-xl mb-3 font-light">Staffs</p>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/admin/customer">
+                  <p className="text-xl mb-3 font-light">Customers</p>
+                </NavLink>
+              </li>
+            </ul>
+          </details>
+        )}
 
         <details
           ref={tasksRef}
