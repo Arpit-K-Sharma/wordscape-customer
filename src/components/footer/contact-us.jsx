@@ -4,8 +4,8 @@ import { AiOutlineEnvironment } from "react-icons/ai";
 import { IoMdMail } from "react-icons/io";
 import { IoCall } from "react-icons/io5";
 import Navbar from "../navbar/navbar";
-import MobileMenu from "./mobile-menu";
-import Footer from "./footer";
+import MobileMenu from "../navbar/mobile-menu";
+import Footer from "../navbar/footer";
 
 export default function Contactuspage() {
   return (

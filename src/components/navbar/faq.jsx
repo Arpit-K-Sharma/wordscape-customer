@@ -7,7 +7,7 @@ function FAQ() {
     <>
       <Navbar />
 
-      <section class=" text-gray-100 py-32 bg-gray-900 font-archivo pl-1 pr-1 pt-6 pb-5">
+      <section class=" text-black py-32 font-archivo pl-1 pr-1 pt-6 pb-5">
         <div class="container flex flex-col justify-center p-4 mx-auto md:p-8">
           <h2 class="mb-6 text-4xl leadi text-center sm:text-5xl pb-5">
             Answers to Our Most Frequently Asked Questions

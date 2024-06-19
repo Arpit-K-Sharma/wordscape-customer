@@ -278,7 +278,7 @@ function Signin() {
               </select>
             </div>
             <div className="text-sm">
-              <NavLink to="/forgotPassworf">
+              <NavLink to="/forgotpassword">
                 <a className="block text-sm font-medium leading-6 text-gray-800 hover:text-gray-600">
                   Forgot password?
                 </a>
