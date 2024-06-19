@@ -144,8 +144,8 @@ function UserOrder() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-[100px] mt-[20px] max-sm:flex-col max-sm:items-center max-sm:gap-8">
-        <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40 max-sm:w-[90%]">
+      <div className="flex justify-center gap-[100px] mt-[20px] max-sm:flex-col max-sm:items-center max-sm:gap-8 mb-8">
+        <div className="card w-[300px] h-[300px] mb-8 bg-base-200 bg-opacity-40 max-sm:w-[90%]">
           <div className="card-body p-[0.3rem] mt-[10%] mb-5">
             <a className="flex justify-center">
               <AiOutlineClockCircle size={35} color="orange" className="ml-2" />
@@ -290,7 +290,7 @@ function UserOrder() {
           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
           <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%] max-sm:w-full">
             <button
-              className="top-0 left-0 text-red-800 hover:text-red-900 font-bold text-[30px] max-sm:mt-5 mt-6"
+              className="absolute top-0 left-0 text-red-800 hover:text-red-900 font-bold text-[30px] max-sm:mt-5 mt-6"
               onClick={() =>
                 (document.getElementById("my-drawer-4").checked = false)
               }
@@ -303,15 +303,27 @@ function UserOrder() {
 
             {selectedOrder && (
               <>
-                <div className="shadow-2xl bg-base-200">
-                  <table className="table-auto w-full ml-[20px]">
+                <div className="shadow-xl">
+                  <table className="table-auto w-full max-sm:max-w-xl">
                     <tbody>
                       <tr
                         className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <IoMdTimer className="text-blue-500" size={30} />
+                          <FaUser className="text-black" />
+                          Customer Name
+                        </td>
+                        <td className="w-1/2">
+                          {selectedOrder.customer.fullName}
+                        </td>
+                      </tr>
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <IoMdTimer className="text-black" size={30} />
                           Date
                         </td>
                         <td className="w-1/2">
@@ -323,7 +335,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <SlSizeActual className="text-green-500" />
+                          <SlSizeActual className="text-black" />
                           Paper Size
                         </td>
                         <td className="w-1/2">{selectedOrder.paperSize}</td>
@@ -333,7 +345,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <SiPowerpages className="text-yellow-500" /> Pages
+                          <SiPowerpages className="text-black" /> Pages
                         </td>
                         <td className="w-1/2">{selectedOrder.pages}</td>
                       </tr>
@@ -342,7 +354,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <RiNumbersFill className="text-red-500" />
+                          <RiNumbersFill className="text-black" />
                           Quantity
                         </td>
                         <td className="w-1/2">{selectedOrder.quantity}</td>
@@ -352,7 +364,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaBook className="text-purple-500" />
+                          <FaBook className="text-black" />
                           Binding Type
                         </td>
                         <td className="w-1/2">{selectedOrder.binding}</td>
@@ -362,7 +374,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaCut className="text-blue-500" />
+                          <FaCut className="text-black" />
                           Cover Treatment Type
                         </td>
                         <td className="w-1/2">
@@ -374,7 +386,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaPaintBrush className="text-green-500" />
+                          <FaPaintBrush className="text-black" />
                           Inner Paper Type
                         </td>
                         <td className="w-1/2">
@@ -386,7 +398,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaLayerGroup className="text-yellow-500" />
+                          <FaLayerGroup className="text-black" />
                           Inner Paper Thickness
                         </td>
                         <td className="w-1/2">
@@ -398,7 +410,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaPaintBrush className="text-green-500" />
+                          <FaPaintBrush className="text-black" />
                           Outer Paper Type
                         </td>
                         <td className="w-1/2">
@@ -410,7 +422,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaLayerGroup className="text-yellow-500" />
+                          <FaLayerGroup className="text-black" />
                           Outer Paper Thickness
                         </td>
                         <td className="w-1/2">
@@ -422,7 +434,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaPrint className="text-red-500" />
+                          <FaPrint className="text-black" />
                           Inner Lamination Type
                         </td>
                         <td className="w-1/2">
@@ -434,7 +446,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaPrint className="text-blue-500" />
+                          <FaPrint className="text-black" />
                           Outer Lamination Type
                         </td>
                         <td className="w-1/2">
@@ -446,7 +458,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaTint className="text-blue-500" />
+                          <FaTint className="text-black" />
                           Ink Type
                         </td>
                         <td className="w-1/2">{selectedOrder.inkType}</td>
@@ -456,7 +468,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaComment className="text-purple-500" />
+                          <FaComment className="text-black" />
                           Remarks
                         </td>
                         <td className="w-1/2">
@@ -470,7 +482,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaCar className="text-blue-500" />
+                          <FaCar className="text-black" />
                           Delivery Option
                         </td>
                         <td className="w-1/2">
@@ -485,7 +497,7 @@ function UserOrder() {
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaCalendarCheck className="text-red-500" />
+                          <FaCalendarCheck className="text-black" />
                           Deadline
                         </td>
                         <td className="w-1/2">
@@ -494,15 +506,6 @@ function UserOrder() {
                                 selectedOrder.deadline
                               ).toLocaleDateString()
                             : "N/A"}
-                        </td>
-                      </tr>
-                      <tr className="mb-4 text-lg" style={{ height: "50px" }}>
-                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                          <FaUser className="text-yellow-500" />
-                          Customer Name
-                        </td>
-                        <td className="w-1/2">
-                          {selectedOrder.customer.fullName}
                         </td>
                       </tr>
                     </tbody>

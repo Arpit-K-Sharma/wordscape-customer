@@ -32,6 +32,9 @@ const OrderDetails = (order) => {
       <h2 className="text-2xl font-bold mb-4">Order Details</h2>
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <strong>Customer Name:</strong> <span>{customerName}</span>
+        </div>
+        <div>
           <strong>Date:</strong> <span>{new Date(date).toLocaleString()}</span>
         </div>
         <div>
@@ -72,9 +75,6 @@ const OrderDetails = (order) => {
         </div>
         <div>
           <strong>Remarks:</strong> <span>{remarks}</span>
-        </div>
-        <div>
-          <strong>Customer Name:</strong> <span>{customerName}</span>
         </div>
       </div>
     </div>
