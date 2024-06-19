@@ -463,8 +463,8 @@ function AdminDashboard() {
         </label>
         <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
-            <div className="dropdown xl:ml-[5%] mt-[30px] p-4 text-center w-[300px] bg-white border border-gray-300 rounded-lg shadow-md">
-              <label className="input input-bordered flex items-center gap-2 bg-white border border-white rounded-lg">
+            <div className="dropdown xl:ml-[5%] mt-[30px] p-4 text-center w-[300px] bg-white border border-gray-300 rounded-lg shadow-md ml-[5%]">
+              <label className="input input-bordered flex items-center gap-2 bg-white border border-white rounded-lg ">
                 <input
                   tabIndex={0}
                   type="text"
@@ -691,9 +691,21 @@ function AdminDashboard() {
                   {selectedOrder && (
                     <>
                       {console.log("SELECTED ORDER" + selectedOrder)}
-                      <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px]">
+                      <div className="shadow-2xl bg-white border border-gray-300 rounded-lg mt-[20px] mb-10">
                         <table className="table-auto w-full ml-[20px]">
                           <tbody>
+                            <tr
+                              className="mb-4 text-lg"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <FaUser className="text-gray-600" />
+                                Customer Name
+                              </td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.customer?.fullName || "N/A"}
+                              </td>
+                            </tr>
                             <tr
                               className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
@@ -942,18 +954,6 @@ function AdminDashboard() {
                                 </div>
                               </td>
                             </tr>
-                            <tr
-                              className="mb-4 text-lg"
-                              style={{ height: "50px" }}
-                            >
-                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
-                                <FaUser className="text-gray-600" />
-                                Customer Name
-                              </td>
-                              <td className="w-1/2 text-gray-600">
-                                {selectedOrder.customer?.fullName || "N/A"}
-                              </td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -964,7 +964,7 @@ function AdminDashboard() {
             </div>
 
             <dialog id="my_modal_1" className="modal">
-              <div className="modal-box overflow-hidden max-w-[64%] bg-white text-gray-800">
+              <div className="modal-box overflow-y-scroll max-w-[64%] bg-white text-gray-800">
                 <div>
                   <ul className="steps w-[900px] mb-[20px]">
                     {steps.map((step, index) => (
