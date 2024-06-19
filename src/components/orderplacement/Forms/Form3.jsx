@@ -22,11 +22,21 @@ const ThirdForm = ({ orderData, setOrderData }) => {
         <input
           className="input input-bordered text-zinc-900"
           type="number"
+          min={0}
+          max={1000}
           value={pages}
           required
-          onChange={(e) =>
-            setOrderData({ ...orderData, pages: parseInt(e.target.value) })
-          }
+          onChange={(e) => {
+            const value = e.target.value === "" ? "" : parseInt(e.target.value);
+            if (value === "" || (!isNaN(value) && value >= 0 && value <= 999)) {
+              setOrderData({ ...orderData, pages: value });
+            }
+          }}
+          onKeyPress={(e) => {
+            if (e.key === "-" || e.key === "e") {
+              e.preventDefault();
+            }
+          }}
         />
         <div className="label">
           <span className="label-text-alt">{""}</span>
@@ -43,10 +53,17 @@ const ThirdForm = ({ orderData, setOrderData }) => {
           className="input input-bordered text-zinc-900"
           type="number"
           value={quantity}
+          max={9999}
           required
-          onChange={(e) =>
-            setOrderData({ ...orderData, quantity: parseInt(e.target.value) })
-          }
+          onChange={(e) => {
+            const value = e.target.value === "" ? "" : parseInt(e.target.value);
+            if (
+              value === "" ||
+              (!isNaN(value) && value >= 0 && value <= 9999)
+            ) {
+              setOrderData({ ...orderData, quantity: value });
+            }
+          }}
         />
         <div className="label">
           <span className="label-text-alt">{""}</span>

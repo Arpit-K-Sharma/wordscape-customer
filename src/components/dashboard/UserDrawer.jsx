@@ -23,16 +23,21 @@ function UserDrawer() {
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu p-4 w-80 min-h-full bg-zinc-700 text-white">
+      <ul className="menu p-4 w-80 min-h-full bg-zinc-800 text-white">
         <li className="mt-[40px]">
           <NavLink to="/">
             <img
-              width="120"
-              height="120"
+              width="140"
+              height="140"
               src={logo}
-              alt="Logo"
+              alt="external-knot-china-photo3ideastudio-solid-photo3ideastudio"
               className="mx-auto my-1 mb-5"
             />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/">
+            <p className="text-xl mb-3 top-[50px]">Home page</p>
           </NavLink>
         </li>
 
@@ -47,11 +52,7 @@ function UserDrawer() {
             <p className="text-xl mb-3 font-light">Profile</p>
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/">
-            <p className="text-xl mb-3 top-[50px]">Return to home page</p>
-          </NavLink>
-        </li>
+
         <br></br>
         <li>
           <NavLink to="/" onClick={handleLogout}>

@@ -10,6 +10,8 @@ import { RiNumbersFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
+import { IoMdClose } from "react-icons/io";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -287,9 +289,18 @@ function UserOrder() {
         <div className="drawer-side">
           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
           <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%] max-sm:w-full">
+            <button
+              className="top-0 left-0 text-red-800 hover:text-red-900 font-bold text-[30px] max-sm:mt-5 mt-6"
+              onClick={() =>
+                (document.getElementById("my-drawer-4").checked = false)
+              }
+            >
+              <IoMdClose />
+            </button>
             <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">
               All Details
             </h1>
+
             {selectedOrder && (
               <>
                 <div className="shadow-2xl bg-base-200">

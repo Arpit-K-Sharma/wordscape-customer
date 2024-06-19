@@ -36,7 +36,7 @@ function MobileMenu() {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-zinc-800 text-white">
+        <ul className="menu p-4 w-80 min-h-full bg-zinc-900 text-white">
           {/* Sidebar content here */}
           <li className="mt-[40px]">
             <NavLink to="/">

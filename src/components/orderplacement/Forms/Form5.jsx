@@ -48,10 +48,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     try {
       await handleSubmit();
       setIsSubmitted(true);
-      toast.success("Check your email for the invoice!", {
-        pauseOnHover: "false",
-      });
+
       setTimeout(() => {
+        toast.success("Check your email for the invoice!", {
+          pauseOnHover: "false",
+        });
         setIsSubmitting(false);
         setIsSubmitted(false);
         navigate("/user/orders");
