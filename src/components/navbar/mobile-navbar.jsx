@@ -129,7 +129,7 @@ function MobileNavbar() {
 
           {isEmployee() && (
             <li>
-              <NavLink to="/user/orders">
+              <NavLink to="/admin/dashboard">
                 <p className="text-xl mb-3 font-light">Staff Dashboard</p>
               </NavLink>
             </li>
