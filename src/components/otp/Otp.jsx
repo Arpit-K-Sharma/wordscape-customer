@@ -21,7 +21,7 @@ function OTPForm() {
     <>
       <Navbar />
       <MobileMenu />
-      <div className="flex flex-col items-center min-h-screen justify-center font-archivo">
+      <div className="flex flex-col items-center lg:min-h-screen justify-center font-archivo">
         <div className="max-w-md w-full p-6 bg-white rounded-lg">
           <h1 className="text-4xl font-bold text-center mb-6">
             Enter OTP Code
