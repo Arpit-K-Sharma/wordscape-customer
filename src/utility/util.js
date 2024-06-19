@@ -13,7 +13,14 @@ export const getRoleFromToken = () => {
 };
 
 export const isAdmin = () => {
-  return getRoleFromToken() === "ROLE_ADMIN";
+  return (
+    getRoleFromToken() === "ROLE_ADMIN" || getRoleFromToken() === "ROLE_USER"
+  ); // To do
+  // Actually make employee login
+};
+
+export const isEmployee = () => {
+  return getRoleFromToken() === "ROLE_USER";
 };
 
 export const isLoggedIn = () => {

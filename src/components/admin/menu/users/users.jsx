@@ -40,30 +40,28 @@ function Users() {
     console.log("Data saved successfully!");
   };
 
-  const handleAddUser = (e) => {
+  const handleAddUser = async (e) => {
     e.preventDefault();
     const username = e.target.elements.username.value;
-    const password = parseFloat(e.target.elements.password.value);
+    const password = e.target.elements.password.value;
     const email = e.target.elements.email.value;
     // const status = e.target.elements.status.checked;
-    axios
-      .post("/users", {
-        username,
-        password,
-        email,
-      })
-      .then((response) => {
-        setUserDataState((prevData) => [...prevData, response.data]);
-        console.log("Paper added successfully!");
-        document.getElementById("my_modal_3").close();
-        return true;
-      })
-      .then((status) => {
-        if (status) getUsers();
-      })
-      .catch((error) => {
-        console.error("Error adding paper:", error);
-      });
+
+    const userData = {
+      username,
+      password,
+      email,
+    };
+
+    try {
+      const response = await axios.post("/users", userData);
+      setUserDataState((prevData) => [...prevData, response.data]);
+      console.log("User added successfully!");
+      document.getElementById("my_modal_3").close();
+      getUsers();
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
   };
 
   return (

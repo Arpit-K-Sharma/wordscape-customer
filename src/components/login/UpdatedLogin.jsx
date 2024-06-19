@@ -207,7 +207,7 @@ function Signin() {
   }
 
   if (isEmployee) {
-    return <Navigate to="/staff/dashboard" />; // Replace with the appropriate path
+    return <Navigate to="/staff/dashboard" />;
   }
 
   return (
@@ -275,6 +275,7 @@ function Signin() {
               >
                 <option value="ROLE_CUSTOMER">Customer</option>
                 <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_USER">Employee</option>
               </select>
             </div>
             <div className="text-sm">

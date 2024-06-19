@@ -5,6 +5,7 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
+
 import {
   FaCut,
   FaPaintBrush,
@@ -21,9 +22,7 @@ function JobcardMenu({ orderId }) {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(
-          `/orders/${orderId}`
-        );
+        const response = await axios.get(`/orders/${orderId}`);
         console.log(response.data);
         setOrderDetails(response.data);
       } catch (error) {

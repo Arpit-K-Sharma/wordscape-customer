@@ -13,12 +13,19 @@ function ForgotPassword() {
     <>
       <Navbar />
       <MobileMenu />
-      <div className="flex flex-col items-center justify-center h-[640px] font-archivo">
+      <div className="flex flex-col items-center justify-center h-[640px] max-sm:h-[540px] font-archivo">
         {" "}
         <div className="max-w-md w-full p-6 bg-white rounded-lg">
           <h1 className="text-4xl font-bold text-center mb-6">
             Forgot Password
           </h1>
+          <div className=" mb-5 ">
+            <p>It appears you have forgotten your password.</p>
+            <p>
+              If you have a registered email with WordScape, you will receive an
+              OTP code.
+            </p>
+          </div>
           <input
             type="email"
             placeholder="Enter your email"
