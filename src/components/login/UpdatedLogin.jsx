@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -15,9 +16,11 @@ function Signin() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const url = "/home/login";
       const data = {
@@ -80,6 +83,8 @@ function Signin() {
         progress: undefined,
         theme: "light",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -282,10 +287,16 @@ function Signin() {
             <div>
               <button
                 type="submit"
-                className="btn btn-neutral w-full hover:text-white"
+                className="btn btn-neutral w-full hover:text-white relative"
                 onClick={handleLogin}
               >
-                Sign in
+                {loading ? (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <AiOutlineLoading className="animate-spin text-white" />
+                  </div>
+                ) : (
+                  "Sign in"
+                )}
               </button>
             </div>
             <h1 className="text-center">

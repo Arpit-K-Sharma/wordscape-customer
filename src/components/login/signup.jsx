@@ -15,6 +15,7 @@ function SignUp() {
     address: null,
     phoneNumber: null,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({
