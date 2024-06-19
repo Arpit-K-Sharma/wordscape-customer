@@ -86,7 +86,7 @@ function AdminDrawer() {
           </NavLink>
         </li>
         <li className="bg-zinc-700">
-          <NavLink to="/admin/dashboard">
+          <NavLink to="/">
             <p className="text-2xl font-light text-center ml-[35px]">Home</p>
           </NavLink>
         </li>

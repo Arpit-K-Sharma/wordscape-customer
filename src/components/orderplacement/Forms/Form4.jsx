@@ -145,15 +145,15 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </div>
         <br />
 
-        <div className="lg:flex flex mb-9 max-sm:flex-col justify-center max-sm:justify-center">
+        <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center">
           <NavLink to="/order/3">
-            <button className="btn btn-primary max-lg:w-full w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
+            <button className="btn max-lg:w-full btn-primary w-[280px] mt-5 mr-5 bg-gray-900 text-white border-none">
               Previous
             </button>
           </NavLink>
           <NavLink to={orderData.bindingType.length === 0 ? "#" : "/order/5"}>
             <button
-              className="btn bg-blue-600 max-lg:w-full btn-primary w-[280px] mt-5"
+              className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5"
               disabled={orderData.bindingType.length === 0}
             >
               Next

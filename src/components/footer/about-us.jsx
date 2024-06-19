@@ -1,6 +1,6 @@
 import React from "react";
 import Printer from "../images/printer.png";
-import NumberRolling from "./NumberRolling";
+import NumberRolling from "../navbar/NumberRolling";
 import Footer from "../navbar/footer";
 import Navbar from "../navbar/navbar";
 

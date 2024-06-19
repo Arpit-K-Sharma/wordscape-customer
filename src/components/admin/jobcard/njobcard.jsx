@@ -44,9 +44,7 @@ function NJobCard() {
     if (orders.length > 0 && ordersId) {
       handleOrderChange(ordersId);
       const fetchJobCard = async () => {
-        const response = await axios.get(
-          `/jobCard/${ordersId}`
-        );
+        const response = await axios.get(`/jobCard/${ordersId}`);
         console.log(response.data);
         setJobCard(response.data);
       };
