@@ -86,7 +86,7 @@ function Users() {
               <thead>
                 <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">User ID</th>
-                  <th className="w-[100px]">Username</th>
+                  {/* <th className="w-[100px]">Username</th> */}
                   <th className="w-[80px]">Email</th>
                   <th className="w-[80px]">Password</th>
                   <th className="w-[80px]">Status</th>
@@ -97,7 +97,7 @@ function Users() {
                 {userDataState.map((row) => (
                   <tr key={row.userId}>
                     <td className="text-wrap">{row.userId}</td>
-                    <td className="text-wrap">
+                    {/* <td className="text-wrap">
                       {editingData && editingData.userId === row.userId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
                           <input
@@ -111,7 +111,7 @@ function Users() {
                       ) : (
                         <span>{row.username}</span>
                       )}
-                    </td>
+                    </td> */}
                     <td className="text-wrap">
                       {editingData && editingData.userId === row.userId ? (
                         <form onSubmit={(e) => handleEdit(e, row)}>
