@@ -72,8 +72,8 @@ function Signin() {
         console.error("Error: No token found in the response");
       }
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Login Failed", {
+      const errorMessage = error.response?.data?.message;
+      toast.error(errorMessage, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -83,6 +83,7 @@ function Signin() {
         progress: undefined,
         theme: "light",
       });
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }

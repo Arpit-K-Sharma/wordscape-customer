@@ -119,7 +119,7 @@ function UserOrder() {
           Orders Summary
         </h1>
         <div className="flex gap-5 max-sm:flex-col max-sm:items-center">
-          <div className="w-[150px] max-sm:w-full">
+          {/* <div className="w-[150px] max-sm:w-full">
             <label className="input input-bordered flex items-center gap-2">
               <input
                 type="date"
@@ -138,7 +138,7 @@ function UserOrder() {
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </label>
-          </div>
+          </div> */}
         </div>
       </div>
 

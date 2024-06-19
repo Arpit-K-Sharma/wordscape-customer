@@ -16,7 +16,7 @@ export default function Contactuspage() {
         <div className="mx-auto max-w-6xl font-archivo">
           <div className="flex flex-col md:flex-row mt-[25px]">
             <div className="w-full md:w-1/2 p-[20px] md:p-[55px]">
-              <h1 className="text-center text-[30px] md:text-[40px] font-medium py-[20px] max-sm:mt-[-80px] lg:mt-[-24%]">
+              <h1 className="text-center text-[30px] font-medium py-[20px] max-sm:mt-[-80px] lg:mt-[-24%]">
                 Contact Us
               </h1>
               <p className="text-center text-[13px] md:text-[15px] leading-[17.6px] mb-[20px]">

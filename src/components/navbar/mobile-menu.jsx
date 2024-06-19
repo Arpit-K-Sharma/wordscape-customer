@@ -70,11 +70,11 @@ function MobileMenu() {
           {isLoggedIn()}
 
           {isLoggedIn() && (
-            <NavLink to="/order/1">
-              <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                Place an Order
-              </button>
-            </NavLink>
+            <li>
+              <NavLink to="/order/1">
+                <p className="text-xl mb-3 font-light">Place an order</p>
+              </NavLink>
+            </li>
           )}
           <li>
             {/* <NavLink to="/cost">

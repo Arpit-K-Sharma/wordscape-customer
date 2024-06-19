@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "../axiosInstance";
 import Navbar from "../navbar/navbar";
 import { ToastContainer, toast } from "react-toastify";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -43,28 +44,29 @@ function SignUp() {
     }
   };
 
-  const signUpUser = (userData) => {
-    axios
-      .post("/customers/register", userData)
-      .then((response) => {
-        console.log("Signup successful:", response.data);
-        toast.success("Signed Up Successfully", {
-          position: "top-right",
-          autoClose: 1500, // Show for 2 seconds
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setTimeout(() => {
-          navigate("/login");
-        }, 1500);
-      })
-      .catch((error) => {
-        console.error("Error signing up:", error);
+  const signUpUser = async (userData) => {
+    setLoading(true); // Show loading spinner
+    try {
+      const response = await axios.post("/customers/register", userData);
+      console.log("Signup successful:", response.data);
+      toast.success("Signed Up Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (error) {
+      console.error("Error signing up:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const setChange = (e) => {
@@ -141,7 +143,7 @@ function SignUp() {
                 </span>
               </label>
               <input
-                type="white"
+                type="text"
                 placeholder="+977 98XXXXXXXX"
                 className="w-full input input-bordered bg-slate-100 text-zinc-900 placeholder:text-zinc-500"
                 value={formData.phoneNumber}
@@ -179,8 +181,18 @@ function SignUp() {
               />
             </div>
             <div className="flex flex-col">
-              <button className="btn btn-neutral mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px]  hover:bg-slate-600 hover:text-white">
-                Signup
+              <button
+                className="btn btn-neutral mt-8 lg:mt-0 lg:mr-[20px] lg:w-[500px]  hover:bg-slate-600 hover:text-white"
+                disabled={loading} // Disable button when loading
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <AiOutlineLoading className="animate-spin text-white mr-2" />
+                    Signing Up...
+                  </div>
+                ) : (
+                  "Signup"
+                )}
               </button>
               <div className="flex flex-col w-full">
                 <div className="divider font-semibold">OR</div>

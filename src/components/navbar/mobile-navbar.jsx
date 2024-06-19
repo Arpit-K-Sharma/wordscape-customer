@@ -8,7 +8,7 @@ import Pricing from "./pricing";
 import Services from "./services";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { isLoggedIn, isAdmin } from "../../utility/util";
+import { isLoggedIn, isAdmin, isCustomer } from "../../utility/util";
 
 function MobileNavbar() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function MobileNavbar() {
           />{" "}
           <h3 className="text-center my-7 text-xl h-[50vh]">
             <div className="">
-              <h1 className="text-b1 mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto w-[50%] text-center font-bold font-archivo max-sm:text-[35px]">
+              <h1 className="max0text-b1 mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto lg:w-[50%] text-center font-bold font-archivo max-sm:text-[35px] max-sm:w-[90%]">
                 All your printing needs in{" "}
                 <span
                   style={{
@@ -61,7 +61,7 @@ function MobileNavbar() {
                   place
                 </span>
               </h1>
-              <p className="w-[30%] text-center mx-auto leading-[23px] text-[19px] max-sm:text-[14px] max-sm:w-[60%] font-archivo text-slate-700 ">
+              <p className="w-[50%] text-center mx-auto leading-[23px] max-sm:w-[90%] font-archivo text-slate-700 ">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry. Register and Login
                 to place an order
@@ -75,7 +75,7 @@ function MobileNavbar() {
                   </NavLink>
                 )}
 
-                {isLoggedIn() && (
+                {isCustomer() && (
                   <NavLink to="/order/1">
                     <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
                       Place an Order
@@ -83,7 +83,7 @@ function MobileNavbar() {
                   </NavLink>
                 )}
 
-                <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold">
+                <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold max-sm:mb-[180px]">
                   Learn More
                 </button>
               </div>
@@ -114,7 +114,7 @@ function MobileNavbar() {
             </NavLink>
             <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
           </li>
-          {isLoggedIn() && (
+          {isCustomer() && (
             <li>
               <NavLink to="/user/orders">
                 <p className="text-xl mb-3 font-light">Dashboard</p>
@@ -130,7 +130,7 @@ function MobileNavbar() {
             </li>
           )}
 
-          {isLoggedIn() && (
+          {isCustomer() && (
             <li>
               <NavLink to="/order/1">
                 <p className="text-xl mb-3 font-light">Place an order</p>

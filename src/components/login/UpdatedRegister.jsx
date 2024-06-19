@@ -7,9 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import books from "../images/logo/books.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function UpdatedRegister() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -61,28 +64,29 @@ function UpdatedRegister() {
     }
   };
 
-  const signUpUser = (userData) => {
-    axios
-      .post("/customers/register", userData)
-      .then((response) => {
-        toast.success("Signed Up Successfully", {
-          position: "top-right",
-          autoClose: 1200,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "dark",
-        });
-        setTimeout(() => {
-          navigate("/login");
-        }, 1200);
-      })
-      .catch((error) => {
-        const errorMessage = error.response?.data?.message;
-        toast.error(errorMessage);
+  const signUpUser = async (userData) => {
+    setLoading(true); // Show loading spinner
+    try {
+      const response = await axios.post("/customers/register", userData);
+      toast.success("Signed Up Successfully", {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
       });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message;
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false); // Hide loading spinner
+    }
   };
 
   return (
@@ -274,8 +278,15 @@ function UpdatedRegister() {
               <button
                 type="submit"
                 className="btn btn-neutral w-full hover:text-white max-sm:mt-5"
+                disabled={loading} // Disable button when loading
               >
-                Sign up
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <AiOutlineLoading className="animate-spin text-white mr-2" />
+                  </div>
+                ) : (
+                  "Sign up"
+                )}
               </button>
             </div>
             <h1 className="text-center">
