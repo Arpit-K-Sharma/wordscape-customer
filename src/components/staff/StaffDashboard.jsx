@@ -147,26 +147,23 @@ function StaffDashboard() {
           htmlFor="my-drawer"
           className="btn mx-1 my-1 drawer-button mt-8 ml-5"
         >
-          <NavLink to="/admin/dashboard">
-            <img
-              width="26"
-              height="26"
-              src="https://img.icons8.com/ios/50/FFFFFF/menu--v1.png"
-              alt="menu--v1"
-            />
-          </NavLink>
-          <p className="text-xl">Menu</p>
+          <img
+            width="26"
+            height="26"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
+            alt="menu--v1"
+          />
         </label>
         {/* <div className="fixed mt-[15px] top-[-0.5px] left-[1100px] flex items-center px-4 py-2">
           <div className="alert alert-info bg-zinc-900 text-white border-0">
             <p>Logged in as: </p>
           </div>
         </div> */}
-        <div className="p-7 text-slate-200">
+        <div className="p-7 text-black">
           <div className="font-archivo">
-            <div className="flex justify-center gap-5 text-slate-200 mb-9">
-              <h1 className="font-bold text-4xl">Orders Summary</h1>
-              <div className="flex gap-5">
+            <div className="flex justify-center gap-5 text-black mb-9">
+              <h1 className="font-bold text-4xl">Employee Tasks</h1>
+              <div className="flex gap-5 text-black">
                 <div className="w-[150px] ml-[420px]">
                   <label className="input input-bordered flex items-center gap-2">
                     <input
@@ -195,15 +192,15 @@ function StaffDashboard() {
                   <a className="flex justify-center">
                     <AiOutlineClockCircle
                       size={35}
-                      color="white"
+                      color="green"
                       className="ml-2"
                     />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Pending Orders
+                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-black pl-5">
+                      Pending Tasks
                     </h3>
                   </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Waiting to be processed
+                  <h3 className="card-title flex justify-center text-black text-[17px]">
+                    Tasks on the way
                   </h3>
                   <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
                     <h2 className="text-4xl text-o1 font-bold">{pending}</h2>
@@ -215,15 +212,15 @@ function StaffDashboard() {
                   <a className="flex justify-center">
                     <AiOutlineCheckCircle
                       size={35}
-                      color="white"
+                      color="green"
                       className="ml-2"
                     />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Approved Orders
+                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-black pl-5">
+                      Approved Tasks
                     </h3>
                   </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Verification Completed
+                  <h3 className="card-title flex justify-center text-black text-[17px]">
+                    Tasks Completed
                   </h3>
                   <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
                     <h2 className="text-4xl text-o1 font-bold">{approved}</h2>
@@ -233,13 +230,13 @@ function StaffDashboard() {
               <div className="card w-[300px] h-[300px] shadow-xl bg-base-200 bg-opacity-40">
                 <div className="card-body p-[0.3rem] mt-[10%] mb-5">
                   <a className="flex justify-center">
-                    <FaCheckCircle size={32} color="white" className="ml-2" />
-                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-slate-200 pl-5">
-                      Completed Orders
+                    <FaCheckCircle size={32} color="green" className="ml-2" />
+                    <h3 className="card-title font-semibold flex justify-center text-[20px] text-black pl-5">
+                      Completed Tasks
                     </h3>
                   </a>
-                  <h3 className="card-title flex justify-center text-[grey] text-[17px]">
-                    Order Finalized
+                  <h3 className="card-title flex justify-center text-black text-[17px]">
+                    Task Finalized
                   </h3>
                   <div className="card-actions justify-center items-center bg-gray-600 bg-opacity-55 h-2/3 rounded-md ml-6 mr-6 mt-1">
                     <h2 className="text-4xl text-o1 font-bold">{completed}</h2>
@@ -247,10 +244,10 @@ function StaffDashboard() {
                 </div>
               </div>
             </div>
-            <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[30px] shadow-xl rounded-lg">
+            {/* <div className="overflow-y-auto w-[83%] h-[300px] ml-[9%] mt-[30px] shadow-xl rounded-lg">
               <table className="table">
                 <thead>
-                  <tr className="bg-base-200 font-semibold text-[15px] text-slate-200">
+                  <tr className="bg-base-200 font-semibold text-[15px] text-black">
                     <th>Order ID</th>
                     <th>Date</th>
                     <th>Delivery Date</th>
@@ -296,7 +293,7 @@ function StaffDashboard() {
                     ))}
                 </tbody>
               </table>
-            </div>
+            </div> */}
             <div className="drawer drawer-end">
               <input
                 id="my-drawer-4"

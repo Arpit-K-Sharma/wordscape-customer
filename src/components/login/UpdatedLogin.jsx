@@ -161,16 +161,16 @@ function Signin() {
           if (decoded.id) {
             console.log("id:", decoded.id);
             // localStorage.setItem("id", decoded.id);
-            toast.success("Signed In Successfully", {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            // toast.success("Signed In Successfully", {
+            //   position: "top-right",
+            //   autoClose: 2000,
+            //   hideProgressBar: false,
+            //   closeOnClick: true,
+            //   pauseOnHover: true,
+            //   draggable: true,
+            //   progress: undefined,
+            //   theme: "light",
+            // });
             setTimeout(() => {
               setIsEmployee(true);
             }, 2000);
@@ -207,7 +207,7 @@ function Signin() {
   }
 
   if (isEmployee) {
-    return <Navigate to="/staff/dashboard" />;
+    return <Navigate to="/admin/dashboard" />;
   }
 
   return (

@@ -16,6 +16,7 @@ export const isAdmin = () => {
   return (
     getRoleFromToken() === "ROLE_ADMIN" || getRoleFromToken() === "ROLE_USER"
   ); // To do
+  //|| getRoleFromToken() === "ROLE_USER"
   // Actually make employee login
 };
 

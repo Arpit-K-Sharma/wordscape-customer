@@ -45,11 +45,13 @@ function Users() {
     const username = e.target.elements.username.value;
     const password = e.target.elements.password.value;
     const email = e.target.elements.email.value;
+    const phoneNumber = e.target.elements.phoneNumber.value;
     // const status = e.target.elements.status.checked;
 
     const userData = {
       username,
       password,
+      phoneNumber,
       email,
     };
 
@@ -177,6 +179,15 @@ function Users() {
                       type="email"
                       name="email"
                       placeholder="Email"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      name="phoneNumber"
+                      placeholder="Phone Number"
+                      type="text"
+                      minLength={10}
+                      maxLength="10"
+                      pattern="\d*"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input

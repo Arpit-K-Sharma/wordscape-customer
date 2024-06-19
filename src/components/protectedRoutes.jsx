@@ -5,7 +5,10 @@ import { jwtDecode } from "jwt-decode";
 import { getRoleFromToken } from "../utility/util";
 
 function ProtectedRoutes() {
-  if (getRoleFromToken() === "ROLE_ADMIN") {
+  if (
+    getRoleFromToken() === "ROLE_ADMIN" ||
+    getRoleFromToken() === "ROLE_USER"
+  ) {
     // Render the admin routes if the adminToken cookie exists
     return <Outlet />;
   } else {

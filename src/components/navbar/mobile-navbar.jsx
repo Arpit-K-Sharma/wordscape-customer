@@ -8,7 +8,12 @@ import Pricing from "./pricing";
 import Services from "./services";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { isLoggedIn, isAdmin, isCustomer } from "../../utility/util";
+import {
+  isLoggedIn,
+  isAdmin,
+  isCustomer,
+  isEmployee,
+} from "../../utility/util";
 
 function MobileNavbar() {
   const navigate = useNavigate();
@@ -118,6 +123,14 @@ function MobileNavbar() {
             <li>
               <NavLink to="/user/orders">
                 <p className="text-xl mb-3 font-light">Dashboard</p>
+              </NavLink>
+            </li>
+          )}
+
+          {isEmployee() && (
+            <li>
+              <NavLink to="/user/orders">
+                <p className="text-xl mb-3 font-light">Staff Dashboard</p>
               </NavLink>
             </li>
           )}

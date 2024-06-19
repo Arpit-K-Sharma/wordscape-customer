@@ -71,6 +71,23 @@ function App() {
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/jobcard" element={<NJobCard />} />
           <Route path="/cost" element={<CostCalculation />} />
+
+          <Route path="/staff/dashboard" element={<StaffDashboard />} />
+          <Route path="/staff/paper" element={<StaffPaper />} />
+          <Route path="/staff/papersize" element={<StaffPaperSize />} />
+          <Route
+            path="/staff/paperthickness"
+            element={<StaffPaperThickness />}
+          />
+          <Route path="/staff/binding" element={<StaffBinding />} />
+          <Route path="/staff/lamination" element={<StaffLamination />} />
+          <Route
+            path="/staff/covertreatment"
+            element={<StaffCoverTreatment />}
+          />
+          <Route path="/staff/plate" element={<StaffPlate />} />
+          <Route path="/staff/customer" element={<StaffCustomer />} />
+          <Route path="/staff/orders" element={<StaffOrders />} />
         </Route>
 
         <Route element={<ProtectedUser />}>
@@ -80,17 +97,6 @@ function App() {
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
-
-        <Route path="/staff/dashboard" element={<StaffDashboard />} />
-        <Route path="/staff/paper" element={<StaffPaper />} />
-        <Route path="/staff/papersize" element={<StaffPaperSize />} />
-        <Route path="/staff/paperthickness" element={<StaffPaperThickness />} />
-        <Route path="/staff/binding" element={<StaffBinding />} />
-        <Route path="/staff/lamination" element={<StaffLamination />} />
-        <Route path="/staff/covertreatment" element={<StaffCoverTreatment />} />
-        <Route path="/staff/plate" element={<StaffPlate />} />
-        <Route path="/staff/customer" element={<StaffCustomer />} />
-        <Route path="/staff/orders" element={<StaffOrders />} />
       </Routes>
     </BrowserRouter>
   );
