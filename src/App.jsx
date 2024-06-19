@@ -41,7 +41,7 @@ import StaffOrders from "./components/staff/menu/order/order.jsx";
 import ProtectedUser from "./components/protectedUser.jsx";
 import UpdatedLogin from "./components/login/UpdatedLogin.jsx";
 import UpdatedRegister from "./components/login/UpdatedRegister.jsx";
-import AboutUs from "./components/navbar/about-us.jsx";
+import AboutUs from "./components/footer/about-us.jsx";
 import NotFoundPage from "./components/NotFoundPage.jsx";
 import Contactuspage from "./components/navbar/contact-us.jsx";
 

@@ -96,7 +96,7 @@ function AdminDrawer() {
           ref={paperFeaturesRef}
           className="dropdown dropdown-bottom font-archivo "
         >
-          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px]">
+          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px] hover:bg-zinc-900">
             Paper Feature
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px] ml-[6px]">
@@ -122,7 +122,7 @@ function AdminDrawer() {
           ref={outerFeaturesRef}
           className="dropdown dropdown-bottom font-archivo "
         >
-          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px]">
+          <summary className="m-1 btn text-xl font-archivo font-light bg-zinc-700 border-none text-white ml-[14px] hover:bg-zinc-900">
             Outer Feature
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px] ml-[6px]">
@@ -153,7 +153,7 @@ function AdminDrawer() {
           ref={userSetupRef}
           className="dropdown dropdown-bottom font-archivo "
         >
-          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
             User Setup
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
@@ -174,7 +174,7 @@ function AdminDrawer() {
           ref={tasksRef}
           className="dropdown dropdown-bottom font-archivo "
         >
-          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
             Tasks
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
@@ -195,7 +195,7 @@ function AdminDrawer() {
           ref={statementsRef}
           className="dropdown dropdown-bottom font-archivo "
         >
-          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
             Statements
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
@@ -210,7 +210,7 @@ function AdminDrawer() {
 
         <li className="bg-gray-900 text-white rounded-lg">
           <NavLink to="/" onClick={handleLogout}>
-            <p className="text-xl mb-3 font-light top-[50px] ml-[34px]">
+            <p className="text-xl mb-3 font-light top-[50px] ml-[34px] hover:bg-red-700">
               Logout
             </p>
           </NavLink>

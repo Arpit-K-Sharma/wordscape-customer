@@ -19,3 +19,21 @@
     font-size: 1.2rem;
   }
 }
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pop-animation {
+  animation: pop 0.3s ease-out;
+}

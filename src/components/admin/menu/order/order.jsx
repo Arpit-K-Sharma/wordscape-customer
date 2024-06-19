@@ -451,15 +451,12 @@ function AdminDashboard() {
           htmlFor="my-drawer"
           className="btn mx-1 my-1 drawer-button mt-8 ml-5"
         >
-          <NavLink to="/admin/dashboard">
-            <img
-              width="26"
-              height="26"
-              src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
-              alt="menu--v1"
-            />
-          </NavLink>
-          <p className="text-xl">Menu</p>
+          <img
+            width="26"
+            height="26"
+            src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
+            alt="menu--v1"
+          />
         </label>
         <div className="max-sm:mr-[10%]">
           <div className="font-archivo">
