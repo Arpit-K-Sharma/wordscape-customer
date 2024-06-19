@@ -65,7 +65,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
             <div className="flex justify-center items-center">
               <label className="form-control">
                 <input
-                  className="input input-bordered w-[70px]"
+                  className="input input-bordered w-[70px] mr-8"
                   onChange={(e) => setPaperSize1(e.target.value)}
                 />
                 <div className="label">
@@ -75,7 +75,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
                 </div>
               </label>
 
-              <span className="text-xl font-light">x</span>
+              <span className="flex text-xl font-light mb-8 mr-7">x</span>
 
               <label className="form-control">
                 <input
