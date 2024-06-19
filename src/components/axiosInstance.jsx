@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
   baseURL: "https://frabjous-clafoutis-7cf3e7.netlify.app/api",
+  // baseURL: "http://localhost:8081",
 });
 
 axiosInstance.interceptors.request.use(
