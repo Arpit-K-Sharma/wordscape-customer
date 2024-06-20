@@ -6,6 +6,7 @@ import axios from "../axiosInstance";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -16,8 +17,10 @@ function ForgotPassword() {
   const [showOTP, setShowOTP] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSendEmail = async () => {
+    setLoading(true);
     try {
       const response = await axios.post("/home/forgot", {
         email: email,
@@ -25,13 +28,16 @@ function ForgotPassword() {
       });
       console.log("Reset password email sent!");
       setTimeout(() => {
+        toast.success("Email sent successfully");
+
         console.log("Toast Message");
         setShowOTP(true);
-        toast.success("Email sent successfully");
-      }, 1500);
+      });
     } catch (error) {
       console.error("Error sending email:", error);
       toast.error("Customer doesn't exist");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,6 +46,7 @@ function ForgotPassword() {
       toast.error("Passwords do not match");
       return;
     }
+    setLoading(true);
     try {
       const response = await axios.post("/home/newPassword", {
         otp: otp,
@@ -49,12 +56,14 @@ function ForgotPassword() {
       });
       setShowForm(true);
       console.log("Password reset successful!");
-      toast.success("Password changed successfully");
       setTimeout(() => {
+        toast.success("Password changed successfully");
         navigate("/login");
-      }, 1500);
+      });
     } catch (error) {
       console.error("Error verifying OTP:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,6 +110,9 @@ function ForgotPassword() {
                 onClick={handleVerifyOTP}
                 className="btn max-lg:w-full mt-6 bg-zinc-800 hover:bg-zinc-900 text-white mt-5 w-full"
               >
+                {loading ? (
+                  <AiOutlineLoading className="animate-spin mr-2" />
+                ) : null}
                 Verify OTP
               </button>
             </>
@@ -126,7 +138,13 @@ function ForgotPassword() {
                 className="btn max-lg:w-full bg-zinc-800 hover:bg-zinc-900 text-white mt-5 w-full"
                 onClick={handleSendEmail}
               >
-                Send Email
+                {loading ? (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <AiOutlineLoading className="animate-spin text-white" />
+                  </div>
+                ) : (
+                  "Send Email"
+                )}
               </button>
             </>
           )}
