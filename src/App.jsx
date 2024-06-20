@@ -41,7 +41,6 @@ import NotFoundPage from "./components/NotFoundPage.jsx";
 import Contactuspage from "./components/footer/contact-us.jsx";
 import FAQ from "./components/navbar/faq.jsx";
 import ForgotPassword from "./components/otp/ForgotPassword.jsx";
-import OTPForm from "./components/otp/Otp.jsx";
 import ProtectedStaff from "./components/protectedStaff.jsx";
 
 function App() {
@@ -56,7 +55,6 @@ function App() {
         <Route path="/contact-us" element={<Contactuspage />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/otp" element={<OTPForm />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
