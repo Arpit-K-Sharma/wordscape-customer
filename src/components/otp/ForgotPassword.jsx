@@ -36,6 +36,10 @@ function ForgotPassword() {
   };
 
   const handleVerifyOTP = async () => {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:8081/home/newPassword",
