@@ -532,17 +532,15 @@ const CostCalculation = () => {
     <>
       {/* <MobileMenu /> */}
       <Navbar />
-      <AdminDrawer />
+
       <div className="cost-calc-container bg-zinc-800">
         <div className="empty-box">
           <div className="test-box">
             <div className="open-box text-zinc-900">
-              <br></br>
-              <h1 className="heading-c">
+              <MobileMenu />
+              <h1 className="heading-c ">
                 <b>Cost</b> Calculator
               </h1>
-              <br></br>
-
               {console.log("PAPER SIZE TEST: " + paperSize)}
               <DrawerTest
                 // inkCost={inkCost}
