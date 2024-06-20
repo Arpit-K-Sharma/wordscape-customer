@@ -81,14 +81,13 @@ function MobileNavbar() {
                   </NavLink>
                 )}
 
-                {isCustomer() ||
-                  (isEmployee() && (
-                    <NavLink to="/order/1">
-                      <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                        Place an Order
-                      </button>
-                    </NavLink>
-                  ))}
+                {isCustomer() && (
+                  <NavLink to="/order/1">
+                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                      Place an Order
+                    </button>
+                  </NavLink>
+                )}
 
                 <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold max-sm:mb-[180px]">
                   Learn More
