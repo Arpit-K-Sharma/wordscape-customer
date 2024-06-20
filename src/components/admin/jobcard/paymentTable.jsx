@@ -3,12 +3,14 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function PaymentTable({ data }) {
+function PaymentTable({ data, onChildData}) {
+
   const [paymentdone, setPaymentdone] = useState(false);
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       servicePaymentList: {
+        prePressUnitId: 0,
         paymentWay: "",
         serviceRequired: [],
       },
@@ -19,28 +21,39 @@ function PaymentTable({ data }) {
     if (data) {
       setValue("servicePaymentList.paymentWay", data.paymentMethod);
       setValue("servicePaymentList.serviceRequired", data.serviceRequired);
+      setValue("servicePaymentList.prePressUnitId", data.prePressUnitId);
+      let datas = {
+        servicePaymentList: data
+      }
+      Cookies.set("paymentData", JSON.stringify(datas));
     }
   }, [data, setValue]);
 
+  
   const onSubmit = (formData) => {
     console.log(formData);
-    const jsonData = {
+    
+    let jsonData = {
       servicePaymentList: {
         paymentMethod: formData.servicePaymentList.paymentWay,
         serviceRequired: formData.servicePaymentList.serviceRequired,
       },
     };
+    if(formData.servicePaymentList.prePressUnitId){
+      jsonData.servicePaymentList.prePressUnitId = formData.servicePaymentList.prePressUnitId
+    }
     console.log("json data from payment table jsx: ", jsonData);
     Cookies.set("paymentData", JSON.stringify(jsonData));
     setPaymentdone(!paymentdone);
+    onChildData(false);
     document.getElementById("my_modal_5").close();
   };
 
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_5").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black  hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_5").showModal(), onChildData(true))}
       >
         <a className="flex"> Payment & Services </a>{" "}
         {paymentdone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
@@ -125,7 +138,10 @@ function PaymentTable({ data }) {
               </div>
             </div>
             <div className="modal-action">
-              <button type="submit" className="btn hover:bg-[#376437]">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_5").close(), onChildData(false))}>
+                Close
+              </button>
+              <button type="submit" className="btn hover:bg-[#3eab3e] hover:text-[white]">
                 Done
               </button>
             </div>

@@ -3,43 +3,78 @@ import { useState, useEffect } from "react";
 import { MdAdd } from "react-icons/md";
 import Cookies from "js-cookie";
 import { Nav } from "rsuite";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
-function Costbreakdown() {
+function Costbreakdown({data, onChildData }) {
+  console.log(data, "cost breakdown")
   const [costdone, setCostdone] = useState(false);
   const [vendors, setVendors] = useState([1, 2, 3, 4, 5]);
   const [costCalculation, setCostCalculation] = useState({
-    plates: "",
-    printing: "",
-    paper: "",
-    coverPaper: "",
-    innerPaper: "",
-    otherPaper: "",
-    lamination: "",
-    binding: "",
-    finishing: "",
-    extraCharges: "",
-    subTotal: "",
-    vat: "",
-    grandTotal: "",
+    plates: 0,
+    printing: 0,
+    paper: 0,
+    coverPaper: 0,
+    innerPaper: 0,
+    otherPaper: 0,
+    lamination: 0,
+    binding: 0,
+    finishing: 0,
+    extraCharges: 0,
+    subTotal: 0,
+    vat: 0,
+    grandTotal: 0,
     preparedBy: "",
-    approvedBy: "",
+    approvedBy: ""
   });
 
+  
   useEffect(() => {
-    const storedData = Cookies.get("costCalculation");
-    if (storedData) {
-      setCostCalculation(JSON.parse(storedData));
-    } else {
-      Cookies.set("costCalculation", JSON.stringify(costCalculation));
+    if (data) {
+      const initialData = {
+        costCalculationId: data.costCalculationId || 0,
+        plates: data.plates || 0,
+        printing: data.printing || 0,
+        paper: data.paper || 0,
+        coverPaper: data.coverPaper || 0,
+        innerPaper: data.innerPaper || 0,
+        otherPaper: data.otherPaper || 0,
+        lamination: data.lamination || 0,
+        binding: data.binding || 0,
+        finishing: data.finishing || 0,
+        extraCharges: data.extraCharges || 0,
+        subTotal: data.subTotal || 0,
+        vat: data.vat || 0,
+        grandTotal: data.grandTotal || 0,
+        preparedBy: data.preparedBy || "",
+        approvedBy: data.approvedBy || ""
+      };
+      setCostCalculation(initialData);
+      Cookies.set("costCalculation", JSON.stringify(data));
     }
-  }, []);
+  }, [data]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const updatedData = { ...costCalculation, [name]: value };
+    let parsedValue = value;
+  
+    if (!["preparedBy", "approvedBy"].includes(name)) {
+      parsedValue = parseFloat(value);
+    }
+  
+    const updatedData = { ...costCalculation, [name]: parsedValue };
     setCostCalculation(updatedData);
-    Cookies.set("costCalculation", JSON.stringify(updatedData));
+  
   };
+
+  const handleClick = () => {
+    Cookies.set("costCalculation", JSON.stringify(costCalculation));
+    document.getElementById("my_modal_13").close();
+    onChildData(false);
+    setCostdone(true);
+
+  }
+  
 
   const handleAdd1 = () => {
     setVendors((prevVendors) => [...prevVendors, vendors.length + 1]);
@@ -52,8 +87,8 @@ function Costbreakdown() {
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_13").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_13").showModal(), onChildData(true))}
       >
         <a className="flex">Cost Breakdown </a>{" "}
         {costdone == true ? (
@@ -65,121 +100,147 @@ function Costbreakdown() {
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <h3 className="font-bold text-xl">Cost Calculation</h3>
           <div className="grid w-full gap-4">
-            <input
-              type="text"
+          <input
+              type="number"
               name="plates"
               id="plates"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Plates"
-              // value={currentData.plates}
+              value={costCalculation.plates}
               onChange={handleChange}
             />
             <input
-              type="text"
+              type="number"
               id="printing"
               name="printing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Printing"
+              value={costCalculation.printing}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="paper"
               name="paper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Paper"
+              value={costCalculation.paper}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="coverPaper"
               name="coverPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Cover Paper"
+              value={costCalculation.coverPaper}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="innerPaper"
               name="innerPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Inner Paper"
+              value={costCalculation.innerPaper}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="otherPaper"
               name="otherPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Other Paper"
+              value={costCalculation.otherPaper}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="lamination"
               name="lamination"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Lamination"
+              value={costCalculation.lamination}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="binding"
               name="binding"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Binding"
+              value={costCalculation.binding}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="finishing"
               name="finishing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Finishing"
+              value={costCalculation.finishing}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="extraCharges"
               name="extraCharges"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Extra Charges"
+              value={costCalculation.extraCharges}
               onChange={handleChange}
             />
             <input
-              className="w-full border-b-2 pt-[20px] border-gray-400  focus:outline-none focus:border-black"
+              type="number"
+              className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Delivery Charges"
               id="deliveryCharges"
               name="deliveryCharges"
-              onChange={handleChange}
             />
-
             <input
+              type="number"
               id="subTotal"
               name="subTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
               placeholder="Sub Total"
+              value={costCalculation.subTotal}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="vat"
               name="vat"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Vat 13%"
+              value={costCalculation.vat}
               onChange={handleChange}
             />
             <input
+              type="number"
               id="grandTotal"
               name="grandTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
               placeholder="Grand Total"
+              value={costCalculation.grandTotal}
               onChange={handleChange}
             />
             <div className="flex gap-[20px] mt-[20px]">
               <input
+                type="text"
                 id="preparedBy"
                 name="preparedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Prepared By"
+                value={costCalculation.preparedBy}
                 onChange={handleChange}
               />
               <input
+                type="text"
                 id="approvedBy"
                 name="approvedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Approved By"
+                value={costCalculation.approvedBy}
                 onChange={handleChange}
               />
             </div>
@@ -222,10 +283,13 @@ function Costbreakdown() {
             />
           </div>
           <div className="modal-action">
-              <button className="btn hover:bg-[#376437]" type="submit" onSubmit={handleChange}>
-                Done
+          <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_13").close(), onChildData(false))}>
+                Close
               </button>
-            </div>
+            <button className="btn hover:bg-[#3eab3e] hover:text-white" type="submit" onClick={handleClick}>
+              Done
+            </button>
+          </div>
           {/* <div className="p-4 mt-[20px]">
             <h2 className="font-semibold mb-[10px]">Project Details:</h2>
             <div className="flex justify-between">

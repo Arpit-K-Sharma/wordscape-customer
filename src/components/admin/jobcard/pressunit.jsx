@@ -4,12 +4,13 @@ import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import axios from "../../axiosInstance";
 
-function PressUnits({ data }) {
+function PressUnits({ data, onChildData  }) {
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       totalset: "",
       forma: "",
       workandturn: "",
+      pressUnitDataId: "",
       pressData: [
         { paperType: "", size: "", signature: "", ordered: "", produced: "" },
       ],
@@ -25,7 +26,9 @@ function PressUnits({ data }) {
         totalset: data.totalSet || "",
         forma: data.forma || "",
         workandturn: data.workAndTurn || "",
+        pressUnitDataId: data.pressUnitDataId || "",
         pressData: data.pressData.map((entry) => ({
+          pressDataId : entry.pressDataId || "",
           paperType: entry.paperType || "",
           size: entry.size || "",
           signature: entry.signature || "",
@@ -33,6 +36,7 @@ function PressUnits({ data }) {
           produced: entry.produced || "",
         })),
       };
+      Cookies.set("pressUnitData", JSON.stringify(data));
       reset(initialFormValues);
     }
   }, [data, reset]);
@@ -48,14 +52,18 @@ function PressUnits({ data }) {
       return processedEntry;
     });
 
-    const jsonData = {
+    let jsonData = {
       totalSet: formData.totalset,
       forma: formData.forma,
       workAndTurn: formData.workandturn,
       pressData: processedPressData,
     };
+    if(formData.pressUnitDataId){
+      jsonData.pressUnitDataId = formData.pressUnitDataId
+    }
 
     document.getElementById("my_modal_12").close();
+    onChildData(false);
     setPressunit(true);
     Cookies.set("pressUnitData", JSON.stringify(jsonData));
   };
@@ -77,8 +85,8 @@ function PressUnits({ data }) {
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_12").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_12").showModal(), onChildData(true))}
       >
         <a className="flex"> Press Unit </a>
         {pressunit ? <AiOutlineCheckCircle size={24} color="green" /> : null}
@@ -191,7 +199,10 @@ function PressUnits({ data }) {
               </tbody>
             </table>
             <div className="modal-action">
-              <button className="btn hover:bg-[#376437]" type="submit">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_12").close(), onChildData(false))}>
+                Close
+              </button>
+              <button className="btn hover:bg-[#3eab3e] hover:text-[white]" type="submit">
                 Done
               </button>
             </div>

@@ -3,7 +3,7 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function PressUnit({ data }) {
+function PressUnit({ data, onChildData  }) {
   const [predone, setPredone] = useState(false);
 
   const { register, handleSubmit, setValue } = useForm({
@@ -12,6 +12,7 @@ function PressUnit({ data }) {
         paymentMethod: "",
         materialReceived: "",
         flapSize: "",
+        prePressDataId: 0
       },
     },
   });
@@ -21,6 +22,11 @@ function PressUnit({ data }) {
       setValue("prePressUnitList.paymentMethod", data.paymentMethod);
       setValue("prePressUnitList.materialReceived", data.materialReceived);
       setValue("prePressUnitList.flapSize", data.flapSize);
+      setValue("prePressUnitList.prePressDataId", data.prePressDataId);
+      let datas = {
+        prePressUnitList: data
+      }
+      Cookies.set("prePressData", JSON.stringify(datas));
     }
   }, [data, setValue]);
 
@@ -33,17 +39,22 @@ function PressUnit({ data }) {
         flapSize: formData.prePressUnitList.flapSize,
       },
     };
+
+    if(formData.prePressUnitList.prePressDataId){
+      jsonData.prePressUnitList.prePressDataId = formData.prePressUnitList.prePressDataId
+    }
     console.log("json data from prepress unit: ", jsonData);
     Cookies.set("prePressData", JSON.stringify(jsonData));
     setPredone(!predone);
     document.getElementById("my_modal_7").close();
+    onChildData(false);
   };
 
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_7").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_7").showModal(), onChildData(true))}
       >
         <a className="flex">Pre Press Unit </a>
         {predone ? <AiOutlineCheckCircle size={24} color="green" /> : null}
@@ -142,7 +153,10 @@ function PressUnit({ data }) {
               </div>
             </p>
             <div className="modal-action">
-              <button type="submit" className="btn hover:bg-[#376437]">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_7").close(), onChildData(false))}>
+                Close
+              </button>
+              <button type="submit" className="btn hover:bg-[#3eab3e] hover:text-white">
                 Done
               </button>
             </div>

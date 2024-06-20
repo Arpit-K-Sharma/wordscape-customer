@@ -3,10 +3,12 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
-function DeliveryDetail({ data }) {
+function DeliveryDetail({ data, onChildData }) {
+  
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
       deliveryDetail: {
+        deliveryId: 0,
         company: "",
         venue: "",
         contactPersonName: "",
@@ -21,6 +23,11 @@ function DeliveryDetail({ data }) {
       setValue("deliveryDetail.venue", data.venue);
       setValue("deliveryDetail.contactPersonName", data.contactPersonName);
       setValue("deliveryDetail.contactPersonNumber", data.contactPersonNumber);
+      setValue("deliveryDetail.deliveryId", data.deliveryId);
+      let datas = {
+        deliveryDetail: data
+      }
+      Cookies.set("deliveryData", JSON.stringify(datas));
     }
   }, [data, setValue]);
 
@@ -28,7 +35,7 @@ function DeliveryDetail({ data }) {
 
   const onSubmit = async (formData) => {
     console.log(formData);
-    const jsonData = {
+    let jsonData = {
       deliveryDetail: {
         company: formData.deliveryDetail.company,
         venue: formData.deliveryDetail.venue,
@@ -36,19 +43,24 @@ function DeliveryDetail({ data }) {
         contactPersonNumber: formData.deliveryDetail.contactPersonNumber,
       },
     };
+    
+    if (formData.deliveryDetail.deliveryId) {
+      jsonData.deliveryDetail.deliveryId = formData.deliveryDetail.deliveryId;
+    }    
 
     console.log("json data from delivery: ", jsonData);
     Cookies.set("deliveryData", JSON.stringify(jsonData));
     setDeliverydone(!deliverydone);
     document.getElementById("my_modal_6").close();
+    onChildData(false);
   };
 
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
         onClick={() => {
-          document.getElementById("my_modal_6").showModal();
+          (document.getElementById("my_modal_6").showModal(), onChildData(true));
         }}
       >
         <a className="flex"> Delivery Details </a>{" "}
@@ -118,7 +130,10 @@ function DeliveryDetail({ data }) {
                 />
               </label>
               <div className="modal-action">
-                <button type="submit" className="btn hover:bg-[#376437]">
+                <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_6").close(), onChildData(false))}>
+                  Close
+                </button>
+                <button type="submit" className="btn hover:bg-[#3eab3e] hover:text-white">
                   Done
                 </button>
               </div>

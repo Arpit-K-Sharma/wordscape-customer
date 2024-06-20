@@ -3,14 +3,15 @@ import { useForm } from "react-hook-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 
-function Bindery({ data }) {
-  const [bindery, setBindery] = useState(false); // Use state to manage bindery status
+function Bindery({ data, onChildData  }) {
+  const [bindery, setBindery] = useState(false);
 
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       filledBy: "",
       approvedBy: "",
-      selectedOptions: [], // Change to an array
+      bindingUnitId: 0,
+      selectedOptions: [], 
     },
   });
 
@@ -20,7 +21,12 @@ function Bindery({ data }) {
     if (data) {
       setValue("filledBy", data.filledInBy || "");
       setValue("approvedBy", data.approvedBy || "");
-      setValue("selectedOptions", data.bindingSelectedOptions || []); // Change to an array
+      setValue("selectedOptions", data.binderySelectedOption || []);
+      setValue("bindingUnitId", data.bindingUnitId)     
+      let datas = {
+        binderyData : data
+      }
+      Cookies.set("binderyData", JSON.stringify(datas)); 
     }
   }, [data, setValue]);
 
@@ -51,29 +57,33 @@ function Bindery({ data }) {
   };
 
   const onSubmit = async (formData) => {
-    const jsondata = {
+    let jsondata = {
       binderyData: {
         filledInBy: formData.filledBy,
         approvedBy: formData.approvedBy,
-        bindingSelectedOptions: formData.selectedOptions,
+        binderySelectedOption: formData.selectedOptions,
       },
     };
+    if(formData.bindingUnitId){
+      jsondata.binderyData.bindingUnitId = formData.bindingUnitId
+    }
     console.log("Bindery Data in JSON", jsondata);
     Cookies.set("binderyData", JSON.stringify(jsondata));
     document.getElementById("my_modal_11").close();
-    setBindery(true); // Update the bindery state here
+    onChildData(false);
+    setBindery(true);
   };
 
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_11").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_11").showModal(), onChildData(true))}
       >
         <a className="flex"> Bindery </a>
         {bindery ? <AiOutlineCheckCircle size={24} color="green" /> : null}
       </button>
-      <dialog id="my_modal_11" className="modal flex h-[100%] ml-[50%]">
+      <dialog id="my_modal_11" className="modal flex h-[100%] ml-[50%] bg-white">
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="font-bold text-lg mb-[20px] flex align-center justify-center">
@@ -212,7 +222,10 @@ function Bindery({ data }) {
               </div>
             </div>
             <div className="modal-action">
-              <button type="submit" className="btn hover:bg-[#376437]">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_11").close(), onChildData(false))}>
+                Close
+              </button>
+              <button type="submit" className="btn hover:bg-[#3eab3e] hover:text-white">
                 Done
               </button>
             </div>

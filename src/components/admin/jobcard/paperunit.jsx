@@ -3,11 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { MdAdd } from "react-icons/md";
 import Cookies from "js-cookie";
-function PaperUnit({ data }) {
-  console.log(data);
+function PaperUnit({ data, onChildData  }) {
   const [paperunitdone, setPaperunitdone] = useState(false);
   const { handleSubmit, control, getValues, setValue, reset, watch } = useForm({
     defaultValues: {
+      paperDataId : 0,
       paperData0: {
         readyBy: "",
         date: "",
@@ -103,6 +103,7 @@ function PaperUnit({ data }) {
   useEffect(() => {
     if (data) {
       reset({
+        paperDataId: data.paperDataId,
         paperData0: data.paperData0 || {
           readyBy: "",
           date: "",
@@ -117,6 +118,10 @@ function PaperUnit({ data }) {
         papersData2: data.paperData2 || [],
         papersData3: data.paperData3 || [],
       });
+      let datas = {
+        paperData : data
+      }
+      Cookies.set("PaperUnitsData", JSON.stringify(datas));
     }
   }, [data, reset]);
 
@@ -140,12 +145,17 @@ function PaperUnit({ data }) {
         paperData0: formData.paperData0,
         paperData1: formData.papersData1,
         paperData2: formData.papersData2,
-        paperData3: formData.papersData3,
+        paperData3: formData.papersData3,   
       },
     };
+    if(formData.paperDataId){
+      papersData.paperData.paperDataId = formData.paperDataId
+    }
+
     console.log(papersData)
     Cookies.set("PaperUnitsData", JSON.stringify(papersData));
     document.getElementById("my_modal_10").close();
+    onChildData(false);
   };
 
   const handleKeyPress = (event) => {
@@ -195,7 +205,7 @@ function PaperUnit({ data }) {
     };
     const updatedPapersData3 = [...papersData3, newRow];
     setValue("papersData3", updatedPapersData3);
-  }; 
+  };
 
   const handleCheckboxChange = (value, checked) => {
     const currentValues = getValues("paperData0.side");
@@ -211,8 +221,8 @@ function PaperUnit({ data }) {
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_10").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_10").showModal(), onChildData(true))}
       >
         <a className="flex"> Paper Unit </a>
         {paperunitdone ? (
@@ -602,7 +612,10 @@ function PaperUnit({ data }) {
               <MdAdd size={30} color="green" />
             </div>
             <div className="modal-action">
-              <button className="btn hover:bg-[#376437]" type="submit">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_10").close(), onChildData(false))}>
+                Close
+              </button>
+              <button className="btn hover:bg-[#3eab3e] hover:text-[white]" type="submit">
                 Done
               </button>
             </div>

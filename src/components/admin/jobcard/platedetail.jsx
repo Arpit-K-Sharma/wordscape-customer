@@ -3,14 +3,16 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 
-function PlateDetail({ data }) {
+function PlateDetail({ data, onChildData  }) {
   const [plate, setPlate] = useState(false);
   const [platenumber, setPlatenumber] = useState([1, 2, 3, 4]);
 
   const { register, handleSubmit, setValue } = useForm({
+    
     defaultValues: {
       screenType: "",
       plateData: Array(4).fill({
+        plateDataId: 0,
         size: "",
         colour1: "",
         colour2: "",
@@ -21,6 +23,7 @@ function PlateDetail({ data }) {
       }),
       plateDamage: "",
       plateRemake: "",
+      plateDetailDataId: 0
     },
   });
 
@@ -29,9 +32,11 @@ function PlateDetail({ data }) {
       setValue("screenType", data.screenType || "");
       setValue("plateDamage", data.plateDamage || "");
       setValue("plateRemake", data.plateRemake || "");
+      setValue("plateDetailDataId", data.plateDetailDataId)
 
       const plateData = data.plateData || [];
       plateData.forEach((plate, index) => {
+        setValue(`plateData[${index}].plateDataId`, plate.plateDataId || "");
         setValue(`plateData[${index}].size`, plate.size || "");
         setValue(`plateData[${index}].colour1`, plate.colour1 || "");
         setValue(`plateData[${index}].colour2`, plate.colour2 || "");
@@ -40,19 +45,25 @@ function PlateDetail({ data }) {
         setValue(`plateData[${index}].special`, plate.special || "");
         setValue(`plateData[${index}].total`, plate.total || "");
       });
+      Cookies.set("plateData", JSON.stringify(data));
     }
   }, [data, setValue]);
 
   const onSubmit = (formData) => {
-    const jsonData = {
+    let jsonData = {
       screenType: formData.screenType,
       plateData: formData.plateData,
       plateDamage: formData.plateDamage,
       plateRemake: formData.plateRemake,
     };
+
+    if(formData.plateDetailDataId){
+      jsonData.plateDetailDataId = formData.plateDetailDataId;
+    }
     Cookies.set("plateData", JSON.stringify(jsonData));
     console.log("Plate Data from Plate Details: ", jsonData);
     document.getElementById("my_modal_9").close();
+    onChildData(false);
     setPlate(true);
   };
 
@@ -73,8 +84,8 @@ function PlateDetail({ data }) {
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_9").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_9").showModal(), onChildData(true))}
       >
         <a className="flex"> Plate Details </a>
         {plate && <AiOutlineCheckCircle size={24} color="green" />}
@@ -210,7 +221,7 @@ function PlateDetail({ data }) {
                   </label>
                 </div>
               </div>
-              <div className="flex items-center ml-[30px]">
+              <div className="flex items-center mt-[10px]">
                 <label className="mr-2">No. of plate remake:</label>
                 <input
                   type="number"
@@ -222,7 +233,10 @@ function PlateDetail({ data }) {
           </p>
           <div className="modal-action">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <button type="submit" className="btn hover:bg-[#376437]">
+            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_9").close(), onChildData(false))}>
+                Close
+              </button>
+              <button type="submit" className="btn hover:bg-[#3eab3e] ml-[5px] hover:text-white">
                 Done
               </button>
             </form>

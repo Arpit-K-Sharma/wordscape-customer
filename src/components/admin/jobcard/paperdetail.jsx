@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
 
-function PaperDetail({ data }) {
+function PaperDetail({ data, onChildData }) {
   const {
     register,
     handleSubmit,
@@ -20,12 +20,18 @@ function PaperDetail({ data }) {
       setValue("innerPaperSize", data.innerPaperSize);
       setValue("folderName", data.folderName);
       setValue("plateProcessBy", data.plateProcessBy);
+      setValue("paperDetailDataId", data.paperDetailDataId)
+      let datas = {
+        paperDetail: data
+      }
+      Cookies.set("paperData", JSON.stringify(datas));
     }
   }, [data, setValue]);
 
   const onSubmit = async (formData) => {
     console.log(formData);
-    const jsonData = {
+  
+    let jsonData = {
       paperDetail: {
         paperSize: formData.paperSize,
         gutterSize: formData.gutterSize,
@@ -34,12 +40,19 @@ function PaperDetail({ data }) {
         innerPaperSize: formData.innerPaperSize,
         folderName: formData.folderName,
         plateProcessBy: formData.plateProcessBy,
-      },
+      }
     };
+  
+    if (formData.paperDetailDataId) {
+      jsonData.paperDetail.paperDetailDataId = formData.paperDetailDataId;
+    }
+
     Cookies.set("paperData", JSON.stringify(jsonData));
-    console.log("Paper Data from Paper Details: " + jsonData);
+    console.log("Paper Data from Paper Details: ", jsonData);
     document.getElementById("my_modal_8").close();
+    onChildData(false);
   };
+  
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -58,8 +71,8 @@ function PaperDetail({ data }) {
   return (
     <>
       <button
-        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-base-200 hover:text-white"
-        onClick={() => document.getElementById("my_modal_8").showModal()}
+        className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
+        onClick={() => (document.getElementById("my_modal_8").showModal(), onChildData(true))}
       >
         <span className="flex">Paper Details </span>
         {isSubmitSuccessful && <AiOutlineCheckCircle size={24} color="green" />}
@@ -162,7 +175,10 @@ function PaperDetail({ data }) {
                 />
               </label>
               <div className="modal-action">
-                <button type="submit" className="btn hover:bg-[#376437]">
+                <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_8").close(), onChildData(false))}>
+                  Close
+                </button>
+                <button type="submit" className="btn hover:bg-[#3eab3e] hover:text-[white]">
                   Done
                 </button>
               </div>

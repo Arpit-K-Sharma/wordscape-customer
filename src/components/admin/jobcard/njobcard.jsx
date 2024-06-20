@@ -13,7 +13,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
 import Cookies from "js-cookie";
-import CostCalculation from "../costcalculation/costcalculation";
+
 
 function NJobCard() {
   const location = useLocation();
@@ -27,9 +27,6 @@ function NJobCard() {
   const [jobCard, setJobCard] = useState([]);
   const [pressunit, setPressunit] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   useEffect(() => {
     axios
@@ -48,7 +45,6 @@ function NJobCard() {
       handleOrderChange(ordersId);
       const fetchJobCard = async () => {
         const response = await axios.get(`/jobCard/${ordersId}`);
-        console.log(response.data);
         setJobCard(response.data);
       };
       fetchJobCard();
@@ -110,14 +106,9 @@ function NJobCard() {
   //   <AdminDrawer />
   // </div>;
 
-  
 
-  const onSubmit = async (formData) => {
-    console.log(formData);
-  
-    document.getElementById("my_modal_12").close();
-    setPressunit(true);
-  
+  const onUpdate = () => {
+
     const parseJSONCookie = (cookie) => {
       try {
         return JSON.parse(cookie);
@@ -126,7 +117,7 @@ function NJobCard() {
         return null;
       }
     };
-  
+
     let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
     let binderyData = parseJSONCookie(Cookies.get("binderyData"));
     let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
@@ -136,8 +127,8 @@ function NJobCard() {
     let prePressData = parseJSONCookie(Cookies.get("prePressData"));
     let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
     let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
-    console.log()
-  
+    console.log(paperData)
+
     let cookiesData = {
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
       binderyData: binderyData ? binderyData.binderyData : null,
@@ -149,26 +140,89 @@ function NJobCard() {
       pressUnitData: pressUnitData ? pressUnitData : null,
       costCalculation: costCalculation ? costCalculation : null,
     };
-    const orderId = 4; // Adjust as needed
+
+    const Update = async () => {
+      try {
+        const response = await axios.put(`http://localhost:8081/jobCard/update/${orderId}`, cookiesData);
+        console.log(response.data);
+        alert(response.data)
+      } catch (error) {
+        console.error('Error updating job card:', error);
+      }
+    };
+    Update();
+  }
+  const onSubmit = async (formData) => {
+    console.log(formData);
+
+    document.getElementById("my_modal_12").close();
+    setPressunit(true);
+
+    const parseJSONCookie = (cookie) => {
+      try {
+        return JSON.parse(cookie);
+      } catch (e) {
+        console.error("Error parsing cookie:", cookie);
+        return null;
+      }
+    };
+
+    let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
+    let binderyData = parseJSONCookie(Cookies.get("binderyData"));
+    let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
+    let paperData = parseJSONCookie(Cookies.get("PaperUnitsData"));
+    let paymentData = parseJSONCookie(Cookies.get("paymentData"));
+    let plateDetailData = parseJSONCookie(Cookies.get("plateData"));
+    let prePressData = parseJSONCookie(Cookies.get("prePressData"));
+    let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
+    let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
+    console.log()
+
+    let cookiesData = {
+      paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
+      binderyData: binderyData ? binderyData.binderyData : null,
+      deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
+      paperData: paperData ? paperData.paperData : null,
+      prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
+      plateDetailData: plateDetailData ? plateDetailData : null,
+      prePressData: prePressData ? prePressData.prePressUnitList : null,
+      pressUnitData: pressUnitData ? pressUnitData : null,
+      costCalculation: costCalculation ? costCalculation : null,
+    };
+
     const url = `/jobCard/${orderId}`;
     console.log(cookiesData);
-  
+    console.log("orderid", orderId)
+
     try {
       const response = await axios.post(url, cookiesData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+      alert(response.data);
+      Cookies.remove("paperData");
+      Cookies.remove("binderyData");
+      Cookies.remove("deliveryData");
+      Cookies.remove("PaperUnitsData");
+      Cookies.remove("paymentData");
+      Cookies.remove("plateData");
+      Cookies.remove("prePressData");
+      Cookies.remove("costCalculation");
+      Cookies.remove("pressUnitData");
       console.log("Successfully sent data to API:", response.data);
     } catch (error) {
       console.error("Error sending data to API:", error);
     }
   };
   
+  const handleChildData = (data) => {
+    setOpen(data); 
+  };
+
 
   return (
-    <div className="drawer">
+    <div className="drawer" >
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <AdminDrawer />
       <div className="drawer-content">
@@ -186,21 +240,20 @@ function NJobCard() {
           </NavLink>
           <p className="text-xl">Menu</p>
         </label>
-        <div className="grid h-screen grid-cols-2 font-archivo">
-          <div className={open ? "xl:mr-[60%]" : null}>
+        <div className="grid h-screen grid-cols-2 font-archivo  ">
+          <div className={open ? "xl:mr-[60%] " : null}>
             <h2 className="text-center w-[200px] xl:ml-[85%] mt-[25px] text-4xl font-extrabold">
               Job Card
             </h2>
-            <button className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl"
-            onClick={() => document.getElementById("my_modal_5").showModal()}>
+            <h1 className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl">
               Order Details
-            </button>
+            </h1>
             <div
               className={
-                open ? "flex gap-[20px] ml-[-100%]" : "flex gap-[20px]"
+                open ? "flex gap-[20px] ml-[-100%] " : "flex gap-[20px]"
               }
             >
-              <div className="dropdown xl:ml-[80%] mt-[10px] text-center">
+              <div className="dropdown xl:ml-[80%] mt-[10px] text-center ">
                 <label className="input input-bordered flex items-center gap-2">
                   <input
                     tabIndex={0}
@@ -244,34 +297,38 @@ function NJobCard() {
             </div>
             <div className={open ? "xl:ml-[40%]" : "xl:ml-[70%]"}>
               <div
-                onClick={handleClick}
                 className="grid grid-cols-2 gap-x-[250px] gap-y-[50px]"
               >
                 {jobCard ? (
                   <>
-                    <PaymentTable data={jobCard.prePressUnitList} />
-                    <DeliveryDetail data={jobCard.delivery} />
-                    <PressUnit data={jobCard.prePressData} />
-                    <PaperDetail data={jobCard.paperDetailData} />
-                    <PlateDetail data={jobCard.plateDetailData} />
-                    <PaperUnit data={jobCard.paperData} />
-                    <Bindery data={jobCard.bindingData} />
-                    <PressUnits data={jobCard.pressUnitData} />
-                    <Costbreakdown
-                      coverData={jobCard.coverTreatment}
-                      bindingData={jobCard.binding}
-                      laminationData={jobCard.lamination}
-                      innerData={jobCard.innerPaper}
-                      outerData={jobCard.outerPaper}
-                    />
-                    <div className="modal-action ml-[70px]">
-                      <button
-                        onClick={onSubmit}
-                        className="btn hover:bg-[#376437]"
-                        type="submit"
-                      >
-                        Submit
-                      </button>
+                    <PaymentTable data={jobCard.prePressUnitList} onChildData={handleChildData}/>
+                    <DeliveryDetail data={jobCard.delivery} onChildData={handleChildData}/>
+                    <PressUnit data={jobCard.prePressData} onChildData={handleChildData}/>
+                    <PaperDetail data={jobCard.paperDetailData} onChildData={handleChildData}/>
+                    <PlateDetail data={jobCard.plateDetailData} onChildData={handleChildData}/>
+                    <PaperUnit data={jobCard.paperData} onChildData={handleChildData}/>
+                    <Bindery data={jobCard.bindingData} onChildData={handleChildData}/>
+                    <PressUnits data={jobCard.pressUnitData} onChildData={handleChildData}/>
+                    <Costbreakdown data={jobCard.costCalculation} onChildData={handleChildData}/>
+                    <div className="modal-action ml-[200px]">
+                      {jobCard?.projectTracking?.jobCard === true
+                        ?
+                        <button
+                          onClick={onUpdate}
+                          className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                        :
+                        <button
+                          onClick={onSubmit}
+                          className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
+                          type="submit"
+                        >
+                          Submit
+                        </button>
+                      }
                     </div>
                   </>
                 ) : null}
