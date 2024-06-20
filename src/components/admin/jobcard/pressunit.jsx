@@ -22,13 +22,20 @@ function PressUnits({ data, onChildData  }) {
 
   useEffect(() => {
     if (data) {
+      const nonnullData = data.pressData.filter(datas => datas.paperType !== null);
+      const nullData = data.pressData.filter(datas => datas.paperType === null);
+      console.log("nonnullData", nonnullData)
+      console.log("nullData", nullData)
+
+      const updatedPressData = [...nonnullData, ...nullData];
+  
       const initialFormValues = {
         totalset: data.totalSet || "",
         forma: data.forma || "",
         workandturn: data.workAndTurn || "",
         pressUnitDataId: data.pressUnitDataId || "",
-        pressData: data.pressData.map((entry) => ({
-          pressDataId : entry.pressDataId || "",
+        pressData: updatedPressData.map((entry) => ({
+          pressDataId: entry.pressDataId || "",
           paperType: entry.paperType || "",
           size: entry.size || "",
           signature: entry.signature || "",
@@ -36,10 +43,17 @@ function PressUnits({ data, onChildData  }) {
           produced: entry.produced || "",
         })),
       };
-      Cookies.set("pressUnitData", JSON.stringify(data));
+  
+      const newData = {
+        ...data,
+        pressData: updatedPressData
+      };
+  
+      Cookies.set("pressUnitData", JSON.stringify(newData));
       reset(initialFormValues);
     }
   }, [data, reset]);
+  
 
   const onSubmit = async (formData) => {
     console.log(formData);

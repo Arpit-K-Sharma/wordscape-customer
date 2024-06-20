@@ -532,37 +532,19 @@ const CostCalculation = () => {
     <>
       {/* <MobileMenu /> */}
       <Navbar />
-
+      <AdminDrawer />
       <div className="cost-calc-container bg-zinc-800">
         <div className="empty-box">
           <div className="test-box">
             <div className="open-box text-zinc-900">
+              <br></br>
               <MobileMenu />
-              <h1 className="heading-c ">
+              <h1 className="heading-c">
                 <b>Cost</b> Calculator
               </h1>
+              <br></br>
+
               {console.log("PAPER SIZE TEST: " + paperSize)}
-              <DrawerTest
-                // inkCost={inkCost}
-                pages={pages}
-                quantity={quantity}
-                paperSize={paperSize}
-                selectedPaperType={selectedPaperType}
-                selectedPaperThickness={selectedPaperThickness}
-                selectedOuterPaperThickness={selectedOuterPaperThickness}
-                totalReams={totalReams(quantity, pages)}
-                selectedBindingType={selectedBindingType}
-                outerSelectedPaperType={outerSelectedPaperType}
-                plateSize={plateSize}
-                selectedLaminationType={selectedLaminationType}
-                changeCostPerKg={paperPrice}
-                selectedInkType={selectedInkType}
-                plateCost={plateCost}
-                laminationCost={laminationPrice}
-                outerPaperPrice={outerPaperPrice}
-                totalCost={totalCost}
-                totalPacket={totalPacket(quantity)}
-              />
               {/* <DrawerTest
                 plateSize={plateSize}
                 outerChangeCostPerKg={outerChangeCostPerKg}
@@ -603,7 +585,7 @@ const CostCalculation = () => {
                 Total Estimate: Rs.<b>{totalCost}</b>
               </h3>
               <br></br>
-              <form>
+              <form className="pb-[20px]">
                 <div className="cost-box">
                   <p className="divider-p-1">Product Specs</p>
                   <br></br>
@@ -884,6 +866,28 @@ const CostCalculation = () => {
                   </div>
                 </div>
                 <br></br>
+
+                <DrawerTest
+                  // inkCost={inkCost}
+                  pages={pages}
+                  quantity={quantity}
+                  paperSize={paperSize}
+                  selectedPaperType={selectedPaperType}
+                  selectedPaperThickness={selectedPaperThickness}
+                  selectedOuterPaperThickness={selectedOuterPaperThickness}
+                  totalReams={totalReams(quantity, pages)}
+                  selectedBindingType={selectedBindingType}
+                  outerSelectedPaperType={outerSelectedPaperType}
+                  plateSize={plateSize}
+                  selectedLaminationType={selectedLaminationType}
+                  changeCostPerKg={paperPrice}
+                  selectedInkType={selectedInkType}
+                  plateCost={plateCost}
+                  laminationCost={laminationPrice}
+                  outerPaperPrice={outerPaperPrice}
+                  totalCost={totalCost}
+                  totalPacket={totalPacket(quantity)}
+                />
               </form>
             </div>
           </div>

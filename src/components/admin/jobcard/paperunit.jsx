@@ -102,9 +102,34 @@ function PaperUnit({ data, onChildData  }) {
 
   useEffect(() => {
     if (data) {
+      const papersData1 = data.paperData1 || [];
+      const papersData2 = data.paperData2 || [];
+      const papersData3 = data.paperData3 || [];
+  
+      const nullData1 = papersData1.filter(datas => datas.fullSheetSize === null);
+      const notNullData1 = papersData1.filter(datas => datas.fullSheetSize !== null);
+      const updatedPaperData1 = [...notNullData1, ...nullData1];
+  
+      const nullData2 = papersData2.filter(datas => datas.cutSheetSize === null);
+      const notNullData2 = papersData2.filter(datas => datas.cutSheetSize !== null);
+      const updatedPaperData2 = [...notNullData2, ...nullData2];
+      
+  
+      const nullData3 = papersData3.filter(datas => datas.type === null);
+      const notNullData3 = papersData3.filter(datas => datas.type !== null);
+      const updatedPaperData3 = [...notNullData3, ...nullData3];
+
+  
+      const updatedData = {
+        ...data,
+        papersData1: updatedPaperData1,
+        papersData2: updatedPaperData2,
+        papersData3: updatedPaperData3,
+      };
+  
       reset({
-        paperDataId: data.paperDataId,
-        paperData0: data.paperData0 || {
+        paperDataId: updatedData.paperDataId,
+        paperData0: updatedData.paperData0 || {
           readyBy: "",
           date: "",
           time: "",
@@ -114,16 +139,20 @@ function PaperUnit({ data, onChildData  }) {
           printrun: "",
           side: [],
         },
-        papersData1: data.paperData1 || [],
-        papersData2: data.paperData2 || [],
-        papersData3: data.paperData3 || [],
+        papersData1: updatedData.papersData1 || [],
+        papersData2: updatedData.papersData2 || [],
+        papersData3: updatedData.papersData3 || [],
       });
-      let datas = {
-        paperData : data
-      }
+  
+      const datas = {
+        paperData: data
+      };
+  
       Cookies.set("PaperUnitsData", JSON.stringify(datas));
     }
   }, [data, reset]);
+  
+  
 
   const onSubmit = async (formData) => {
     setPaperunitdone(true);

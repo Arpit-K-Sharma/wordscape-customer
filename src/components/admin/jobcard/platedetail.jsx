@@ -32,9 +32,15 @@ function PlateDetail({ data, onChildData  }) {
       setValue("screenType", data.screenType || "");
       setValue("plateDamage", data.plateDamage || "");
       setValue("plateRemake", data.plateRemake || "");
-      setValue("plateDetailDataId", data.plateDetailDataId)
+      setValue("plateDetailDataId", data.plateDetailDataId);
+  
+      let plateData = data.plateData || [];
 
-      const plateData = data.plateData || [];
+      const nonNullPlates = plateData.filter(plate => plate.size !== "");
+      const nullPlates = plateData.filter(plate => plate.size === "");
+
+      plateData = [...nonNullPlates, ...nullPlates];
+  
       plateData.forEach((plate, index) => {
         setValue(`plateData[${index}].plateDataId`, plate.plateDataId || "");
         setValue(`plateData[${index}].size`, plate.size || "");
@@ -45,9 +51,11 @@ function PlateDetail({ data, onChildData  }) {
         setValue(`plateData[${index}].special`, plate.special || "");
         setValue(`plateData[${index}].total`, plate.total || "");
       });
+  
       Cookies.set("plateData", JSON.stringify(data));
     }
   }, [data, setValue]);
+  
 
   const onSubmit = (formData) => {
     let jsonData = {
