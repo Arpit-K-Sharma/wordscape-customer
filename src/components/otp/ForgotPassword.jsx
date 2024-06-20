@@ -19,7 +19,7 @@ function ForgotPassword() {
 
   const handleSendEmail = async () => {
     try {
-      const response = await axios.post("http://localhost:8081/home/forgot", {
+      const response = await axios.post("/home/forgot", {
         email: email,
         role: role,
       });
@@ -41,15 +41,12 @@ function ForgotPassword() {
       return;
     }
     try {
-      const response = await axios.post(
-        "http://localhost:8081/home/newPassword",
-        {
-          otp: otp,
-          newPassword: password,
-          email: email,
-          role: "ROLE_CUSTOMER",
-        }
-      );
+      const response = await axios.post("/home/newPassword", {
+        otp: otp,
+        newPassword: password,
+        email: email,
+        role: "ROLE_CUSTOMER",
+      });
       setShowForm(true);
       console.log("Password reset successful!");
       toast.success("Password changed successfully");
