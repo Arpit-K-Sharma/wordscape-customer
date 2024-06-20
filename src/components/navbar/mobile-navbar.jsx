@@ -66,10 +66,11 @@ function MobileNavbar() {
                   place
                 </span>
               </h1>
-              <p className="w-[50%] text-center mx-auto leading-[23px] max-sm:w-[90%] font-archivo text-slate-700 ">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry. Register and Login
-                to place an order
+              <p className="w-[50%] text-center mx-auto leading-[23px] max-sm:w-[90%] font-archivo text-slate-700">
+                Wordscape is a renowned printing press company that offers
+                top-notch printing services. With cutting-edge technology and
+                skilled professionals, they deliver high-quality magazines,
+                publications, and more.
               </p>
               <div className="flex flex-row justify-center mt-[40px] mb-[150px]">
                 {!isLoggedIn() && (
@@ -80,13 +81,14 @@ function MobileNavbar() {
                   </NavLink>
                 )}
 
-                {isCustomer() && (
-                  <NavLink to="/order/1">
-                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                      Place an Order
-                    </button>
-                  </NavLink>
-                )}
+                {isCustomer() ||
+                  (isEmployee() && (
+                    <NavLink to="/order/1">
+                      <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
+                        Place an Order
+                      </button>
+                    </NavLink>
+                  ))}
 
                 <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold max-sm:mb-[180px]">
                   Learn More

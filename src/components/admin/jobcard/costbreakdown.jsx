@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { MdAdd } from "react-icons/md";
 import Cookies from "js-cookie";
+import { Nav } from "rsuite";
 
 function Costbreakdown() {
   const [costdone, setCostdone] = useState(false);
@@ -132,7 +133,7 @@ function Costbreakdown() {
             />
             <input
               id="extraCharges"
-              name="extraCharge"
+              name="extraCharges"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Extra Charges"
               onChange={handleChange}
@@ -220,6 +221,11 @@ function Costbreakdown() {
               placeholder="Issue By"
             />
           </div>
+          <div className="modal-action">
+              <button className="btn hover:bg-[#376437]" type="submit" onSubmit={handleChange}>
+                Done
+              </button>
+            </div>
           {/* <div className="p-4 mt-[20px]">
             <h2 className="font-semibold mb-[10px]">Project Details:</h2>
             <div className="flex justify-between">

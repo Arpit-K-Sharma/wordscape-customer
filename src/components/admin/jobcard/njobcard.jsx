@@ -12,6 +12,8 @@ import axios from "../../axiosInstance";
 import { NavLink, useLocation } from "react-router-dom";
 import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
+import Cookies from "js-cookie";
+import CostCalculation from "../costcalculation/costcalculation";
 
 function NJobCard() {
   const location = useLocation();
@@ -23,6 +25,7 @@ function NJobCard() {
   const [filteredOrder, setFilteredOrder] = useState([]);
   const dropdownRef = useRef(null);
   const [jobCard, setJobCard] = useState([]);
+  const [pressunit, setPressunit] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -52,6 +55,7 @@ function NJobCard() {
     }
   }, [orders, ordersId]);
 
+
   const handleOrderChange = (id) => {
     setSelectedOrder(id);
     setOrderId(id);
@@ -78,6 +82,22 @@ function NJobCard() {
     }
   };
 
+  // const handleSubmit = async (formData) => {
+  //   console.log(formData);
+  //   const jsonData = {
+  //     prePressUnitList: {
+  //       paymentMethod: formData.prePressUnitList.paymentMethod,
+  //       materialReceived: formData.prePressUnitList.materialReceived,
+  //       flapSize: formData.prePressUnitList.flapSize,
+  //     },
+
+  //   };
+  //   console.log("json data from prepress unit: ", jsonData);
+  //   Cookies.set("prePressData", JSON.stringify(jsonData));
+  //   setPredone(!predone);
+  //   document.getElementById("my_modal_7").close();
+  // };
+
   // <div className="drawer drawer-end">
   //   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
   //   <div className="drawer-content">
@@ -89,6 +109,63 @@ function NJobCard() {
 
   //   <AdminDrawer />
   // </div>;
+
+  
+
+  const onSubmit = async (formData) => {
+    console.log(formData);
+  
+    document.getElementById("my_modal_12").close();
+    setPressunit(true);
+  
+    const parseJSONCookie = (cookie) => {
+      try {
+        return JSON.parse(cookie);
+      } catch (e) {
+        console.error("Error parsing cookie:", cookie);
+        return null;
+      }
+    };
+  
+    let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
+    let binderyData = parseJSONCookie(Cookies.get("binderyData"));
+    let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
+    let paperData = parseJSONCookie(Cookies.get("PaperUnitsData"));
+    let paymentData = parseJSONCookie(Cookies.get("paymentData"));
+    let plateDetailData = parseJSONCookie(Cookies.get("plateData"));
+    let prePressData = parseJSONCookie(Cookies.get("prePressData"));
+    let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
+    let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
+    console.log()
+  
+    let cookiesData = {
+      paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
+      binderyData: binderyData ? binderyData.binderyData : null,
+      deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
+      paperData: paperData ? paperData.paperData : null,
+      prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
+      plateDetailData: plateDetailData ? plateDetailData : null,
+      prePressData: prePressData ? prePressData.prePressUnitList : null,
+      pressUnitData: pressUnitData ? pressUnitData : null,
+      costCalculation: costCalculation ? costCalculation : null,
+    };
+    const orderId = 4; // Adjust as needed
+    const url = `/jobCard/${orderId}`;
+    console.log(cookiesData);
+  
+    try {
+      const response = await axios.post(url, cookiesData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Successfully sent data to API:", response.data);
+    } catch (error) {
+      console.error("Error sending data to API:", error);
+    }
+  };
+  
 
   return (
     <div className="drawer">
@@ -114,9 +191,10 @@ function NJobCard() {
             <h2 className="text-center w-[200px] xl:ml-[85%] mt-[25px] text-4xl font-extrabold">
               Job Card
             </h2>
-            <h1 className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl">
+            <button className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl"
+            onClick={() => document.getElementById("my_modal_5").showModal()}>
               Order Details
-            </h1>
+            </button>
             <div
               className={
                 open ? "flex gap-[20px] ml-[-100%]" : "flex gap-[20px]"
@@ -186,6 +264,15 @@ function NJobCard() {
                       innerData={jobCard.innerPaper}
                       outerData={jobCard.outerPaper}
                     />
+                    <div className="modal-action ml-[70px]">
+                      <button
+                        onClick={onSubmit}
+                        className="btn hover:bg-[#376437]"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </>
                 ) : null}
               </div>

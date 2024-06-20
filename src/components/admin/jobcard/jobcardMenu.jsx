@@ -5,7 +5,6 @@ import { SlSizeActual } from "react-icons/sl";
 import { SiPowerpages } from "react-icons/si";
 import { RiNumbersFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
-
 import {
   FaCut,
   FaPaintBrush,
@@ -15,6 +14,7 @@ import {
   FaComment,
   FaUser,
 } from "react-icons/fa";
+import './jobcard.css';
 
 function JobcardMenu({ orderId }) {
   const [orderDetails, setOrderDetails] = useState(null);
@@ -22,7 +22,9 @@ function JobcardMenu({ orderId }) {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`/orders/${orderId}`);
+        const response = await axios.get(
+          `/orders/${orderId}`
+        );
         console.log(response.data);
         setOrderDetails(response.data);
       } catch (error) {
@@ -36,25 +38,23 @@ function JobcardMenu({ orderId }) {
   }, [orderId]);
 
   return (
-    <div className="drawer w-[200px]">
-      <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
+    <div className="drawer w-[200px] relative">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle hidden" />
       <div className="drawer-content">
-        <label htmlFor="my-drawer-1" className="btn drawer-button ">
+        <label htmlFor="my-drawer-4" className="btn drawer-button ">
           Order Details
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="order-details-drawer">
         <label
-          htmlFor="my-drawer-1"
+          htmlFor="my-drawer-4"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="p-4 w-80 min-h-full bg-base-100 text-base-content w-[38%]  ">
-          <h1 className="text-3xl mb-4 mt-5 flex justify-center mb-6 ">
-            All Details
-          </h1>
+        <div className="p-4 w-80 min-h-full bg-base-100 text-base-content w-[38%]">
+          
           {orderDetails ? (
-            <div className="shadow-2xl bg-base-200 ml-[20px] w-[92%] pl-[20px]">
+            <div className="shadow-2xl bg-base-200 ml-[20px] w-[92%] pl-[20px] h-screen">
               <table className="table-auto w-full mr-[20px] ">
                 <tbody>
                   <tr
@@ -62,7 +62,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <IoMdTimer className="text-blue-500" size={30} />
+                      <IoMdTimer className="text-gray-600" size={30} />
                       Date
                     </td>
                     <td className="w-1/2">
@@ -74,7 +74,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <SlSizeActual className="text-green-500" />
+                      <SlSizeActual className="text-gray-600" />
                       Paper Size
                     </td>
                     <td className="w-1/2">{orderDetails.paperSize}</td>
@@ -84,7 +84,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <SiPowerpages className="text-yellow-500" /> Pages
+                      <SiPowerpages className="text-gray-600" /> Pages
                     </td>
                     <td className="w-1/2">{orderDetails.pages}</td>
                   </tr>
@@ -93,7 +93,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <RiNumbersFill className="text-red-500" />
+                      <RiNumbersFill className="text-gray-600" />
                       Quantity
                     </td>
                     <td className="w-1/2">{orderDetails.quantity}</td>
@@ -103,7 +103,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaBook className="text-purple-500" />
+                      <FaBook className="text-gray-600" />
                       Binding Type
                     </td>
                     <td className="w-1/2">{orderDetails.bindingType}</td>
@@ -113,7 +113,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaCut className="text-blue-500" />
+                      <FaCut className="ttext-gray-600" />
                       Cover Treatment Type
                     </td>
                     <td className="w-1/2">{orderDetails.coverTreatmentType}</td>
@@ -123,7 +123,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaPaintBrush className="text-green-500" />
+                      <FaPaintBrush className="text-gray-600" />
                       Inner Paper Type
                     </td>
                     <td className="w-1/2">{orderDetails.innerPaperType}</td>
@@ -133,7 +133,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaLayerGroup className="text-yellow-500" />
+                      <FaLayerGroup className="text-gray-600" />
                       Inner Paper Thickness
                     </td>
                     <td className="w-1/2">
@@ -145,7 +145,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaPaintBrush className="text-green-500" />
+                      <FaPaintBrush className="text-gray-600" />
                       Outer Paper Type
                     </td>
                     <td className="w-1/2">{orderDetails.outerPaperType}</td>
@@ -155,7 +155,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaLayerGroup className="text-yellow-500" />
+                      <FaLayerGroup className="text-gray-600" />
                       Outer Paper Thickness
                     </td>
                     <td className="w-1/2">
@@ -167,7 +167,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaPrint className="text-red-500" />
+                      <FaPrint className="text-gray-600" />
                       Inner Lamination Type
                     </td>
                     <td className="w-1/2">{orderDetails.innerLamination}</td>
@@ -177,7 +177,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaPrint className="text-red-500" />
+                      <FaPrint className="text-gray-600" />
                       Outer Lamination Type
                     </td>
                     <td className="w-1/2">{orderDetails.outerLamination}</td>
@@ -187,7 +187,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaTint className="text-blue-500" />
+                      <FaTint className="text-gray-600" />
                       Ink Type
                     </td>
                     <td className="w-1/2">{orderDetails.inkType}</td>
@@ -197,7 +197,7 @@ function JobcardMenu({ orderId }) {
                     style={{ height: "50px" }}
                   >
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaComment className="text-purple-500" />
+                      <FaComment className="text-gray-600" />
                       Remarks
                     </td>
                     <td className="w-1/2">
@@ -206,7 +206,7 @@ function JobcardMenu({ orderId }) {
                   </tr>
                   <tr className="mb-4 text-lg" style={{ height: "50px" }}>
                     <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
-                      <FaUser className="text-yellow-500" />
+                      <FaUser className="text-gray-600" />
                       Customer Name
                     </td>
                     <td className="w-1/2">{orderDetails.customer}</td>

@@ -57,50 +57,7 @@ function PressUnits({ data }) {
 
     document.getElementById("my_modal_12").close();
     setPressunit(true);
-
-    const parseJSONCookie = (cookie) => {
-      try {
-        return JSON.parse(cookie);
-      } catch (e) {
-        console.error("Error parsing cookie:", cookie);
-        return null;
-      }
-    };
-
-    let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
-    let binderyData = parseJSONCookie(Cookies.get("binderyData"));
-    let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
-    let paperData = parseJSONCookie(Cookies.get("PaperUnitsData"));
-    let paymentData = parseJSONCookie(Cookies.get("paymentData"));
-    let plateDetailData = parseJSONCookie(Cookies.get("plateData"));
-    let prePressData = parseJSONCookie(Cookies.get("prePressData"));
-
-    let cookiesData = {
-      paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
-      binderyData: binderyData ? binderyData.binderyData : null,
-      deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
-      paperData: paperData ? paperData.paperData : null,
-      prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
-      plateDetailData: plateDetailData ? plateDetailData : null,
-      prePressData: prePressData ? prePressData.prePressUnitList : null,
-      pressUnitData: jsonData,
-    };
-
-    const orderId = 4;
-    const url = `/jobCard/${orderId}`;
-    console.log(cookiesData);
-
-    try {
-      const response = await axios.post(url, cookiesData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log("Successfully sent data to API:", response.data);
-    } catch (error) {
-      console.error("Error sending data to API:", error);
-    }
+    Cookies.set("pressUnitData", JSON.stringify(jsonData));
   };
 
   const handleKeyPress = (event) => {
@@ -207,7 +164,7 @@ function PressUnits({ data }) {
                     </td>
                     <td>
                       <input
-                        type="signature"
+                        type="text"
                         className="input input-bordered h-[40px] w-full max-w-xs"
                         {...register(`pressData.${index}.signature`)}
                         onKeyDown={handleKeyPress}
