@@ -27,10 +27,6 @@ function OrderStatusList({ orderDetails }) {
     };
 
     fetchTrackingData(); // Initial fetch
-
-    const intervalId = setInterval(fetchTrackingData, pollingInterval); // Set up polling
-
-    return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [orderDetails]);
 
   function getLastCompletedStage(data) {
@@ -54,10 +50,6 @@ function OrderStatusList({ orderDetails }) {
     return "Not Started";
   }
 
-  const sortedOrderDetails = [...orderDetails].sort(
-    (a, b) => a.orderId - b.orderId
-  );
-
   return (
     <>
       <div className="w-1/3 h-[350px] bg-[white] rounded-lg ml-[10%] mt-[20px] text-[#1c1b1b] p-4">
@@ -70,7 +62,7 @@ function OrderStatusList({ orderDetails }) {
             </tr>
           </thead>
           <tbody>
-            {sortedOrderDetails.map((order) => (
+            {orderDetails.map((order) => (
               <tr
                 key={order.orderId}
                 className="border-b border-gray-200 hover:bg-gray-100 text-gray-700"

@@ -36,16 +36,6 @@ function AdminDashboard() {
     { name: "Delivery", active: false, key: "delivery" },
     { name: "End", active: false, key: "end" },
   ]);
-  const [recentSteps, setRecentSteps] = useState([
-    { name: "Order Slip", active: false, key: "orderSlip" },
-    { name: "Job Card", active: false, key: "jobCard" },
-    { name: "Paper Cutting", active: false, key: "paperCutting" },
-    { name: "Plate Preparation", active: false, key: "platePreparation" },
-    { name: "Printing", active: false, key: "printing" },
-    { name: "Post Press", active: false, key: "postPress" },
-    { name: "Delivery", active: false, key: "delivery" },
-    { name: "End", active: false, key: "end" },
-  ]);
   const [order, setOrderid] = useState();
   const [lastOrderStatus, setLastOrderStatus] = useState("");
   const [customerName, setCustomerName] = useState("");
@@ -99,13 +89,9 @@ function AdminDashboard() {
 
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(`/orders?pageSize=5`);
+        const response = await axios.get(`/orders?pageSize=5&sortField=date`);
         const allorder = response.data.response;
-        const recentOrder = allorder.reduce((maxOrder, order) => {
-          return order.orderId > (maxOrder?.orderId || 0) ? order : maxOrder;
-        }, null);
 
-        handleRecentTracking(recentOrder.orderId);
         setRecentOrders(allorder);
         setOrderDetails(allorder);
         setFilteredOrder(allorder.sort((a, b) => a.orderId - b.orderId));
@@ -166,22 +152,6 @@ function AdminDashboard() {
       console.error("Error fetching tracking data:", error);
     }
   };
-  const handleRecentTracking = async (id) => {
-    setRecentId(id);
-    try {
-      const response = await axios.get(`/projectTracking/${id}`);
-      const trackingData = response.data;
-
-      const updatedSteps = recentSteps.map((step) => ({
-        ...step,
-        active: trackingData[step.key],
-      }));
-      console.log(updatedSteps);
-      setRecentSteps(updatedSteps);
-    } catch (error) {
-      console.error("Error fetching tracking data:", error);
-    }
-  };
 
   const handleDone = async () => {
     const stepData = steps.reduce((acc, step) => {
@@ -214,22 +184,6 @@ function AdminDashboard() {
       }
       return prevSteps;
     });
-    if (orderid == recentId) {
-      setRecentSteps((prevSteps) => {
-        const lastActiveIndex = prevSteps.reduce(
-          (lastIndex, step, index) => (step.active ? index : lastIndex),
-          -1
-        );
-        if (lastActiveIndex > 0) {
-          const newSteps = prevSteps.map((step, index) => ({
-            ...step,
-            active: index < lastActiveIndex,
-          }));
-          return newSteps;
-        }
-        return prevSteps;
-      });
-    }
   };
   const handleNext = () => {
     setSteps((prevSteps) => {
@@ -246,22 +200,6 @@ function AdminDashboard() {
       }
       return prevSteps;
     });
-    if (orderid == recentId) {
-      setRecentSteps((prevSteps) => {
-        const lastActiveIndex = prevSteps.reduce(
-          (lastIndex, step, index) => (step.active ? index : lastIndex),
-          -1
-        );
-        if (lastActiveIndex < prevSteps.length - 1) {
-          const newSteps = prevSteps.map((step, index) => ({
-            ...step,
-            active: index <= lastActiveIndex + 1,
-          }));
-          return newSteps;
-        }
-        return prevSteps;
-      });
-    }
   };
 
   const handleJobCard = (id) => {
@@ -465,10 +403,10 @@ function AdminDashboard() {
                               {new Date(details.date).toLocaleDateString()}
                             </td>
                             <td className="h-[60px] text-left">
-                              {details.delivery
+                              {details.delivery && details.delivery.deliveryDate
                                 ? new Date(
-                                    details.delivery
-                                  ).toLocaleDateString()
+                                  details.delivery && details.delivery.deliveryDate
+                                ).toLocaleDateString()
                                 : "N/A"}
                             </td>
                             <td className="h-[60px] text-left pl-[15px]">

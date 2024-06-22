@@ -221,8 +221,8 @@ function UserOrder() {
                   <td>{details.orderId}</td>
                   <td>{new Date(details.date).toLocaleDateString()}</td>
                   <td>
-                    {details.delivery
-                      ? new Date(details.delivery).toLocaleDateString()
+                    {details.delivery && details.delivery.deliveryDate
+                      ? new Date(details.delivery.deliveryDate).toLocaleDateString()
                       : "N/A"}
                   </td>
                   <td>{details.pages}</td>
@@ -262,10 +262,10 @@ function UserOrder() {
                           ? "bg-blue-400 p-[6px] rounded-[5px] w-[100px] flex gap-[5px] font-bold text-[white] max-sm:w-[80px]"
                           : details.status == "APPROVED" ||
                             details.status == "COMPLETED"
-                          ? "bg-[#155415] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] max-sm:w-[80px]"
-                          : details.status == "CANCELED"
-                          ? "bg-[red] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] text-white font-bold max-sm:w-[80px]"
-                          : null
+                            ? "bg-[#155415] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] max-sm:w-[80px] text-white"
+                            : details.status == "CANCELED"
+                              ? "bg-[red] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] text-white font-bold max-sm:w-[80px]"
+                              : null
                       }
                     >
                       {details.status == "PENDING" ? (
@@ -503,8 +503,8 @@ function UserOrder() {
                         <td className="w-1/2">
                           {selectedOrder.deadline
                             ? new Date(
-                                selectedOrder.deadline
-                              ).toLocaleDateString()
+                              selectedOrder.deadline
+                            ).toLocaleDateString()
                             : "N/A"}
                         </td>
                       </tr>
