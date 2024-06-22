@@ -6,25 +6,32 @@ import { Nav } from "rsuite";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
 function Costbreakdown({ data, onChildData }) {
-  console.log(data, "cost breakdown");
   const [costdone, setCostdone] = useState(false);
   const [vendors, setVendors] = useState([1, 2, 3, 4, 5]);
   const [costCalculation, setCostCalculation] = useState({
-    plates: null,
-    printing: null,
-    paper: null,
-    coverPaper: null,
-    innerPaper: null,
-    otherPaper: null,
-    lamination: null,
-    binding: null,
-    finishing: null,
-    extraCharges: null,
-    subTotal: null,
-    vat: null,
-    grandTotal: null,
+    plates: "",
+    printing: "",
+    paper: "",
+    coverPaper: "",
+    innerPaper: "",
+    otherPaper: "",
+    lamination: "",
+    binding: "",
+    finishing: "",
+    extraCharges: "",
+    deliveryCharges: "",
+    subTotal: "",
+    vat: "",
+    grandTotal: "",
     preparedBy: "",
     approvedBy: "",
+    billingInfo: {
+      approvalStatus: "",
+      invoiceIssueDate: "",
+      invoiceNo: "",
+      customerName: "",
+      issuedBy: "",
+    },
   });
 
   useEffect(() => {
@@ -41,31 +48,100 @@ function Costbreakdown({ data, onChildData }) {
         binding: data.binding || 0,
         finishing: data.finishing || 0,
         extraCharges: data.extraCharges || 0,
+        deliveryCharges: data.deliveryCharges || 0,
         subTotal: data.subTotal || 0,
         vat: data.vat || 0,
         grandTotal: data.grandTotal || 0,
         preparedBy: data.preparedBy || "",
         approvedBy: data.approvedBy || "",
+        billingInfo: {
+          approvalStatus: data.billingInfo?.approvalStatus || "",
+          invoiceIssueDate: data.billingInfo?.invoiceIssueDate || "",
+          invoiceNo: data.billingInfo?.invoiceNo || "",
+          customerName: data.billingInfo?.customerName || "",
+          issuedBy: data.billingInfo?.issuedBy || "",
+        },
       };
       setCostCalculation(initialData);
-      Cookies.set("costCalculation", JSON.stringify(data));
+      Cookies.set("costCalculation", JSON.stringify(initialData));
     }
   }, [data]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    let parsedValue = value;
+    const { name, value, type } = e.target;
 
-    if (!["preparedBy", "approvedBy"].includes(name)) {
-      parsedValue = parseFloat(value);
+    if (type === "radio") {
+      setCostCalculation((prevState) => ({
+        ...prevState,
+        billingInfo: {
+          ...prevState.billingInfo,
+          approvalStatus: value,
+        },
+      }));
+    } else {
+      let parsedValue = value;
+
+      if (["preparedBy", "approvedBy"].includes(name)) {
+        setCostCalculation((prevState) => ({
+          ...prevState,
+          [name]: parsedValue.trim(),
+        }));
+      } else if (["grandTotal", "subTotal", "vat"].includes(name)) {
+        setCostCalculation((prevState) => ({
+          ...prevState,
+          [name]: parseFloat(parsedValue),
+        }));
+      } else if (
+        ["invoiceIssueDate", "invoiceNo", "customerName", "issuedBy"].includes(
+          name
+        )
+      ) {
+        setCostCalculation((prevState) => ({
+          ...prevState,
+          billingInfo: {
+            ...prevState.billingInfo,
+            [name]: parsedValue.trim(),
+          },
+        }));
+      } else {
+        setCostCalculation((prevState) => ({
+          ...prevState,
+          [name]: parseFloat(parsedValue),
+        }));
+      }
     }
-
-    const updatedData = { ...costCalculation, [name]: parsedValue };
-    setCostCalculation(updatedData);
   };
 
   const handleClick = () => {
-    Cookies.set("costCalculation", JSON.stringify(costCalculation));
+    const dataToSave = {
+      costCalculationId: costCalculation.costCalculationId,
+      plates: costCalculation.plates,
+      printing: costCalculation.printing,
+      paper: costCalculation.paper,
+      coverPaper: costCalculation.coverPaper,
+      innerPaper: costCalculation.innerPaper,
+      otherPaper: costCalculation.otherPaper,
+      lamination: costCalculation.lamination,
+      binding: costCalculation.binding,
+      finishing: costCalculation.finishing,
+      extraCharges: costCalculation.extraCharges,
+      deliveryCharges: costCalculation.deliveryCharges,
+      subTotal: costCalculation.subTotal,
+      vat: costCalculation.vat,
+      grandTotal: costCalculation.grandTotal,
+      preparedBy: costCalculation.preparedBy,
+      approvedBy: costCalculation.approvedBy,
+      billingInfo: {
+        approvalStatus: costCalculation.billingInfo.approvalStatus,
+        invoiceIssueDate: costCalculation.billingInfo.invoiceIssueDate,
+        invoiceNo: costCalculation.billingInfo.invoiceNo,
+        customerName: costCalculation.billingInfo.customerName,
+        issuedBy: costCalculation.billingInfo.issuedBy,
+      },
+    };
+
+    Cookies.set("costCalculation", JSON.stringify(dataToSave));
+    console.log("Cost Calc " + JSON.stringify(dataToSave));
     document.getElementById("my_modal_13").close();
     onChildData(false);
     setCostdone(true);
@@ -192,7 +268,9 @@ function Costbreakdown({ data, onChildData }) {
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Delivery Charges"
               id="deliveryCharges"
+              value={costCalculation.deliveryCharges}
               name="deliveryCharges"
+              onChange={handleChange}
             />
             <input
               type="number"
@@ -229,7 +307,12 @@ function Costbreakdown({ data, onChildData }) {
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Prepared By"
                 value={costCalculation.preparedBy}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setCostCalculation({
+                    ...costCalculation,
+                    preparedBy: e.target.value,
+                  })
+                }
               />
               <input
                 type="text"
@@ -238,34 +321,88 @@ function Costbreakdown({ data, onChildData }) {
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                 placeholder="Approved By"
                 value={costCalculation.approvedBy}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setCostCalculation({
+                    ...costCalculation,
+                    approvedBy: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
           <div className="border border-black h-[250px] mt-[40px] p-[20px]">
-            <div className="flex ">
+            <div className="flex">
               <div>
                 <h2 className="font-bold">Billing Information:</h2>
                 <input
                   className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                   placeholder="Invoice Issue Date"
+                  type="date"
+                  value={costCalculation.billingInfo.invoiceIssueDate}
+                  onChange={(e) =>
+                    setCostCalculation({
+                      ...costCalculation,
+                      billingInfo: {
+                        ...costCalculation.billingInfo,
+                        invoiceIssueDate: e.target.value,
+                      },
+                    })
+                  }
                 />
                 <input
                   className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
                   placeholder="Invoice no."
+                  value={costCalculation.billingInfo.invoiceNo}
+                  onChange={(e) =>
+                    setCostCalculation({
+                      ...costCalculation,
+                      billingInfo: {
+                        ...costCalculation.billingInfo,
+                        invoiceNo: e.target.value,
+                      },
+                    })
+                  }
                 />
               </div>
               <div className="mt-[9px] ml-[20px]">
                 <div className="flex items-center mb-[15px]">
-                  <input type="radio" className="radio" name="approvalStatus" />
+                  <input
+                    type="radio"
+                    className="radio"
+                    name="approvalStatus"
+                    value="required"
+                    checked={
+                      costCalculation.billingInfo.approvalStatus === "required"
+                    }
+                    onChange={handleChange}
+                  />
                   <label className="text-[17px] ml-[10px]">Required</label>
                 </div>
                 <div className="flex items-center mb-[15px]">
-                  <input type="radio" className="radio" name="approvalStatus" />
+                  <input
+                    type="radio"
+                    className="radio"
+                    name="approvalStatus"
+                    value="approved"
+                    checked={
+                      costCalculation.billingInfo.approvalStatus === "approved"
+                    }
+                    onChange={handleChange}
+                  />
                   <label className="text-[17px] ml-[10px]">Approved</label>
                 </div>
                 <div className="flex items-center">
-                  <input type="radio" className="radio" name="approvalStatus" />
+                  <input
+                    type="radio"
+                    className="radio"
+                    name="approvalStatus"
+                    value="reviseneeded"
+                    checked={
+                      costCalculation.billingInfo.approvalStatus ===
+                      "reviseneeded"
+                    }
+                    onChange={handleChange}
+                  />
                   <label className="text-[17px] ml-[10px]">Revise needed</label>
                 </div>
               </div>
@@ -273,10 +410,30 @@ function Costbreakdown({ data, onChildData }) {
             <input
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Customer Name"
+              value={costCalculation.billingInfo.customerName}
+              onChange={(e) =>
+                setCostCalculation({
+                  ...costCalculation,
+                  billingInfo: {
+                    ...costCalculation.billingInfo,
+                    customerName: e.target.value,
+                  },
+                })
+              }
             />
             <input
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
               placeholder="Issue By"
+              value={costCalculation.billingInfo.issuedBy}
+              onChange={(e) =>
+                setCostCalculation({
+                  ...costCalculation,
+                  billingInfo: {
+                    ...costCalculation.billingInfo,
+                    issuedBy: e.target.value,
+                  },
+                })
+              }
             />
           </div>
           <div className="modal-action">

@@ -142,6 +142,7 @@ function NJobCard() {
           `/jobCard/update/${orderId}`,
           cookiesData
         );
+        clearCookies();
         console.log(response.data);
         alert(response.data);
       } catch (error) {
@@ -199,15 +200,7 @@ function NJobCard() {
         },
       });
       alert(response.data);
-      Cookies.remove("paperData");
-      Cookies.remove("binderyData");
-      Cookies.remove("deliveryData");
-      Cookies.remove("PaperUnitsData");
-      Cookies.remove("paymentData");
-      Cookies.remove("plateData");
-      Cookies.remove("prePressData");
-      Cookies.remove("costCalculation");
-      Cookies.remove("pressUnitData");
+      clearCookies();
       console.log("Successfully sent data to API:", response.data);
     } catch (error) {
       console.error("Error sending data to API:", error);
@@ -216,6 +209,18 @@ function NJobCard() {
 
   const handleChildData = (data) => {
     setOpen(data);
+  };
+
+  const clearCookies = () => {
+    Cookies.remove("paperData");
+    Cookies.remove("binderyData");
+    Cookies.remove("deliveryData");
+    Cookies.remove("PaperUnitsData");
+    Cookies.remove("paymentData");
+    Cookies.remove("plateData");
+    Cookies.remove("prePressData");
+    Cookies.remove("costCalculation");
+    Cookies.remove("pressUnitData");
   };
 
   return (
