@@ -5,29 +5,28 @@ import Cookies from "js-cookie";
 import { Nav } from "rsuite";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-function Costbreakdown({data, onChildData }) {
-  console.log(data, "cost breakdown")
+function Costbreakdown({ data, onChildData }) {
+  console.log(data, "cost breakdown");
   const [costdone, setCostdone] = useState(false);
   const [vendors, setVendors] = useState([1, 2, 3, 4, 5]);
   const [costCalculation, setCostCalculation] = useState({
-    plates: 0,
-    printing: 0,
-    paper: 0,
-    coverPaper: 0,
-    innerPaper: 0,
-    otherPaper: 0,
-    lamination: 0,
-    binding: 0,
-    finishing: 0,
-    extraCharges: 0,
-    subTotal: 0,
-    vat: 0,
-    grandTotal: 0,
+    plates: null,
+    printing: null,
+    paper: null,
+    coverPaper: null,
+    innerPaper: null,
+    otherPaper: null,
+    lamination: null,
+    binding: null,
+    finishing: null,
+    extraCharges: null,
+    subTotal: null,
+    vat: null,
+    grandTotal: null,
     preparedBy: "",
-    approvedBy: ""
+    approvedBy: "",
   });
 
-  
   useEffect(() => {
     if (data) {
       const initialData = {
@@ -46,25 +45,23 @@ function Costbreakdown({data, onChildData }) {
         vat: data.vat || 0,
         grandTotal: data.grandTotal || 0,
         preparedBy: data.preparedBy || "",
-        approvedBy: data.approvedBy || ""
+        approvedBy: data.approvedBy || "",
       };
       setCostCalculation(initialData);
       Cookies.set("costCalculation", JSON.stringify(data));
     }
   }, [data]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let parsedValue = value;
-  
+
     if (!["preparedBy", "approvedBy"].includes(name)) {
       parsedValue = parseFloat(value);
     }
-  
+
     const updatedData = { ...costCalculation, [name]: parsedValue };
     setCostCalculation(updatedData);
-  
   };
 
   const handleClick = () => {
@@ -72,9 +69,7 @@ function Costbreakdown({data, onChildData }) {
     document.getElementById("my_modal_13").close();
     onChildData(false);
     setCostdone(true);
-
-  }
-  
+  };
 
   const handleAdd1 = () => {
     setVendors((prevVendors) => [...prevVendors, vendors.length + 1]);
@@ -88,7 +83,9 @@ function Costbreakdown({data, onChildData }) {
     <>
       <button
         className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
-        onClick={() => (document.getElementById("my_modal_13").showModal(), onChildData(true))}
+        onClick={() => (
+          document.getElementById("my_modal_13").showModal(), onChildData(true)
+        )}
       >
         <a className="flex">Cost Breakdown </a>{" "}
         {costdone == true ? (
@@ -100,7 +97,7 @@ function Costbreakdown({data, onChildData }) {
         <div className="modal-box max-h-[100%] max-w-[50%] shadow-none">
           <h3 className="font-bold text-xl">Cost Calculation</h3>
           <div className="grid w-full gap-4">
-          <input
+            <input
               type="number"
               name="plates"
               id="plates"
@@ -260,15 +257,15 @@ function Costbreakdown({data, onChildData }) {
               </div>
               <div className="mt-[9px] ml-[20px]">
                 <div className="flex items-center mb-[15px]">
-                  <input type="radio" className="radio" />
+                  <input type="radio" className="radio" name="approvalStatus" />
                   <label className="text-[17px] ml-[10px]">Required</label>
                 </div>
                 <div className="flex items-center mb-[15px]">
-                  <input type="radio" className="radio" />
-                  <label className="text-[17px] ml-[10px]">Approved </label>
+                  <input type="radio" className="radio" name="approvalStatus" />
+                  <label className="text-[17px] ml-[10px]">Approved</label>
                 </div>
                 <div className="flex items-center">
-                  <input type="radio" className="radio" />
+                  <input type="radio" className="radio" name="approvalStatus" />
                   <label className="text-[17px] ml-[10px]">Revise needed</label>
                 </div>
               </div>
@@ -283,10 +280,20 @@ function Costbreakdown({data, onChildData }) {
             />
           </div>
           <div className="modal-action">
-          <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_13").close(), onChildData(false))}>
-                Close
-              </button>
-            <button className="btn hover:bg-[#3eab3e] hover:text-white" type="submit" onClick={handleClick}>
+            <button
+              className="btn hover:bg-[red] hover:text-white"
+              onClick={(e) => (
+                document.getElementById("my_modal_13").close(),
+                onChildData(false)
+              )}
+            >
+              Close
+            </button>
+            <button
+              className="btn hover:bg-[#3eab3e] hover:text-white"
+              type="submit"
+              onClick={handleClick}
+            >
               Done
             </button>
           </div>

@@ -14,7 +14,6 @@ import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
 import Cookies from "js-cookie";
 
-
 function NJobCard() {
   const location = useLocation();
   const { ordersId } = location.state || {};
@@ -26,7 +25,6 @@ function NJobCard() {
   const dropdownRef = useRef(null);
   const [jobCard, setJobCard] = useState([]);
   const [pressunit, setPressunit] = useState(false);
-
 
   useEffect(() => {
     axios
@@ -50,7 +48,6 @@ function NJobCard() {
       fetchJobCard();
     }
   }, [orders, ordersId]);
-
 
   const handleOrderChange = (id) => {
     setSelectedOrder(id);
@@ -106,9 +103,7 @@ function NJobCard() {
   //   <AdminDrawer />
   // </div>;
 
-
   const onUpdate = () => {
-
     const parseJSONCookie = (cookie) => {
       try {
         return JSON.parse(cookie);
@@ -127,7 +122,7 @@ function NJobCard() {
     let prePressData = parseJSONCookie(Cookies.get("prePressData"));
     let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
     let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
-    console.log(paperData)
+    console.log(paperData);
 
     let cookiesData = {
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
@@ -143,15 +138,18 @@ function NJobCard() {
 
     const Update = async () => {
       try {
-        const response = await axios.put(`http://localhost:8081/jobCard/update/${orderId}`, cookiesData);
+        const response = await axios.put(
+          `/jobCard/update/${orderId}`,
+          cookiesData
+        );
         console.log(response.data);
-        alert(response.data)
+        alert(response.data);
       } catch (error) {
-        console.error('Error updating job card:', error);
+        console.error("Error updating job card:", error);
       }
     };
     Update();
-  }
+  };
   const onSubmit = async (formData) => {
     console.log(formData);
 
@@ -176,7 +174,7 @@ function NJobCard() {
     let prePressData = parseJSONCookie(Cookies.get("prePressData"));
     let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
     let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
-    console.log()
+    console.log();
 
     let cookiesData = {
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
@@ -192,7 +190,7 @@ function NJobCard() {
 
     const url = `/jobCard/${orderId}`;
     console.log(cookiesData);
-    console.log("orderid", orderId)
+    console.log("orderid", orderId);
 
     try {
       const response = await axios.post(url, cookiesData, {
@@ -215,14 +213,13 @@ function NJobCard() {
       console.error("Error sending data to API:", error);
     }
   };
-  
+
   const handleChildData = (data) => {
-    setOpen(data); 
+    setOpen(data);
   };
 
-
   return (
-    <div className="drawer" >
+    <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <AdminDrawer />
       <div className="drawer-content">
@@ -296,23 +293,47 @@ function NJobCard() {
               </div>
             </div>
             <div className={open ? "xl:ml-[40%]" : "xl:ml-[70%]"}>
-              <div
-                className="grid grid-cols-2 gap-x-[250px] gap-y-[50px]"
-              >
+              <div className="grid grid-cols-2 gap-x-[250px] gap-y-[50px]">
                 {jobCard ? (
                   <>
-                    <PaymentTable data={jobCard.prePressUnitList} onChildData={handleChildData}/>
-                    <DeliveryDetail data={jobCard.delivery} onChildData={handleChildData}/>
-                    <PressUnit data={jobCard.prePressData} onChildData={handleChildData}/>
-                    <PaperDetail data={jobCard.paperDetailData} onChildData={handleChildData}/>
-                    <PlateDetail data={jobCard.plateDetailData} onChildData={handleChildData}/>
-                    <PaperUnit data={jobCard.paperData} onChildData={handleChildData}/>
-                    <Bindery data={jobCard.bindingData} onChildData={handleChildData}/>
-                    <PressUnits data={jobCard.pressUnitData} onChildData={handleChildData}/>
-                    <Costbreakdown data={jobCard.costCalculation} onChildData={handleChildData}/>
+                    <PaymentTable
+                      data={jobCard.prePressUnitList}
+                      onChildData={handleChildData}
+                    />
+                    <DeliveryDetail
+                      data={jobCard.delivery}
+                      onChildData={handleChildData}
+                    />
+                    <PressUnit
+                      data={jobCard.prePressData}
+                      onChildData={handleChildData}
+                    />
+                    <PaperDetail
+                      data={jobCard.paperDetailData}
+                      onChildData={handleChildData}
+                    />
+                    <PlateDetail
+                      data={jobCard.plateDetailData}
+                      onChildData={handleChildData}
+                    />
+                    <PaperUnit
+                      data={jobCard.paperData}
+                      onChildData={handleChildData}
+                    />
+                    <Bindery
+                      data={jobCard.bindingData}
+                      onChildData={handleChildData}
+                    />
+                    <PressUnits
+                      data={jobCard.pressUnitData}
+                      onChildData={handleChildData}
+                    />
+                    <Costbreakdown
+                      data={jobCard.costCalculation}
+                      onChildData={handleChildData}
+                    />
                     <div className="modal-action ml-[200px]">
-                      {jobCard?.projectTracking?.jobCard === true
-                        ?
+                      {jobCard?.projectTracking?.jobCard === true ? (
                         <button
                           onClick={onUpdate}
                           className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
@@ -320,7 +341,7 @@ function NJobCard() {
                         >
                           Update
                         </button>
-                        :
+                      ) : (
                         <button
                           onClick={onSubmit}
                           className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
@@ -328,7 +349,7 @@ function NJobCard() {
                         >
                           Submit
                         </button>
-                      }
+                      )}
                     </div>
                   </>
                 ) : null}

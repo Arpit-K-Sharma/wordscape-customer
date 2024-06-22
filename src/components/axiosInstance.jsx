@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "https://frabjous-clafoutis-7cf3e7.netlify.app/api",
+  baseURL: "https://api.thewordscape.net/",
   // baseURL: "http://localhost:8081",
 });
 
