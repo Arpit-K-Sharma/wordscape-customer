@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "https://api.thewordscape.net/",
+  baseURL: "https://erp-api.wordscapepress.com",
   // baseURL: "http://localhost:8081",
 });
 

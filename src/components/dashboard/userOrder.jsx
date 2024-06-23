@@ -12,6 +12,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import { GiMoneyStack } from "react-icons/gi";
 
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -218,7 +219,7 @@ function UserOrder() {
             {orderDetails &&
               orderDetails.map((details) => (
                 <tr key={details.orderId}>
-                  <td>{details.orderId}</td>
+                  <td className="truncate">{details.orderId}</td>
                   <td>{new Date(details.date).toLocaleDateString()}</td>
                   <td>
                     {details.delivery && details.delivery.deliveryDate
@@ -475,6 +476,21 @@ function UserOrder() {
                           {selectedOrder.remarks
                             ? selectedOrder.remarks
                             : "N/A"}
+                        </td>
+                      </tr>
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <GiMoneyStack className="text-black" />
+                          Estimated Amount
+                        </td>
+                        <td className="w-1/2">
+                          Rs.
+                          {selectedOrder.estimatedAmount
+                            ? selectedOrder.estimatedAmount
+                            : "N/A"}{" "}
                         </td>
                       </tr>
                       <tr

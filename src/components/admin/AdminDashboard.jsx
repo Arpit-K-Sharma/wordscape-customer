@@ -378,7 +378,7 @@ function AdminDashboard() {
                   <table className="w-full text-[13px] bg-white">
                     <thead>
                       <tr className="text-[16px] border-b border-[#d5d4d4] text-[#171717] h-[47px]">
-                        <th className="w-[100px] pl-[15px] text-left">
+                        <th className="w-[60px] pl-[15px] text-left">
                           Order ID
                         </th>
                         <th className="w-[100px] text-left">Date</th>
@@ -394,9 +394,9 @@ function AdminDashboard() {
                         recentOrders.map((details) => (
                           <tr
                             key={details.orderId}
-                            className="hover:bg-gray-100 transition-colors duration-300 border-b border-[#d5d4d4] text-[15px] text-gray-700"
+                            className="hover:bg-gray-100 transition-colors duration-300 border-b truncate border-[#d5d4d4] text-[15px] text-gray-700"
                           >
-                            <td className="h-[60px] pl-[15px] text-left">
+                            <td className="h-[60px] pl-[15px]  text-left truncate">
                               {details.orderId}
                             </td>
                             <td className="h-[60px] text-left">
@@ -405,8 +405,9 @@ function AdminDashboard() {
                             <td className="h-[60px] text-left">
                               {details.delivery && details.delivery.deliveryDate
                                 ? new Date(
-                                  details.delivery && details.delivery.deliveryDate
-                                ).toLocaleDateString()
+                                    details.delivery &&
+                                      details.delivery.deliveryDate
+                                  ).toLocaleDateString()
                                 : "N/A"}
                             </td>
                             <td className="h-[60px] text-left pl-[15px]">

@@ -11,9 +11,7 @@ function OrderStatusList({ orderDetails }) {
       const trackingResults = {};
       for (const order of orderDetails) {
         try {
-          const response = await axios.get(
-            `/projectTracking/${order.orderId}`
-          );
+          const response = await axios.get(`/projectTracking/${order.orderId}`);
           const data = response.data;
           trackingResults[order.orderId] = getLastCompletedStage(data);
         } catch (error) {
@@ -80,10 +78,12 @@ function OrderStatusList({ orderDetails }) {
                   </div>
                 </td>
                 <td>
-                  <h4>#{order.orderId}</h4>
+                  <h4 className="truncate">#{order.orderId}</h4>
                 </td>
                 <td>
-                  <h3>{trackingData[order.orderId] || "Loading..."}</h3>
+                  <h3 className="truncate">
+                    {trackingData[order.orderId] || "Loading..."}
+                  </h3>
                 </td>
               </tr>
             ))}

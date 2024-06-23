@@ -51,7 +51,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
       setTimeout(() => {
         toast.success("Check your email for the invoice!", {
-          pauseOnHover: "false",
+          pauseOnHover: false,
         });
         setIsSubmitting(false);
         setIsSubmitted(false);
@@ -59,7 +59,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       }, 1200);
     } catch (error) {
       console.error("Error submitting order:", error);
-      toast.error("Failed to place order.");
+      toast.error(`Failed to place order. Error: ${error.message}`);
+
       setIsSubmitting(false);
     }
   };

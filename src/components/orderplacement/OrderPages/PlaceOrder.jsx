@@ -17,17 +17,17 @@ function OrderPlacement() {
     // name: "",
     address: "",
     // companyName: "",
-    innerPaperType: "Art Paper",
+    innerPaperType: "",
     innerPaperThickness: 100,
-    outerPaperType: "Art Paper",
+    outerPaperType: "",
     outerPaperThickness: 100,
-    paperSize: "A4",
+    // paperSize: "",
     pages: "",
     quantity: "",
     estimatedAmount: 0,
     bindingType: "",
     inkType: "B/W",
-    coverTreatmentType: "Die Cutting",
+    // coverTreatmentType: "",
     date: Date.now(),
     deadline: "",
     innerPaperRate: 0,
@@ -36,8 +36,8 @@ function OrderPlacement() {
     bindingRate: 0,
     plateRate: 0,
     deliveryOption: "",
-    innerLamination: "Normal Glossy",
-    outerLamination: "Normal Glossy",
+    innerLamination: "",
+    outerLamination: "",
   });
 
   useEffect(() => {
@@ -71,7 +71,17 @@ function OrderPlacement() {
           ...prevEntireData,
           coverTreatment: sortedData,
         }));
+
+        const firstCoverTreatment =
+          sortedData.length > 0 ? sortedData[0].coverTreatmentType : "";
+
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          coverTreatmentType: firstCoverTreatment,
+        }));
+        console.log("COVER T 1 " + firstCoverTreatment);
       })
+
       .catch((error) => {
         console.error("Error fetching cover treatment data:", error);
       });
@@ -88,10 +98,26 @@ function OrderPlacement() {
           id: paper.paperId,
           name: paper.paperType,
         }));
+
         // Set the paper types data as state
         setEntireData((prevEntireData) => ({
           ...prevEntireData,
           fetchedPaperTypes: paperTypesData,
+        }));
+
+        const firstPaperType =
+          paperTypesData.length > 0 ? paperTypesData[0].name : "";
+
+        const outerPaperType =
+          paperTypesData.length > 0 ? paperTypesData[0].name : "";
+
+        // const firstPaperType =
+        //   paperTypesData.length > 0 ? paperTypesData[0].name : "Art Paper";
+
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          innerPaperType: firstPaperType,
+          outerPaperType: outerPaperType,
         }));
       })
       .catch((error) => {
@@ -127,6 +153,14 @@ function OrderPlacement() {
           ...prevEntireData,
           paperSizeData: sortedData,
         }));
+
+        const firstPaperSize =
+          sortedData.length > 0 ? sortedData[0].paperSize : "";
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          paperSize: firstPaperSize,
+        }));
+        console.log("FIRST PAPER SIZE " + firstPaperSize);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -141,6 +175,12 @@ function OrderPlacement() {
         setEntireData((prevEntireData) => ({
           ...prevEntireData,
           inkTypes: sortedData,
+        }));
+
+        const firstInkType = sortedData.length > 0 ? sortedData[0].inkType : "";
+        setOrderData((prevOrderData) => ({
+          ...prevOrderData,
+          inkType: firstInkType,
         }));
       }
     } catch (error) {
@@ -157,6 +197,15 @@ function OrderPlacement() {
       setEntireData((prevEntireData) => ({
         ...prevEntireData,
         laminationTypes: sortedData,
+      }));
+
+      const firstLaminationType =
+        sortedData.length > 0 ? sortedData[0].laminationType : "";
+
+      setOrderData((prevOrderData) => ({
+        ...prevOrderData,
+        innerLamination: firstLaminationType,
+        outerLamination: firstLaminationType,
       }));
     } catch (error) {
       console.error("Error fetching lamination data:", error);

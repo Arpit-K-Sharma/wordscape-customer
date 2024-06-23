@@ -178,134 +178,147 @@ function Costbreakdown({ data, onChildData }) {
               name="plates"
               id="plates"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Plates"
               value={costCalculation.plates}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Plates</label>
+
             <input
               type="number"
               id="printing"
               name="printing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Printing"
               value={costCalculation.printing}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Printing</label>
+
             <input
               type="number"
               id="paper"
               name="paper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Paper"
               value={costCalculation.paper}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Paper</label>
+
             <input
               type="number"
               id="coverPaper"
               name="coverPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Cover Paper"
               value={costCalculation.coverPaper}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Cover Paper</label>
+
             <input
               type="number"
               id="innerPaper"
               name="innerPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Inner Paper"
               value={costCalculation.innerPaper}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Inner Paper</label>
+
             <input
               type="number"
               id="otherPaper"
               name="otherPaper"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Other Paper"
               value={costCalculation.otherPaper}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Other Paper</label>
+
             <input
               type="number"
               id="lamination"
               name="lamination"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Lamination"
               value={costCalculation.lamination}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Lamination</label>
+
             <input
               type="number"
               id="binding"
               name="binding"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Binding"
               value={costCalculation.binding}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Binding</label>
+
             <input
               type="number"
               id="finishing"
               name="finishing"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Finishing"
               value={costCalculation.finishing}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Finishing</label>
+
             <input
               type="number"
               id="extraCharges"
               name="extraCharges"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Extra Charges"
               value={costCalculation.extraCharges}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Extra Charges</label>
+
             <input
               type="number"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Delivery Charges"
               id="deliveryCharges"
               value={costCalculation.deliveryCharges}
               name="deliveryCharges"
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Delivery Charges</label>
+
             <input
               type="number"
               id="subTotal"
               name="subTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
-              placeholder="Sub Total"
               value={costCalculation.subTotal}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Sub Total</label>
+
             <input
               type="number"
               id="vat"
               name="vat"
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Vat 13%"
               value={costCalculation.vat}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">VAT 13%</label>
+
             <input
               type="number"
               id="grandTotal"
               name="grandTotal"
               className="w-full border-b-2 pt-[20px] border-gray-400 font-bold focus:outline-none focus:border-black"
-              placeholder="Grand Total"
               value={costCalculation.grandTotal}
               onChange={handleChange}
             />
+            <label className="text-[16px] font-bold">Grand Total</label>
+
             <div className="flex gap-[20px] mt-[20px]">
               <input
                 type="text"
                 id="preparedBy"
                 name="preparedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-                placeholder="Prepared By"
                 value={costCalculation.preparedBy}
                 onChange={(e) =>
                   setCostCalculation({
@@ -314,12 +327,13 @@ function Costbreakdown({ data, onChildData }) {
                   })
                 }
               />
+              <label className="text-[16px] font-bold">Prepared By</label>
+
               <input
                 type="text"
                 id="approvedBy"
                 name="approvedBy"
                 className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-                placeholder="Approved By"
                 value={costCalculation.approvedBy}
                 onChange={(e) =>
                   setCostCalculation({
@@ -328,15 +342,15 @@ function Costbreakdown({ data, onChildData }) {
                   })
                 }
               />
+              <label className="text-[16px] font-bold">Approved By</label>
             </div>
           </div>
-          <div className="border border-black h-[250px] mt-[40px] p-[20px]">
+          <div className="border border-black h-[335px] mt-[40px] p-[20px]">
             <div className="flex">
               <div>
                 <h2 className="font-bold">Billing Information:</h2>
                 <input
                   className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-                  placeholder="Invoice Issue Date"
                   type="date"
                   value={costCalculation.billingInfo.invoiceIssueDate}
                   onChange={(e) =>
@@ -351,7 +365,6 @@ function Costbreakdown({ data, onChildData }) {
                 />
                 <input
                   className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-                  placeholder="Invoice no."
                   value={costCalculation.billingInfo.invoiceNo}
                   onChange={(e) =>
                     setCostCalculation({
@@ -363,9 +376,10 @@ function Costbreakdown({ data, onChildData }) {
                     })
                   }
                 />
+                <label className="text-[16px] font-bold">Invoice No.</label>
               </div>
               <div className="mt-[9px] ml-[20px]">
-                <div className="flex items-center mb-[15px]">
+                <div className="flex items-center mb-[15px] mt-5">
                   <input
                     type="radio"
                     className="radio"
@@ -409,7 +423,6 @@ function Costbreakdown({ data, onChildData }) {
             </div>
             <input
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Customer Name"
               value={costCalculation.billingInfo.customerName}
               onChange={(e) =>
                 setCostCalculation({
@@ -421,9 +434,10 @@ function Costbreakdown({ data, onChildData }) {
                 })
               }
             />
+            <label className="text-[16px] font-bold">Customer Name.</label>
+
             <input
               className="w-full border-b-2 pt-[20px] border-gray-400 focus:outline-none focus:border-black"
-              placeholder="Issue By"
               value={costCalculation.billingInfo.issuedBy}
               onChange={(e) =>
                 setCostCalculation({
@@ -435,6 +449,7 @@ function Costbreakdown({ data, onChildData }) {
                 })
               }
             />
+            <label className="text-[16px] font-bold">Issued By</label>
           </div>
           <div className="modal-action">
             <button
