@@ -11,7 +11,9 @@ function OrderStatusList({ orderDetails }) {
       const trackingResults = {};
       for (const order of orderDetails) {
         try {
-          const response = await axios.get(`/projectTracking/${order.orderId}`);
+          const response = await axios.get(
+            `/projectTracking/${order.orderId}`
+          );
           const data = response.data;
           trackingResults[order.orderId] = getLastCompletedStage(data);
         } catch (error) {
@@ -50,13 +52,13 @@ function OrderStatusList({ orderDetails }) {
 
   return (
     <>
-      <div className="w-1/3 h-[350px] bg-[white] rounded-lg ml-[10%] mt-[20px] text-[#1c1b1b] p-4">
-        <table className="min-w-full">
+      <div className="w-full lg:w-1/3 h-[350px] bg-white rounded-lg ml-[10%] sm:ml-[5%]  lg:ml-[0] mt-[20px] text-[#1c1b1b] p-4 overflow-x-auto lg:overflow-hidden">
+        <table className="w-full min-w-[600px]">
           <thead>
             <tr className="font-medium text-[16px] h-[47px] border-b border-gray-200 text-left">
-              <th className="w-[270px] pl-[10px]">Customer Name</th>
+              <th className="w-[100px] md:w-[150px] pl-[10px]">Customer Name</th>
               <th className="w-[100px]">Order Id</th>
-              <th className="w-[150px]">Tracking Stage</th>
+              <th className=" w-[80px] md:w-[100px] lg:w-[150px]">Tracking Stage</th>
             </tr>
           </thead>
           <tbody>
@@ -77,19 +79,18 @@ function OrderStatusList({ orderDetails }) {
                     <span>{order.customer || "N/A"}</span>
                   </div>
                 </td>
-                <td>
+                <td className="truncate max-w-[80px]">
                   <h4 className="truncate">#{order.orderId}</h4>
                 </td>
                 <td>
-                  <h3 className="truncate">
-                    {trackingData[order.orderId] || "Loading..."}
-                  </h3>
+                  <h3>{trackingData[order.orderId] || "Loading..."}</h3>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
     </>
   );
 }

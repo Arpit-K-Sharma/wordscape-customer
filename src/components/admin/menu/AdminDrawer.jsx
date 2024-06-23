@@ -182,11 +182,6 @@ function AdminDrawer() {
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[1] bg-zinc-800 rounded-box w-[160px]">
             <li>
-              <NavLink to="/jobcard">
-                <p className="text-xl mb-3 font-light">Job Card</p>
-              </NavLink>
-            </li>
-            <li>
               <NavLink to="/cost">
                 <p className="text-xl mb-3 font-light">Cost Calculation</p>
               </NavLink>

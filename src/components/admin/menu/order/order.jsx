@@ -101,8 +101,7 @@ function AdminDashboard() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `/orders?pageNumber=${page}&sortField=date&sortDirection=${
-            sortDirection.split("_")[1]
+          `/orders?pageNumber=${page}&sortField=date&sortDirection=${sortDirection.split("_")[1]
           }`
         );
         setFilteredOrderDetails(response.data.response);
@@ -554,8 +553,8 @@ function AdminDashboard() {
                           <td>{details.orderId}</td>
                           <td>{new Date(details.date).toLocaleDateString()}</td>
                           <td>
-                            {details.delivery
-                              ? new Date(details.delivery).toLocaleDateString()
+                            {details.delivery && details.delivery.deliveryDate
+                              ? new Date(details.delivery.deliveryDate).toLocaleDateString()
                               : "N/A"}
                           </td>
                           <td>{details.pages}</td>
@@ -927,8 +926,8 @@ function AdminDashboard() {
                                     value={
                                       selectedOrder.deadline
                                         ? new Date(selectedOrder.deadline)
-                                            .toISOString()
-                                            .split("T")[0]
+                                          .toISOString()
+                                          .split("T")[0]
                                         : ""
                                     }
                                     onChange={(e) =>
@@ -967,11 +966,10 @@ function AdminDashboard() {
                     {steps.map((step, index) => (
                       <li
                         key={index}
-                        className={` step  ${
-                          step.active
+                        className={` step  ${step.active
                             ? "step-primary text-[black]"
                             : "text-[gray] step-neutral"
-                        }`}
+                          }`}
                         data-content={step.active ? "✓" : null}
                       >
                         {step.name}

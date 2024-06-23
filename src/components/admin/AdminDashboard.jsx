@@ -363,10 +363,10 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className="flex gap-[20px] mt-[30px]">
+            <div className="lg:flex justify-center md:flex-wrap gap-[20px] mt-[30px] ml-[-40px] mr-[20px] lg:ml-[0px] lg:mr-[0px]">
               <OrderStatusList orderDetails={orderDetails} />
               <div className="grid mt-[-8px] w-full lg:w-1/2">
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-[30px] lg:mt-[0px] ml-[30px] lg:ml-[0px]">
                   <h2
                     className="text-indigo-700 font-semibold hover:text-indigo-500 cursor-pointer"
                     onClick={(e) => navigate("/admin/orders")}
@@ -374,18 +374,14 @@ function AdminDashboard() {
                     View all orders
                   </h2>
                 </div>
-                <div className="w-full h-[350px] bg-white mt-[5px] rounded-lg text-[#1c1b1b] p-4 overflow-auto mb-10">
-                  <table className="w-full text-[13px] bg-white">
+                <div className="w-full h-[350px] bg-white mt-[5px] rounded-lg text-[#1c1b1b] p-4 mb-10 ml-[40px] lg:ml-[0px] overflow-x-auto">
+                  <table className="w-full min-w-[600px] text-[13px] bg-white">
                     <thead>
                       <tr className="text-[16px] border-b border-[#d5d4d4] text-[#171717] h-[47px]">
-                        <th className="w-[60px] pl-[15px] text-left">
-                          Order ID
-                        </th>
+                        <th className="w-[100px] pl-[15px] text-left">Order ID</th>
                         <th className="w-[100px] text-left">Date</th>
                         <th className="w-[150px] text-left">Delivery Date</th>
-                        <th className="w-[150px] text-left">
-                          Estimated Amount
-                        </th>
+                        <th className="w-[200px] lg:w-[150px]  text-left">Estimated Amount</th>
                         <th className="w-[100px] text-left">Order Status</th>
                       </tr>
                     </thead>
@@ -394,20 +390,28 @@ function AdminDashboard() {
                         recentOrders.map((details) => (
                           <tr
                             key={details.orderId}
-                            className="hover:bg-gray-100 transition-colors duration-300 border-b truncate border-[#d5d4d4] text-[15px] text-gray-700"
+                            className="hover:bg-gray-100 transition-colors duration-300 border-b border-[#d5d4d4] text-[15px] text-gray-700"
                           >
-                            <td className="h-[60px] pl-[15px]  text-left truncate">
-                              {details.orderId}
+                            <td className="h-[60px] pl-[15px] text-left">
+                              <span
+                                className="truncate"
+                                style={{
+                                  display: 'block',
+                                  width: '100px',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  whiteSpace: 'nowrap',
+                                }}
+                              >
+                                {details.orderId}
+                              </span>
                             </td>
                             <td className="h-[60px] text-left">
                               {new Date(details.date).toLocaleDateString()}
                             </td>
                             <td className="h-[60px] text-left">
                               {details.delivery && details.delivery.deliveryDate
-                                ? new Date(
-                                    details.delivery &&
-                                      details.delivery.deliveryDate
-                                  ).toLocaleDateString()
+                                ? new Date(details.delivery.deliveryDate).toLocaleDateString()
                                 : "N/A"}
                             </td>
                             <td className="h-[60px] text-left pl-[15px]">
