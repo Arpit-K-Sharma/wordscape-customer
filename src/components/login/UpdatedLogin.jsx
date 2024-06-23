@@ -8,11 +8,11 @@ import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineLoading } from "react-icons/ai";
+import { isLoggedIn } from "../../utility/util";
 
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("ROLE_CUSTOMER");
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
@@ -25,8 +25,7 @@ function Signin() {
       const url = "/home/login";
       const data = {
         email: email,
-        password: password,
-        role: role,
+        password: password
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);
@@ -54,13 +53,8 @@ function Signin() {
               theme: "dark",
             });
             setTimeout(() => {
-              if (role === "ROLE_ADMIN") {
-                handleAdminLogin();
-              } else if (role === "ROLE_USER") {
-                handleEmployeeLogin();
-              } else {
-                setLoggedIn(true);
-              }
+              login();
+              setLoggedIn(true);
             }, 1200);
           } else {
             console.error("Error: Username not found in the token");
@@ -89,13 +83,12 @@ function Signin() {
     }
   };
 
-  const handleAdminLogin = async (e) => {
+  const login = async (e) => {
     try {
       const url = "/home/login";
       const data = {
         email: email,
-        password: password,
-        role: "ROLE_ADMIN",
+        password: password
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);
@@ -112,9 +105,6 @@ function Signin() {
           if (decoded.id) {
             console.log("id of decoded:", decoded.id);
             localStorage.setItem("id", decoded.id);
-            setTimeout(() => {
-              setIsAdmin(true);
-            }, 1500);
           } else {
             console.error("Error: Username not found in the token");
           }
@@ -139,79 +129,17 @@ function Signin() {
     }
   };
 
-  const handleEmployeeLogin = async (e) => {
-    try {
-      const url = "/home/login";
-      const data = {
-        email: email,
-        password: password,
-        role: "ROLE_USER",
-      };
-      console.log("Request Data:", data);
-      const response = await axios.post(url, data);
-      console.log("Response Data:", response.data);
-
-      if (response.data && response.data.token) {
-        const token = response.data.token;
-        Cookies.set("accessToken", token, { expires: 7 });
-        try {
-          const decoded = jwtDecode(token);
-          console.log("Decoded Token:", decoded);
-
-          if (decoded.id) {
-            console.log("id:", decoded.id);
-            // localStorage.setItem("id", decoded.id);
-            // toast.success("Signed In Successfully", {
-            //   position: "top-right",
-            //   autoClose: 2000,
-            //   hideProgressBar: false,
-            //   closeOnClick: true,
-            //   pauseOnHover: true,
-            //   draggable: true,
-            //   progress: undefined,
-            //   theme: "light",
-            // });
-            setTimeout(() => {
-              setIsEmployee(true);
-            }, 2000);
-          } else {
-            console.error("Error: Username not found in the token");
-          }
-        } catch (decodeError) {
-          console.error("Error decoding token:", decodeError);
-        }
-      } else {
-        console.error("Error: No token found in the response");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Login Failed", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  };
-
   if (loggedIn) {
     return <Navigate to="/" />;
   }
 
-  if (isAdmin) {
-    return <Navigate to="/admin/dashboard" />;
-  }
-
-  if (isEmployee) {
-    return <Navigate to="/admin/dashboard" />;
+  //redirect if it has access token cookie
+  if (isLoggedIn()) {
+    return <Navigate to="/" />;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 max-h-screen font-archivo">
+    <div className="grid grid-cols-1 lg:grid-cols-2 max-h-screen font-archivo">
       <div className=" p-8 md:p-16 flex items-center">
         <div className="max-w-md mx-auto w-[450px]">
           <NavLink to="/">
@@ -221,7 +149,7 @@ function Signin() {
               alt="Logo"
             />
           </NavLink>
-          <div>
+          <div className="pt-[50px] md:pt-[100px] lg:pt-[100px]">
             <h2 className="text-xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto text-[22px]">
               Sign in
             </h2>
@@ -262,21 +190,6 @@ function Signin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
-            <div className="form-control w-full">
-              <label htmlFor="role" className="label">
-                <span className="label-text text-black text-[16px]">Role</span>
-              </label>
-              <select
-                id="role"
-                className="select select-bordered w-full bg-white text-gray-900"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <option value="ROLE_CUSTOMER">Customer</option>
-                <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_USER">Employee</option>
-              </select>
             </div>
             <div className="text-sm">
               <NavLink to="/forgotpassword">

@@ -1,13 +1,10 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
-import { getRoleFromToken } from "../utility/util";
+import { isAdmin, isEmployee } from "../utility/util";
 
 function ProtectedRoutes() {
   if (
-    getRoleFromToken() === "ROLE_ADMIN" ||
-    getRoleFromToken() === "ROLE_USER"
+    isAdmin() || isEmployee()
   ) {
     // Render the admin routes if the adminToken cookie exists
     return <Outlet />;

@@ -10,7 +10,6 @@ import { AiOutlineLoading } from "react-icons/ai";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("ROLE_CUSTOMER");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,9 +21,8 @@ function ForgotPassword() {
   const handleSendEmail = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("/home/forgot", {
-        email: email,
-        role: role,
+      await axios.post("/home/forgot", {
+        email: email
       });
       console.log("Reset password email sent!");
       setTimeout(() => {
@@ -48,11 +46,10 @@ function ForgotPassword() {
     }
     setLoading(true);
     try {
-      const response = await axios.post("/home/newPassword", {
+      await axios.post("/home/newPassword", {
         otp: otp,
         newPassword: password,
-        email: email,
-        role: "ROLE_CUSTOMER",
+        email: email
       });
       setShowForm(true);
       console.log("Password reset successful!");
@@ -125,15 +122,6 @@ function ForgotPassword() {
                 placeholder="Enter your email"
                 className="w-full px-5 py-5 mb-4 border rounded-md mb-6 focus:outline-none focus:ring focus:border-blue-300"
               />
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full px-5 py-3 mb-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-              >
-                <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_CUSTOMER">Customer</option>
-                <option value="ROLE_USER">User</option>
-              </select>
               <button
                 className="btn max-lg:w-full bg-zinc-800 hover:bg-zinc-900 text-white mt-5 w-full"
                 onClick={handleSendEmail}
