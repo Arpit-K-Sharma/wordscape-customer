@@ -884,6 +884,7 @@ const CostCalculation = () => {
                   selectedInkType={selectedInkType}
                   plateCost={plateCost}
                   laminationCost={laminationPrice}
+                  bindingCost={bindingCost}
                   outerPaperPrice={outerPaperPrice}
                   totalCost={totalCost}
                   totalPacket={totalPacket(quantity)}

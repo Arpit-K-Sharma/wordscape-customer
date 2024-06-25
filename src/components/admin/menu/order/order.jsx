@@ -909,6 +909,9 @@ function AdminDashboard() {
                                 <GiMoneyStack className="text-gray-600" />
                                 Estimated amount
                               </td>
+                              <button className="btn btn-ghost underline mt-5 mb-5">
+                                Open Cost Breakdown
+                              </button>
                               <td className="w-1/2 text-gray-600">
                                 Rs. {selectedOrder.estimatedAmount}
                               </td>

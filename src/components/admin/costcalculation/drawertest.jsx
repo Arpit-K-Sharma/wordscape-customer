@@ -6,7 +6,9 @@ const DrawerTest = ({
   selectedPaperType,
   selectedPaperThickness,
   totalSheets,
+  bindingCost,
   totalReams,
+  outerPaperPrice,
   costReam,
   changeCostPerKg,
   outerSelectedPaperType,
@@ -55,6 +57,9 @@ const DrawerTest = ({
               Inner type: <b>{selectedPaperType}</b>
             </p>
             <p>
+              Unit cost for paper type (per kg): Rs. <b>{changeCostPerKg}</b>
+            </p>
+            <p>
               Inner paper thickness: <b>{selectedPaperThickness}</b> gsm
             </p>
             <p>
@@ -66,14 +71,15 @@ const DrawerTest = ({
             {/* <p>
               Cost of Reams: Rs. <b>{costReam}</b>
             </p> */}
-            <p>
-              Unit cost for paper type (per kg): Rs. <b>{changeCostPerKg}</b>
-            </p>
           </li>
           <li>
             <h3 className="text-xl font-semibold mb-2">Cover Paper</h3>
             <p>
               Cover paper type: <b>{outerSelectedPaperType}</b>
+            </p>
+            <p>
+              Unit cost for outer paper type (per kg): Rs.{" "}
+              <b>{outerPaperPrice}</b>
             </p>
             <p>
               Cover paper thickness: <b>{selectedOuterPaperThickness} gsm</b>
@@ -99,6 +105,9 @@ const DrawerTest = ({
             <h3 className="text-xl font-semibold mb-2">Binding</h3>
             <p>
               Selected binding type: <b>{selectedBindingType}</b>
+            </p>
+            <p>
+              Cost of binding: Rs. <b>{bindingCost}</b>
             </p>
           </li>
           <li>
