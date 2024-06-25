@@ -12,6 +12,7 @@ import { FaBook } from "react-icons/fa";
 import { FaCar } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
+import { GiMoneyStack } from "react-icons/gi";
 
 import {
   FaCut,
@@ -101,7 +102,8 @@ function AdminDashboard() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `/orders?pageNumber=${page}&sortField=date&sortDirection=${sortDirection.split("_")[1]
+          `/orders?pageNumber=${page}&sortField=date&sortDirection=${
+            sortDirection.split("_")[1]
           }`
         );
         setFilteredOrderDetails(response.data.response);
@@ -554,7 +556,9 @@ function AdminDashboard() {
                           <td>{new Date(details.date).toLocaleDateString()}</td>
                           <td>
                             {details.delivery && details.delivery.deliveryDate
-                              ? new Date(details.delivery.deliveryDate).toLocaleDateString()
+                              ? new Date(
+                                  details.delivery.deliveryDate
+                                ).toLocaleDateString()
                               : "N/A"}
                           </td>
                           <td>{details.pages}</td>
@@ -902,6 +906,19 @@ function AdminDashboard() {
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <GiMoneyStack className="text-gray-600" />
+                                Estimated amount
+                              </td>
+                              <td className="w-1/2 text-gray-600">
+                                Rs. {selectedOrder.estimatedAmount}
+                              </td>
+                            </tr>
+
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaCar className="text-gray-600" />
                                 Delivery Option
                               </td>
@@ -926,8 +943,8 @@ function AdminDashboard() {
                                     value={
                                       selectedOrder.deadline
                                         ? new Date(selectedOrder.deadline)
-                                          .toISOString()
-                                          .split("T")[0]
+                                            .toISOString()
+                                            .split("T")[0]
                                         : ""
                                     }
                                     onChange={(e) =>
@@ -966,10 +983,11 @@ function AdminDashboard() {
                     {steps.map((step, index) => (
                       <li
                         key={index}
-                        className={` step  ${step.active
+                        className={` step  ${
+                          step.active
                             ? "step-primary text-[black]"
                             : "text-[gray] step-neutral"
-                          }`}
+                        }`}
                         data-content={step.active ? "✓" : null}
                       >
                         {step.name}
