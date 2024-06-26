@@ -1059,6 +1059,11 @@ const CostCalculation = () => {
                     </select>
                     <br></br>
                     <br></br>
+                    <p>
+                      The selected sheet will fit a quantity of: {paperFit}{" "}
+                      Papers
+                    </p>
+                    <br></br>
                     <label htmlFor="ink-type">
                       <b>Ink </b> Type:
                     </label>
