@@ -218,8 +218,6 @@ const CostCalculation = () => {
           setStandardLength(selectedPaperSize.paperLength);
           setStandardBreadth(selectedPaperSize.paperBreadth);
           // setPaperBreadth(selectedPaperSize.paperBreadth);
-          console.log("Paper Length: ", selectedPaperSize.paperLength);
-          console.log("Paper Breadth: ", selectedPaperSize.paperBreadth);
         }
       })
       .catch((error) => {
@@ -253,7 +251,6 @@ const CostCalculation = () => {
         // Set the paper size state
         setPaperSizes(fetchedPaperSizes);
         setPaperLength(fetchedPaperSizes.length);
-        console.log("PAPER TEST LENGTH" + fetchedPaperSizes.length);
         setPaperBreadth(fetchedPaperSizes.breadth);
       })
       .catch((error) => {
@@ -354,12 +351,12 @@ const CostCalculation = () => {
           // Update the state with the paper rate
           setPaperPrice(selectedPaper.rate); // Assuming you have a state variable to store the paper rate
           setOuterPaperPrice(selectedPaper.rate);
-          console.log(
-            "Paper Type:",
-            selectedPaperType,
-            "Rate:",
-            selectedPaper.rate
-          );
+          // console.log(
+          //   "Paper Type:",
+          //   selectedPaperType,
+          //   "Rate:",
+          //   selectedPaper.rate
+          // );
         } else {
           // If paper type not found, handle error accordingly
           console.error("Paper type not found:", selectedPaperType);
@@ -373,7 +370,7 @@ const CostCalculation = () => {
   const getRateForOuterPaper = () => {
     // Fetch the paper rates from the database
     if (outerSelectedPaperType) {
-      console.log("Outer Paper Type test:", outerSelectedPaperType);
+      // console.log("Outer Paper Type test:", outerSelectedPaperType);
       axios
         .get("/papers") // Adjust the URL to match your API endpoint
         .then((response) => {
@@ -385,12 +382,12 @@ const CostCalculation = () => {
           if (outPaper) {
             // Update the state with the paper rate
             setOuterPaperPrice(outPaper.rate);
-            console.log(
-              "Outer Paper Type:",
-              outPaper,
-              "Outer Rate:",
-              outPaper.rate
-            );
+            // console.log(
+            //   "Outer Paper Type:",
+            //   outPaper,
+            //   "Outer Rate:",
+            //   outPaper.rate
+            // );
           } else {
             // If paper type not found, handle error accordingly
             console.error("Paper type not found:", selectedPaperType);
@@ -415,12 +412,12 @@ const CostCalculation = () => {
         if (selectedBinding) {
           setBindingCost(selectedBinding.rate);
           // Log the rate of the selected binding
-          console.log(
-            "Binding Type:",
-            selectedBindingType,
-            "Rate:",
-            selectedBinding.rate
-          );
+          // console.log(
+          //   "Binding Type:",
+          //   selectedBindingType,
+          //   "Rate:",
+          //   selectedBinding.rate
+          // );
         } else {
           // If binding type not found, handle error accordingly
           console.error("Binding type not found:", selectedBindingType);
@@ -440,12 +437,12 @@ const CostCalculation = () => {
         );
         if (selectedLamination) {
           setLaminationPrice(selectedLamination.rate);
-          console.log(
-            "Lamination Type:",
-            selectedLaminationType,
-            "Rate:",
-            selectedLamination.rate
-          );
+          // console.log(
+          //   "Lamination Type:",
+          //   selectedLaminationType,
+          //   "Rate:",
+          //   selectedLamination.rate
+          // );
         } else {
           console.error("Lamination type not found:", selectedLaminationType);
         }
@@ -469,12 +466,12 @@ const CostCalculation = () => {
         if (selectedCoverTreatment) {
           // Update the state with the cover treatment rate
           setCoverTreatmentRate(selectedCoverTreatment.rate);
-          console.log(
-            "Cover Treatment Type:",
-            selectedCoverTreatmentType,
-            "Rate:",
-            selectedCoverTreatment.rate
-          );
+          // console.log(
+          //   "Cover Treatment Type:",
+          //   selectedCoverTreatmentType,
+          //   "Rate:",
+          //   selectedCoverTreatment.rate
+          // );
         } else {
           // If cover treatment type not found, handle error accordingly
           console.error(
@@ -505,7 +502,7 @@ const CostCalculation = () => {
     return Math.ceil((sheetValue * selectedPaperThickness * costPerKg) / 3100);
   }
 
-  console.log("Ream cost is " + reamCalc(selectedPaperThickness, costPerKg));
+  // console.log("Ream cost is " + reamCalc(selectedPaperThickness, costPerKg));
 
   function packetCalc(selectedOuterPaperThickness, outerChangeCostPerKg) {
     return reamCalc(selectedOuterPaperThickness, outerChangeCostPerKg) / 5;
@@ -515,8 +512,11 @@ const CostCalculation = () => {
     return Math.round(quantity * pages);
   }
 
-  function totalSheets(quantity, pages) {
-    return totalPages(quantity, pages) / 16;
+  function totalSheets(quantity, pages, paperFit) {
+    let val =
+      totalPages(quantity, pages) / paperFit +
+      (0.05 * totalPages(quantity, pages)) / paperFit;
+    return val;
   }
 
   function totalReams(pages, quantity) {
@@ -535,22 +535,22 @@ const CostCalculation = () => {
     return Math.ceil(sheets / 100);
   }
 
-  console.log("The number of packets required are " + totalPacket(quantity));
+  // console.log("The number of packets required are " + totalPacket(quantity));
 
   function calculateLamination(laminationPrice, quantity, pages) {
     return Math.ceil(((12 * 18 * laminationPrice) / 2) * pages * quantity);
   }
 
-  console.log("Lamination price is " + laminationPrice);
+  // console.log("Lamination price is " + laminationPrice);
 
-  console.log(
-    "Total Lamination is " +
-      calculateLamination(laminationPrice, quantity, pages)
-  );
+  // console.log(
+  //   "Total Lamination is " +
+  //     calculateLamination(laminationPrice, quantity, pages)
+  // );
 
   const handleSheetSizeChange = (e) => {
     const selectedSize = e.target.value;
-    console.log("Selected Sheet Size:", selectedSize);
+    // console.log("Selected Sheet Size:", selectedSize);
     setSheetSize(selectedSize);
 
     // Fetch the sheet size data
@@ -568,8 +568,8 @@ const CostCalculation = () => {
           setSheetLength(selectedSheetSize.sheetLength);
           setSheetBreadth(selectedSheetSize.sheetBreadth);
           setSheetValue(selectedSheetSize.value);
-          console.log("Sheet value:", selectedSheetSize.value);
-          console.log("Sheet Length TEST: ", selectedSheetSize.sheetLength);
+          // console.log("Sheet value:", selectedSheetSize.value);
+          // console.log("Sheet Length TEST: ", selectedSheetSize.sheetLength);
         }
       })
       .catch((error) => {
@@ -593,7 +593,7 @@ const CostCalculation = () => {
 
   const handlePlateSizeChange = (e) => {
     const selectedSize = e.target.value;
-    console.log("Selected Plate Size:", selectedSize);
+    // console.log("Selected Plate Size:", selectedSize);
     setPlateSize(selectedSize);
 
     // Fetch the plate cost data
@@ -608,11 +608,11 @@ const CostCalculation = () => {
         if (selectedPlateCost) {
           // Fetched plate cost value
           setPlateCost(selectedPlateCost.plateCost);
-          console.log("Plate cost:", selectedPlateCost.plateCost);
+          // console.log("Plate cost:", selectedPlateCost.plateCost);
 
           setInkCost(selectedPlateCost.inkCost);
           // Log out the ink cost for the selected plate size
-          console.log("Ink cost:", selectedPlateCost.inkCost);
+          // console.log("Ink cost:", selectedPlateCost.inkCost);
         }
       })
       .catch((error) => {
@@ -651,10 +651,6 @@ const CostCalculation = () => {
       paperBreadth
     );
 
-    console.log("Sheet Breadth:", sheetBreadth);
-    console.log("Sheet Length:", sheetLength);
-    console.log("Paper Breadth:", paperBreadth);
-    console.log("Paper Length:", paperLength);
     console.log("Fit Normal:", fitNormal);
     console.log("Fit Rotated:", fitRotated);
     console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
@@ -700,6 +696,9 @@ const CostCalculation = () => {
               <br></br>
 
               {console.log("PAPER SIZE TEST: " + paperSize)}
+              {console.log(
+                "TOTAL SHEEEETS " + totalSheets(quantity, pages, paperFit)
+              )}
               {/* <DrawerTest
                 plateSize={plateSize}
                 outerChangeCostPerKg={outerChangeCostPerKg}
@@ -1117,6 +1116,7 @@ const CostCalculation = () => {
                   bindingCost={bindingCost}
                   outerPaperPrice={outerPaperPrice}
                   totalCost={totalCost}
+                  requiredSheet={totalSheets(quantity, pages, paperFit)}
                   paperFit={paperFit}
                   totalPacket={totalPacket(quantity)}
                 />
