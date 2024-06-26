@@ -89,6 +89,13 @@ const CostCalculation = () => {
     getRateForPaper(selectedPaperType);
     getRateForOuterPaper();
     getSheetSizes();
+    const paperFit = fitPapers(
+      sheetBreadth,
+      sheetLength,
+      breadth || standardBreadth,
+      length || standardLength
+    );
+    console.log("Paper Fit (updated):", paperFit);
 
     //getRateForOuterPaper(selectedOuterPaperType);
   }, [
@@ -98,6 +105,12 @@ const CostCalculation = () => {
     selectedPaperType,
     plateSize,
     outerSelectedPaperType,
+    sheetBreadth,
+    sheetLength,
+    breadth,
+    standardBreadth,
+    length,
+    standardLength,
   ]);
 
   const getInks = () => {
@@ -611,6 +624,53 @@ const CostCalculation = () => {
     setSelectedInkType(e.target.value);
   };
 
+  // Inside your CostCalculation component
+
+  function fitPapers(sheetBreadth, sheetLength, paperBreadth, paperLength) {
+    function calculateFit(
+      sheetBreadth,
+      sheetLength,
+      paperBreadth,
+      paperLength
+    ) {
+      let fitHorizontally = Math.floor(sheetBreadth / paperBreadth);
+      let fitVertically = Math.floor(sheetLength / paperLength);
+      return fitHorizontally * fitVertically;
+    }
+
+    let fitNormal = calculateFit(
+      sheetBreadth,
+      sheetLength,
+      paperBreadth,
+      paperLength
+    );
+    let fitRotated = calculateFit(
+      sheetBreadth,
+      sheetLength,
+      paperLength,
+      paperBreadth
+    );
+
+    console.log("Sheet Breadth:", sheetBreadth);
+    console.log("Sheet Length:", sheetLength);
+    console.log("Paper Breadth:", paperBreadth);
+    console.log("Paper Length:", paperLength);
+    console.log("Fit Normal:", fitNormal);
+    console.log("Fit Rotated:", fitRotated);
+    console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
+
+    return Math.max(fitNormal, fitRotated) * 2;
+  }
+
+  const paperFit = fitPapers(
+    sheetBreadth,
+    sheetLength,
+    breadth || standardBreadth,
+    length || standardLength
+  );
+
+  console.log("THE PAPER FIT :", paperFit);
+
   const totalCost =
     Math.ceil(
       totalPacket(quantity) *
@@ -1032,6 +1092,8 @@ const CostCalculation = () => {
                   standardLength={standardLength}
                   standardBreadth={standardBreadth}
                   sheetValue={sheetValue}
+                  sheetLength={sheetLength}
+                  sheetBreadth={sheetBreadth}
                   quantity={quantity}
                   sheetSize={sheetSize}
                   paperSize={paperSize}
