@@ -14,7 +14,14 @@ const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);
   const [sheetSizes, setSheetSizes] = useState([]);
   const [length, setLength] = useState("");
+  const [standardLength, setStandardLength] = useState("");
+  const [standardBreadth, setStandardBreadth] = useState("");
+
   const [breadth, setBreadth] = useState("");
+  const [paperLength, setPaperLength] = useState("");
+  const [paperBreadth, setPaperBreadth] = useState("");
+  const [sheetLength, setSheetLength] = useState("");
+  const [sheetBreadth, setSheetBreadth] = useState("");
 
   const [outerPaperType, setOuterPaperType] = useState([]);
   const [outerPaperThickness, setOuterPaperThickness] = useState([]);
@@ -177,6 +184,36 @@ const CostCalculation = () => {
       });
   };
 
+  const handlePaperSizeChange = (e) => {
+    const selectedSize = e.target.value;
+    console.log("Selected Paper Size:", selectedSize);
+    setPaperSize(selectedSize);
+
+    // Fetch the paper size data
+    axios
+      .get("/paperSizes")
+      .then((response) => {
+        const paperSizeData = response.data;
+        // Find the selected paper size
+        const selectedPaperSize = paperSizeData.find(
+          (paper) =>
+            paper.paperSize.toLowerCase() === selectedSize.toLowerCase()
+        );
+        if (selectedPaperSize) {
+          // Set the values for the selected paper size
+          //setPaperLength(selectedPaperSize.paperLength);
+          setStandardLength(selectedPaperSize.paperLength);
+          setStandardBreadth(selectedPaperSize.paperBreadth);
+          // setPaperBreadth(selectedPaperSize.paperBreadth);
+          console.log("Paper Length: ", selectedPaperSize.paperLength);
+          console.log("Paper Breadth: ", selectedPaperSize.paperBreadth);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching paper size data:", error);
+      });
+  };
+
   const getOuterPaperThickness = () => {
     axios
       .get("/paperThickness") // Adjust URL accordingly
@@ -197,9 +234,14 @@ const CostCalculation = () => {
         const fetchedPaperSizes = response.data.map((size) => ({
           value: size.paperSizeId, // Assuming 'paperSizeId' is the unique identifier
           label: size.paperSize,
+          length: size.paperLength,
+          breadth: size.paperBreadth,
         }));
         // Set the paper size state
         setPaperSizes(fetchedPaperSizes);
+        setPaperLength(fetchedPaperSizes.length);
+        console.log("PAPER TEST LENGTH" + fetchedPaperSizes.length);
+        setPaperBreadth(fetchedPaperSizes.breadth);
       })
       .catch((error) => {
         console.error("Error fetching paper sizes:", error);
@@ -225,22 +267,6 @@ const CostCalculation = () => {
       })
       .catch((error) => {
         console.error("Error fetching sheet sizes:", error);
-      });
-  };
-
-  const getSheet = () => {
-    axios
-      .get("/sheetSizes")
-      .then((response) => {
-        // Transform the fetched data to match the expected format for the select options
-        const fetchedSheetSizes = response.data.map((item) => ({
-          label: item.sheetSizeId,
-          value: item.sheetSize,
-        }));
-        setPlateSizes(fetchedSheetSizes);
-      })
-      .catch((error) => {
-        console.error("Error fetching sheet data:", error);
       });
   };
 
@@ -526,8 +552,11 @@ const CostCalculation = () => {
         );
         if (selectedSheetSize) {
           // Set the value for the selected sheet size
+          setSheetLength(selectedSheetSize.sheetLength);
+          setSheetBreadth(selectedSheetSize.sheetBreadth);
           setSheetValue(selectedSheetSize.value);
           console.log("Sheet value:", selectedSheetSize.value);
+          console.log("Sheet Length TEST: ", selectedSheetSize.sheetLength);
         }
       })
       .catch((error) => {
@@ -663,7 +692,7 @@ const CostCalculation = () => {
                     <select
                       id="paperSize"
                       value={paperSize}
-                      onChange={(e) => setPaperSize(e.target.value)}
+                      onChange={handlePaperSizeChange}
                     >
                       <option value="">Select Paper Size</option>
                       {/* Map over the fetched paper sizes */}
@@ -689,7 +718,23 @@ const CostCalculation = () => {
                       required
                     />
                     <br></br>
+                    <label htmlFor="quantity">
+                      <b>Quantity</b> (Number of copies):
+                    </label>
+                    <br></br>
+                    <input
+                      type="number"
+                      id="quantity"
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      min="50"
+                      max="10000"
+                      required
+                    />
+                    <br></br>
+                    <br></br>
                     <p className="divider-p">Custom Paper Detail</p>
+                    <br></br>
 
                     <label htmlFor="length">
                       <b>Length (inches):</b>
@@ -731,20 +776,6 @@ const CostCalculation = () => {
                       required
                     /> */}
                     <br></br>
-
-                    <label htmlFor="quantity">
-                      <b>Quantity</b> (Number of copies):
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="quantity"
-                      value={quantity}
-                      onChange={handleQuantityChange}
-                      min="50"
-                      max="10000"
-                      required
-                    />
                   </div>
                 </div>
                 <div className="cost-box-1">
@@ -996,6 +1027,10 @@ const CostCalculation = () => {
                 <DrawerTest
                   // inkCost={inkCost}
                   pages={pages}
+                  length={length}
+                  breadth={breadth}
+                  standardLength={standardLength}
+                  standardBreadth={standardBreadth}
                   sheetValue={sheetValue}
                   quantity={quantity}
                   sheetSize={sheetSize}

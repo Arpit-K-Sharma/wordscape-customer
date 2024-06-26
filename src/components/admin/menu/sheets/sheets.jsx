@@ -24,11 +24,15 @@ function Sheets() {
   const handleAddSheet = (e) => {
     e.preventDefault();
     const sheetSize = e.target.elements.sheetSize.value;
+    const sheetLength = parseInt(e.target.elements.sheetLength.value, 10);
+    const sheetBreadth = parseInt(e.target.elements.sheetBreadth.value, 10);
     const value = parseInt(e.target.elements.value.value, 10);
 
     axios
       .post("/sheetSizes", {
         sheetSize,
+        sheetLength,
+        sheetBreadth,
         value,
       })
       .then((response) => {
@@ -65,11 +69,19 @@ function Sheets() {
     const sheetSizeInput = document.getElementById(
       `sheetSize_${row.sheetSizeId}`
     );
+    const sheetLengthInput = document.getElementById(
+      `sheetLength_${row.sheetSizeId}`
+    );
+    const sheetBreadthInput = document.getElementById(
+      `sheetBreadth_${row.sheetSizeId}`
+    );
     const valueInput = document.getElementById(`value_${row.sheetSizeId}`);
 
-    if (sheetSizeInput && valueInput) {
+    if (sheetSizeInput && sheetLengthInput && sheetBreadthInput && valueInput) {
       const updatedData = {
         sheetSize: sheetSizeInput.value,
+        sheetLength: parseInt(sheetLengthInput.value, 10),
+        sheetBreadth: parseInt(sheetBreadthInput.value, 10),
         value: parseInt(valueInput.value, 10),
       };
       handleUpdate(row.sheetSizeId, updatedData);
@@ -99,11 +111,13 @@ function Sheets() {
             Sheets
           </h1>
           <div className="overflow-x-auto mt-[80px]">
-            <table className="table w-2/3 mx-auto my-auto">
+            <table className="table w-full mx-auto my-auto">
               <thead>
                 <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Sheet Size</th>
+                  <th className="w-[80px]">Sheet Length</th>
+                  <th className="w-[80px]">Sheet Breadth</th>
                   <th className="w-[80px]">Value</th>
                   <th className="w-[10px]">Actions</th>
                 </tr>
@@ -115,16 +129,14 @@ function Sheets() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.sheetSizeId === row.sheetSizeId ? (
-                        <form onSubmit={(e) => handleSave(row)}>
-                          <input
-                            type="text"
-                            id={`sheetSize_${row.sheetSizeId}`}
-                            name="sheetSize"
-                            className="input input-bordered"
-                            defaultValue={row.sheetSize}
-                            required
-                          />
-                        </form>
+                        <input
+                          type="text"
+                          id={`sheetSize_${row.sheetSizeId}`}
+                          name="sheetSize"
+                          className="input input-bordered"
+                          defaultValue={row.sheetSize}
+                          required
+                        />
                       ) : (
                         <span>{row.sheetSize}</span>
                       )}
@@ -132,16 +144,44 @@ function Sheets() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.sheetSizeId === row.sheetSizeId ? (
-                        <form onSubmit={(e) => handleSave(row)}>
-                          <input
-                            type="number"
-                            id={`value_${row.sheetSizeId}`}
-                            name="value"
-                            className="input input-bordered"
-                            defaultValue={row.value}
-                            required
-                          />
-                        </form>
+                        <input
+                          type="number"
+                          id={`sheetLength_${row.sheetSizeId}`}
+                          name="sheetLength"
+                          className="input input-bordered"
+                          defaultValue={row.sheetLength}
+                          required
+                        />
+                      ) : (
+                        <span>{row.sheetLength}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.sheetSizeId === row.sheetSizeId ? (
+                        <input
+                          type="number"
+                          id={`sheetBreadth_${row.sheetSizeId}`}
+                          name="sheetBreadth"
+                          className="input input-bordered"
+                          defaultValue={row.sheetBreadth}
+                          required
+                        />
+                      ) : (
+                        <span>{row.sheetBreadth}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.sheetSizeId === row.sheetSizeId ? (
+                        <input
+                          type="number"
+                          id={`value_${row.sheetSizeId}`}
+                          name="value"
+                          className="input input-bordered"
+                          defaultValue={row.value}
+                          required
+                        />
                       ) : (
                         <span>{row.value}</span>
                       )}
@@ -189,6 +229,18 @@ function Sheets() {
                       type="text"
                       name="sheetSize"
                       placeholder="Sheet Size"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="sheetLength"
+                      placeholder="Sheet Length"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="sheetBreadth"
+                      placeholder="Sheet Breadth"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input

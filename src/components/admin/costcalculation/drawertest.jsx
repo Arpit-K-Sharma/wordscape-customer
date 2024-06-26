@@ -9,6 +9,10 @@ const DrawerTest = ({
   bindingCost,
   totalReams,
   outerPaperPrice,
+  standardLength,
+  standardBreadth,
+  length,
+  breadth,
   costReam,
   sheetValue,
   sheetSize,
@@ -55,6 +59,19 @@ const DrawerTest = ({
             <p>
               Paper size: <b>{paperSize}</b>
             </p>
+            <p>
+              Paper size's length: <b>{standardLength}</b>
+            </p>
+            <p>
+              Paper size's breadth <b>{standardBreadth}</b>
+            </p>
+            <p>
+              Custom Paper's Length <b>{length}</b>
+            </p>
+            <p>
+              Custom Paper's Breadth <b>{breadth}</b>
+            </p>
+
             <p>
               Inner type: <b>{selectedPaperType}</b>
             </p>

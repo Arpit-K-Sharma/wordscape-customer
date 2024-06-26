@@ -11,8 +11,8 @@ function PaperSize() {
       .get("/paperSizes")
       .then((response) => {
         // Sort the data by paperSizeId in ascending order
-        const sortedData = response.data.sort(
-          (a, b) => a.paperSizeId - b.paperSizeId
+        const sortedData = response.data.sort((a, b) =>
+          a.paperSizeId.localeCompare(b.paperSizeId)
         );
         setPaperSizeDataState(sortedData);
       })
@@ -21,7 +21,6 @@ function PaperSize() {
       });
   }
 
-  // Fetching paper size data from the backend
   useEffect(() => {
     getPaperSizes();
   }, []);
@@ -30,10 +29,14 @@ function PaperSize() {
     e.preventDefault();
     const paperSize = e.target.elements.paperSize.value;
     const dimensions = e.target.elements.dimensions.value;
+    const paperLength = parseFloat(e.target.elements.paperLength.value);
+    const paperBreadth = parseFloat(e.target.elements.paperBreadth.value);
     axios
       .post("/paperSizes", {
         paperSize,
         dimensions,
+        paperLength,
+        paperBreadth,
       })
       .then((response) => {
         setPaperSizeDataState((prevData) => [...prevData, response.data]);
@@ -70,6 +73,12 @@ function PaperSize() {
       paperSize: document.getElementById(`paper_size_${row.paperSizeId}`).value,
       dimensions: document.getElementById(`dimensions_${row.paperSizeId}`)
         .value,
+      paperLength: parseFloat(
+        document.getElementById(`paper_length_${row.paperSizeId}`).value
+      ),
+      paperBreadth: parseFloat(
+        document.getElementById(`paper_breadth_${row.paperSizeId}`).value
+      ),
     };
     handleUpdate(row.paperSizeId, updatedData);
     setEditingData(null); // Reset editing state after save
@@ -101,6 +110,8 @@ function PaperSize() {
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Paper Size</th>
                   <th className="w-[100px]">Dimensions</th>
+                  <th className="w-[100px]">Length (in)</th>
+                  <th className="w-[100px]">Breadth (in)</th>
                   <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
@@ -111,16 +122,13 @@ function PaperSize() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.paperSizeId === row.paperSizeId ? (
-                        <form onSubmit={(e) => handleSave(e, row)}>
-                          <input
-                            type="text"
-                            id={`paper_size_${row.paperSizeId}`}
-                            name="paper_size"
-                            className="input input-bordered"
-                            defaultValue={row.paperSize}
-                            required
-                          />
-                        </form>
+                        <input
+                          type="text"
+                          id={`paper_size_${row.paperSizeId}`}
+                          className="input input-bordered"
+                          defaultValue={row.paperSize}
+                          required
+                        />
                       ) : (
                         <span>{row.paperSize}</span>
                       )}
@@ -128,18 +136,45 @@ function PaperSize() {
                     <td className="text-wrap">
                       {editingData &&
                       editingData.paperSizeId === row.paperSizeId ? (
-                        <form onSubmit={(e) => handleSave(e, row)}>
-                          <input
-                            type="text"
-                            id={`dimensions_${row.paperSizeId}`}
-                            name="dimensions"
-                            className="input input-bordered"
-                            defaultValue={row.dimensions}
-                            required
-                          />
-                        </form>
+                        <input
+                          type="text"
+                          id={`dimensions_${row.paperSizeId}`}
+                          className="input input-bordered"
+                          defaultValue={row.dimensions}
+                          required
+                        />
                       ) : (
                         <span>{row.dimensions}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.paperSizeId === row.paperSizeId ? (
+                        <input
+                          type="number"
+                          id={`paper_length_${row.paperSizeId}`}
+                          className="input input-bordered"
+                          defaultValue={row.paperLength}
+                          step="0.1"
+                          required
+                        />
+                      ) : (
+                        <span>{row.paperLength}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData &&
+                      editingData.paperSizeId === row.paperSizeId ? (
+                        <input
+                          type="number"
+                          id={`paper_breadth_${row.paperSizeId}`}
+                          className="input input-bordered"
+                          defaultValue={row.paperBreadth}
+                          step="0.1"
+                          required
+                        />
+                      ) : (
+                        <span>{row.paperBreadth}</span>
                       )}
                     </td>
                     <td>
@@ -193,6 +228,22 @@ function PaperSize() {
                       name="dimensions"
                       placeholder="Dimensions"
                       className="mt-5 input input-bordered w-full max-w-xs"
+                      required
+                    />
+                    <input
+                      type="number"
+                      name="paperLength"
+                      placeholder="Length (in)"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                      step="0.1"
+                      required
+                    />
+                    <input
+                      type="number"
+                      name="paperBreadth"
+                      placeholder="Breadth (in)"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                      step="0.1"
                       required
                     />
                     <button className="btn mt-5 btn-ghost mx-[115px]">
