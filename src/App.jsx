@@ -42,6 +42,7 @@ import Contactuspage from "./components/footer/contact-us.jsx";
 import FAQ from "./components/navbar/faq.jsx";
 import ForgotPassword from "./components/otp/ForgotPassword.jsx";
 import ProtectedStaff from "./components/protectedStaff.jsx";
+import Sheets from "./components/admin/menu/sheets/sheets.jsx";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
           <Route path="/admin/covertreatment" element={<CoverTreatment />} />
           <Route path="/admin/plate" element={<Plate />} />
           <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/sheets" element={<Sheets />} />
           <Route path="/jobcard" element={<NJobCard />} />
           <Route path="/cost" element={<CostCalculation />} />
 

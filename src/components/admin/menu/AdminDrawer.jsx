@@ -116,6 +116,11 @@ function AdminDrawer() {
                 <p className="text-xl mb-3 font-light">Paper Thickness</p>
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/admin/sheets">
+                <p className="text-xl mb-3 font-light">Sheets</p>
+              </NavLink>
+            </li>
           </ul>
         </details>
 

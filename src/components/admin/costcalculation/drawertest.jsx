@@ -10,6 +10,8 @@ const DrawerTest = ({
   totalReams,
   outerPaperPrice,
   costReam,
+  sheetValue,
+  sheetSize,
   changeCostPerKg,
   outerSelectedPaperType,
   selectedOuterPaperThickness,
@@ -100,6 +102,15 @@ const DrawerTest = ({
             {/* <p>
               Cost of Ink: Rs. <b>{inkCost * 4}</b>
             </p> */}
+          </li>
+          <li>
+            <h3 className="text-xl font-semibold mb-2">Sheet Details</h3>
+            <p>
+              Chosen sheet size: <b>{sheetSize}</b>
+            </p>
+            <p>
+              Value of sheet size: <b>{sheetValue}</b>
+            </p>
           </li>
           <li>
             <h3 className="text-xl font-semibold mb-2">Binding</h3>

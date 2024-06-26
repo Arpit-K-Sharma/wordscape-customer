@@ -48,4 +48,5 @@ GET http://localhost:8081/users
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjoxLCJleHAiOjE3MTg4OTAxMzEsImlhdCI6MTcxODgwMzczMX0.Pa5cOqggU4L9jd9NqJ6wTIN94jHCFeDI4lF4JGuKGZUDUD4JkBsy8UqL_1jszq7h1Od2yn4RAuZJp8sSFaaJSg
 
-
+### Retrieve Sheet Sizes
+GET https://erp-api.wordscapepress.com/sheetSizes

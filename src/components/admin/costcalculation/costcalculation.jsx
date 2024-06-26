@@ -12,14 +12,20 @@ import MobileMenu from "../../navbar/mobile-menu";
 
 const CostCalculation = () => {
   const [paperSizes, setPaperSizes] = useState([]);
+  const [sheetSizes, setSheetSizes] = useState([]);
+  const [length, setLength] = useState("");
+  const [breadth, setBreadth] = useState("");
 
   const [outerPaperType, setOuterPaperType] = useState([]);
   const [outerPaperThickness, setOuterPaperThickness] = useState([]);
+  const [sheetSize, setSheetSize] = useState("");
+  const [sheetValue, setSheetValue] = useState(null);
 
   const [paperSize, setPaperSize] = useState("");
   const [plateSize, setPlateSize] = useState("");
   const [quantity, setQuantity] = useState("");
   const [pages, setPages] = useState("");
+  const [outerpages, setOuterPages] = useState("");
   const [paperType, setPaperType] = useState([]);
   const [selectedPaperType, setSelectedInnerPaper] = useState("");
   const [outerSelectedPaperType, setOuterSelectedPaperType] = useState("");
@@ -75,6 +81,8 @@ const CostCalculation = () => {
     getRateForCoverTreatment(selectedCoverTreatmentType);
     getRateForPaper(selectedPaperType);
     getRateForOuterPaper();
+    getSheetSizes();
+
     //getRateForOuterPaper(selectedOuterPaperType);
   }, [
     selectedBindingType,
@@ -206,6 +214,33 @@ const CostCalculation = () => {
       })
       .catch((error) => {
         console.error("Error fetching paper data:", error);
+      });
+  };
+
+  const getSheetSizes = () => {
+    axios
+      .get("/sheetSizes")
+      .then((response) => {
+        setSheetSizes(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching sheet sizes:", error);
+      });
+  };
+
+  const getSheet = () => {
+    axios
+      .get("/sheetSizes")
+      .then((response) => {
+        // Transform the fetched data to match the expected format for the select options
+        const fetchedSheetSizes = response.data.map((item) => ({
+          label: item.sheetSizeId,
+          value: item.sheetSize,
+        }));
+        setPlateSizes(fetchedSheetSizes);
+      })
+      .catch((error) => {
+        console.error("Error fetching sheet data:", error);
       });
   };
 
@@ -428,7 +463,7 @@ const CostCalculation = () => {
   };
 
   function reamCalc(selectedPaperThickness, costPerKg) {
-    return Math.ceil((864 * selectedPaperThickness * costPerKg) / 3100);
+    return Math.ceil((sheetValue * selectedPaperThickness * costPerKg) / 3100);
   }
 
   console.log("Ream cost is " + reamCalc(selectedPaperThickness, costPerKg));
@@ -474,6 +509,32 @@ const CostCalculation = () => {
       calculateLamination(laminationPrice, quantity, pages)
   );
 
+  const handleSheetSizeChange = (e) => {
+    const selectedSize = e.target.value;
+    console.log("Selected Sheet Size:", selectedSize);
+    setSheetSize(selectedSize);
+
+    // Fetch the sheet size data
+    axios
+      .get("/sheetSizes")
+      .then((response) => {
+        const sheetSizeData = response.data;
+        // Find the selected sheet size
+        const selectedSheetSize = sheetSizeData.find(
+          (sheet) =>
+            sheet.sheetSize.toLowerCase() === selectedSize.toLowerCase()
+        );
+        if (selectedSheetSize) {
+          // Set the value for the selected sheet size
+          setSheetValue(selectedSheetSize.value);
+          console.log("Sheet value:", selectedSheetSize.value);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching sheet size data:", error);
+      });
+  };
+
   function platePrice(pages, plateCost) {
     return pages * plateCost;
   }
@@ -481,6 +542,11 @@ const CostCalculation = () => {
   const handlePagesChange = (e) => {
     const value = parseInt(e.target.value);
     setPages(value);
+  };
+
+  const handleOuterPagesChange = (e) => {
+    const value = parseInt(e.target.value);
+    setOuterPages(value);
   };
 
   const handlePlateSizeChange = (e) => {
@@ -608,9 +674,8 @@ const CostCalculation = () => {
                       ))}
                     </select>
                     <br></br>
-
                     <label htmlFor="pages">
-                      <b>Pages</b> (Number of pages per copy):
+                      <b>Inner Pages</b> (Number of pages in the inside):
                     </label>
                     <br></br>
                     <input
@@ -623,6 +688,48 @@ const CostCalculation = () => {
                       max="500"
                       required
                     />
+                    <br></br>
+                    <p className="divider-p">Custom Paper Detail</p>
+
+                    <label htmlFor="length">
+                      <b>Length (inches):</b>
+                    </label>
+                    <br></br>
+                    <input
+                      id="length"
+                      type="number"
+                      value={length}
+                      onChange={(e) => setLength(e.target.value)}
+                      placeholder="Enter length"
+                    />
+                    <br></br>
+                    <label htmlFor="breadth">
+                      <b>Breadth (inches):</b>
+                    </label>
+                    <br></br>
+                    <input
+                      id="breadth"
+                      type="number"
+                      value={breadth}
+                      onChange={(e) => setBreadth(e.target.value)}
+                      placeholder="Enter breadth"
+                    />
+                    <br></br>
+
+                    {/* <label htmlFor="outerpages">
+                      <b>Outer Pages</b> (Pages of the cover paper, i.e. 4):
+                    </label>
+                    <br></br>
+                    <input
+                      type="number"
+                      id="outerpages"
+                      placeholder="Enter number of pages"
+                      value={outerpages}
+                      onChange={handleOuterPagesChange}
+                      min="8"
+                      max="500"
+                      required
+                    /> */}
                     <br></br>
 
                     <label htmlFor="quantity">
@@ -842,6 +949,25 @@ const CostCalculation = () => {
                     </select>
                     <br></br>
                     <br></br>
+                    <label htmlFor="plateSize">
+                      <b>Sheet </b>Size:
+                    </label>
+                    <br></br>
+                    <br></br>
+                    <select
+                      id="sheetSize"
+                      value={sheetSize}
+                      onChange={handleSheetSizeChange}
+                    >
+                      <option value="">Select Sheet Size</option>
+                      {sheetSizes.map((size, index) => (
+                        <option key={size.sheetSizeId} value={size.sheetSize}>
+                          {size.sheetSize}
+                        </option>
+                      ))}
+                    </select>
+                    <br></br>
+                    <br></br>
                     <label htmlFor="ink-type">
                       <b>Ink </b> Type:
                     </label>
@@ -870,7 +996,9 @@ const CostCalculation = () => {
                 <DrawerTest
                   // inkCost={inkCost}
                   pages={pages}
+                  sheetValue={sheetValue}
                   quantity={quantity}
+                  sheetSize={sheetSize}
                   paperSize={paperSize}
                   selectedPaperType={selectedPaperType}
                   selectedPaperThickness={selectedPaperThickness}
