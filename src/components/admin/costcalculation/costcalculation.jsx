@@ -1117,6 +1117,7 @@ const CostCalculation = () => {
                   bindingCost={bindingCost}
                   outerPaperPrice={outerPaperPrice}
                   totalCost={totalCost}
+                  paperFit={paperFit}
                   totalPacket={totalPacket(quantity)}
                 />
               </form>

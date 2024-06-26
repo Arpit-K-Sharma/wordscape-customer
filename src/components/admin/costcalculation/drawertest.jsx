@@ -8,6 +8,7 @@ const DrawerTest = ({
   totalSheets,
   bindingCost,
   sheetLength,
+  paperFit,
   sheetBreadth,
   totalReams,
   outerPaperPrice,
@@ -135,6 +136,9 @@ const DrawerTest = ({
             </p>
             <p>
               Breadth of sheet size: <b>{sheetBreadth}</b>
+            </p>
+            <p>
+              Sheet can contain: <b>{paperFit} Papers</b>
             </p>
           </li>
           <li>
