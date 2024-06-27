@@ -154,7 +154,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <br />
         <NavLink to="/order/2">
           <button
-            className="btn max-lg:w-full btn-primary mt-5 w-full"
+            className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
             onClick={handleNext}
           >
             Next

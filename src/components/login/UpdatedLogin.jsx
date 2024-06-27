@@ -25,7 +25,7 @@ function Signin() {
       const url = "/home/login";
       const data = {
         email: email,
-        password: password
+        password: password,
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);
@@ -37,7 +37,7 @@ function Signin() {
 
         try {
           const decoded = jwtDecode(token);
-          console.log("Decoded Token:", decoded);
+          // console.log("Decoded Token:", decoded);
 
           if (decoded.id) {
             console.log("id:", decoded.id);
@@ -88,7 +88,7 @@ function Signin() {
       const url = "/home/login";
       const data = {
         email: email,
-        password: password
+        password: password,
       };
       console.log("Request Data:", data);
       const response = await axios.post(url, data);
@@ -100,7 +100,7 @@ function Signin() {
 
         try {
           const decoded = jwtDecode(token);
-          console.log("Decoded Token: ", decoded);
+          // console.log("Decoded Token: ", decoded);
 
           if (decoded.id) {
             console.log("id of decoded:", decoded.id);

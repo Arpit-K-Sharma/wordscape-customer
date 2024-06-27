@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
   // baseURL: "https://erp-api.wordscapepress.com",
-  baseURL: "https://localhost:8443",
+  baseURL: "http://localhost:8081",
 });
 
 axiosInstance.interceptors.request.use(

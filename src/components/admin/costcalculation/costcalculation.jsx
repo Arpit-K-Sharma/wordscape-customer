@@ -16,6 +16,9 @@ const CostCalculation = () => {
   const [length, setLength] = useState("");
   const [standardLength, setStandardLength] = useState("");
   const [standardBreadth, setStandardBreadth] = useState("");
+  const [selectedOuterLaminationType, setSelectedOuterLaminationType] =
+    useState("");
+  const [outerLaminationRate, setOuterLaminationRate] = useState(0);
 
   const [breadth, setBreadth] = useState("");
   const [paperLength, setPaperLength] = useState("");
@@ -88,6 +91,7 @@ const CostCalculation = () => {
     getRateForCoverTreatment(selectedCoverTreatmentType);
     getRateForPaper(selectedPaperType);
     getRateForOuterPaper();
+    getRateForOuterLaminationType(selectedOuterLaminationType);
     getSheetSizes();
     const paperFit = fitPapers(
       sheetBreadth,
@@ -158,6 +162,39 @@ const CostCalculation = () => {
 
   const handleOuterPaperTypeChange = (e) => {
     setOuterSelectedPaperType(e.target.value);
+  };
+
+  const getRateForOuterLaminationType = (selectedOuterLaminationType) => {
+    axios
+      .get("/laminations")
+      .then((response) => {
+        const selectedOuterLamination = response.data.find(
+          (lamination) =>
+            lamination.laminationType === selectedOuterLaminationType
+        );
+        if (selectedOuterLamination) {
+          setOuterLaminationRate(selectedOuterLamination.rate);
+          console.log(
+            "Outer Lamination Type:",
+            selectedOuterLaminationType,
+            "Rate:",
+            selectedOuterLamination.rate
+          );
+        } else {
+          console.error(
+            "Outer Lamination type not found:",
+            selectedOuterLaminationType
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching outer lamination types:", error);
+      });
+  };
+
+  const handleOuterLaminationTypeChange = (event) => {
+    setSelectedOuterLaminationType(event.target.value);
+    getRateForOuterLaminationType(event.target.value);
   };
 
   const handlePaperTypeChange = (e) => {
@@ -1010,6 +1047,27 @@ const CostCalculation = () => {
                         ))}
                       </select>
                     </div>
+                    <br></br>
+                    <div className="l-container">
+                      <label htmlFor="outer-lamination-type">
+                        <b>Outer </b>Lamination Type{" "}
+                      </label>
+                      <br></br>
+                      <select
+                        id="outer-lamination-type"
+                        name="outer-lamination-type"
+                        value={selectedOuterLaminationType}
+                        onChange={handleOuterLaminationTypeChange}
+                        required
+                      >
+                        <option value="">Select Outer Lamination Type</option>
+                        {laminationType.map((lamination, index) => (
+                          <option key={index} value={lamination}>
+                            {lamination}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   <p> </p>
@@ -1119,6 +1177,8 @@ const CostCalculation = () => {
                   requiredSheet={totalSheets(quantity, pages, paperFit)}
                   paperFit={paperFit}
                   totalPacket={totalPacket(quantity)}
+                  selectedOuterLaminationType={selectedOuterLaminationType}
+                  outerLaminationRate={outerLaminationRate}
                 />
               </form>
             </div>

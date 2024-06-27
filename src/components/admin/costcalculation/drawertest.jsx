@@ -14,11 +14,14 @@ const DrawerTest = ({
   outerPaperPrice,
   standardLength,
   standardBreadth,
+  outerLaminationRate,
+  selectedOuterLaminationType,
   totalSheets,
   length,
   breadth,
   costReam,
   sheetValue,
+  outerLamination,
   sheetSize,
   changeCostPerKg,
   outerSelectedPaperType,
@@ -157,10 +160,16 @@ const DrawerTest = ({
           <li>
             <h3 className="text-xl font-semibold mb-2">Lamination</h3>
             <p>
-              Type of Lamination: <b>{selectedLaminationType}</b>
+              Type of Inner Lamination: <b>{selectedLaminationType}</b>
             </p>
             <p>
-              Cost of Lamination: Rs. <b>{laminationCost}</b>
+              Cost of Inner Lamination: Rs. <b>{laminationCost}</b>
+            </p>
+            <p>
+              Type of Outer Lamination: <b>{selectedOuterLaminationType}</b>
+            </p>
+            <p>
+              Cost of Outer Lamination: Rs. <b>{outerLaminationRate}</b>
             </p>
           </li>
           <li>
