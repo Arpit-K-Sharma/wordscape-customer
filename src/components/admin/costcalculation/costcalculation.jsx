@@ -573,10 +573,23 @@ const CostCalculation = () => {
   }
 
   // console.log("The number of packets required are " + totalPacket(quantity));
-
-  function calculateLamination(laminationPrice, quantity, pages) {
-    return Math.ceil(((12 * 18 * laminationPrice) / 2) * pages * quantity);
+  // Outer Lamination
+  function calculateLamination(
+    laminationPrice,
+    quantity,
+    sheetLength,
+    sheetBreadth,
+    length,
+    breadth
+  ) {
+    const effectiveLength = sheetLength || length;
+    const effectiveBreadth = sheetBreadth || breadth;
+    return Math.ceil(
+      effectiveLength * effectiveBreadth * laminationPrice * quantity
+    );
   }
+
+  // Inner lamination
 
   // console.log("Lamination price is " + laminationPrice);
 
@@ -714,7 +727,7 @@ const CostCalculation = () => {
     ) +
     platePrice(pages, plateCost) +
     Math.ceil(bindingCost * quantity) +
-    calculateLamination(laminationPrice, quantity, pages);
+    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
 
   return (
     <>
