@@ -149,7 +149,9 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         </select>
         <br />
         <div className="label text-center">
-          <span className="label-text">Inner Paper Thickness</span>
+          <span className="label-text">
+            <span className="text-red-500">*</span> Inner Paper Thickness
+          </span>
           <span>
             <GiPapers color="black" size={25} />
           </span>
@@ -165,7 +167,6 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           }
           disabled={!orderData.innerPaperType}
         >
-          <option value="">Select Thickness</option>
           {availableThicknesses.map((gsm) => (
             <option key={gsm.id} value={gsm.thickness} className="text-bold">
               {gsm.thickness}
@@ -177,6 +178,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           <button
             className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
             onClick={handleNext}
+            disabled={!orderData.innerPaperThickness}
           >
             Next
           </button>

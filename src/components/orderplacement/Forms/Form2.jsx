@@ -7,6 +7,40 @@ import { GiPapers } from "react-icons/gi";
 
 const SecondForm = ({ orderData, entireData, setOrderData }) => {
   const { paperThicknessData, fetchedPaperTypes } = entireData;
+  const [availableThicknesses, setAvailableThicknesses] = useState([]);
+
+  useEffect(() => {
+    if (fetchedPaperTypes.length > 0) {
+      const defaultPaperType = fetchedPaperTypes[0].name;
+      setOrderData((prevData) => ({
+        ...prevData,
+        outerPaperType: defaultPaperType,
+      }));
+    }
+  }, [fetchedPaperTypes]);
+
+  useEffect(() => {
+    if (orderData.outerPaperType) {
+      const selectedPaperType = fetchedPaperTypes.find(
+        (type) => type.name === orderData.outerPaperType
+      );
+      if (selectedPaperType) {
+        const minThickness = selectedPaperType.minThickness;
+        const maxThickness = selectedPaperType.maxThickness;
+        const thicknessOptions = paperThicknessData.filter(
+          (gsm) =>
+            gsm.thickness >= minThickness && gsm.thickness <= maxThickness
+        );
+        setAvailableThicknesses(thicknessOptions);
+        if (thicknessOptions.length > 0) {
+          setOrderData((prevData) => ({
+            ...prevData,
+            outerPaperThickness: thicknessOptions[0].thickness,
+          }));
+        }
+      }
+    }
+  }, [orderData.outerPaperType, fetchedPaperTypes, paperThicknessData]);
 
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
@@ -21,13 +55,15 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         </div>
         <select
           className="select select-bordered text-zinc-900"
+          value={orderData.outerPaperType}
           onChange={(e) =>
-            setOrderData({ ...orderData, outerPaperType: e.target.value })
+            setOrderData({
+              ...orderData,
+              outerPaperType: e.target.value,
+              outerPaperThickness: "", // Reset thickness when paper type changes
+            })
           }
         >
-          <option disabled defaultValue>
-            Pick one
-          </option>
           {fetchedPaperTypes.map((type) => (
             <option key={type.id} value={type.name}>
               {type.name}
@@ -41,6 +77,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         </div>
         <select
           className="select select-bordered text-zinc-900"
+          value={orderData.outerPaperThickness}
           onChange={(e) =>
             setOrderData({
               ...orderData,
@@ -48,10 +85,7 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
             })
           }
         >
-          <option disabled defaultValue>
-            Pick one
-          </option>
-          {paperThicknessData.map((gsm) => (
+          {availableThicknesses.map((gsm) => (
             <option key={gsm.id} value={gsm.thickness}>
               {gsm.thickness}
             </option>
