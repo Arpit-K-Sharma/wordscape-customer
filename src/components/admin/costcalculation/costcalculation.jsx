@@ -16,6 +16,8 @@ const CostCalculation = () => {
   const [length, setLength] = useState("");
   const [standardLength, setStandardLength] = useState("");
   const [standardBreadth, setStandardBreadth] = useState("");
+  const [paperTypes, setPaperTypes] = useState([]);
+
   const [selectedOuterLaminationType, setSelectedOuterLaminationType] =
     useState("");
   const [outerLaminationRate, setOuterLaminationRate] = useState(0);
@@ -161,7 +163,9 @@ const CostCalculation = () => {
   };
 
   const handleOuterPaperTypeChange = (e) => {
-    setOuterSelectedPaperType(e.target.value);
+    const selectedType = e.target.value;
+    setOuterSelectedPaperType(selectedType);
+    etSelectedOuterPaperThickness("");
   };
 
   const getRateForOuterLaminationType = (selectedOuterLaminationType) => {
@@ -198,7 +202,9 @@ const CostCalculation = () => {
   };
 
   const handlePaperTypeChange = (e) => {
-    setSelectedInnerPaper(e.target.value);
+    const selectedType = e.target.value;
+    setSelectedInnerPaper(selectedType);
+    setSelectedPaperThickness("");
   };
 
   const handleCoverTreatmentTypeChange = (e) => {
@@ -295,11 +301,29 @@ const CostCalculation = () => {
       });
   };
 
+  const generateThicknessOptions = (selectedPaperType) => {
+    const selectedPaper = paperTypes.find(
+      (paper) => paper.paperType === selectedPaperType
+    );
+    if (!selectedPaper) return [];
+
+    const options = [];
+    for (
+      let thickness = selectedPaper.minThickness;
+      thickness <= selectedPaper.maxThickness;
+      thickness += 10
+    ) {
+      options.push(thickness);
+    }
+    return options;
+  };
+
   const getPaper = () => {
     axios
       .get("/papers")
       .then((response) => {
         setPaperType(response.data);
+        setPaperTypes(response.data);
       })
       .catch((error) => {
         console.error("Error fetching paper data:", error);
@@ -980,11 +1004,13 @@ const CostCalculation = () => {
                         required
                       >
                         <option value="">Set Paper Thickness</option>
-                        {paperThicknesses.map((thickness, index) => (
-                          <option key={index} value={thickness.thickness}>
-                            {thickness.thickness}
-                          </option>
-                        ))}
+                        {generateThicknessOptions(selectedPaperType).map(
+                          (thickness) => (
+                            <option key={thickness} value={thickness}>
+                              {thickness}
+                            </option>
+                          )
+                        )}
                       </select>
                     </div>
                     <br></br>
@@ -1031,11 +1057,13 @@ const CostCalculation = () => {
                         required
                       >
                         <option value="">Set Paper Thickness</option>
-                        {paperThicknesses.map((thickness, index) => (
-                          <option key={index} value={thickness.thickness}>
-                            {thickness.thickness}
-                          </option>
-                        ))}
+                        {generateThicknessOptions(outerSelectedPaperType).map(
+                          (thickness) => (
+                            <option key={thickness} value={thickness}>
+                              {thickness}
+                            </option>
+                          )
+                        )}
                       </select>
                       <br></br>
                     </div>

@@ -136,10 +136,10 @@ const DrawerTest = ({
               Value of sheet size: <b>{sheetValue}</b>
             </p>
             <p>
-              Length of sheet size: <b>{sheetLength}</b>
+              Length of sheet size: <b>{sheetLength || length}</b>
             </p>
             <p>
-              Breadth of sheet size: <b>{sheetBreadth}</b>
+              Breadth of sheet size: <b>{sheetBreadth || breadth}</b>
             </p>
             <p>
               Sheet can contain: <b>{paperFit} Papers</b>

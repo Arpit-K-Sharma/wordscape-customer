@@ -10,7 +10,6 @@ function Paper() {
     axios
       .get("/papers")
       .then((response) => {
-        // Sort the data by paperId in ascending order
         const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
         setPaperDataState(sortedData);
       })
@@ -19,25 +18,23 @@ function Paper() {
       });
   }
 
-  // Fetching paper data from the backend
   useEffect(() => {
     getPaper();
   }, []);
 
-  // Update the handleAddPaper function to close the dialog after adding
   const handleAddPaper = (e) => {
     e.preventDefault();
     const paperType = e.target.elements.paperType.value;
     const rate = parseFloat(e.target.elements.rate.value);
+    const minThickness = parseFloat(e.target.elements.minThickness.value);
+    const maxThickness = parseFloat(e.target.elements.maxThickness.value);
+
     axios
-      .post("/papers", {
-        paperType,
-        rate,
-      })
+      .post("/papers", { paperType, rate, minThickness, maxThickness })
       .then((response) => {
         setPaperDataState((prevData) => [...prevData, response.data]);
         console.log("Paper added successfully!");
-        document.getElementById("my_modal_3").close(); // Close the dialog
+        document.getElementById("my_modal_3").close();
         return true;
       })
       .then((status) => {
@@ -53,7 +50,7 @@ function Paper() {
       .put(`/papers/${id}`, updatedData)
       .then((response) => {
         console.log("Paper updated successfully:", response.data);
-        getPaper(); // Refresh paper data
+        getPaper();
       })
       .catch((error) => {
         console.error("Error updating paper:", error);
@@ -68,9 +65,15 @@ function Paper() {
     const updatedData = {
       paperType: document.getElementById(`paper_type_${row.paperId}`).value,
       rate: parseFloat(document.getElementById(`rate_${row.paperId}`).value),
+      minThickness: parseFloat(
+        document.getElementById(`min_thickness_${row.paperId}`).value
+      ),
+      maxThickness: parseFloat(
+        document.getElementById(`max_thickness_${row.paperId}`).value
+      ),
     };
     handleUpdate(row.paperId, updatedData);
-    setEditingData(null); // Reset editing state after save
+    setEditingData(null);
   };
 
   return (
@@ -99,6 +102,8 @@ function Paper() {
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Paper Type</th>
                   <th className="w-[80px]">Rate</th>
+                  <th className="w-[80px]">Min Thickness</th>
+                  <th className="w-[80px]">Max Thickness</th>
                   <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
@@ -136,6 +141,38 @@ function Paper() {
                         </form>
                       ) : (
                         <span>{row.rate}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData && editingData.paperId === row.paperId ? (
+                        <form onSubmit={(e) => handleSave(e, row)}>
+                          <input
+                            type="number"
+                            id={`min_thickness_${row.paperId}`}
+                            name="min_thickness"
+                            className="input input-bordered"
+                            defaultValue={row.minThickness}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>{row.minThickness}</span>
+                      )}
+                    </td>
+                    <td className="text-wrap">
+                      {editingData && editingData.paperId === row.paperId ? (
+                        <form onSubmit={(e) => handleSave(e, row)}>
+                          <input
+                            type="number"
+                            id={`max_thickness_${row.paperId}`}
+                            name="max_thickness"
+                            className="input input-bordered"
+                            defaultValue={row.maxThickness}
+                            required
+                          />
+                        </form>
+                      ) : (
+                        <span>{row.maxThickness}</span>
                       )}
                     </td>
                     <td>
@@ -186,6 +223,18 @@ function Paper() {
                       type="number"
                       name="rate"
                       placeholder="Rate"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="minThickness"
+                      placeholder="Min Thickness"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="maxThickness"
+                      placeholder="Max Thickness"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <button className="btn mt-5 btn-ghost mx-[115px]">
