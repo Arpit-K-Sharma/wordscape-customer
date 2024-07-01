@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { IoNewspaper } from "react-icons/io5";
 import { GiPapers } from "react-icons/gi";
 import { ImBook } from "react-icons/im";
 import { MdAdd, MdClose } from "react-icons/md";
-import { useEffect } from "react";
 
 const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const {
@@ -148,37 +147,44 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           ))}
         </select>
         <br />
-        <div className="label text-center">
-          <span className="label-text">
-            <span className="text-red-500">*</span> Inner Paper Thickness
-          </span>
-          <span>
-            <GiPapers color="black" size={25} />
-          </span>
-        </div>
-        <select
-          className="select select-bordered"
-          value={orderData.innerPaperThickness}
-          onChange={(e) =>
-            setOrderData({
-              ...orderData,
-              innerPaperThickness: parseInt(e.target.value),
-            })
-          }
-          disabled={!orderData.innerPaperType}
-        >
-          {availableThicknesses.map((gsm) => (
-            <option key={gsm.id} value={gsm.thickness} className="text-bold">
-              {gsm.thickness}
-            </option>
-          ))}
-        </select>
+        {orderData.innerPaperType && (
+          <>
+            <div className="label text-center">
+              <span className="label-text">
+                <span className="text-red-500">*</span> Inner Paper Thickness
+              </span>
+              <span>
+                <GiPapers color="black" size={25} />
+              </span>
+            </div>
+            <select
+              className="select select-bordered"
+              value={orderData.innerPaperThickness}
+              onChange={(e) =>
+                setOrderData({
+                  ...orderData,
+                  innerPaperThickness: parseInt(e.target.value),
+                })
+              }
+              disabled={!orderData.innerPaperType}
+            >
+              {availableThicknesses.map((gsm) => (
+                <option
+                  key={gsm.id}
+                  value={gsm.thickness}
+                  className="text-bold"
+                >
+                  {gsm.thickness}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
         <br />
         <NavLink to="/order/2">
           <button
             className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
             onClick={handleNext}
-            disabled={!orderData.innerPaperThickness}
           >
             Next
           </button>
