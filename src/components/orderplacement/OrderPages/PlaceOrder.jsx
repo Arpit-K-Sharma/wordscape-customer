@@ -91,15 +91,14 @@ function OrderPlacement() {
     axios
       .get("/papers")
       .then((response) => {
-        // Sort the data by paperId in ascending order
         const sortedData = response.data.sort((a, b) => a.paperId - b.paperId);
-        // Extract the paper types data
         const paperTypesData = sortedData.map((paper) => ({
           id: paper.paperId,
           name: paper.paperType,
+          minThickness: paper.minThickness,
+          maxThickness: paper.maxThickness,
         }));
 
-        // Set the paper types data as state
         setEntireData((prevEntireData) => ({
           ...prevEntireData,
           fetchedPaperTypes: paperTypesData,
@@ -110,9 +109,6 @@ function OrderPlacement() {
 
         const outerPaperType =
           paperTypesData.length > 0 ? paperTypesData[0].name : "";
-
-        // const firstPaperType =
-        //   paperTypesData.length > 0 ? paperTypesData[0].name : "Art Paper";
 
         setOrderData((prevOrderData) => ({
           ...prevOrderData,

@@ -4,6 +4,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { GiPapers } from "react-icons/gi";
 import { ImBook } from "react-icons/im";
 import { MdAdd, MdClose } from "react-icons/md";
+import { useEffect } from "react";
 
 const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const {
@@ -16,10 +17,28 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const [paperSize1, setPaperSize1] = useState("");
   const [paperSize2, setPaperSize2] = useState("");
   const [addPaper, setAddPaper] = useState(false);
+  const [availableThicknesses, setAvailableThicknesses] = useState([]);
 
   const handleAdd = () => {
     setAddPaper(!addPaper);
   };
+
+  useEffect(() => {
+    if (orderData.innerPaperType) {
+      const selectedPaperType = fetchedPaperTypes.find(
+        (type) => type.name === orderData.innerPaperType
+      );
+      if (selectedPaperType) {
+        const minThickness = selectedPaperType.minThickness;
+        const maxThickness = selectedPaperType.maxThickness;
+        const thicknessOptions = paperThicknessData.filter(
+          (gsm) =>
+            gsm.thickness >= minThickness && gsm.thickness <= maxThickness
+        );
+        setAvailableThicknesses(thicknessOptions);
+      }
+    }
+  }, [orderData.innerPaperType, fetchedPaperTypes, paperThicknessData]);
 
   const handleNext = () => {
     if (addPaper) {
@@ -137,16 +156,18 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         </div>
         <select
           className="select select-bordered"
-          value={selectedThickness}
+          value={orderData.innerPaperThickness}
           onChange={(e) =>
             setOrderData({
               ...orderData,
               innerPaperThickness: parseInt(e.target.value),
             })
           }
+          disabled={!orderData.innerPaperType}
         >
-          {paperThicknessData.map((gsm) => (
-            <option key={gsm.id} value={gsm.id} className="text-bold">
+          <option value="">Select Thickness</option>
+          {availableThicknesses.map((gsm) => (
+            <option key={gsm.id} value={gsm.thickness} className="text-bold">
               {gsm.thickness}
             </option>
           ))}
