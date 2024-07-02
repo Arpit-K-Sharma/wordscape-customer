@@ -30,27 +30,8 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
           What lamination and binding would you want to choose from?
         </p>
         <br />
-
         <div className="label text-center">
-          <span className="label-text">Inner Lamination Types</span>
-          <IoMdPaper size={`25px`} color="black" />
-        </div>
-        <select
-          className="select select-bordered text-zinc-800"
-          onChange={(e) =>
-            setOrderData({ ...orderData, innerLamination: e.target.value })
-          }
-        >
-          {laminationTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.laminationType}
-            </option>
-          ))}
-        </select>
-        <br />
-
-        <div className="label text-center">
-          <span className="label-text">Outer Lamination Types</span>
+          <span className="label-text">Lamination for Cover</span>
           <IoMdPaper size={`25px`} color="black" />
         </div>
         <select

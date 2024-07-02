@@ -223,7 +223,9 @@ function UserOrder() {
                   <td>{new Date(details.date).toLocaleDateString()}</td>
                   <td>
                     {details.delivery && details.delivery.deliveryDate
-                      ? new Date(details.delivery.deliveryDate).toLocaleDateString()
+                      ? new Date(
+                          details.delivery.deliveryDate
+                        ).toLocaleDateString()
                       : "N/A"}
                   </td>
                   <td>{details.pages}</td>
@@ -263,10 +265,10 @@ function UserOrder() {
                           ? "bg-blue-400 p-[6px] rounded-[5px] w-[100px] flex gap-[5px] font-bold text-[white] max-sm:w-[80px]"
                           : details.status == "APPROVED" ||
                             details.status == "COMPLETED"
-                            ? "bg-[#155415] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] max-sm:w-[80px] text-white"
-                            : details.status == "CANCELED"
-                              ? "bg-[red] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] text-white font-bold max-sm:w-[80px]"
-                              : null
+                          ? "bg-[#155415] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] max-sm:w-[80px] text-white"
+                          : details.status == "CANCELED"
+                          ? "bg-[red] p-[6px] rounded-[5px] w-[100px] flex gap-[5px] text-white font-bold max-sm:w-[80px]"
+                          : null
                       }
                     >
                       {details.status == "PENDING" ? (
@@ -289,7 +291,7 @@ function UserOrder() {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-side">
           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
-          <div className="p-4 w-80 min-h-full bg-base-100 pl-[20px] text-base-content w-[35%] max-sm:w-full">
+          <div className="p-4 w-80 min-h-full bg-base-100 pl-[14px] text-base-content w-[35%] max-sm:w-full">
             <button
               className="absolute top-0 left-0 text-red-800 hover:text-red-900 font-bold text-[30px] max-sm:mt-5 mt-6"
               onClick={() =>
@@ -304,7 +306,7 @@ function UserOrder() {
 
             {selectedOrder && (
               <>
-                <div className="shadow-xl">
+                <div className="shadow-xl pl-[12px] pr-[12px]">
                   <table className="table-auto w-full max-sm:max-w-xl">
                     <tbody>
                       <tr
@@ -325,7 +327,7 @@ function UserOrder() {
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
                           <IoMdTimer className="text-black" size={30} />
-                          Date
+                          Date Ordered:
                         </td>
                         <td className="w-1/2">
                           {new Date(selectedOrder.date).toLocaleDateString()}
@@ -430,7 +432,7 @@ function UserOrder() {
                           {selectedOrder.outerPaperThickness}
                         </td>
                       </tr>
-                      <tr
+                      {/* <tr
                         className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
                         style={{ height: "50px" }}
                       >
@@ -441,14 +443,14 @@ function UserOrder() {
                         <td className="w-1/2">
                           {selectedOrder.innerLamination.laminationType}
                         </td>
-                      </tr>
+                      </tr> */}
                       <tr
                         className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
                         style={{ height: "50px" }}
                       >
                         <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
                           <FaPrint className="text-black" />
-                          Outer Lamination Type
+                          Cover Lamination
                         </td>
                         <td className="w-1/2">
                           {selectedOrder.outerLamination.laminationType}
@@ -519,8 +521,8 @@ function UserOrder() {
                         <td className="w-1/2">
                           {selectedOrder.deadline
                             ? new Date(
-                              selectedOrder.deadline
-                            ).toLocaleDateString()
+                                selectedOrder.deadline
+                              ).toLocaleDateString()
                             : "N/A"}
                         </td>
                       </tr>
