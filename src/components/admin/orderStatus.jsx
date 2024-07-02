@@ -11,9 +11,7 @@ function OrderStatusList({ orderDetails }) {
       const trackingResults = {};
       for (const order of orderDetails) {
         try {
-          const response = await axios.get(
-            `/projectTracking/${order.orderId}`
-          );
+          const response = await axios.get(`/projectTracking/${order.orderId}`);
           const data = response.data;
           trackingResults[order.orderId] = getLastCompletedStage(data);
         } catch (error) {
@@ -56,9 +54,13 @@ function OrderStatusList({ orderDetails }) {
         <table className="w-full min-w-[600px]">
           <thead>
             <tr className="font-medium text-[16px] h-[47px] border-b border-gray-200 text-left">
-              <th className="w-[100px] md:w-[150px] pl-[10px]">Customer Name</th>
-              <th className="w-[100px]">Order Id</th>
-              <th className=" w-[80px] md:w-[100px] lg:w-[150px]">Tracking Stage</th>
+              <th className="w-[100px] md:w-[150px] pl-[10px]">
+                Customer Name
+              </th>
+              {/* <th className="w-[100px]">Order Id</th> */}
+              <th className=" w-[80px] md:w-[100px] lg:w-[150px]">
+                Tracking Stage
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -79,9 +81,9 @@ function OrderStatusList({ orderDetails }) {
                     <span>{order.customer || "N/A"}</span>
                   </div>
                 </td>
-                <td className="truncate max-w-[80px]">
-                  <h4 className="truncate">#{order.orderId}</h4>
-                </td>
+                {/* <td className="truncate max-w-[20px]">
+                  <h4 className="truncate w-[52px]">{order.orderId}</h4>
+                </td> */}
                 <td>
                   <h3>{trackingData[order.orderId] || "Loading..."}</h3>
                 </td>
@@ -90,7 +92,6 @@ function OrderStatusList({ orderDetails }) {
           </tbody>
         </table>
       </div>
-
     </>
   );
 }

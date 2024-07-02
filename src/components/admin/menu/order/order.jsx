@@ -841,7 +841,7 @@ function AdminDashboard() {
                                 {selectedOrder.outerPaperThickness || "N/A"}
                               </td>
                             </tr>
-                            <tr
+                            {/* <tr
                               className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
@@ -857,14 +857,14 @@ function AdminDashboard() {
                                   {selectedOrder.innerLamination?.rate || "N/A"}
                                 </span>
                               </td>
-                            </tr>
+                            </tr> */}
                             <tr
                               className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
                               <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
                                 <FaPrint className="text-gray-600" />
-                                Outer Lamination Type
+                                Cover Lamination
                               </td>
                               <td className="w-1/2 text-gray-600">
                                 {selectedOrder.outerLamination

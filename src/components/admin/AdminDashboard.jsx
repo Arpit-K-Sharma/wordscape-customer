@@ -378,10 +378,14 @@ function AdminDashboard() {
                   <table className="w-full min-w-[600px] text-[13px] bg-white">
                     <thead>
                       <tr className="text-[16px] border-b border-[#d5d4d4] text-[#171717] h-[47px]">
-                        <th className="w-[100px] pl-[15px] text-left">Order ID</th>
+                        <th className="w-[100px] pl-[15px] text-left">
+                          Order ID
+                        </th>
                         <th className="w-[100px] text-left">Date</th>
                         <th className="w-[150px] text-left">Delivery Date</th>
-                        <th className="w-[200px] lg:w-[150px]  text-left">Estimated Amount</th>
+                        <th className="w-[200px] lg:w-[150px]  text-left">
+                          Estimated Amount
+                        </th>
                         <th className="w-[100px] text-left">Order Status</th>
                       </tr>
                     </thead>
@@ -396,11 +400,11 @@ function AdminDashboard() {
                               <span
                                 className="truncate"
                                 style={{
-                                  display: 'block',
-                                  width: '100px',
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis',
-                                  whiteSpace: 'nowrap',
+                                  display: "block",
+                                  width: "50px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
                                 }}
                               >
                                 {details.orderId}
@@ -411,7 +415,9 @@ function AdminDashboard() {
                             </td>
                             <td className="h-[60px] text-left">
                               {details.delivery && details.delivery.deliveryDate
-                                ? new Date(details.delivery.deliveryDate).toLocaleDateString()
+                                ? new Date(
+                                    details.delivery.deliveryDate
+                                  ).toLocaleDateString()
                                 : "N/A"}
                             </td>
                             <td className="h-[60px] text-left pl-[15px]">
