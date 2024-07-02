@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "../../axiosInstance";
 import { FaRegNewspaper } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { GiPapers } from "react-icons/gi";
@@ -8,19 +7,13 @@ import { GiPapers } from "react-icons/gi";
 const SecondForm = ({ orderData, entireData, setOrderData }) => {
   const { paperThicknessData, fetchedPaperTypes } = entireData;
   const [availableThicknesses, setAvailableThicknesses] = useState([]);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   useEffect(() => {
-    if (fetchedPaperTypes.length > 0) {
-      const defaultPaperType = fetchedPaperTypes[0].name;
-      setOrderData((prevData) => ({
-        ...prevData,
-        outerPaperType: defaultPaperType,
-      }));
-    }
-  }, [fetchedPaperTypes]);
-
-  useEffect(() => {
-    if (orderData.outerPaperType) {
+    if (
+      orderData.outerPaperType &&
+      orderData.outerPaperType !== "Choose a Paper Type"
+    ) {
       const selectedPaperType = fetchedPaperTypes.find(
         (type) => type.name === orderData.outerPaperType
       );
@@ -32,15 +25,19 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
             gsm.thickness >= minThickness && gsm.thickness <= maxThickness
         );
         setAvailableThicknesses(thicknessOptions);
-        if (thicknessOptions.length > 0) {
-          setOrderData((prevData) => ({
-            ...prevData,
-            outerPaperThickness: thicknessOptions[0].thickness,
-          }));
-        }
       }
+    } else {
+      setAvailableThicknesses([]);
     }
   }, [orderData.outerPaperType, fetchedPaperTypes, paperThicknessData]);
+
+  useEffect(() => {
+    setIsNextDisabled(
+      !orderData.outerPaperType ||
+        orderData.outerPaperType === "Choose a Paper Type" ||
+        !orderData.outerPaperThickness
+    );
+  }, [orderData]);
 
   return (
     <div className="lg:mt-6 lg:mb-6 font-archivo">
@@ -55,15 +52,16 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
         </div>
         <select
           className="select select-bordered text-zinc-900"
-          value={orderData.outerPaperType}
+          value={orderData.outerPaperType || "Choose a Paper Type"}
           onChange={(e) =>
             setOrderData({
               ...orderData,
               outerPaperType: e.target.value,
-              outerPaperThickness: "", // Reset thickness when paper type changes
+              outerPaperThickness: "",
             })
           }
         >
+          <option disabled>Choose a Paper Type</option>
           {fetchedPaperTypes.map((type) => (
             <option key={type.id} value={type.name}>
               {type.name}
@@ -71,26 +69,34 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
           ))}
         </select>
         <br />
-        <div className="label text-center">
-          <span className="label-text">Outer Paper Thickness</span>
-          <GiPapers color="black" size={`25px`} />
-        </div>
-        <select
-          className="select select-bordered text-zinc-900"
-          value={orderData.outerPaperThickness}
-          onChange={(e) =>
-            setOrderData({
-              ...orderData,
-              outerPaperThickness: parseInt(e.target.value),
-            })
-          }
-        >
-          {availableThicknesses.map((gsm) => (
-            <option key={gsm.id} value={gsm.thickness}>
-              {gsm.thickness}
-            </option>
-          ))}
-        </select>
+        {orderData.outerPaperType &&
+          orderData.outerPaperType !== "Choose a Paper Type" && (
+            <>
+              <div className="label text-center">
+                <span className="label-text">Outer Paper Thickness</span>
+                <GiPapers color="black" size={`25px`} />
+              </div>
+              <select
+                className="select select-bordered text-zinc-900"
+                value={orderData.outerPaperThickness || ""}
+                onChange={(e) =>
+                  setOrderData({
+                    ...orderData,
+                    outerPaperThickness: parseInt(e.target.value),
+                  })
+                }
+              >
+                <option disabled value="">
+                  Select Thickness
+                </option>
+                {availableThicknesses.map((gsm) => (
+                  <option key={gsm.id} value={gsm.thickness}>
+                    {gsm.thickness}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
         <br />
         <div className="lg:flex max-sm:flex-col justify-center max-sm:justify-center ">
           <NavLink to="/order/1">
@@ -98,8 +104,11 @@ const SecondForm = ({ orderData, entireData, setOrderData }) => {
               Previous
             </button>
           </NavLink>
-          <NavLink to="/order/3">
-            <button className="btn bg-blue-600 max-lg:w-full text-white btn-primary w-[280px] mt-5">
+          <NavLink to={!orderData.outerPaperThickness ? "#" : "/order/3"}>
+            <button
+              className="btn bg-blue-600 max-lg:w-full text-white btn-primary w-[280px] mt-5"
+              disabled={isNextDisabled}
+            >
               Next
             </button>
           </NavLink>

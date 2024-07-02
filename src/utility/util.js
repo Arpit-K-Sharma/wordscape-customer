@@ -5,7 +5,7 @@ export const getRoleFromToken = () => {
   const token = Cookies.get("accessToken");
   if (token) {
     const decoded = jwtDecode(token);
-    console.log("DECODED " + decoded);
+    //console.log("DECODED " + decoded);
     return decoded.roles[0];
   } else {
     return Cookies.remove("accessToken");

@@ -17,13 +17,17 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const [paperSize2, setPaperSize2] = useState("");
   const [addPaper, setAddPaper] = useState(false);
   const [availableThicknesses, setAvailableThicknesses] = useState([]);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   const handleAdd = () => {
     setAddPaper(!addPaper);
   };
 
   useEffect(() => {
-    if (orderData.innerPaperType) {
+    if (
+      orderData.innerPaperType &&
+      orderData.innerPaperType !== "Choose a Paper Type"
+    ) {
       const selectedPaperType = fetchedPaperTypes.find(
         (type) => type.name === orderData.innerPaperType
       );
@@ -36,8 +40,19 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         );
         setAvailableThicknesses(thicknessOptions);
       }
+    } else {
+      setAvailableThicknesses([]);
     }
   }, [orderData.innerPaperType, fetchedPaperTypes, paperThicknessData]);
+
+  useEffect(() => {
+    setIsNextDisabled(
+      !orderData.paperSize ||
+        !orderData.innerPaperType ||
+        orderData.innerPaperType === "Choose a Paper Type" ||
+        !orderData.innerPaperThickness
+    );
+  }, [orderData]);
 
   const handleNext = () => {
     if (addPaper) {
@@ -130,16 +145,23 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
         <br />
         <div className="label text-center">
           <span className="label-text">Inner Paper Type</span>
+
           <span>
             <ImBook color="black" size={25} />
           </span>
         </div>
         <select
           className="select select-bordered"
+          value={orderData.innerPaperType || "Choose a Paper Type"}
           onChange={(e) =>
-            setOrderData({ ...orderData, innerPaperType: e.target.value })
+            setOrderData({
+              ...orderData,
+              innerPaperType: e.target.value,
+              innerPaperThickness: "",
+            })
           }
         >
+          <option disabled>Choose a Paper Type</option>
           {fetchedPaperTypes.map((type) => (
             <option key={type.id} value={type.name}>
               {type.name}
@@ -147,44 +169,49 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
           ))}
         </select>
         <br />
-        {orderData.innerPaperType && (
-          <>
-            <div className="label text-center">
-              <span className="label-text">
-                <span className="text-red-500">*</span> Inner Paper Thickness
-              </span>
-              <span>
-                <GiPapers color="black" size={25} />
-              </span>
-            </div>
-            <select
-              className="select select-bordered"
-              value={orderData.innerPaperThickness}
-              onChange={(e) =>
-                setOrderData({
-                  ...orderData,
-                  innerPaperThickness: parseInt(e.target.value),
-                })
-              }
-              disabled={!orderData.innerPaperType}
-            >
-              {availableThicknesses.map((gsm) => (
-                <option
-                  key={gsm.id}
-                  value={gsm.thickness}
-                  className="text-bold"
-                >
-                  {gsm.thickness}
+        {orderData.innerPaperType &&
+          orderData.innerPaperType !== "Choose a Paper Type" && (
+            <>
+              <div className="label text-center">
+                <span className="label-text">
+                  <span className="text-red-500">*</span> Inner Paper Thickness{" "}
+                  <span className="font-bold">(in GSM)</span>
+                </span>
+                <span>
+                  <GiPapers color="black" size={25} />
+                </span>
+              </div>
+              <select
+                className="select select-bordered"
+                value={orderData.innerPaperThickness || ""}
+                onChange={(e) =>
+                  setOrderData({
+                    ...orderData,
+                    innerPaperThickness: parseInt(e.target.value),
+                  })
+                }
+              >
+                <option disabled value="">
+                  Select Thickness
                 </option>
-              ))}
-            </select>
-          </>
-        )}
+                {availableThicknesses.map((gsm) => (
+                  <option
+                    key={gsm.id}
+                    value={gsm.thickness}
+                    className="text-bold"
+                  >
+                    {gsm.thickness}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
         <br />
-        <NavLink to="/order/2">
+        <NavLink to={!orderData.innerPaperThickness ? "#" : "/order/2"}>
           <button
             className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
             onClick={handleNext}
+            disabled={isNextDisabled}
           >
             Next
           </button>

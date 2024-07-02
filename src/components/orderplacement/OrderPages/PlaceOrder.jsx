@@ -79,7 +79,7 @@ function OrderPlacement() {
           ...prevOrderData,
           coverTreatmentType: firstCoverTreatment,
         }));
-        console.log("COVER T 1 " + firstCoverTreatment);
+        //console.log("COVER T 1 " + firstCoverTreatment);
       })
 
       .catch((error) => {
@@ -143,8 +143,8 @@ function OrderPlacement() {
       const response = await axios.get("/paperSizes");
       if (response) {
         const sortedData = response.data.sort((a, b) => a.sizeId - b.sizeId);
-        console.log("Sorted data");
-        console.log(sortedData);
+        // console.log("Sorted data");
+        // console.log(sortedData);
         setEntireData((prevEntireData) => ({
           ...prevEntireData,
           paperSizeData: sortedData,
@@ -156,7 +156,7 @@ function OrderPlacement() {
           ...prevOrderData,
           paperSize: firstPaperSize,
         }));
-        console.log("FIRST PAPER SIZE " + firstPaperSize);
+        // console.log("FIRST PAPER SIZE " + firstPaperSize);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -208,7 +208,7 @@ function OrderPlacement() {
     }
   };
 
-  console.log("The orderData is: ", JSON.stringify(orderData));
+  console.log("Order Data : ", JSON.stringify(orderData));
 
   const getBinding = async () => {
     try {
@@ -256,6 +256,10 @@ function OrderPlacement() {
   //     console.error("Error placing order", error);
   //   }
   // };
+
+  {
+    console.log("Order Data: " + JSON.stringify(orderData));
+  }
 
   return (
     <>
