@@ -198,6 +198,7 @@ function Signin() {
                 </a>
               </NavLink>
             </div>
+
             <div>
               <button
                 type="submit"
@@ -216,9 +217,15 @@ function Signin() {
             <h1 className="text-center">
               Don't have an account?{" "}
               <NavLink to="/signup">
-                <a href="" className="text-slate-600">
+                <a href="" className="text-blue-600">
                   Signup
                 </a>
+              </NavLink>
+            </h1>
+            <h1 className="text-center">
+              Trouble logging in?
+              <NavLink to="/verify">
+                <a className="text-blue-600"> Request for activation</a>
               </NavLink>
             </h1>
           </form>

@@ -85,7 +85,7 @@ function UpdatedRegister() {
       const errorMessage = error.response?.data?.message;
       toast.error(errorMessage);
     } finally {
-      setLoading(false); // Hide loading spinner
+      setLoading(false);
     }
   };
 

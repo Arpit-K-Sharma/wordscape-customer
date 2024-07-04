@@ -15,18 +15,21 @@ function EmailVerification() {
   const location = useLocation();
 
   useEffect(() => {
-    // Retrieve email from location state
     const emailFromState = location.state?.email;
     if (emailFromState) {
       setEmail(emailFromState);
     } else {
-      // If email is not in state, redirect to registration or show an error
       toast.error("Email not found. Please register again.");
       navigate("/register");
     }
   }, [location, navigate]);
 
   const handleVerifyOTP = async () => {
+    if (otpCode.length !== 6) {
+      toast.error("OTP code must be exactly 6 digits.");
+      return;
+    }
+
     setLoading(true);
     try {
       await axios.post("http://localhost:8081/customers/verify", {
@@ -46,6 +49,13 @@ function EmailVerification() {
     }
   };
 
+  const handleChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 6 && /^\d*$/.test(value)) {
+      setOtpCode(value);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -55,16 +65,19 @@ function EmailVerification() {
           <h1 className="text-4xl font-bold text-center mb-6">
             Email Verification
           </h1>
-          <div className="mb-5">
+          <div className="mb-5 text-center">
             <p>
-              Please enter your OTP code sent to {email} to complete the sign-up
+              Please enter your OTP code sent to{" "}
+              <span className="font-bold">{email}</span> to complete the sign-up
               process.
             </p>
           </div>
           <input
-            type="number"
+            type="text"
             value={otpCode}
-            onChange={(e) => setOtpCode(e.target.value)}
+            maxLength="6"
+            pattern="\d*"
+            onChange={handleChange}
             placeholder="Enter Your Verification Code"
             className="w-full px-5 py-5 mb-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />
@@ -79,9 +92,9 @@ function EmailVerification() {
             Verify OTP
           </button>
         </div>
+        <ToastContainer />
       </div>
       <Footer />
-      <ToastContainer />
     </>
   );
 }
