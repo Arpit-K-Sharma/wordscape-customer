@@ -43,6 +43,7 @@ import FAQ from "./components/navbar/faq.jsx";
 import ForgotPassword from "./components/otp/ForgotPassword.jsx";
 import ProtectedStaff from "./components/protectedStaff.jsx";
 import Sheets from "./components/admin/menu/sheets/sheets.jsx";
+import EmailVerification from "./components/login/verification/EmailVerification.jsx";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/contact-us" element={<Contactuspage />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/verify" element={<EmailVerification />} />
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
