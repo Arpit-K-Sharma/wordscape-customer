@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
 import Navbar from "../../navbar/navbar";
 import MobileMenu from "../../navbar/mobile-menu";
@@ -10,17 +10,34 @@ import Footer from "../../navbar/footer";
 function EmailVerification() {
   const [otpCode, setOtpCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Retrieve email from location state
+    const emailFromState = location.state?.email;
+    if (emailFromState) {
+      setEmail(emailFromState);
+    } else {
+      // If email is not in state, redirect to registration or show an error
+      toast.error("Email not found. Please register again.");
+      navigate("/register");
+    }
+  }, [location, navigate]);
 
   const handleVerifyOTP = async () => {
     setLoading(true);
     try {
-      await axios.post("/auth/verify-otp", {
-        otpCode: otpCode,
+      await axios.post("http://localhost:8081/customers/verify", {
+        otp: parseInt(otpCode),
+        email: email,
       });
       console.log("Email verified successfully!");
       toast.success("Email verified successfully");
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
       console.error("Error verifying email:", error);
       toast.error("Invalid OTP code");
@@ -40,8 +57,8 @@ function EmailVerification() {
           </h1>
           <div className="mb-5">
             <p>
-              Please enter your OTP code sent to your email to complete the
-              sign-up process.
+              Please enter your OTP code sent to {email} to complete the sign-up
+              process.
             </p>
           </div>
           <input
@@ -64,6 +81,7 @@ function EmailVerification() {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }

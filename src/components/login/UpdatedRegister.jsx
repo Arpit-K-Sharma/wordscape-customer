@@ -79,7 +79,7 @@ function UpdatedRegister() {
         theme: "dark",
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate("/verify", { state: { email: userData.email } });
       }, 1200);
     } catch (error) {
       const errorMessage = error.response?.data?.message;
