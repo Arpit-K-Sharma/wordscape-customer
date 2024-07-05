@@ -12,11 +12,21 @@ function TroubleLogin() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSendOTP = async () => {
     if (!email) {
-      toast.error("Please enter your email address.");
+      toast.error("Please enter your email address.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -25,11 +35,29 @@ function TroubleLogin() {
       await axios.post("http://localhost:8081/customers/resend", {
         email: email,
       });
-      toast.success("OTP sent successfully");
+      toast.success("OTP sent successfully", {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
       setOtpSent(true);
     } catch (error) {
       console.error("Error sending OTP:", error);
-      toast.error("Failed to send OTP");
+      toast.error("Failed to send OTP", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } finally {
       setLoading(false);
     }
@@ -37,7 +65,16 @@ function TroubleLogin() {
 
   const handleVerifyOTP = async () => {
     if (otpCode.length !== 6) {
-      toast.error("OTP code must be exactly 6 digits.");
+      toast.error("OTP code must be exactly 6 digits.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -48,13 +85,31 @@ function TroubleLogin() {
         email: email,
       });
       console.log("Email verified successfully!");
-      toast.success("Email verified successfully");
+      toast.success("Email verified successfully", {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
       setTimeout(() => {
         navigate("/");
       }, 2000);
     } catch (error) {
       console.error("Error verifying email:", error);
-      toast.error("Invalid OTP code");
+      toast.error("Invalid OTP code", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } finally {
       setLoading(false);
     }
@@ -71,8 +126,41 @@ function TroubleLogin() {
     }
   };
 
+  const handleResendOTP = async () => {
+    setResendLoading(true);
+    try {
+      await axios.post("http://localhost:8081/customers/resend", {
+        email: email,
+      });
+      toast.success("OTP resent successfully", {
+        position: "top-right",
+        autoClose: 1200,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      toast.error("Failed to resend OTP", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
   return (
-    <>
+    <div>
       <Navbar />
       <MobileMenu />
       <div className="flex flex-col items-center justify-center min-h-[650px] font-archivo py-10">
@@ -127,12 +215,25 @@ function TroubleLogin() {
                 ) : null}
                 Verify OTP
               </button>
+              <div className="mt-5 text-center">
+                <button
+                  className="text-blue-600 hover:underline"
+                  onClick={handleResendOTP}
+                  disabled={resendLoading}
+                >
+                  {resendLoading ? (
+                    <AiOutlineLoading className="animate-spin mr-2 inline" />
+                  ) : null}{" "}
+                  Resend OTP
+                </button>
+              </div>
             </>
           )}
         </div>
       </div>
+      {/* <ToastContainer /> */}
       <Footer />
-    </>
+    </div>
   );
 }
 
