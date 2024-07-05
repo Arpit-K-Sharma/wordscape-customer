@@ -22,7 +22,7 @@ function TroubleLogin() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8081/customers/resend-otp", {
+      await axios.post("http://localhost:8081/customers/resend", {
         email: email,
       });
       toast.success("OTP sent successfully");
@@ -130,7 +130,6 @@ function TroubleLogin() {
             </>
           )}
         </div>
-        <ToastContainer />
       </div>
       <Footer />
     </>
