@@ -224,7 +224,7 @@ function Signin() {
             </h1>
             <h1 className="text-center">
               Trouble logging in?
-              <NavLink to="/verify">
+              <NavLink to="/trouble">
                 <a className="text-blue-600"> Request for activation</a>
               </NavLink>
             </h1>
