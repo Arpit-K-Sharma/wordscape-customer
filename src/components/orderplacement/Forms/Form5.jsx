@@ -154,8 +154,18 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     return pages * plateCost;
   }
 
-  function calculateLamination(laminationPrice, quantity, pages) {
-    return Math.ceil(((12 * 18 * laminationPrice) / 2) * pages * quantity);
+  function calculateLamination(
+    sheetLength,
+    sheetBreadth,
+    laminationPrice,
+    quantity
+  ) {
+    console.log(sheetLength, sheetBreadth, laminationPrice, quantity)
+    const effectiveLength = sheetLength ;
+    const effectiveBreadth = sheetBreadth;
+    return Math.ceil(
+      effectiveLength * effectiveBreadth * laminationPrice * quantity
+    );
   }
 
   function totalReams(pages, quantity) {
@@ -218,6 +228,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         const plate = response.data.find(
           (plate) => plate.plateSize === plateSize
         );
+        console.log("this is response", response.data)
 
         if (plate) {
           setPlateCost(plate.plateRate);
@@ -290,8 +301,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
 
   useEffect(() => {
     getRateForBindingType(orderData.bindingType);
-    getRateForLaminationType(orderData.laminationType);
-    getRatePlate("18 X 24");
+    getRateForLaminationType(orderData.outerLamination);
+    getRatePlate("19 X 25");
     getRatePaper(orderData.innerPaperType);
     getOuterPaperRate(orderData.outerPaperType);
   }, []);
@@ -317,9 +328,10 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         Math.round(bindingCost * orderData.quantity) +
         Math.round(
           calculateLamination(
+            50,
+            50,
             laminationPrice,
-            orderData.quantity,
-            orderData.pages
+            orderData.quantity
           )
         );
 
@@ -344,6 +356,28 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       laminationRate: laminationPrice,
       plateRate: plateCost,
       estimatedAmount: totalCost,
+        costCalculation: {
+          plates: platePrice(orderData.pages, plateCost),
+          printing: 0,
+          paper: 0,
+          coverPaper: packetCalc(orderData.outerPaperThickness, outerChangeCostPerKg),
+          innerPaper: innerCost(
+            orderData.quantity,
+            orderData.pages,
+            orderData.innerPaperThickness,
+            changeCostPerKg
+          ),
+          otherPaper: 0,
+          lamination: calculateLamination(50, 50, laminationPrice, orderData.quantity),
+          binding: (bindingCost * orderData.quantity),
+          finishing: 0,
+          extraCharges: 0,
+          subTotal: 0,
+          vat: 0,
+          grandTotal: 0,
+          preparedBy: "",
+          approvedBy: ""
+        }
     });
   }, [
     changeCostPerKg,
@@ -358,6 +392,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     orderData;
 
   return (
+   
     <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control max-sm:mr-5">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center text-zinc-900 font-archivo">

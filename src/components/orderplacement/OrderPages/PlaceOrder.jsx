@@ -38,6 +38,23 @@ function OrderPlacement() {
     deliveryOption: "",
     innerLamination: "",
     outerLamination: "",
+    costCalculation:{
+    plates: 0,
+    printing: 0,
+    paper: 0,
+    coverPaper: 0,
+    innerPaper: 0,
+    otherPaper: 0,
+    lamination: 0,
+    binding: 0,
+    finishing: 0,
+    extraCharges: 0,
+    subTotal: 0,
+    vat: 0,
+    grandTotal: 0,
+    preparedBy: "",
+    approvedBy: ""
+  }
   });
 
   useEffect(() => {
@@ -233,6 +250,7 @@ function OrderPlacement() {
       // console.log(order Data);
       // const id = localStorage.getItem("id");
       // console.log(id);
+      console.log("mydatais", orderData)
       const response = await axios.post(`/orders`, orderData);
       console.log("Order placed successfully", response.data);
       toast.success(

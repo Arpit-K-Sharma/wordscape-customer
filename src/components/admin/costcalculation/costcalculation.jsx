@@ -751,7 +751,7 @@ const CostCalculation = () => {
     ) +
     platePrice(pages, plateCost) +
     Math.ceil(bindingCost * quantity) +
-    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
+    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);      
 
   return (
     <>
