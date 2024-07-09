@@ -49,6 +49,7 @@ const CostCalculation = () => {
   // const [laminationPrice, setLaminationPrice] = useState("");
   const [laminationPrice, setLaminationPrice] = useState(0);
   const [paperPrice, setPaperPrice] = useState(0);
+  const [inkPlate, setInkPlate] = useState(0);
 
   const [plateSizes, setPlateSizes] = useState([]);
   const [outerChangeCostPerKg, setOuterChangeCostPerKg] = useState(0);
@@ -161,6 +162,7 @@ const CostCalculation = () => {
         if (plate) {
           // Update the state with the plate rate
           setPlateCost(plate.plateRate);
+          setInkPlate(plate.inkRate);
           console.log("Plate Rate for size", plateSize, "is", plate.plateRate);
         } else {
           console.error("Plate size not found:", plateSize);
@@ -829,6 +831,9 @@ const CostCalculation = () => {
 
   const noPlate = totalPlate(pages, plateFit, selectedInkType);
 
+  const pricePlate = noPlate * inkPlate;
+  const pricePrint = noPlate * plateCost;
+
   return (
     <>
       {/* <MobileMenu /> */}
@@ -1186,6 +1191,11 @@ const CostCalculation = () => {
                     <p>
                       The selected plate will fit a quantity of: {plateFit}{" "}
                       Papers
+                    </p>
+                    <p>The selected plate will cost: Rs. {pricePlate}</p>
+                    <p>
+                      The selected plate with ink {selectedInkType} will cost:
+                      Rs. Rs. {pricePrint}
                     </p>
                     <br></br>
                     <label htmlFor="plateSize">

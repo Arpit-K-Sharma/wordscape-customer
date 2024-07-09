@@ -39,12 +39,16 @@ function Plate() {
   const handleAddPlates = (e) => {
     e.preventDefault();
     const plateSize = e.target.elements.plateSize.value;
+    const plateLength = parseFloat(e.target.elements.plateLength.value);
+    const plateBreadth = parseFloat(e.target.elements.plateBreadth.value);
     const plateRate = parseFloat(e.target.elements.plateRate.value);
     const inkRate = parseFloat(e.target.elements.inkRate.value);
 
     axios
       .post("/plates", {
         plateSize,
+        plateLength,
+        plateBreadth,
         plateRate,
         inkRate,
       })
@@ -129,12 +133,26 @@ function Plate() {
 
   const handleSave = (row) => {
     const plateSizeInput = document.getElementById(`plateSize_${row.plateId}`);
+    const plateLengthInput = document.getElementById(
+      `plateLength_${row.plateId}`
+    );
+    const plateBreadthInput = document.getElementById(
+      `plateBreadth_${row.plateId}`
+    );
     const plateRateInput = document.getElementById(`plateRate_${row.plateId}`);
     const inkRateInput = document.getElementById(`inkRate_${row.plateId}`);
 
-    if (plateSizeInput && plateRateInput && inkRateInput) {
+    if (
+      plateSizeInput &&
+      plateLengthInput &&
+      plateBreadthInput &&
+      plateRateInput &&
+      inkRateInput
+    ) {
       const updatedData = {
         plateSize: plateSizeInput.value,
+        plateLength: parseFloat(plateLengthInput.value),
+        plateBreadth: parseFloat(plateBreadthInput.value),
         plateRate: parseFloat(plateRateInput.value),
         inkRate: parseFloat(inkRateInput.value),
       };
@@ -170,6 +188,8 @@ function Plate() {
                 <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
                   <th className="w-[100px]">Plate Size</th>
+                  <th className="w-[80px]">Length</th>
+                  <th className="w-[80px]">Breadth</th>
                   <th className="w-[80px]">Plate Rate</th>
                   <th className="w-[80px]">Ink Rate</th>
                   <th className="w-[10px]">Actions</th>
@@ -177,54 +197,76 @@ function Plate() {
               </thead>
               <tbody>
                 {plateDataState
-                  .sort((a, b) => a.plateId - b.plateId) // Sort the array by plateId
+                  .sort((a, b) => a.plateId - b.plateId)
                   .map((row) => (
                     <tr key={row.plateId}>
                       <td className="text-wrap">{row.plateId}</td>
                       <td className="text-wrap">
                         {editingData && editingData.plateId === row.plateId ? (
-                          <form onSubmit={(e) => handleSave(row)}>
-                            <input
-                              type="text"
-                              id={`plateSize_${row.plateId}`}
-                              name="plateSize"
-                              className="input input-bordered"
-                              defaultValue={row.plateSize}
-                              required
-                            />
-                          </form>
+                          <input
+                            type="text"
+                            id={`plateSize_${row.plateId}`}
+                            name="plateSize"
+                            className="input input-bordered"
+                            defaultValue={row.plateSize}
+                            required
+                          />
                         ) : (
                           <span>{row.plateSize}</span>
                         )}
                       </td>
                       <td className="text-wrap">
                         {editingData && editingData.plateId === row.plateId ? (
-                          <form onSubmit={(e) => handleSave(row)}>
-                            <input
-                              type="number"
-                              id={`plateRate_${row.plateId}`}
-                              name="plateRate"
-                              className="input input-bordered"
-                              defaultValue={row.plateRate}
-                              required
-                            />
-                          </form>
+                          <input
+                            type="number"
+                            id={`plateLength_${row.plateId}`}
+                            name="plateLength"
+                            className="input input-bordered"
+                            defaultValue={row.plateLength}
+                            required
+                          />
+                        ) : (
+                          <span>{row.plateLength}</span>
+                        )}
+                      </td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <input
+                            type="number"
+                            id={`plateBreadth_${row.plateId}`}
+                            name="plateBreadth"
+                            className="input input-bordered"
+                            defaultValue={row.plateBreadth}
+                            required
+                          />
+                        ) : (
+                          <span>{row.plateBreadth}</span>
+                        )}
+                      </td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <input
+                            type="number"
+                            id={`plateRate_${row.plateId}`}
+                            name="plateRate"
+                            className="input input-bordered"
+                            defaultValue={row.plateRate}
+                            required
+                          />
                         ) : (
                           <span>{row.plateRate}</span>
                         )}
                       </td>
                       <td className="text-wrap">
                         {editingData && editingData.plateId === row.plateId ? (
-                          <form onSubmit={(e) => handleSave(row)}>
-                            <input
-                              type="number"
-                              id={`inkRate_${row.plateId}`}
-                              name="inkRate"
-                              className="input input-bordered"
-                              defaultValue={row.inkRate}
-                              required
-                            />
-                          </form>
+                          <input
+                            type="number"
+                            id={`inkRate_${row.plateId}`}
+                            name="inkRate"
+                            className="input input-bordered"
+                            defaultValue={row.inkRate}
+                            required
+                          />
                         ) : (
                           <span>{row.inkRate}</span>
                         )}
@@ -271,6 +313,18 @@ function Plate() {
                       type="text"
                       name="plateSize"
                       placeholder="Plate Size"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="plateLength"
+                      placeholder="Plate Length"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="plateBreadth"
+                      placeholder="Plate Breadth"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <input
