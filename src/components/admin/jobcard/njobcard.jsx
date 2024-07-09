@@ -43,6 +43,7 @@ function NJobCard() {
       handleOrderChange(ordersId);
       const fetchJobCard = async () => {
         const response = await axios.get(`/jobCard/${ordersId}`);
+        console.log("jobcard response " , response)
         setJobCard(response.data);
       };
       fetchJobCard();

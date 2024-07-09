@@ -6,6 +6,7 @@ import { Nav } from "rsuite";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
 function Costbreakdown({ data, onChildData }) {
+  
   const [costdone, setCostdone] = useState(false);
   const [vendors, setVendors] = useState([1, 2, 3, 4, 5]);
   const [costCalculation, setCostCalculation] = useState({
@@ -36,6 +37,7 @@ function Costbreakdown({ data, onChildData }) {
 
   useEffect(() => {
     if (data) {
+      console.log("this is data", data)
       const initialData = {
         costCalculationId: data.costCalculationId || 0,
         plates: data.plates || 0,

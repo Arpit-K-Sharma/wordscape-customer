@@ -357,7 +357,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       plateRate: plateCost,
       estimatedAmount: totalCost,
         costCalculation: {
-          plates: platePrice(orderData.pages, plateCost),
+          plates: 0,
           printing: 0,
           paper: 0,
           coverPaper: packetCalc(orderData.outerPaperThickness, outerChangeCostPerKg),
