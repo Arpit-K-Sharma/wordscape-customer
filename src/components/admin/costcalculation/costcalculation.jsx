@@ -75,6 +75,8 @@ const CostCalculation = () => {
   const [laminationTypes, setLaminationTypes] = useState([]);
   const [costPerKg, setPaperRate] = useState(0);
   const [outerPaperPrice, setOuterPaperPrice] = useState(0);
+  const [plateLength, setPlateLength] = useState(0);
+  const [plateBreadth, setPlateBreadth] = useState(0);
 
   useEffect(() => {
     getBinding();
@@ -95,6 +97,20 @@ const CostCalculation = () => {
     getRateForOuterPaper();
     getRateForOuterLaminationType(selectedOuterLaminationType);
     getSheetSizes();
+    const plateFit = fitPlate(
+      plateLength,
+      plateBreadth,
+      paperLength,
+      breadth || standardBreadth,
+      length || standardLength
+    );
+
+    console.log("Plate Fit (updated): ", plateFit);
+
+    const plateNo = totalPlate(pages, plateFit, selectedInkType);
+
+    console.log("Total Number of Plates: ", plateNo);
+
     const paperFit = fitPapers(
       sheetBreadth,
       sheetLength,
@@ -109,7 +125,10 @@ const CostCalculation = () => {
     selectedLaminationType,
     selectedCoverTreatmentType,
     selectedPaperType,
+    selectedInkType,
     plateSize,
+    plateLength,
+    plateBreadth,
     outerSelectedPaperType,
     sheetBreadth,
     sheetLength,
@@ -667,30 +686,33 @@ const CostCalculation = () => {
 
   const handlePlateSizeChange = (e) => {
     const selectedSize = e.target.value;
-    // console.log("Selected Plate Size:", selectedSize);
     setPlateSize(selectedSize);
 
-    // Fetch the plate cost data
+    // Fetch the plate data
     axios
       .get("/plates")
       .then((response) => {
-        const plateCostData = response.data;
-        // Selected plate size
-        const selectedPlateCost = plateCostData.find(
-          (cost) => cost.plateSize.toLowerCase() === selectedSize.toLowerCase()
+        const plateData = response.data;
+        // Find the selected plate size
+        const selectedPlate = plateData.find(
+          (plate) =>
+            plate.plateSize.toLowerCase() === selectedSize.toLowerCase()
         );
-        if (selectedPlateCost) {
-          // Fetched plate cost value
-          setPlateCost(selectedPlateCost.plateCost);
-          // console.log("Plate cost:", selectedPlateCost.plateCost);
+        if (selectedPlate) {
+          // Set the values for the selected plate size
+          setPlateLength(selectedPlate.plateLength);
+          setPlateBreadth(selectedPlate.plateBreadth);
+          setPlateCost(selectedPlate.plateCost);
+          setInkCost(selectedPlate.inkCost);
 
-          setInkCost(selectedPlateCost.inkCost);
-          // Log out the ink cost for the selected plate size
-          // console.log("Ink cost:", selectedPlateCost.inkCost);
+          // console.log("Plate Length:", selectedPlate.plateLength);
+          // console.log("Plate Breadth:", selectedPlate.plateBreadth);
+          // console.log("Plate Cost:", selectedPlate.plateCost);
+          // console.log("Ink Cost:", selectedPlate.inkCost);
         }
       })
       .catch((error) => {
-        console.error("Error fetching plate cost data:", error);
+        console.error("Error fetching plate data:", error);
       });
   };
 
@@ -732,12 +754,64 @@ const CostCalculation = () => {
     return Math.max(fitNormal, fitRotated) * 2;
   }
 
+  function fitPlate(plateBreadth, plateLength, paperBreadth, paperLength) {
+    function calculatePlate(
+      plateBreadth,
+      plateLength,
+      paperBreadth,
+      paperLength
+    ) {
+      let fitHorizontally = Math.floor(plateBreadth / paperBreadth);
+      let fitVertically = Math.floor(plateLength / paperLength);
+      return fitHorizontally * fitVertically;
+    }
+
+    let fitNormal = calculatePlate(
+      plateBreadth,
+      plateLength,
+      paperBreadth,
+      paperLength
+    );
+    let fitRotated = calculatePlate(
+      plateBreadth,
+      plateLength,
+      paperLength,
+      paperBreadth
+    );
+
+    console.log("Fit Normal:", fitNormal);
+    console.log("Fit Rotated:", fitRotated);
+    console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
+
+    return Math.max(fitNormal, fitRotated);
+  }
+
+  function totalPlate(pages, plateFit, selectedInkType) {
+    const totalNo = Math.ceil(pages / plateFit);
+    if (selectedInkType === "CMYK") {
+      return totalNo * 4;
+    } else {
+      return totalNo;
+    }
+  }
+
   const paperFit = fitPapers(
     sheetBreadth,
     sheetLength,
     breadth || standardBreadth,
     length || standardLength
   );
+
+  const plateFit = fitPlate(
+    plateBreadth,
+    plateLength,
+    breadth || standardBreadth,
+    length || standardLength
+  );
+
+  console.log("PLATE FIT: ", plateFit);
+  console.log("PLATE LENGTH ", plateLength);
+  console.log("PLATE BREADTH ", plateBreadth);
 
   console.log("THE PAPER FIT :", paperFit);
 
@@ -751,7 +825,9 @@ const CostCalculation = () => {
     ) +
     platePrice(pages, plateCost) +
     Math.ceil(bindingCost * quantity) +
-    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);      
+    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
+
+  const noPlate = totalPlate(pages, plateFit, selectedInkType);
 
   return (
     <>
@@ -773,36 +849,6 @@ const CostCalculation = () => {
               {console.log(
                 "TOTAL SHEEEETS " + totalSheets(quantity, pages, paperFit)
               )}
-              {/* <DrawerTest
-                plateSize={plateSize}
-                outerChangeCostPerKg={outerChangeCostPerKg}
-                selectedLaminationType={selectedLaminationType}
-                inkCost={inkCost}
-                selectedOuterPaperThickness={selectedOuterPaperThickness}
-                outerCost={Math.ceil(
-                  totalPacket(quantity) *
-                    reamCalc(selectedOuterPaperThickness, changeCostPerKg)
-                )}
-                outerSelectedPaperType={outerSelectedPaperType}
-                paperSize={paperSize}
-                selectedBindingType={selectedBindingType}
-                changeCostPerKg={changeCostPerKg}
-                pages={totalPages(quantity, pages)}
-                selectedPaperType={selectedPaperType}
-                selectedPaperThickness={selectedPaperThickness}
-                totalSheets={totalSheets(quantity, pages)}
-                totalReams={totalReams(quantity, pages)}
-                totalPacket={totalPacket(quantity)}
-                laminationCost={Math.ceil(
-                  calculateLamination(laminationPrice, quantity, pages)
-                )}
-                quantity={quantity}
-                selectedInkType={selectedInkType}
-                totalCost={totalCost}
-                costReam={Math.ceil(
-                  reamCalc(selectedPaperThickness, changeCostPerKg)
-                )}
-              /> */}
             </div>
             <div className="total-b"></div>
             <br></br>
@@ -1137,6 +1183,10 @@ const CostCalculation = () => {
                       ))}
                     </select>
                     <br></br>
+                    <p>
+                      The selected plate will fit a quantity of: {plateFit}{" "}
+                      Papers
+                    </p>
                     <br></br>
                     <label htmlFor="plateSize">
                       <b>Sheet </b>Size:
@@ -1206,6 +1256,8 @@ const CostCalculation = () => {
                   totalReams={totalReams(quantity, pages)}
                   selectedBindingType={selectedBindingType}
                   outerSelectedPaperType={outerSelectedPaperType}
+                  plateLength={plateLength}
+                  plateBreadth={plateBreadth}
                   plateSize={plateSize}
                   selectedLaminationType={selectedLaminationType}
                   changeCostPerKg={paperPrice}
@@ -1215,6 +1267,7 @@ const CostCalculation = () => {
                   bindingCost={bindingCost}
                   outerPaperPrice={outerPaperPrice}
                   totalCost={totalCost}
+                  noPlate={noPlate}
                   requiredSheet={totalSheets(quantity, pages, paperFit)}
                   paperFit={paperFit}
                   totalPacket={totalPacket(quantity)}

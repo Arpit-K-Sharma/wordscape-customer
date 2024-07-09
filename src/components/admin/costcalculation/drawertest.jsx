@@ -7,6 +7,9 @@ const DrawerTest = ({
   selectedPaperThickness,
   requiredSheet,
   bindingCost,
+  plateLength,
+  plateBreadth,
+  noPlate,
   sheetLength,
   paperFit,
   sheetBreadth,
@@ -119,6 +122,15 @@ const DrawerTest = ({
             <h3 className="text-xl font-semibold mb-2">Plate Details</h3>
             <p>
               Chosen plate size: <b>{plateSize}</b>
+            </p>
+            <p>
+              Plate Length: <b>{plateLength}</b>
+            </p>
+            <p>
+              Plate Length: <b>{plateBreadth}</b>
+            </p>
+            <p>
+              Number of Plates: <b>{noPlate}</b>
             </p>
             <p>
               Ink Details: <b>{selectedInkType}</b>
