@@ -814,6 +814,10 @@ const CostCalculation = () => {
   console.log("PLATE FIT: ", plateFit);
   console.log("PLATE LENGTH ", plateLength);
   console.log("PLATE BREADTH ", plateBreadth);
+  const noPlate = totalPlate(pages, plateFit, selectedInkType);
+
+  const pricePlate = noPlate * inkPlate;
+  const pricePrint = noPlate * plateCost;
 
   console.log("THE PAPER FIT :", paperFit);
 
@@ -827,12 +831,9 @@ const CostCalculation = () => {
     ) +
     platePrice(pages, plateCost) +
     Math.ceil(bindingCost * quantity) +
-    calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
-
-  const noPlate = totalPlate(pages, plateFit, selectedInkType);
-
-  const pricePlate = noPlate * inkPlate;
-  const pricePrint = noPlate * plateCost;
+    pricePlate +
+    pricePrint;
+  calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
 
   return (
     <>
