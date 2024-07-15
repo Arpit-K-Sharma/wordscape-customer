@@ -13,14 +13,20 @@ const DrawerTest = ({
   sheetLength,
   paperFit,
   sheetBreadth,
+  outerPageCost,
   totalReams,
   outerPaperPrice,
   standardLength,
   standardBreadth,
+  bindingFinalCost,
   outerLaminationRate,
   selectedOuterLaminationType,
   totalSheets,
+  innerPageCost,
+  pricePrint,
+  pricePlate,
   length,
+  costLamination,
   breadth,
   costReam,
   sheetValue,
@@ -154,7 +160,7 @@ const DrawerTest = ({
               Breadth of sheet size: <b>{sheetBreadth || breadth}</b>
             </p>
             <p>
-              Sheet can contain: <b>{paperFit} Papers</b>
+              Sheet can contain: <b>{paperFit} Pages</b>
             </p>
             <p>
               Total number of sheets for inner pages: <b>{requiredSheet}</b>
@@ -177,15 +183,35 @@ const DrawerTest = ({
             <p>
               Cost of Inner Lamination: Rs. <b>{laminationCost}</b>
             </p>
-            <p>
+            {/* <p>
               Type of Outer Lamination: <b>{selectedOuterLaminationType}</b>
             </p>
             <p>
               Cost of Outer Lamination: Rs. <b>{outerLaminationRate}</b>
-            </p>
+            </p> */}
           </li>
           <li>
             <h3 className="text-3xl font-semibold mb-2">Total Cost</h3>
+            <p>
+              The cost of inner paper is Rs. <b>{Math.floor(innerPageCost)}</b>
+            </p>
+            <p>
+              The cost of outer paper is Rs. <b>{Math.floor(outerPageCost)}</b>
+            </p>
+            <p>
+              The cost of lamination is Rs. <b>{Math.floor(costLamination)}</b>
+            </p>
+            <p>
+              The cost of binding is Rs.<b>{Math.floor(bindingFinalCost)}</b>
+            </p>
+            <p>
+              The cost of printing on a plate is Rs.
+              <b>{Math.floor(pricePrint)}</b>
+            </p>
+            <p>
+              The cost of a plate with the selected ink is Rs.
+              <b>{Math.floor(pricePlate)}</b>
+            </p>
             <p>
               Total Cost: Rs. <b>{totalCost}</b>
             </p>

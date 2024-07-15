@@ -31,7 +31,7 @@ const CostCalculation = () => {
   const [outerPaperType, setOuterPaperType] = useState([]);
   const [outerPaperThickness, setOuterPaperThickness] = useState([]);
   const [sheetSize, setSheetSize] = useState("");
-  const [sheetValue, setSheetValue] = useState(null);
+  const [sheetValue, setSheetValue] = useState("");
 
   const [paperSize, setPaperSize] = useState("");
   const [plateSize, setPlateSize] = useState("");
@@ -95,7 +95,7 @@ const CostCalculation = () => {
     getRateForLaminationType(selectedLaminationType);
     getRateForCoverTreatment(selectedCoverTreatmentType);
     getRateForPaper(selectedPaperType);
-    getRateForOuterPaper();
+    getRateForOuterPaper(outerSelectedPaperType);
     getRateForOuterLaminationType(selectedOuterLaminationType);
     getSheetSizes();
     const plateFit = fitPlate(
@@ -106,11 +106,11 @@ const CostCalculation = () => {
       length || standardLength
     );
 
-    console.log("Plate Fit (updated): ", plateFit);
+    // console.log("Plate Fit (updated): ", plateFit);
 
     const plateNo = totalPlate(pages, plateFit, selectedInkType);
 
-    console.log("Total Number of Plates: ", plateNo);
+    // console.log("Total Number of Plates: ", plateNo);
 
     const paperFit = fitPapers(
       sheetBreadth,
@@ -118,7 +118,7 @@ const CostCalculation = () => {
       breadth || standardBreadth,
       length || standardLength
     );
-    console.log("Paper Fit (updated):", paperFit);
+    // console.log("Paper Fit (updated):", paperFit);
 
     //getRateForOuterPaper(selectedOuterPaperType);
   }, [
@@ -432,7 +432,6 @@ const CostCalculation = () => {
         if (selectedPaper) {
           // Update the state with the paper rate
           setPaperPrice(selectedPaper.rate); // Assuming you have a state variable to store the paper rate
-          setOuterPaperPrice(selectedPaper.rate);
           // console.log(
           //   "Paper Type:",
           //   selectedPaperType,
@@ -449,7 +448,7 @@ const CostCalculation = () => {
       });
   };
 
-  const getRateForOuterPaper = () => {
+  const getRateForOuterPaper = (outerSelectedPaperType) => {
     // Fetch the paper rates from the database
     if (outerSelectedPaperType) {
       // console.log("Outer Paper Type test:", outerSelectedPaperType);
@@ -464,6 +463,8 @@ const CostCalculation = () => {
           if (outPaper) {
             // Update the state with the paper rate
             setOuterPaperPrice(outPaper.rate);
+            console.log("OUTER PAPER RATE : " + outerPaperPrice);
+
             // console.log(
             //   "Outer Paper Type:",
             //   outPaper,
@@ -580,10 +581,6 @@ const CostCalculation = () => {
     setSelectedLaminationType(event.target.value);
   };
 
-  function reamCalc(selectedPaperThickness, costPerKg) {
-    return Math.ceil((sheetValue * selectedPaperThickness * costPerKg) / 3100);
-  }
-
   // console.log("Ream cost is " + reamCalc(selectedPaperThickness, costPerKg));
 
   function packetCalc(selectedOuterPaperThickness, outerChangeCostPerKg) {
@@ -601,19 +598,14 @@ const CostCalculation = () => {
     return val;
   }
 
-  function totalReams(pages, quantity) {
-    return Math.round((pages * quantity) / 16 / 500);
-  }
+  innerCost(quantity, pages, selectedPaperThickness, changeCostPerKg);
+  console.log(
+    "Inner Paper COST IS: ",
+    innerCost(quantity, pages, selectedPaperThickness, changeCostPerKg)
+  );
 
-  function innerCost(quantity, pages, selectedPaperThickness, changeCostPerKg) {
-    return (
-      totalReams(pages, quantity) *
-      reamCalc(selectedPaperThickness, changeCostPerKg)
-    );
-  }
-
-  function totalPacket(quantity) {
-    const sheets = (4 * quantity) / 16;
+  function totalPacket(quantity, paperFit) {
+    const sheets = (4 * quantity) / paperFit;
     return Math.ceil(sheets / 100);
   }
 
@@ -671,6 +663,20 @@ const CostCalculation = () => {
         console.error("Error fetching sheet size data:", error);
       });
   };
+
+  const paperFit = fitPapers(
+    sheetBreadth,
+    sheetLength,
+    breadth || standardBreadth,
+    length || standardLength
+  );
+
+  const plateFit = fitPlate(
+    plateBreadth,
+    plateLength,
+    breadth || standardBreadth,
+    length || standardLength
+  );
 
   function platePrice(pages, plateCost) {
     return pages * plateCost;
@@ -749,9 +755,9 @@ const CostCalculation = () => {
       paperBreadth
     );
 
-    console.log("Fit Normal:", fitNormal);
-    console.log("Fit Rotated:", fitRotated);
-    console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
+    // console.log("Fit Normal:", fitNormal);
+    // console.log("Fit Rotated:", fitRotated);
+    // console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
 
     return Math.max(fitNormal, fitRotated) * 2;
   }
@@ -781,9 +787,9 @@ const CostCalculation = () => {
       paperBreadth
     );
 
-    console.log("Fit Normal:", fitNormal);
-    console.log("Fit Rotated:", fitRotated);
-    console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
+    // console.log("Fit Normal:", fitNormal);
+    // console.log("Fit Rotated:", fitRotated);
+    // console.log("Max Fit for Two Sides:", Math.max(fitNormal, fitRotated));
 
     return Math.max(fitNormal, fitRotated);
   }
@@ -797,43 +803,206 @@ const CostCalculation = () => {
     }
   }
 
-  const paperFit = fitPapers(
+  function reamCalc(selectedPaperThickness, sheetValue) {
+    return Math.ceil(sheetValue * selectedPaperThickness);
+  }
+
+  function innerPaperCost(
+    sheetValue,
+    selectedPaperThickness,
+    pages,
+    quantity,
+    paperFit,
+    paperPrice
+  ) {
+    const pt = parseInt(selectedPaperThickness);
+    const calc =
+      ((sheetValue * pt * paperPrice) / 3100) *
+      totalReams(pages, quantity, paperFit);
+    console.log("CCCC ", (sheetValue * pt * paperPrice) / 3100);
+    return calc;
+  }
+
+  console.log(
+    "INNER PAPER FINAL: ",
+    innerPaperCost(
+      sheetValue,
+      selectedPaperThickness,
+      pages,
+      quantity,
+      paperFit,
+      paperPrice
+    )
+  );
+
+  function outerPaperCost(
+    sheetValue,
+    selectedOuterPaperThickness,
+    quantity,
+    outerPaperPrice,
     sheetBreadth,
     sheetLength,
-    breadth || standardBreadth,
-    length || standardLength
+    paperBreadth,
+    paperLength
+  ) {
+    // 500 Sheet = 3100
+    // 250 Sheet = Divided by 2 at the end
+    // 125 Sheet = Divided by 4 at the end
+    const fitVar = fitPapers(
+      sheetBreadth,
+      sheetLength,
+      paperBreadth,
+      paperLength
+    );
+    const calc =
+      ((sheetValue * selectedOuterPaperThickness) / 3100) *
+        (0.05 * Math.floor((4 * quantity) / fitVar / 500)) +
+      Math.floor(((4 * quantity) / 16 / 500) * outerPaperPrice);
+    return calc;
+  }
+
+  function outerFinalCost(
+    sheetValue,
+    selectedOuterPaperThickness,
+    paperFit,
+    quantity,
+    outerPaperPrice
+  ) {
+    const pt = parseInt(selectedOuterPaperThickness);
+    console.log("Outer paper thickness: ", selectedOuterPaperThickness);
+    const calc =
+      ((sheetValue * pt * outerPaperPrice) / 3100 / 4) *
+      totalPacket(quantity, paperFit);
+    return calc;
+  }
+
+  console.log(
+    "OUTER PAPER FINAL: ",
+    outerFinalCost(
+      sheetValue,
+      selectedOuterPaperThickness,
+      paperFit,
+      quantity,
+      outerPaperPrice
+    )
   );
 
-  const plateFit = fitPlate(
-    plateBreadth,
-    plateLength,
-    breadth || standardBreadth,
-    length || standardLength
+  // innerPaperCost(
+  //   sheetValue,
+  //   selectedPaperThickness,
+  //   totalReams,
+  //   pages,
+  //   quantity,
+  //   paperPrice
+  // );
+  outerPaperCost(
+    sheetValue,
+    selectedOuterPaperThickness,
+    quantity,
+    outerPaperPrice
+  );
+  console.log("sheetValue:", sheetValue);
+  console.log("selectedOuterPaperThickness:", selectedOuterPaperThickness);
+  console.log("quantity:", quantity);
+  console.log("outerPaperPrice:", outerPaperPrice);
+
+  console.log(
+    "Inner Paper Cost is: Rs. " +
+      innerPaperCost(
+        sheetValue,
+        selectedPaperThickness,
+        totalReams,
+        paperPrice,
+        pages,
+        quantity
+      )
   );
 
-  console.log("PLATE FIT: ", plateFit);
-  console.log("PLATE LENGTH ", plateLength);
-  console.log("PLATE BREADTH ", plateBreadth);
+  // console.log(
+  //   "Outer Paper Cost is: Rs. " +
+  //     outerPaperCost(
+  //       sheetValue,
+  //       selectedOuterPaperThickness,
+  //       outerPaperPrice,
+  //       quantity
+  //     )
+  // );
+
+  function totalReams(pages, quantity, paperFit) {
+    return Math.ceil(
+      0.05 * Math.floor((pages * quantity) / paperFit / 500) +
+        Math.floor((pages * quantity) / paperFit / 500)
+    );
+  }
+
+  console.log("Reams required CHECK: ", totalReams(pages, quantity, paperFit));
+
+  function innerCost(
+    quantity,
+    pages,
+    selectedPaperThickness,
+    changeCostPerKg,
+    paperFit
+  ) {
+    return (
+      totalReams(pages, quantity, paperFit) *
+      reamCalc(selectedPaperThickness, changeCostPerKg)
+    );
+  }
+
+  Math.round(
+    innerCost(
+      quantity,
+      pages,
+      selectedPaperThickness,
+      changeCostPerKg,
+      paperFit
+    )
+  );
+
+  // console.log("PLATE FIT: ", plateFit);
+  // console.log("PLATE LENGTH ", plateLength);
+  // console.log("PLATE BREADTH ", plateBreadth);
   const noPlate = totalPlate(pages, plateFit, selectedInkType);
 
   const pricePlate = noPlate * inkPlate;
   const pricePrint = noPlate * plateCost;
 
-  console.log("THE PAPER FIT :", paperFit);
+  function laminationFinal(
+    laminationCost,
+    sheetLength,
+    sheetBreadth,
+    quantity
+  ) {
+    const calc =
+      laminationCost * (sheetLength / 2) * (sheetBreadth / 2) * quantity;
+    return calc;
+  }
+
+  console.log(
+    "The cost of lamination is: ",
+    laminationFinal(laminationPrice, sheetLength, sheetBreadth, quantity)
+  );
+
+  // console.log("THE PAPER FIT :", paperFit);
 
   const totalCost =
     Math.ceil(
-      totalPacket(quantity) *
+      totalPacket(quantity, paperFit) *
         packetCalc(selectedOuterPaperThickness, outerChangeCostPerKg)
-    ) +
-    Math.round(
-      innerCost(quantity, pages, selectedPaperThickness, changeCostPerKg)
     ) +
     platePrice(pages, plateCost) +
     Math.ceil(bindingCost * quantity) +
     pricePlate +
-    pricePrint;
-  calculateLamination(sheetLength, sheetBreadth, laminationPrice, quantity);
+    pricePrint +
+    calculateLamination(
+      laminationPrice,
+      quantity,
+      sheetLength,
+      sheetBreadth,
+      length,
+      breadth
+    );
 
   return (
     <>
@@ -851,10 +1020,10 @@ const CostCalculation = () => {
               </h1>
               <br></br>
 
-              {console.log("PAPER SIZE TEST: " + paperSize)}
+              {/* {console.log("PAPER SIZE TEST: " + paperSize)}
               {console.log(
                 "TOTAL SHEEEETS " + totalSheets(quantity, pages, paperFit)
-              )}
+              )} */}
             </div>
             <div className="total-b"></div>
             <br></br>
@@ -1141,7 +1310,7 @@ const CostCalculation = () => {
                       </select>
                     </div>
                     <br></br>
-                    <div className="l-container">
+                    {/* <div className="l-container">
                       <label htmlFor="outer-lamination-type">
                         <b>Outer </b>Lamination Type{" "}
                       </label>
@@ -1160,7 +1329,7 @@ const CostCalculation = () => {
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </div> */}
                   </div>
 
                   <p> </p>
@@ -1193,10 +1362,10 @@ const CostCalculation = () => {
                       The selected plate will fit a quantity of: {plateFit}{" "}
                       Papers
                     </p>
-                    <p>The selected plate will cost: Rs. {pricePlate}</p>
+                    <p>The selected plate will cost: Rs. {pricePrint}</p>
                     <p>
                       The selected plate with ink {selectedInkType} will cost:
-                      Rs. Rs. {pricePrint}
+                      Rs.{pricePlate}
                     </p>
                     <br></br>
                     <label htmlFor="plateSize">
@@ -1264,7 +1433,7 @@ const CostCalculation = () => {
                   selectedPaperType={selectedPaperType}
                   selectedPaperThickness={selectedPaperThickness}
                   selectedOuterPaperThickness={selectedOuterPaperThickness}
-                  totalReams={totalReams(quantity, pages)}
+                  totalReams={totalReams(pages, quantity, paperFit)}
                   selectedBindingType={selectedBindingType}
                   outerSelectedPaperType={outerSelectedPaperType}
                   plateLength={plateLength}
@@ -1281,9 +1450,33 @@ const CostCalculation = () => {
                   noPlate={noPlate}
                   requiredSheet={totalSheets(quantity, pages, paperFit)}
                   paperFit={paperFit}
-                  totalPacket={totalPacket(quantity)}
+                  totalPacket={totalPacket(quantity, paperFit)}
                   selectedOuterLaminationType={selectedOuterLaminationType}
                   outerLaminationRate={outerLaminationRate}
+                  innerPageCost={innerPaperCost(
+                    sheetValue,
+                    selectedPaperThickness,
+                    pages,
+                    quantity,
+                    paperFit,
+                    paperPrice
+                  )}
+                  outerPageCost={outerFinalCost(
+                    sheetValue,
+                    selectedOuterPaperThickness,
+                    paperFit,
+                    quantity,
+                    outerPaperPrice
+                  )}
+                  costLamination={laminationFinal(
+                    laminationPrice,
+                    sheetLength,
+                    sheetBreadth,
+                    quantity
+                  )}
+                  bindingFinalCost={bindingCost * quantity}
+                  pricePrint={pricePrint}
+                  pricePlate={pricePlate}
                 />
               </form>
             </div>
