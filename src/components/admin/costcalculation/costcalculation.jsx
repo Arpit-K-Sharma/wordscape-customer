@@ -78,6 +78,7 @@ const CostCalculation = () => {
   const [outerPaperPrice, setOuterPaperPrice] = useState(0);
   const [plateLength, setPlateLength] = useState(0);
   const [plateBreadth, setPlateBreadth] = useState(0);
+  const [sheetPackage, setSheetPackage] = useState("500");
 
   useEffect(() => {
     getBinding();
@@ -417,6 +418,10 @@ const CostCalculation = () => {
       .catch((error) => {
         console.error("Error fetching binding types:", error);
       });
+  };
+
+  const handleSheetPackageChange = (e) => {
+    setSheetPackage(e.target.value);
   };
 
   const getRateForPaper = (selectedPaperType) => {
@@ -861,18 +866,42 @@ const CostCalculation = () => {
     return calc;
   }
 
+  // function outerFinalCost(
+  //   sheetValue,
+  //   selectedOuterPaperThickness,
+  //   paperFit,
+  //   quantity,
+  //   outerPaperPrice
+  // ) {
+  //   const pt = parseInt(selectedOuterPaperThickness);
+  //   console.log("Outer paper thickness: ", selectedOuterPaperThickness);
+  //   const calc =
+  //     ((sheetValue * pt * outerPaperPrice) / 3100 / 4) *
+  //     totalPacket(quantity, paperFit);
+  //   return calc;
+  // }
+
   function outerFinalCost(
     sheetValue,
     selectedOuterPaperThickness,
     paperFit,
     quantity,
-    outerPaperPrice
+    outerPaperPrice,
+    sheetPackage
   ) {
     const pt = parseInt(selectedOuterPaperThickness);
     console.log("Outer paper thickness: ", selectedOuterPaperThickness);
-    const calc =
+
+    let calc =
       ((sheetValue * pt * outerPaperPrice) / 3100 / 4) *
       totalPacket(quantity, paperFit);
+
+    if (sheetPackage === "250") {
+      calc /= 2;
+    } else if (sheetPackage === "125") {
+      calc /= 4;
+    }
+
     return calc;
   }
 
@@ -883,9 +912,12 @@ const CostCalculation = () => {
       selectedOuterPaperThickness,
       paperFit,
       quantity,
-      outerPaperPrice
+      outerPaperPrice,
+      sheetPackage
     )
   );
+
+  console.log("Sheet Package: ", sheetPackage);
 
   // innerPaperCost(
   //   sheetValue,
@@ -1387,6 +1419,23 @@ const CostCalculation = () => {
                     </select>
                     <br></br>
                     <br></br>
+                    <label htmlFor="sheetPackage">
+                      <b>Sheet Package:</b>
+                    </label>
+                    <br />
+                    <br></br>
+                    <select
+                      id="sheetPackage"
+                      value={sheetPackage}
+                      onChange={handleSheetPackageChange}
+                    >
+                      <option value="">Select Sheet Package</option>
+                      <option value="500">500 Sheets</option>
+                      <option value="250">250 Sheets</option>
+                      <option value="125">125 Sheets</option>
+                    </select>
+
+                    <br></br>
                     <p>
                       The selected sheet will fit a quantity of: {paperFit}{" "}
                       Papers
@@ -1466,7 +1515,8 @@ const CostCalculation = () => {
                     selectedOuterPaperThickness,
                     paperFit,
                     quantity,
-                    outerPaperPrice
+                    outerPaperPrice,
+                    sheetPackage
                   )}
                   costLamination={laminationFinal(
                     laminationPrice,
