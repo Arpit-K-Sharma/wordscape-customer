@@ -79,6 +79,7 @@ const CostCalculation = () => {
   const [plateLength, setPlateLength] = useState(0);
   const [plateBreadth, setPlateBreadth] = useState(0);
   const [sheetPackage, setSheetPackage] = useState("500");
+  const [innerSheetPackage, setInnerSheetPackage] = useState("500");
 
   useEffect(() => {
     getBinding();
@@ -422,6 +423,10 @@ const CostCalculation = () => {
 
   const handleSheetPackageChange = (e) => {
     setSheetPackage(e.target.value);
+  };
+
+  const handleInnerSheetPackageChange = (e) => {
+    setInnerSheetPackage(e.target.value);
   };
 
   const getRateForPaper = (selectedPaperType) => {
@@ -818,20 +823,29 @@ const CostCalculation = () => {
     pages,
     quantity,
     paperFit,
-    paperPrice
+    paperPrice,
+    innerSheetPackage
   ) {
     const pt = parseInt(selectedPaperThickness);
-    const calc =
+    let calc =
       ((sheetValue * pt * paperPrice) / 3100) *
       totalReams(pages, quantity, paperFit);
-    console.log("CCCC ", (sheetValue * pt * paperPrice) / 3100);
+
+    if (innerSheetPackage === "500") {
+      // No change for 500 sheets
+    } else if (innerSheetPackage === "250") {
+      calc /= 2; // Divide the cost by 2 for 250 sheets
+    } else if (innerSheetPackage === "125") {
+      calc /= 4; // Divide the cost by 4 for 125 sheets
+    }
+
     return calc;
   }
-
   console.log(
     "INNER PAPER FINAL: ",
     innerPaperCost(
       sheetValue,
+      innerSheetPackage,
       selectedPaperThickness,
       pages,
       quantity,
@@ -859,10 +873,17 @@ const CostCalculation = () => {
       paperBreadth,
       paperLength
     );
-    const calc =
+    let calc =
       ((sheetValue * selectedOuterPaperThickness) / 3100) *
         (0.05 * Math.floor((4 * quantity) / fitVar / 500)) +
       Math.floor(((4 * quantity) / 16 / 500) * outerPaperPrice);
+
+    if (innerSheetPackage === "250") {
+      calc /= 2;
+    } else if (innerSheetPackage === "125") {
+      calc /= 4;
+    }
+
     return calc;
   }
 
@@ -918,6 +939,7 @@ const CostCalculation = () => {
   );
 
   console.log("Sheet Package: ", sheetPackage);
+  console.log("Inner sheet package: ", innerSheetPackage);
 
   // innerPaperCost(
   //   sheetValue,
@@ -1418,28 +1440,50 @@ const CostCalculation = () => {
                       ))}
                     </select>
                     <br></br>
+                    <p>
+                      The selected sheet will fit a quantity of: {paperFit}{" "}
+                      Papers
+                    </p>
                     <br></br>
                     <label htmlFor="sheetPackage">
                       <b>Sheet Package:</b>
                     </label>
                     <br />
-                    <br></br>
+                    <br />
+
+                    <label htmlFor="ink-type">
+                      <b>Inner Sheet </b> Package:
+                    </label>
+
+                    <select
+                      id="sheetPackage"
+                      value={innerSheetPackage}
+                      onChange={handleInnerSheetPackageChange}
+                    >
+                      <option value="">Select Inner Sheet Package</option>
+                      <option value="500">500 Sheets</option>
+                      <option value="250">250 Sheets</option>
+                      <option value="125">125 Sheets</option>
+                    </select>
+                    <br />
+
+                    <label htmlFor="ink-type">
+                      <b>Outer sheet </b> package:
+                    </label>
+
                     <select
                       id="sheetPackage"
                       value={sheetPackage}
                       onChange={handleSheetPackageChange}
                     >
-                      <option value="">Select Sheet Package</option>
+                      <option value="">Select Outer Sheet Package</option>
                       <option value="500">500 Sheets</option>
                       <option value="250">250 Sheets</option>
                       <option value="125">125 Sheets</option>
                     </select>
 
                     <br></br>
-                    <p>
-                      The selected sheet will fit a quantity of: {paperFit}{" "}
-                      Papers
-                    </p>
+
                     <br></br>
                     <label htmlFor="ink-type">
                       <b>Ink </b> Type:
@@ -1508,7 +1552,8 @@ const CostCalculation = () => {
                     pages,
                     quantity,
                     paperFit,
-                    paperPrice
+                    paperPrice,
+                    innerSheetPackage
                   )}
                   outerPageCost={outerFinalCost(
                     sheetValue,
