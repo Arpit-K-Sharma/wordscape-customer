@@ -194,16 +194,17 @@ function AdminDrawer() {
           </ul>
         </details>
 
-        <details
-          ref={tasksRef}
-          className="dropdown dropdown-bottom font-archivo "
-        >
-          <NavLink to="/inventory">
-            <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
-              Inventory
-            </summary>
-          </NavLink>
-        </details>
+        <NavLink to="/inventory">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
+            Inventory
+          </summary>
+        </NavLink>
+
+        <NavLink to="/hr">
+          <summary className="m-1 btn text-xl font-archivo font-light w-[150px] ml-[6px] bg-zinc-700 border-none text-white hover:bg-zinc-900">
+            HR
+          </summary>
+        </NavLink>
 
         <details
           ref={statementsRef}
