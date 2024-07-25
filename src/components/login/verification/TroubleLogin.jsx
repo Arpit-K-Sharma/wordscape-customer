@@ -6,6 +6,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import Navbar from "../../navbar/navbar";
 import MobileMenu from "../../navbar/mobile-menu";
 import Footer from "../../navbar/footer";
+import { baseURL } from "../../axiosInstance";
 
 function TroubleLogin() {
   const [otpCode, setOtpCode] = useState("");
@@ -32,7 +33,7 @@ function TroubleLogin() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8081/customers/resend", {
+      await axios.post(`${baseURL}/customers/resend`, {
         email: email,
       });
       toast.success("OTP sent successfully", {
@@ -80,7 +81,7 @@ function TroubleLogin() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8081/customers/verify", {
+      await axios.post(`${baseURL}/customers/verify`, {
         otp: parseInt(otpCode),
         email: email,
       });
@@ -129,7 +130,7 @@ function TroubleLogin() {
   const handleResendOTP = async () => {
     setResendLoading(true);
     try {
-      await axios.post("http://localhost:8081/customers/resend", {
+      await axios.post(`${baseURL}/customers/resend`, {
         email: email,
       });
       toast.success("OTP resent successfully", {
