@@ -1,9 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+export const baseURL = "https://erp-v2-7a15.onrender.com";
+
 const axiosInstance = axios.create({
   // baseURL: "https://erp-api.wordscapepress.com",
-  baseURL: "http://localhost:8081",
+  // baseURL: "http://localhost:8081",
+  baseURL: "https://erp-v2-7a15.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(
