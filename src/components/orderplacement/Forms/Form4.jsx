@@ -50,7 +50,6 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
 
         <div className="label text-center content-center">
           <span className="label-text">Binding Types</span>
-
           <IoNewspaperSharp size={`25px`} color="black" />
         </div>
         <span className="text-xs text-gray-500 mb-5">
@@ -64,7 +63,11 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               bindingType: [...(orderData.bindingType || []), e.target.value],
             })
           }
+          defaultValue=""
         >
+          <option value="" disabled>
+            Choose a binding
+          </option>
           {bindingType.map((type) => (
             <option key={type.id} value={type.id}>
               {type.bindingType}

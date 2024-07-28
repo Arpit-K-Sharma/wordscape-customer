@@ -149,7 +149,7 @@ function Signin() {
               alt="Logo"
             />
           </NavLink>
-          <div className="pt-[50px] md:pt-[100px] lg:pt-[100px]">
+          <div className="pt-[50px] md:pt-[10px] lg:pt-[100px]">
             <h2 className="text-xl font-semibold leading-9 tracking-tight text-gray-900 mb-2 mx-auto text-[22px]">
               Sign in
             </h2>
