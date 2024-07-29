@@ -1,13 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// export const baseURL = "https://erp-v2-7a15.onrender.com";
-export const baseURL = "http://localhost:8081";
+export const baseURL = "https://erp-v2-7a15.onrender.com";
+// export const baseURL = "http://localhost:8081";
 
 const axiosInstance = axios.create({
   // baseURL: "https://erp-api.wordscapepress.com",
-  baseURL: "http://localhost:8081",
-  // baseURL: "https://erp-v2-7a15.onrender.com",
+  // baseURL: "http://localhost:8081",
+  baseURL: "https://erp-v2-7a15.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(
