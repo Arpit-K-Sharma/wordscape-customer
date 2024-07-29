@@ -53,13 +53,13 @@ const ThirdForm = ({ orderData, setOrderData }) => {
           className="input input-bordered text-zinc-900"
           type="number"
           value={quantity}
-          max={9999}
+          max={999999}
           required
           onChange={(e) => {
             const value = e.target.value === "" ? "" : parseInt(e.target.value);
             if (
               value === "" ||
-              (!isNaN(value) && value >= 0 && value <= 9999)
+              (!isNaN(value) && value >= 0 && value <= 999999)
             ) {
               setOrderData({ ...orderData, quantity: value });
             }

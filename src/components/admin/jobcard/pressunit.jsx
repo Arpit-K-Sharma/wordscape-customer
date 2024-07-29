@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { MdAdd } from "react-icons/md"; // Import the add icon
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-import axios from "../../axiosInstance";
 
-function PressUnits({ data, onChildData  }) {
-  const { register, handleSubmit, reset, watch } = useForm({
+function PressUnits({ data, onChildData }) {
+  const { register, handleSubmit, reset, watch, setValue } = useForm({
     defaultValues: {
       totalset: "",
       forma: "",
@@ -17,18 +17,19 @@ function PressUnits({ data, onChildData  }) {
     },
   });
 
-  const [pressUnit, setPressUnit] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   const [pressunit, setPressunit] = useState(false);
+  const pressData = watch("pressData");
 
   useEffect(() => {
     if (data) {
-      const nonnullData = data.pressData.filter(datas => datas.paperType !== null);
-      const nullData = data.pressData.filter(datas => datas.paperType === null);
-      console.log("nonnullData", nonnullData)
-      console.log("nullData", nullData)
-
+      const nonnullData = data.pressData.filter(
+        (datas) => datas.paperType !== null
+      );
+      const nullData = data.pressData.filter(
+        (datas) => datas.paperType === null
+      );
       const updatedPressData = [...nonnullData, ...nullData];
-  
+
       const initialFormValues = {
         totalset: data.totalSet || "",
         forma: data.forma || "",
@@ -43,21 +44,18 @@ function PressUnits({ data, onChildData  }) {
           produced: entry.produced || "",
         })),
       };
-  
+
       const newData = {
         ...data,
-        pressData: updatedPressData
+        pressData: updatedPressData,
       };
-  
+
       Cookies.set("pressUnitData", JSON.stringify(newData));
       reset(initialFormValues);
     }
   }, [data, reset]);
-  
 
   const onSubmit = async (formData) => {
-    console.log(formData);
-
     const processedPressData = formData.pressData.map((entry) => {
       const processedEntry = {};
       Object.entries(entry).forEach(([key, value]) => {
@@ -72,8 +70,8 @@ function PressUnits({ data, onChildData  }) {
       workAndTurn: formData.workandturn,
       pressData: processedPressData,
     };
-    if(formData.pressUnitDataId){
-      jsonData.pressUnitDataId = formData.pressUnitDataId
+    if (formData.pressUnitDataId) {
+      jsonData.pressUnitDataId = formData.pressUnitDataId;
     }
 
     document.getElementById("my_modal_12").close();
@@ -96,11 +94,25 @@ function PressUnits({ data, onChildData  }) {
     }
   };
 
+  const handleAddRow = () => {
+    const newRow = {
+      paperType: "",
+      size: "",
+      signature: "",
+      ordered: "",
+      produced: "",
+    };
+    const updatedPressData = [...pressData, newRow];
+    setValue("pressData", updatedPressData);
+  };
+
   return (
     <>
       <button
         className="flex btn mx-auto mt-9 w-[195px] bg-gray-200 text-black hover:bg-[black] hover:text-white"
-        onClick={() => (document.getElementById("my_modal_12").showModal(), onChildData(true))}
+        onClick={() => (
+          document.getElementById("my_modal_12").showModal(), onChildData(true)
+        )}
       >
         <a className="flex"> Press Unit </a>
         {pressunit ? <AiOutlineCheckCircle size={24} color="green" /> : null}
@@ -166,8 +178,8 @@ function PressUnits({ data, onChildData  }) {
                 </tr>
               </thead>
               <tbody>
-                {pressUnit.map((press, index) => (
-                  <tr className="border border-[#393838]" key={press}>
+                {pressData.map((press, index) => (
+                  <tr className="border border-[#393838]" key={index}>
                     <td>
                       <input
                         type="text"
@@ -212,11 +224,23 @@ function PressUnits({ data, onChildData  }) {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-end mt-[5px]" onClick={handleAddRow}>
+              <MdAdd size={30} color="green" />
+            </div>
             <div className="modal-action">
-            <button className="btn hover:bg-[red] hover:text-white" onClick={(e) => (document.getElementById("my_modal_12").close(), onChildData(false))}>
+              <button
+                className="btn hover:bg-[red] hover:text-white"
+                onClick={(e) => (
+                  document.getElementById("my_modal_12").close(),
+                  onChildData(false)
+                )}
+              >
                 Close
               </button>
-              <button className="btn hover:bg-[#3eab3e] hover:text-[white]" type="submit">
+              <button
+                className="btn hover:bg-[#3eab3e] hover:text-[white]"
+                type="submit"
+              >
                 Done
               </button>
             </div>
