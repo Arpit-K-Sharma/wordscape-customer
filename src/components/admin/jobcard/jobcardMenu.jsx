@@ -14,6 +14,7 @@ import {
   FaComment,
   FaUser,
 } from "react-icons/fa";
+import { TbFileOrientation } from "react-icons/tb";
 
 function JobcardMenu({ orderId }) {
   const [orderDetails, setOrderDetails] = useState(null);
@@ -21,9 +22,7 @@ function JobcardMenu({ orderId }) {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get(
-          `/orders/${orderId}`
-        );
+        const response = await axios.get(`/orders/${orderId}`);
         console.log(response.data);
         setOrderDetails(response.data);
       } catch (error) {
@@ -79,6 +78,16 @@ function JobcardMenu({ orderId }) {
                       Paper Size
                     </td>
                     <td className="w-1/2">{orderDetails.paperSize}</td>
+                  </tr>
+                  <tr
+                    className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                    style={{ height: "50px" }}
+                  >
+                    <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                      <TbFileOrientation className="text-green-500" />
+                      Paper Orientation
+                    </td>
+                    <td className="w-1/2">{orderDetails.orientation}</td>
                   </tr>
                   <tr
                     className="mb-4 text-lg border-b-[0.5px] border-[#303031]"

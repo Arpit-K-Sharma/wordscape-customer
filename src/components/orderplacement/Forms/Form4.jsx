@@ -14,12 +14,19 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
     inkTypes,
     coverTreatment,
   } = entireData;
-
-  const handleRemove = (data) => {
-    console.log("removing");
+  console.log(orderData);
+  const handleRemove = (type, data) => {
+    console.log(`removing ${type}`);
     setOrderData({
       ...orderData,
-      bindingType: orderData.bindingType.filter((item) => item !== data),
+      [type]: orderData[type].filter((item) => item !== data),
+    });
+  };
+
+  const handleAdd = (type, value) => {
+    setOrderData({
+      ...orderData,
+      [type]: [...(orderData[type] || []), value],
     });
   };
 
@@ -57,12 +64,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         </span>
         <select
           className="select select-bordered text-zinc-800"
-          onChange={(e) =>
-            setOrderData({
-              ...orderData,
-              bindingType: [...(orderData.bindingType || []), e.target.value],
-            })
-          }
+          onChange={(e) => handleAdd("bindingType", e.target.value)}
           defaultValue=""
         >
           <option value="" disabled>
@@ -83,7 +85,10 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               className="btn mt-[10px] flex justify-between items-center"
             >
               <div className="mt-[3px]">{data}</div>
-              <div className="w-[30px]" onClick={() => handleRemove(data)}>
+              <div
+                className="w-[30px]"
+                onClick={() => handleRemove("bindingType", data)}
+              >
                 <FaTimes size={20} color="red" />
               </div>
             </button>
@@ -112,13 +117,18 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
           <h3 className="mx-auto justify-center text-l font-archivo text-zinc-900">
             Color Type:{" "}
           </h3>
+          <span className="text-xs text-gray-500 mb-5">
+            *multiple, please select one from the dropdown
+          </span>
           <div className="flex justify-center max-sm:mt-5">
             <select
               className="select select-bordered text-zinc-900"
-              onChange={(e) =>
-                setOrderData({ ...orderData, inkType: e.target.value })
-              }
+              onChange={(e) => handleAdd("inkType", e.target.value)}
+              defaultValue=""
             >
+              <option value="" disabled>
+                Choose a color type
+              </option>
               {inkTypes.map((type) => (
                 <option key={type.inkId} value={type.inkType}>
                   {type.inkType}
@@ -126,6 +136,22 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               ))}
             </select>
           </div>
+          {orderData.inkType &&
+            Array.isArray(orderData.inkType) &&
+            orderData.inkType.map((data) => (
+              <button
+                key={data}
+                className="btn mt-[10px] flex justify-between items-center w-[100%]"
+              >
+                <div className="mt-[3px]">{data}</div>
+                <div
+                  className="w-[30px]"
+                  onClick={() => handleRemove("inkType", data)}
+                >
+                  <FaTimes size={20} color="red" />
+                </div>
+              </button>
+            ))}
         </div>
         <br />
 
@@ -135,10 +161,20 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
               Previous
             </button>
           </NavLink>
-          <NavLink to={orderData.bindingType.length === 0 ? "#" : "/order/5"}>
+          <NavLink
+            to={
+              orderData.bindingType.length === 0 ||
+              orderData.inkType.length === 0
+                ? "#"
+                : "/order/5"
+            }
+          >
             <button
               className="btn max-lg:w-full bg-blue-600 btn-primary w-[280px] mt-5"
-              disabled={orderData.bindingType.length === 0}
+              disabled={
+                orderData.bindingType.length === 0 ||
+                orderData.inkType.length === 0
+              }
             >
               Next
             </button>

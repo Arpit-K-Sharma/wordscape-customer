@@ -17,6 +17,7 @@ const OrderDetails = (order) => {
     inkType,
     remarks,
     customerName,
+    orientation,
   } = order;
 
   if (!date) {
@@ -39,6 +40,9 @@ const OrderDetails = (order) => {
         </div>
         <div>
           <strong>Paper Size:</strong> <span>{paperSize}</span>
+        </div>
+        <div>
+          <strong>Orientatino:</strong> <span>{orientation}</span>
         </div>
         <div>
           <strong>Pages:</strong> <span>{pages}</span>

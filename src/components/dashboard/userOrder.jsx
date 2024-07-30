@@ -13,6 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { GiMoneyStack } from "react-icons/gi";
+import { TbFileOrientation } from "react-icons/tb";
 
 import { FaBook } from "react-icons/fa";
 import { FaClock, FaTimesCircle } from "react-icons/fa";
@@ -342,6 +343,16 @@ function UserOrder() {
                           Paper Size
                         </td>
                         <td className="w-1/2">{selectedOrder.paperSize}</td>
+                      </tr>
+                      <tr
+                        className="mb-4 text-lg border-b-[0.5px] border-[#303031]"
+                        style={{ height: "50px" }}
+                      >
+                        <td className="w-[100%] flex items-center gap-[10px] mt-[9px]">
+                          <TbFileOrientation className="text-black" />
+                          Paper Orientation
+                        </td>
+                        <td className="w-1/2">{selectedOrder.orientation}</td>
                       </tr>
                       <tr
                         className="mb-4 text-lg border-b-[0.5px] border-[#303031]"

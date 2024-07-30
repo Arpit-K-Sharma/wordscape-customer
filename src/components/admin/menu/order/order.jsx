@@ -13,6 +13,7 @@ import { FaCar } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import { GiMoneyStack } from "react-icons/gi";
+import { TbFileOrientation } from "react-icons/tb";
 
 import {
   FaCut,
@@ -733,6 +734,18 @@ function AdminDashboard() {
                               </td>
                               <td className="w-1/2 text-gray-600">
                                 {selectedOrder.paperSize}
+                              </td>
+                            </tr>
+                            <tr
+                              className="mb-4 text-lg border-b border-gray-300"
+                              style={{ height: "50px" }}
+                            >
+                              <td className="w-[100%] flex items-center gap-[10px] mt-[9px] text-gray-800">
+                                <TbFileOrientation className="text-gray-600" />
+                                Orientation
+                              </td>
+                              <td className="w-1/2 text-gray-600">
+                                {selectedOrder.orientation}
                               </td>
                             </tr>
                             <tr

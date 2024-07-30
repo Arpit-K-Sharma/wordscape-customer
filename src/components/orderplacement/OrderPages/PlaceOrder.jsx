@@ -24,6 +24,7 @@ function OrderPlacement() {
     // paperSize: "",
     pages: "",
     quantity: "",
+    orientation: "",
     estimatedAmount: 0,
     bindingType: "",
     inkType: "",
@@ -188,12 +189,6 @@ function OrderPlacement() {
         setEntireData((prevEntireData) => ({
           ...prevEntireData,
           inkTypes: sortedData,
-        }));
-
-        const firstInkType = sortedData.length > 0 ? sortedData[0].inkType : "";
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
-          inkType: firstInkType,
         }));
       }
     } catch (error) {

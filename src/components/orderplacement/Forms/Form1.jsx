@@ -18,9 +18,15 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const [addPaper, setAddPaper] = useState(false);
   const [availableThicknesses, setAvailableThicknesses] = useState([]);
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [orientation, setOrientation] = useState("portrait");
 
   const handleAdd = () => {
     setAddPaper(!addPaper);
+  };
+
+  const handleOrientationChange = (e) => {
+    setOrientation(e.target.value);
+    setOrderData({ ...orderData, orientation: e.target.value });
   };
 
   useEffect(() => {
@@ -59,6 +65,12 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
       setOrderData({
         ...orderData,
         paperSize: `${paperSize1} x ${paperSize2}`,
+        orientation: orientation,
+      });
+    } else {
+      setOrderData({
+        ...orderData,
+        orientation: orientation,
       });
     }
   };
@@ -207,6 +219,33 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
             </>
           )}
         <br />
+        <div className="mt-5">
+          <div className="label text-center">
+            <span className="label-text">Orientation</span>
+          </div>
+          <div className="flex justify-center space-x-4">
+            <label className="flex items-center mr-5">
+              <input
+                type="radio"
+                value="PORTRAIT"
+                checked={orientation === "PORTRAIT"}
+                onChange={handleOrientationChange}
+                className="radio radio-primary mr-2"
+              />
+              <span className="ml-[10px]">Portrait</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="LANDSCAPE"
+                checked={orientation === "LANDSCAPE"}
+                onChange={handleOrientationChange}
+                className="radio radio-primary mr-2"
+              />
+              <span className="ml-[10px]">Landscape</span>
+            </label>
+          </div>
+        </div>
         <NavLink to={!orderData.innerPaperThickness ? "#" : "/order/2"}>
           <button
             className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
