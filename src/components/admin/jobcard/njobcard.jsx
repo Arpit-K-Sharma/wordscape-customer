@@ -13,6 +13,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import AdminDrawer from "../menu/AdminDrawer";
 import Costbreakdown from "./costbreakdown";
 import Cookies from "js-cookie";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDFGenerator from "./pdfGenerator";
 
 function NJobCard() {
   const location = useLocation();
@@ -25,6 +27,7 @@ function NJobCard() {
   const dropdownRef = useRef(null);
   const [jobCard, setJobCard] = useState([]);
   const [pressunit, setPressunit] = useState(false);
+  const [cookiesData, setCookiesData] = useState([]);
 
   useEffect(() => {
     axios
@@ -32,6 +35,7 @@ function NJobCard() {
       .then((response) => {
         setOrders(response.data.response);
         setFilteredOrder(response.data.response);
+        handleGeneratePDF();
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
@@ -224,6 +228,40 @@ function NJobCard() {
     Cookies.remove("pressUnitData");
   };
 
+  const handleGeneratePDF = () => {
+    const parseJSONCookie = (cookie) => {
+      try {
+        return JSON.parse(cookie);
+      } catch (e) {
+        console.error("Error parsing cookie:", cookie);
+        return null;
+      }
+    };
+
+    let PaperDetailData = parseJSONCookie(Cookies.get("paperData"));
+    let binderyData = parseJSONCookie(Cookies.get("binderyData"));
+    let deliveryData = parseJSONCookie(Cookies.get("deliveryData"));
+    let paperData = parseJSONCookie(Cookies.get("PaperUnitsData"));
+    let paymentData = parseJSONCookie(Cookies.get("paymentData"));
+    let plateDetailData = parseJSONCookie(Cookies.get("plateData"));
+    let prePressData = parseJSONCookie(Cookies.get("prePressData"));
+    let costCalculation = parseJSONCookie(Cookies.get("costCalculation"));
+    let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
+
+    let cookiesData = {
+      paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
+      binderyData: binderyData ? binderyData.binderyData : null,
+      deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
+      paperData: paperData ? paperData.paperData : null,
+      prePressUnitList: paymentData ? paymentData.servicePaymentList : null,
+      plateDetailData: plateDetailData ? plateDetailData : null,
+      prePressData: prePressData ? prePressData.prePressUnitList : null,
+      pressUnitData: pressUnitData ? pressUnitData : null,
+      costCalculation: costCalculation ? costCalculation : null,
+    };
+    setCookiesData(cookiesData);
+  };
+
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -243,6 +281,7 @@ function NJobCard() {
           </NavLink>
           <p className="text-xl">Menu</p>
         </label>
+
         <div className="grid h-screen grid-cols-2 font-archivo  ">
           <div className={open ? "xl:mr-[60%] " : null}>
             <h2 className="text-center w-[200px] xl:ml-[85%] mt-[25px] text-4xl font-extrabold">
@@ -250,13 +289,68 @@ function NJobCard() {
             </h2>
             <h1 className="xl:ml-[85%] w-[200px] text-center mt-[20px] text-xl">
               Order Details
+              <div className="flex justify-center items-center">
+                {Object.keys(cookiesData).length > 0 ? (
+                  <PDFDownloadLink
+                    document={<PDFGenerator data={cookiesData} />}
+                    fileName="jobcard.pdf"
+                  >
+                    {({ blob, url, loading, error }) => (
+                      <button
+                        className="p-[10px] rounded-full hover:bg-[#3eab3e] mt-[10px] hover:text-[white] transition-colors duration-300"
+                        disabled={loading}
+                        title={loading ? "Generating PDF..." : "Download PDF"}
+                      >
+                        {loading ? (
+                          <svg
+                            className="animate-spin h-6 w-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                        ) : (
+                          <svg
+                            className="h-6 w-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                            />
+                          </svg>
+                        )}
+                      </button>
+                    )}
+                  </PDFDownloadLink>
+                ) : null}
+              </div>
             </h1>
+
             <div
               className={
                 open ? "flex gap-[20px] ml-[-100%] " : "flex gap-[20px]"
               }
             >
-              <div className="dropdown xl:ml-[80%] mt-[10px] text-center ">
+              <div className="dropdown xl:ml-[75%] mt-[10px] text-center ">
                 <label className="input input-bordered flex items-center gap-2">
                   <input
                     tabIndex={0}
@@ -289,7 +383,7 @@ function NJobCard() {
                       key={order.orderId}
                       onClick={() => handleOrderChange(order.orderId)}
                     >
-                      <a>{order.companyName}</a>
+                      <a>{order.customer}</a>
                     </li>
                   ))}
                 </ul>
