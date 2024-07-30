@@ -1207,8 +1207,22 @@ const CostCalculation = () => {
                         </option>
                       ))}
                     </select>
-
                     <br></br>
+                    <label htmlFor="binding-cost">
+                      <b>Binding Cost</b> (Custom Price)
+                    </label>
+                    <br />
+                    in Nepali Rupees
+                    <br />
+                    <input
+                      type="text"
+                      id="binding-cost"
+                      name="binding-cost"
+                      value={bindingCost}
+                      onChange={(e) => setBindingCost(e.target.value)}
+                      required
+                    />
+                    <br />
                     <label htmlFor="covertreatment-type">
                       <b>Cover </b>Treatment
                     </label>
