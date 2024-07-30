@@ -35,7 +35,6 @@ function NJobCard() {
       .then((response) => {
         setOrders(response.data.response);
         setFilteredOrder(response.data.response);
-        handleGeneratePDF();
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
@@ -53,6 +52,10 @@ function NJobCard() {
       fetchJobCard();
     }
   }, [orders, ordersId]);
+
+  useEffect(() => {
+    jobCard?.projectTracking?.jobCard === true ? handleGeneratePDF() : null;
+  }, [jobCard]);
 
   const handleOrderChange = (id) => {
     setSelectedOrder(id);
@@ -259,6 +262,7 @@ function NJobCard() {
       pressUnitData: pressUnitData ? pressUnitData : null,
       costCalculation: costCalculation ? costCalculation : null,
     };
+    console.log(cookiesData);
     setCookiesData(cookiesData);
   };
 

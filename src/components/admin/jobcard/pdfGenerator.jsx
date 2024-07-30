@@ -293,7 +293,7 @@ const PDFGenerator = ({ data }) => {
           <View style={styles.column}>
             {data.paperData &&
               renderSimpleSection(
-                Object.fromEntries(
+              Object.fromEntries(
                   Object.entries(data.paperData.paperData0).filter(
                     ([key]) => key !== "paperData0_id"
                   )
