@@ -187,7 +187,7 @@ function NJobCard() {
 
     let cookiesData = {
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
-      binderyData: binderyData ? binderyData.binderyData : null,
+      binderyData: binderyData ? binderyData : null,
       deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
       paperData: paperData ? paperData.paperData : null,
       prePressUnitList: paymentData ? paymentData.servicePaymentList : null,

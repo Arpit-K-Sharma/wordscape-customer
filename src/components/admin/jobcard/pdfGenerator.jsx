@@ -287,13 +287,13 @@ const PDFGenerator = ({ data }) => {
               renderSimpleSection(data.deliveryDetail, "Delivery Details")}
             {data.prePressUnitList &&
               renderSimpleSection(data.prePressUnitList, "Payment and Service")}
-            {data.binderyData.binderyData &&
-              renderSimpleSection(data.binderyData.binderyData, "Bindery Data")}
+            {data.binderyData &&
+              renderSimpleSection(data.binderyData, "Bindery Data")}
           </View>
           <View style={styles.column}>
             {data.paperData &&
               renderSimpleSection(
-              Object.fromEntries(
+                Object.fromEntries(
                   Object.entries(data.paperData.paperData0).filter(
                     ([key]) => key !== "paperData0_id"
                   )
