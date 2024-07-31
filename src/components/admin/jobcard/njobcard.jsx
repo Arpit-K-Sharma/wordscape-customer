@@ -252,6 +252,7 @@ function NJobCard() {
     let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
 
     let cookiesData = {
+      job_card_id : jobCard.job_card_id,
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
       binderyData: binderyData ? binderyData.binderyData : null,
       deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,

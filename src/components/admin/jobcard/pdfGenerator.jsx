@@ -281,6 +281,7 @@ const PDFGenerator = ({ data }) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>Job Card Details</Text>
+        <Text style={styles.title}>{`Job card ID: ${data.job_card_id}` || 'No Job Card ID'}</Text>
         <View style={styles.flexContainer}>
           <View style={styles.column}>
             {data.deliveryDetail &&
@@ -374,6 +375,7 @@ const PDFGenerator = ({ data }) => {
       </Page>
       <Page>
         <Text style={styles.title}>Job Card Details</Text>
+        <Text style={styles.title}>{`Job card ID:  ${data.job_card_id}` || 'No Job Card ID'}</Text>
         <View style={styles.flexContainer}>
           <View style={styles.column}>
             {data.deliveryDetail &&
