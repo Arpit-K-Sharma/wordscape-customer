@@ -787,7 +787,7 @@ function AdminDashboard() {
                                 </span> */}
                               </td>
                             </tr>
-                            <tr
+                            {/* <tr
                               className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
                             >
@@ -799,7 +799,7 @@ function AdminDashboard() {
                                 {selectedOrder.coverTreatment
                                   ?.coverTreatmentType || "N/A"}
                               </td>
-                            </tr>
+                            </tr> */}
                             <tr
                               className="mb-4 text-lg border-b border-gray-300"
                               style={{ height: "50px" }}
