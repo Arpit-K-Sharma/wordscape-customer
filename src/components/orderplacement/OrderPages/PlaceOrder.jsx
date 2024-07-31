@@ -28,6 +28,7 @@ function OrderPlacement() {
     estimatedAmount: 0,
     bindingType: "",
     inkType: "",
+    // coverTreatment: "",
     // coverTreatmentType: "",
     date: Date.now(),
     deadline: "",
@@ -65,7 +66,7 @@ function OrderPlacement() {
     getInks();
     getBinding();
     getPaperThicknesses();
-    getCoverTreatment();
+    // getCoverTreatment();
   }, []);
 
   const [entireData, setEntireData] = useState({
@@ -75,35 +76,35 @@ function OrderPlacement() {
     laminationTypes: [],
     bindingType: [],
     paperThicknessData: [],
-    coverTreatment: [],
+    // coverTreatment: [],
   });
 
-  const getCoverTreatment = () => {
-    axios
-      .get("/coverTreatments")
-      .then((response) => {
-        const sortedData = response.data.sort(
-          (a, b) => a.coverTreatmentId - b.coverTreatmentId
-        );
-        setEntireData((prevEntireData) => ({
-          ...prevEntireData,
-          coverTreatment: sortedData,
-        }));
+  // const getCoverTreatment = () => {
+  //   axios
+  //     .get("/coverTreatments")
+  //     .then((response) => {
+  //       const sortedData = response.data.sort(
+  //         (a, b) => a.coverTreatmentId - b.coverTreatmentId
+  //       );
+  //       setEntireData((prevEntireData) => ({
+  //         ...prevEntireData,
+  //         coverTreatment: sortedData,
+  //       }));
 
-        const firstCoverTreatment =
-          sortedData.length > 0 ? sortedData[0].coverTreatmentType : "";
+  //       const firstCoverTreatment =
+  //         sortedData.length > 0 ? sortedData[0].coverTreatmentType : "";
 
-        setOrderData((prevOrderData) => ({
-          ...prevOrderData,
-          coverTreatmentType: firstCoverTreatment,
-        }));
-        //console.log("COVER T 1 " + firstCoverTreatment);
-      })
+  //       setOrderData((prevOrderData) => ({
+  //         ...prevOrderData,
+  //         coverTreatmentType: firstCoverTreatment,
+  //       }));
+  //       //console.log("COVER T 1 " + firstCoverTreatment);
+  //     })
 
-      .catch((error) => {
-        console.error("Error fetching cover treatment data:", error);
-      });
-  };
+  //     .catch((error) => {
+  //       console.error("Error fetching cover treatment data:", error);
+  //     });
+  // };
 
   const getInnerPaperType = () => {
     axios

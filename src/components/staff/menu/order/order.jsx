@@ -42,11 +42,14 @@ function StaffOrders() {
 
   const handleBack = () => {
     setSteps((prevSteps) => {
-      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      const lastActiveIndex = prevSteps.reduce(
+        (lastIndex, step, index) => (step.active ? index : lastIndex),
+        -1
+      );
       if (lastActiveIndex > 0) {
         const newSteps = prevSteps.map((step, index) => ({
           ...step,
-          active: index < lastActiveIndex
+          active: index < lastActiveIndex,
         }));
         return newSteps;
       }
@@ -56,11 +59,14 @@ function StaffOrders() {
 
   const handleNext = () => {
     setSteps((prevSteps) => {
-      const lastActiveIndex = prevSteps.reduce((lastIndex, step, index) => step.active ? index : lastIndex, -1);
+      const lastActiveIndex = prevSteps.reduce(
+        (lastIndex, step, index) => (step.active ? index : lastIndex),
+        -1
+      );
       if (lastActiveIndex < prevSteps.length - 1) {
         const newSteps = prevSteps.map((step, index) => ({
           ...step,
-          active: index <= lastActiveIndex + 1
+          active: index <= lastActiveIndex + 1,
         }));
         return newSteps;
       }
@@ -85,18 +91,18 @@ function StaffOrders() {
   };
 
   const handleTracking = async (id) => {
-    console.log(id)
+    console.log(id);
     try {
       const response = await axios.get(`/projectTracking/${id}`);
       const trackingData = response.data;
 
-      const updatedSteps = steps.map(step => ({
+      const updatedSteps = steps.map((step) => ({
         ...step,
-        active: trackingData[step.key]
+        active: trackingData[step.key],
       }));
       console.log(updatedSteps);
       setSteps(updatedSteps);
-      document.getElementById('my_modal_1').showModal();
+      document.getElementById("my_modal_1").showModal();
     } catch (error) {
       console.error("Error fetching tracking data:", error);
     }
@@ -154,7 +160,7 @@ function StaffOrders() {
                       <td className="text-wrap">{order.pages}</td>
                       <td className="text-wrap">{order.quantity}</td>
                       <td className="text-wrap">{order.bindingType}</td>
-                      <td className="text-wrap">{order.coverTreatmentType}</td>
+                      {/* <td className="text-wrap">{order.coverTreatmentType}</td> */}
                       <td className="text-wrap">{order.innerPaperType}</td>
                       <td className="text-wrap">{order.innerPaperThickness}</td>
                       <td className="text-wrap">{order.outerPaperType}</td>
@@ -176,7 +182,7 @@ function StaffOrders() {
                           className="btn min-h-[30px] h-[40px]"
                           onClick={() => {
                             handleTracking(order.orderId),
-                              setOrderid(order.orderId)
+                              setOrderid(order.orderId);
                           }}
                         >
                           Track It
@@ -195,7 +201,11 @@ function StaffOrders() {
           <div className="">
             <ul className="steps w-[900px] mb-[20px]">
               {steps.map((step, index) => (
-                <li key={index} className={`step ${step.active ? "step step-primary" : ""}`} data-content={step.active ? "✓" : null}>
+                <li
+                  key={index}
+                  className={`step ${step.active ? "step step-primary" : ""}`}
+                  data-content={step.active ? "✓" : null}
+                >
                   {step.name}
                 </li>
               ))}
@@ -213,7 +223,9 @@ function StaffOrders() {
             <form method="dialog">
               <div className="flex justify-end gap-[15px]">
                 <button className="btn">Close</button>
-                <button className="btn" onClick={handleDone}>Done</button>
+                <button className="btn" onClick={handleDone}>
+                  Done
+                </button>
               </div>
             </form>
           </div>

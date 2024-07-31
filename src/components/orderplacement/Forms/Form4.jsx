@@ -12,7 +12,6 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
     outerLamination,
     bindingType,
     inkTypes,
-    coverTreatment,
   } = entireData;
   console.log(orderData);
   const handleRemove = (type, data) => {
@@ -56,7 +55,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
         <br />
 
         <div className="label text-center content-center">
-          <span className="label-text">Binding Types</span>
+          <span className="label-text">Binding Types / Cover Treatment</span>
           <IoNewspaperSharp size={`25px`} color="black" />
         </div>
         <span className="text-xs text-gray-500 mb-5">
@@ -95,7 +94,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
           ))}
         <br />
 
-        <div className="label text-center content-center">
+        {/* <div className="label text-center content-center">
           <span className="label-text">Cover Treatment</span>
           <HiNewspaper size={`25px`} color="black" />
         </div>
@@ -111,7 +110,7 @@ const FourthForm = ({ orderData, setOrderData, entireData }) => {
             </option>
           ))}
         </select>
-        <br />
+        <br /> */}
 
         <div>
           <h3 className="mx-auto justify-center text-l font-archivo text-zinc-900">

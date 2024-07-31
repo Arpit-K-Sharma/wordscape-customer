@@ -142,11 +142,11 @@ function AdminDrawer() {
                 <p className="text-xl mb-3 font-light">Lamination</p>
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink to="/admin/covertreatment">
                 <p className="text-xl mb-3 font-light">Cover Treatment</p>
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink to="/admin/plate">
                 <p className="text-xl mb-3 font-light">Plate</p>
