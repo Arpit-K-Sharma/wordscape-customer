@@ -15,6 +15,7 @@ import Costbreakdown from "./costbreakdown";
 import Cookies from "js-cookie";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFGenerator from "./pdfGenerator";
+import { AiOutlineLoading } from "react-icons/ai";
 
 function NJobCard() {
   const location = useLocation();
@@ -28,6 +29,8 @@ function NJobCard() {
   const [jobCard, setJobCard] = useState([]);
   const [pressunit, setPressunit] = useState(false);
   const [cookiesData, setCookiesData] = useState([]);
+  const [reload, setReload] = useState(1);
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     axios
@@ -39,7 +42,7 @@ function NJobCard() {
       .catch((error) => {
         console.error("Error fetching orders:", error);
       });
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     if (orders.length > 0 && ordersId) {
@@ -82,36 +85,8 @@ function NJobCard() {
       dropdownRef.current.style.display = "block";
     }
   };
-
-  // const handleSubmit = async (formData) => {
-  //   console.log(formData);
-  //   const jsonData = {
-  //     prePressUnitList: {
-  //       paymentMethod: formData.prePressUnitList.paymentMethod,
-  //       materialReceived: formData.prePressUnitList.materialReceived,
-  //       flapSize: formData.prePressUnitList.flapSize,
-  //     },
-
-  //   };
-  //   console.log("json data from prepress unit: ", jsonData);
-  //   Cookies.set("prePressData", JSON.stringify(jsonData));
-  //   setPredone(!predone);
-  //   document.getElementById("my_modal_7").close();
-  // };
-
-  // <div className="drawer drawer-end">
-  //   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-  //   <div className="drawer-content">
-  //     {/* Page content here */}
-  //     <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary">
-  //       Open drawer
-  //     </label>
-  //   </div>
-
-  //   <AdminDrawer />
-  // </div>;
-
   const onUpdate = () => {
+    setSpinner(true);
     const parseJSONCookie = (cookie) => {
       try {
         return JSON.parse(cookie);
@@ -150,9 +125,10 @@ function NJobCard() {
           `/jobCard/update/${orderId}`,
           cookiesData
         );
-        clearCookies();
-        console.log(response.data);
+        setSpinner(false);
         alert(response.data);
+        clearCookies();
+        setReload(reload + 1);
       } catch (error) {
         console.error("Error updating job card:", error);
       }
@@ -164,6 +140,7 @@ function NJobCard() {
 
     document.getElementById("my_modal_12").close();
     setPressunit(true);
+    setSpinner(true);
 
     const parseJSONCookie = (cookie) => {
       try {
@@ -207,8 +184,10 @@ function NJobCard() {
           "Content-Type": "application/json",
         },
       });
+      setSpinner(false);
       alert(response.data);
       clearCookies();
+      setReload(reload + 1);
       console.log("Successfully sent data to API:", response.data);
     } catch (error) {
       console.error("Error sending data to API:", error);
@@ -252,7 +231,7 @@ function NJobCard() {
     let pressUnitData = parseJSONCookie(Cookies.get("pressUnitData"));
 
     let cookiesData = {
-      job_card_id : jobCard.job_card_id,
+      job_card_id: jobCard.job_card_id,
       paperDetailData: PaperDetailData ? PaperDetailData.paperDetail : null,
       binderyData: binderyData ? binderyData.binderyData : null,
       deliveryDetail: deliveryData ? deliveryData.deliveryDetail : null,
@@ -444,7 +423,11 @@ function NJobCard() {
                           className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
                           type="submit"
                         >
-                          Update
+                          {spinner ? (
+                            <AiOutlineLoading className="animate-spin" />
+                          ) : (
+                            "Update"
+                          )}
                         </button>
                       ) : (
                         <button
@@ -452,7 +435,11 @@ function NJobCard() {
                           className="btn hover:bg-[#3eab3e] mt-[10px] w-[200px] hover:text-[white]"
                           type="submit"
                         >
-                          Submit
+                          {spinner ? (
+                            <AiOutlineLoading className="animate-spin" />
+                          ) : (
+                            "Submit"
+                          )}
                         </button>
                       )}
                     </div>
