@@ -18,7 +18,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
   const [addPaper, setAddPaper] = useState(false);
   const [availableThicknesses, setAvailableThicknesses] = useState([]);
   const [isNextDisabled, setIsNextDisabled] = useState(true);
-  const [orientation, setOrientation] = useState("portrait");
+  const [orientation, setOrientation] = useState("PORTRAIT");
 
   const handleAdd = () => {
     setAddPaper(!addPaper);
@@ -49,16 +49,16 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
     } else {
       setAvailableThicknesses([]);
     }
-  }, [orderData.innerPaperType, fetchedPaperTypes, paperThicknessData]);
 
-  useEffect(() => {
+    // Add this new logic for checking all conditions, including orientation
     setIsNextDisabled(
       !orderData.paperSize ||
         !orderData.innerPaperType ||
         orderData.innerPaperType === "Choose a Paper Type" ||
-        !orderData.innerPaperThickness
+        !orderData.innerPaperThickness ||
+        !orientation
     );
-  }, [orderData]);
+  }, [orderData, fetchedPaperTypes, paperThicknessData, orientation]);
 
   const handleNext = () => {
     if (addPaper) {
@@ -231,6 +231,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
                 checked={orientation === "PORTRAIT"}
                 onChange={handleOrientationChange}
                 className="radio radio-primary mr-2"
+                defaultChecked
               />
               <span className="ml-[10px]">Portrait</span>
             </label>
@@ -246,7 +247,7 @@ const FirstForm = ({ orderData, entireData, setOrderData }) => {
             </label>
           </div>
         </div>
-        <NavLink to={!orderData.innerPaperThickness ? "#" : "/order/2"}>
+        <NavLink to={isNextDisabled ? "#" : "/order/2"}>
           <button
             className="btn max-lg:w-full text-white btn-primary mt-5 w-full"
             onClick={handleNext}
