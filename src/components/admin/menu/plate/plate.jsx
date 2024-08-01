@@ -143,13 +143,15 @@ function Plate() {
     );
     const plateRateInput = document.getElementById(`plateRate_${row.plateId}`);
     const inkRateInput = document.getElementById(`inkRate_${row.plateId}`);
+    const reprintInput = document.getElementById(`reprint_${row.plateId}`);
 
     if (
       plateSizeInput &&
       plateLengthInput &&
       plateBreadthInput &&
       plateRateInput &&
-      inkRateInput
+      inkRateInput &&
+      reprintInput
     ) {
       const updatedData = {
         plateSize: plateSizeInput.value,
@@ -157,6 +159,7 @@ function Plate() {
         plateBreadth: parseFloat(plateBreadthInput.value),
         plateRate: parseFloat(plateRateInput.value),
         inkRate: parseFloat(inkRateInput.value),
+        reprint: parseFloat(reprintInput.value),
       };
       handleUpdate(row.plateId, updatedData);
       setEditingData(null); // Reset editing state after save
@@ -355,6 +358,12 @@ function Plate() {
                       type="number"
                       name="inkRate"
                       placeholder="Ink Rate"
+                      className="mt-5 input input-bordered w-full max-w-xs"
+                    />
+                    <input
+                      type="number"
+                      name="reprint"
+                      placeholder="Reprint Price"
                       className="mt-5 input input-bordered w-full max-w-xs"
                     />
                     <button className="btn mt-5 btn-ghost mx-[115px]">
