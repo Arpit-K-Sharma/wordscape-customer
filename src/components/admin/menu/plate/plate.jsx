@@ -43,6 +43,7 @@ function Plate() {
     const plateBreadth = parseFloat(e.target.elements.plateBreadth.value);
     const plateRate = parseFloat(e.target.elements.plateRate.value);
     const inkRate = parseFloat(e.target.elements.inkRate.value);
+    const reprint = parseFloat(e.target.elements.reprint.value);
 
     axios
       .post("/plates", {
@@ -51,6 +52,7 @@ function Plate() {
         plateBreadth,
         plateRate,
         inkRate,
+        reprint,
       })
       .then((response) => {
         setPlateDataState((prevData) => [...prevData, response.data]);
@@ -183,7 +185,7 @@ function Plate() {
             Plate
           </h1>
           <div className="overflow-x-auto mt-[80px]">
-            <table className="table w-2/3 mx-auto my-auto">
+            <table className="table w-3/4 mx-auto my-auto">
               <thead>
                 <tr className="bg-zinc-600 text-white">
                   <th className="w-[50px]">S.N</th>
@@ -192,6 +194,8 @@ function Plate() {
                   <th className="w-[80px]">Breadth</th>
                   <th className="w-[80px]">Plate Rate</th>
                   <th className="w-[80px]">Ink Rate</th>
+                  <th className="w-[80px]">Reprint</th>
+
                   <th className="w-[10px]">Actions</th>
                 </tr>
               </thead>
@@ -269,6 +273,20 @@ function Plate() {
                           />
                         ) : (
                           <span>{row.inkRate}</span>
+                        )}
+                      </td>
+                      <td className="text-wrap">
+                        {editingData && editingData.plateId === row.plateId ? (
+                          <input
+                            type="number"
+                            id={`reprint_${row.plateId}`}
+                            name="reprint"
+                            className="input input-bordered"
+                            defaultValue={row.reprint}
+                            required
+                          />
+                        ) : (
+                          <span>{row.reprint}</span>
                         )}
                       </td>
                       <td>
