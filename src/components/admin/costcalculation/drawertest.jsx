@@ -196,7 +196,8 @@ const DrawerTest = ({
               The cost of inner paper is Rs. <b>{Math.floor(innerPageCost)}</b>
             </p>
             <p>
-              The cost of outer paper is Rs. <b>{Math.floor(outerPageCost)}</b>
+              The cost of outer paper is Rs.{" "}
+              <b>{Math.floor(outerPageCost) * totalPacket}</b>
             </p>
             <p>
               The cost of lamination is Rs. <b>{Math.floor(costLamination)}</b>
@@ -213,7 +214,31 @@ const DrawerTest = ({
               <b>{Math.floor(pricePlate)}</b>
             </p>
             <p>
-              Total Cost: Rs. <b>{totalCost}</b>
+              {/* Total Cost: Rs. <b>{totalCost}</b> */}
+              Total (Excluding VAT): Rs
+              <b>
+                {Math.floor(innerPageCost) +
+                  Math.floor(outerPageCost) * totalPacket +
+                  Math.floor(costLamination) +
+                  Math.floor(bindingFinalCost) +
+                  Math.floor(pricePrint) +
+                  Math.floor(pricePlate)}
+              </b>
+            </p>
+            <p>
+              {/* Total Cost: Rs. <b>{totalCost}</b> */}
+              Total (with 20% margin): Rs
+              <b>
+                {Math.floor(
+                  (Math.floor(innerPageCost) +
+                    Math.floor(outerPageCost) * totalPacket +
+                    Math.floor(costLamination) +
+                    Math.floor(bindingFinalCost) +
+                    Math.floor(pricePrint) +
+                    Math.floor(pricePlate)) *
+                    1.2
+                )}
+              </b>
             </p>
           </li>
           <li></li>

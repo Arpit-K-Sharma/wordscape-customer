@@ -914,7 +914,7 @@ const CostCalculation = () => {
     console.log("Outer paper thickness: ", selectedOuterPaperThickness);
 
     let calc =
-      ((sheetValue * pt * outerPaperPrice) / 3100 / 4) *
+      ((sheetValue * pt * outerPaperPrice) / 3100 / 2) *
       totalPacket(quantity, paperFit);
 
     if (sheetPackage === "250") {

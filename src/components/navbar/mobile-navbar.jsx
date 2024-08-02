@@ -60,7 +60,7 @@ function MobileNavbar() {
                     color: "transparent",
                     marginTop: "90px",
                   }}
-                  className="text-[#5C61F3]"
+                  className="text-[#5C61F3] max-sm:ml-10"
                 >
                   one <br />
                   place
