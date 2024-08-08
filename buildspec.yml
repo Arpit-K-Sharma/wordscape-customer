@@ -13,6 +13,6 @@ phases:
     commands:
       - echo Build completed.
       - echo Syncing files to S3...
-      - aws s3 sync build/ s3://wordscape-customer-frontend --delete
+      - aws s3 sync dist/ s3://wordscape-customer-frontend --delete
       - echo Invalidating CloudFront cache...
       - aws cloudfront create-invalidation --distribution-id E200M0XVOVMU4I --paths "/*"
