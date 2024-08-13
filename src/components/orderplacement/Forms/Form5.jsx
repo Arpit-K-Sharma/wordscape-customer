@@ -12,9 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [plateCost, setPlateCost] = useState(0);
-  const [pdfFile, setFile] = useState(null); // State to hold the uploaded file
+  const [pdfFile, setpdfFile] = useState([]); // State to hold the uploaded file
   const [showDeadlineError, setShowDeadlineError] = useState(false);
-
+  const [currentFile, setCurrentFile] = useState(null);
   const [bindingCost, setBindingCost] = useState(0);
   const [laminationPrice, setLaminationPrice] = useState(0);
   const [changeCostPerKg, setChangeCostPerKg] = useState(0);
@@ -26,7 +26,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   const [isPdfDone, setIsPdfDone] = useState(true);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]); // Set the file to state
+    setCurrentFile(event.target.files[0]); // Set the file to state
   };
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -66,27 +66,27 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
   };
 
   const hanndlepdfUpload = async () => {
-    if (!orderData.deliveryOption || !orderData.deadline) {
-      toast.error("Please fill all required fields.");
-      return;
-    }
+    // if (!orderData.deliveryOption || !orderData.deadline) {
+    //   toast.error("Please fill all required fields.");
+    //   return;
+    // }
 
-    // Ensure the pdfFile state is holding the actual file
-    if (!pdfFile) {
-      toast.error("Please upload a PDF file.");
-      return;
-    }
+    // // Ensure the pdfFile state is holding the actual file
+    // if (!pdfFile) {
+    //   toast.error("Please upload a PDF file.");
+    //   return;
+    // }
 
     setIsPdfDone(false);
 
     const updatedOrderData = {
       ...orderData,
-      pdfFile: pdfFile.filename,
+      pdfFile: currentFile.filename,
     };
 
     const formData = new FormData();
-    formData.append("pdfFile", pdfFile); // Append the actual file from state
-    formData.append("data", JSON.stringify(updatedOrderData)); // Optionally append other order data as a JSON string
+    formData.append("pdfFile", currentFile);
+    formData.append("data", JSON.stringify(updatedOrderData));
 
     setIsPdfSubmitting(true);
     try {
@@ -96,7 +96,11 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         },
       });
       if (response.data.filename) {
-        setOrderData({ ...orderData, pdfFile: response.data.filename });
+        setpdfFile([...pdfFile, response.data.filename]);
+        setOrderData({
+          ...orderData,
+          pdfFile: [...pdfFile, response.data.filename],
+        });
         setIsPdfSubmitting(false);
         setIsPdfSubmitted(false);
         setIsPdfDone(true);
@@ -160,8 +164,8 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     laminationPrice,
     quantity
   ) {
-    console.log(sheetLength, sheetBreadth, laminationPrice, quantity)
-    const effectiveLength = sheetLength ;
+    console.log(sheetLength, sheetBreadth, laminationPrice, quantity);
+    const effectiveLength = sheetLength;
     const effectiveBreadth = sheetBreadth;
     return Math.ceil(
       effectiveLength * effectiveBreadth * laminationPrice * quantity
@@ -228,7 +232,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         const plate = response.data.find(
           (plate) => plate.plateSize === plateSize
         );
-        console.log("this is response", response.data)
+        console.log("this is response", response.data);
 
         if (plate) {
           setPlateCost(plate.plateRate);
@@ -327,12 +331,7 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
         Math.round(platePrice(orderData.pages, plateCost)) +
         Math.round(bindingCost * orderData.quantity) +
         Math.round(
-          calculateLamination(
-            50,
-            50,
-            laminationPrice,
-            orderData.quantity
-          )
+          calculateLamination(50, 50, laminationPrice, orderData.quantity)
         );
 
       setTotalCost(cost);
@@ -356,28 +355,36 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
       laminationRate: laminationPrice,
       plateRate: plateCost,
       estimatedAmount: totalCost,
-        costCalculation: {
-          plates: 0,
-          printing: 0,
-          paper: 0,
-          coverPaper: packetCalc(orderData.outerPaperThickness, outerChangeCostPerKg),
-          innerPaper: innerCost(
-            orderData.quantity,
-            orderData.pages,
-            orderData.innerPaperThickness,
-            changeCostPerKg
-          ),
-          otherPaper: 0,
-          lamination: calculateLamination(50, 50, laminationPrice, orderData.quantity),
-          binding: (bindingCost * orderData.quantity),
-          finishing: 0,
-          extraCharges: 0,
-          subTotal: 0,
-          vat: 0,
-          grandTotal: 0,
-          preparedBy: "",
-          approvedBy: ""
-        }
+      costCalculation: {
+        plates: 0,
+        printing: 0,
+        paper: 0,
+        coverPaper: packetCalc(
+          orderData.outerPaperThickness,
+          outerChangeCostPerKg
+        ),
+        innerPaper: innerCost(
+          orderData.quantity,
+          orderData.pages,
+          orderData.innerPaperThickness,
+          changeCostPerKg
+        ),
+        otherPaper: 0,
+        lamination: calculateLamination(
+          50,
+          50,
+          laminationPrice,
+          orderData.quantity
+        ),
+        binding: bindingCost * orderData.quantity,
+        finishing: 0,
+        extraCharges: 0,
+        subTotal: 0,
+        vat: 0,
+        grandTotal: 0,
+        preparedBy: "",
+        approvedBy: "",
+      },
     });
   }, [
     changeCostPerKg,
@@ -392,7 +399,6 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
     orderData;
 
   return (
-   
     <div className="lg:mt-6 lg:mb-6 font-archivo">
       <label className="form-control max-sm:mr-5">
         <p className="text-2xl font-light max-sm:text-[24px] max-sm:flex max-sm:justify-center text-zinc-900 font-archivo">
@@ -550,11 +556,34 @@ const FifthForm = ({ orderData, setOrderData, handleSubmit }) => {
           accept=".pdf"
         />
         <span className="italic text-gray-400">Optional</span>
+        <div className="flex flex-col gap-2 mt-4 justify-center items-center">
+          <p className="italic text-gray-400 mb-[10px]">Your Pdf:</p>
+          {pdfFile.map((fileName, index) => (
+            <div
+              key={index}
+              className="flex items-center mt-[10px] bg-gray-200 rounded-md shadow-md max-w-xs overflow-hidden"
+            >
+              <p className="text-gray-700 truncate flex-1 pl-[10px]">
+                {fileName}
+              </p>
+              <button
+                className="text-red-500 hover:text-red-700 ml-[5px] mr-[5px] text-[30px]"
+                onClick={() => {
+                  const updatedPdfFile = pdfFile.filter((_, i) => i !== index);
+                  setpdfFile(updatedPdfFile);
+                  setOrderData({ ...orderData, pdfFile: updatedPdfFile });
+                }}
+              >
+                <span className="">&times;</span>
+              </button>
+            </div>
+          ))}
+        </div>
         <button
           className={`btn btn-primary max-lg:w-full w-[280px] lg:mx-auto mt-5 border-none justify-center text-white ${
             isPdfSubmitting ? "bg-blue-600" : "bg-blue-500 hover:bg-blue-800"
           }`}
-          onClick={hanndlepdfUpload}
+          onClick={(e) => hanndlepdfUpload()}
           disabled={isPdfSubmitting || isPdfSubmitted}
         >
           {isPdfSubmitting ? (
