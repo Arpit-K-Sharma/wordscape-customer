@@ -56,7 +56,7 @@ function PrintCraft() {
           CURIOUS ABOUT OUR <span className="text-pink-600">CRAFT?</span>
         </h1>
         <p className="text-center mb-10 mt-[15px] font-archivo">
-          Enter Our Realm Of Print Excellence
+          Enter Our Realm Of Printing Excellence
         </p>
 
         <div className="flex justify-center space-x-8 mb-12 font-archivo">

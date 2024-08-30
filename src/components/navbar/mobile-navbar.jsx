@@ -55,7 +55,7 @@ function MobileNavbar() {
             className="mx-auto"
           />
         </label>
-        <div className="bg-[#ECECEC] flex flex-row items-center min-h-[98vh] max-sm:flex-col max-sm:justify-center mb-[10rem] ">
+        <div className="bg-[#ECECEC] flex flex-row items-center min-h-[98vh] max-sm:flex-col max-sm:justify-center mb-[10rem] md:p-10 ">
           <div className="w-1/2 max-sm:w-full lg:p-10 max-sm:mt-8 flex flex-col justify-center max-sm:ml-[16%]">
             <p className="text-xl font-semibold tracking-wide text-[#000000] mb-2 lg:mb-[3rem] lg:ml-[3.4rem] max-sm:text-sm max-sm:mb-[2rem]">
               PREMIER PRINTING DESTINATION

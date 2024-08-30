@@ -8,7 +8,11 @@ function Footer() {
       <footer className="footer p-10 bg-zinc-800 text-white font-archivo relative">
         <div className="flex mx-auto items-center justify-between">
           <div className="max-sm:mr-[-30%] max-sm:ml-[-10%]  max-sm:items-center max-sm:flex">
-            <img src={logo} className="h-[150px] ml-[10%]" />
+            <img
+              src={logo}
+              className="h-[150px] ml-[10%] sm:h-[100px] sm:ml-[5%] md:h-[125px] md:ml-[7.5%] lg:h-[150px] lg:ml-[10%] w-auto"
+              alt="Responsive Logo"
+            />
             <div className="max-lg:hidden">
               <p
                 style={{ fontFamily: "Poppins" }}
