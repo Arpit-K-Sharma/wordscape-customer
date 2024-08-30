@@ -5,13 +5,12 @@ function Products() {
     <div className="py-8 md:py-16 bg-gray-100 font-archivo">
       <div className="container mx-auto px-4 md:px-6 xl:px-0 text-zinc-800 lg:mt-[10%] max-sm:mt-[30%]">
         <div className="text-center mb-8 md:mb-12">
-          <h2
-            style={{ fontFamily: "Proxima Nova" }}
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-zinc-800 mb-4 md:mt-[20%] lg:mt-[30%]"
-          >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-zinc-800 mb-4 md:mt-[20%] lg:mt-[30%] font-archivo">
             DISCOVER THE ART OF PRINT
             <br className="hidden sm:block" />{" "}
-            <span className="text-pink-600">OUR PRODUCT LINEUP</span>
+            <span className="text-pink-600 font-archivo">
+              OUR PRODUCT LINEUP
+            </span>
           </h2>
         </div>
         <div className="grid gap-5 max-sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-md:gap-6">
@@ -58,19 +57,13 @@ function Products() {
               className="bg-[#ECECEC] max-sm:mx-8 p-6 lg:w-auto lg:h-[18rem] flex flex-col justify-center mx-auto"
             >
               <div className="space-y-4 lg:space-y-5">
-                <h3
-                  style={{ fontFamily: "Proxima Nova" }}
-                  className="text-xl md:text-2xl font-semibold text-zinc-800"
-                >
+                <h3 className="text-xl md:text-2xl font-semibold text-zinc-800">
                   {product.title}
                 </h3>
-                <p className="text-xs md:text-sm text-[#6D636A]">
+                <p className="text-xs md:text-sm text-[#6D636A] font-archivo">
                   {product.subtitle}
                 </p>
-                <p
-                  style={{ fontFamily: "Proxima Nova" }}
-                  className="text-sm md:text-base text-gray-800 mt-2 lg:mt-3"
-                >
+                <p className="text-sm md:text-base text-gray-800 mt-2 lg:mt-3 font-archivo">
                   {product.description}
                 </p>
               </div>

@@ -43,21 +43,15 @@ function PrintCraft() {
 
   return (
     <div className="bg-white py-[2rem]">
-      <div className="container mx-auto px-4 min-h-[550px]">
-        <h1
-          style={{ fontFamily: "Proxima Nova" }}
-          className="text-5xl font-semibold text-center mb-2"
-        >
+      <div className="container mx-auto px-4 min-h-[550px] font-archivo">
+        <h1 className="text-5xl font-semibold text-center mb-2">
           CURIOUS ABOUT OUR <span className="text-pink-600">CRAFT?</span>
         </h1>
-        <p
-          style={{ fontFamily: "Proxima Nova" }}
-          className="text-center mb-10 mt-[15px]"
-        >
+        <p className="text-center mb-10 mt-[15px] font-archivo">
           Enter Our Realm Of Print Excellence
         </p>
 
-        <div className="flex justify-center space-x-8 mb-12">
+        <div className="flex justify-center space-x-8 mb-12 font-archivo">
           {categories.map((category) => (
             <button
               key={category}
@@ -73,23 +67,19 @@ function PrintCraft() {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row justify-center items-center md:items-end gap-7 mt-9">
+        <div className="flex justify-center items-center gap-7 mt-9">
           {imageData[activeCategory] &&
             imageData[activeCategory].map((image, index) => (
               <div
                 key={index}
-                className={`bg-white p-4  w-full md:w-[30%] mb-8 ${
-                  index === 0
-                    ? " md:self-end "
-                    : index === 1
-                    ? "md:self-end"
-                    : " md:self-end md:mb-16"
+                className={`p-4 ${
+                  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
                 }`}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-auto"
+                  className="w-full h-[auto]"
                 />
               </div>
             ))}

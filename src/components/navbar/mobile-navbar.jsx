@@ -60,18 +60,12 @@ function MobileNavbar() {
             <p className="text-xl font-semibold tracking-wide text-[#000000] mb-2 lg:mb-[3rem] lg:ml-[3.4rem] max-sm:text-sm max-sm:mb-[2rem]">
               PREMIER PRINTING DESTINATION
             </p>
-            <h1
-              style={{ fontFamily: "Proxima Nova" }}
-              className="text-6xl max-sm:text-4xl font-semibold leading-tight mb-6 lg:ml-[3rem]"
-            >
+            <h1 className="text-6xl max-sm:text-4xl font-semibold leading-tight mb-6 lg:ml-[3rem] font-archivo">
               YOUR VISION, OUR <br></br> PRINT -{" "}
               <span className="text-[#9D1C79]">PERFECT</span>
               <br></br> EVERY TIME!
             </h1>
-            <p
-              style={{ fontFamily: "Proxima Nova" }}
-              className="text-lg font-medium mb-6 lg:ml-[3rem] text-[#3D3B3B]"
-            >
+            <p className="text-lg font-medium mb-6 lg:ml-[3rem] text-[#3D3B3B] font-archivo">
               Precision Prints With Flawless Detail,<br></br> Tailored To Make
               Your Vision Shine.
             </p>
