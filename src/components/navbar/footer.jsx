@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../images/logo/WOnly.png";
 
 function Footer() {
   return (
@@ -7,7 +8,7 @@ function Footer() {
       <footer className="footer p-10 bg-zinc-800 text-white font-archivo relative">
         <div className="flex mx-auto items-center justify-between">
           <div className="max-sm:mr-[-30%] max-sm:ml-[-10%]  max-sm:items-center max-sm:flex">
-            <img src="/logo.png" className="h-[150px] ml-[10%]" />
+            <img src={logo} className="h-[150px] ml-[10%]" />
             <div className="max-lg:hidden">
               <p
                 style={{ fontFamily: "Poppins" }}
