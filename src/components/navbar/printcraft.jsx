@@ -7,6 +7,14 @@ import ecs1 from "../images/ecs/1.jpg";
 import ecs2 from "../images/ecs/2.jpg";
 import ecs3 from "../images/ecs/3.jpg";
 
+import wb1 from "../images/wb/wb1.jpg";
+import wb2 from "../images/wb/wb2.jpg";
+import wb3 from "../images/wb/wb3.jpg";
+
+import b1 from "../images/build/wb1.jpg";
+import b2 from "../images/build/wb2.jpg";
+import b3 from "../images/build/wb3.jpg";
+
 // Move "ECS Nepal" to the first position in the categories array
 const categories = ["ECS Nepal", "Wedding Bells", "Build", "Living"];
 
@@ -22,14 +30,14 @@ const imageData = {
     { src: ecs3, alt: "Vogue Magazine" },
   ],
   "Wedding Bells": [
-    { src: "", alt: "Wedding Image 1" },
-    { src: "", alt: "Wedding Image 2" },
-    { src: "", alt: "Wedding Image 3" },
+    { src: wb1, alt: "Wedding Image 1" },
+    { src: wb2, alt: "Wedding Image 2" },
+    { src: wb3, alt: "Wedding Image 3" },
   ],
   Build: [
-    { src: "", alt: "Build Image 1" },
-    { src: "", alt: "Build Image 2" },
-    { src: "", alt: "Build Image 3" },
+    { src: b3, alt: "Build Image 1" },
+    { src: b2, alt: "Build Image 2" },
+    { src: b1, alt: "Build Image 3" },
   ],
   Friday: [
     { src: "", alt: "Friday Image 1" },
@@ -73,7 +81,8 @@ function PrintCraft() {
               <div
                 key={index}
                 className={`p-4 ${
-                  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
+                  index === 1 ? "w-full " : "w-full "
+                  //  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
                 }`}
               >
                 <img
