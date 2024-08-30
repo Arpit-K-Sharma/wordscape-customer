@@ -1,7 +1,7 @@
 import React from "react";
 import config from "../../../config.json";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../images/logo/LogoOnly.png";
+import logo from "../images/logo/LogoBG.png";
 import { GoArrowUpRight } from "react-icons/go";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
@@ -22,23 +22,21 @@ function Navbar() {
   };
 
   return (
-    <div className="navbar lg:h-[5vh] bg-zinc-900 max-lg:hidden text-white font-archivo">
-      <div className="navbar-start ml-5">
-        <NavLink to="/">
+    <div className="navbar lg:h-[12vh] relative bg-white max-lg:hidden text-black font-archivo flex justify-between items-center">
+      <div className="navbar-start w-1/3" />
+      <div className="navbar-center w-1/3 flex justify-center items-center">
+        <NavLink to="/" className="flex items-center">
           <img
-            width="32"
-            height="32"
+            width="200"
+            height="200"
             src={logo}
             alt="Small Logo"
-            className="ml-2"
+            className="mr-2"
           />
         </NavLink>
-        <NavLink to="/">
-          <a className="btn btn-ghost text-xl">{config.config.firmname}</a>
-        </NavLink>
       </div>
-      <div className="navbar-end">
-        <div className="navbar-center hidden lg:flex">
+      <div className="navbar-end w-1/3 flex justify-end">
+        <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-[40px] text-[16px]">
             {isCustomer() && (
               <li>
@@ -75,17 +73,41 @@ function Navbar() {
         </div>
         {isLoggedIn() || isAdmin() ? (
           <a
-            className="mr-[25px] text-white flex items-center cursor-pointer"
+            className="mr-[25px] text-black flex items-center border md:hidden lg:hidden"
             onClick={handleLogout}
+            style={{
+              padding: "8px 12px",
+              borderRadius: "8px",
+              border: "1px solid black",
+              textDecoration: "none",
+              fontWeight: "bold",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+            }}
           >
             Logout{" "}
-            <GoArrowUpRight color="white" size="25px" className="flex ml-1" />
+            <GoArrowUpRight color="black" size="25px" className="flex ml-1" />
           </a>
         ) : (
           <NavLink to="/login">
-            <a className="mr-[25px] text-white flex items-center ">
+            <a
+              className="mr-[25px] text-black flex items-center border md:hidden lg:hidden"
+              style={{
+                padding: "8px 12px",
+                borderRadius: "8px",
+                border: "1px solid black",
+                textDecoration: "none",
+                fontWeight: "bold",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+            >
               Login{" "}
-              <GoArrowUpRight color="white" size="25px" className="flex ml-1" />
+              <GoArrowUpRight color="black" size="25px" className="flex ml-1" />
             </a>
           </NavLink>
         )}

@@ -1,13 +1,27 @@
 import React from "react";
 import config from "../../../config.json";
-import logo from "../images/logo/LogoOnly.png";
+import logo from "../images/logo/WOnly.png";
 import textlogo from "../images/logo/TextOnly.png";
 import { NavLink } from "react-router-dom";
 import Footer from "./footer";
-import Pricing from "./pricing";
-import Services from "./services";
+import Products from "./products";
+import ServiceCarousel from "./servicecarousel";
+import VideoPlay from "./videoplay";
+import OrderingSection from "./orderringsection";
 import Cookies from "js-cookie";
+import InfiniteLogoSlider from "./logoslide";
+import PrintCraft from "./printcraft";
 import { useNavigate } from "react-router-dom";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useMediaQuery } from "react-responsive";
+import { FunctionComponent } from "react";
+import img1 from "../images/IMAGE1.png";
+import img2 from "../images/IMAGE2.png";
+import img3 from "../images/IMAGE3.png";
+import img4 from "../images/image4.png";
+import Rarrow from "../images/arrowright.png";
+
 import {
   isLoggedIn,
   isAdmin,
@@ -16,6 +30,7 @@ import {
 } from "../../utility/util";
 
 function MobileNavbar() {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -25,7 +40,7 @@ function MobileNavbar() {
   };
 
   return (
-    <div className="drawer">
+    <div className="drawer bg-white">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <label
@@ -35,69 +50,83 @@ function MobileNavbar() {
           <img
             width="26"
             height="26"
-            src="https://img.icons8.com/?size=100&id=8113&format=png&color=ffffff"
+            src="https://img.icons8.com/?size=100&id=8113&format=png&color=000000"
             alt="menu icon"
+            className="mx-auto"
           />
         </label>
-        <div className="p-7 text-slate-800 bg-gray-200">
-          <img
-            width="350"
-            height="350"
-            src={logo}
-            alt="Logo"
-            className="mx-auto my-5"
-          />{" "}
-          <h3 className="text-center my-7 text-xl h-[50vh]">
-            <div className="">
-              <h1 className="max0text-b1 mb-[18px] text-[40px] lg:text-[40px] leading-10 mx-auto lg:w-[50%] text-center font-bold font-archivo max-sm:text-[35px] max-sm:w-[90%]">
-                All your printing needs in{" "}
-                <span
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #FFA500, #FF69B4)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                    marginTop: "90px",
-                  }}
-                  className="text-[#5C61F3] max-sm:ml-10"
-                >
-                  one <br />
-                  place
-                </span>
-              </h1>
-              <p className="w-[50%] text-center mx-auto leading-[23px] max-sm:w-[90%] font-archivo text-slate-700">
-                Wordscape is a renowned printing press company that offers
-                top-notch printing services. With cutting-edge technology and
-                skilled professionals, they deliver high-quality magazines,
-                publications, and more.
-              </p>
-              <div className="flex flex-row justify-center mt-[40px] mb-[150px]">
-                {!isLoggedIn() && (
-                  <NavLink to="/login">
-                    <button className="mr-[10px] px-[20px] py-[10px] text-[#fefefe] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                      Login to Start
-                    </button>
-                  </NavLink>
-                )}
-
-                {isCustomer() && (
-                  <NavLink to="/order/1">
-                    <button className="mr-[10px] px-[20px] py-[10px] text-[#ffffff] rounded-[8px] font-archivo font-bold bg-[#f87642] hover:bg-[#c83db3] transition-colors duration-300">
-                      Place an Order
-                    </button>
-                  </NavLink>
-                )}
-
-                <button className="bg-[#ffffff] px-[20px] py-[10px] text-b1 rounded-[8px] font-archivo font-semibold max-sm:mb-[180px]">
-                  Learn More
+        <div className="bg-[#ECECEC] flex flex-row items-center min-h-[98vh] max-sm:flex-col max-sm:justify-center mb-[10rem] ">
+          <div className="w-1/2 max-sm:w-full lg:p-10 max-sm:mt-8 flex flex-col justify-center max-sm:ml-[16%]">
+            <p className="text-xl font-semibold tracking-wide text-[#000000] mb-2 lg:mb-[3rem] lg:ml-[3.4rem] max-sm:text-sm max-sm:mb-[2rem]">
+              PREMIER PRINTING DESTINATION
+            </p>
+            <h1
+              style={{ fontFamily: "Proxima Nova" }}
+              className="text-6xl max-sm:text-4xl font-semibold leading-tight mb-6 lg:ml-[3rem]"
+            >
+              YOUR VISION, OUR <br></br> PRINT -{" "}
+              <span className="text-[#9D1C79]">PERFECT</span>
+              <br></br> EVERY TIME!
+            </h1>
+            <p
+              style={{ fontFamily: "Proxima Nova" }}
+              className="text-lg font-medium mb-6 lg:ml-[3rem] text-[#3D3B3B]"
+            >
+              Precision Prints With Flawless Detail,<br></br> Tailored To Make
+              Your Vision Shine.
+            </p>
+            <div className="flex lg:mt-[4%] flex-row space-x-4 h-auto w-full max-w-[30rem] lg:ml-[3rem] lg:mb-10 ">
+              <NavLink to="/login">
+                <button className="px-6  py-[0.5rem] bg-[#9D1C79] text-white font-semibold hover:bg-[#8A1869] transition-colors duration-300 whitespace-nowrap">
+                  Login To Start
                 </button>
+              </NavLink>
+              <button className="px-6 py-[.5rem] text-[#9D1C79] font-semibold hover:text-[#8A1869] transition-colors duration-300 whitespace-nowrap">
+                Request demo →
+              </button>
+            </div>
+          </div>
+          <div className="w-1/2 relative max-sm:w-full max-sm:mt-8">
+            <div className="relative w-[80%] pb-[80%] mb-[10rem]">
+              <div className="max-sm:mt-[5rem] lg:h-auto absolute inset-0 bg-[#ECECEC] rounded-tl-full rounded-tr-full border-[3px] border-[#C01690] flex items-center justify-center max-sm:h-[19rem] pt-[3rem] pr-[3rem] pl-[3rem] pb-0 max-sm:ml-[15%]">
+                <div className="w-full h-auto overflow-hidden rounded-tl-full rounded-tr-full border-[3px] border-[#B39797]">
+                  <Carousel
+                    showArrows={false}
+                    showStatus={false}
+                    showIndicators={false}
+                    infiniteLoop={true}
+                    autoPlay={true}
+                    interval={1500}
+                    showThumbs={false}
+                    className="w-full h-full"
+                  >
+                    <div className="w-full h-full">
+                      <img
+                        src={img2}
+                        alt="Printing sample 2"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="w-full h-full">
+                      <img
+                        src={img3}
+                        alt="Printing sample 3"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </Carousel>
+                </div>
               </div>
             </div>
-          </h3>
+          </div>
         </div>
-        <Services />
-        <Pricing />
+
+        <PrintCraft />
+        <InfiniteLogoSlider />
+        <VideoPlay />
+        <Products />
+        <OrderingSection />
+        <ServiceCarousel />
         <Footer />
       </div>
       <div className="drawer-side font-archivo">
@@ -108,8 +137,8 @@ function MobileNavbar() {
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-zinc-900 text-white">
           {/* Sidebar content here */}
-          <li className="mt-[45%]">
-            <NavLink to="/">
+          <li className="mt-[45%] flex flex-col items-center">
+            <NavLink to="/" className="flex justify-center">
               <img
                 width="140"
                 height="140"
@@ -118,7 +147,9 @@ function MobileNavbar() {
                 className="mx-auto my-1 mb-5"
               />
             </NavLink>
-            <p className="text-2xl mb-[30px] font-semibold">WordScape</p>
+            <p className="text-2xl mb-[30px] font-semibold text-center">
+              WordScape
+            </p>
           </li>
           {isCustomer() && (
             <li>
