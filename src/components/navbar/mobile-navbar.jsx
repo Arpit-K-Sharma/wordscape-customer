@@ -81,8 +81,8 @@ function MobileNavbar() {
             </div>
           </div>
           <div className="w-1/2 relative max-sm:w-full max-sm:mt-8">
-            <div className="relative w-[80%] pb-[80%] mb-[10rem]">
-              <div className="max-sm:mt-[5rem] lg:h-auto absolute inset-0 bg-[#ECECEC] rounded-tl-full rounded-tr-full border-[3px] border-[#C01690] flex items-center justify-center max-sm:h-[19rem] pt-[3rem] pr-[3rem] pl-[3rem] pb-0 max-sm:ml-[15%]">
+            <div className="relative w-[80%] pb-[80%]  mb-[10rem] max-sm:mt-[-5rem] max-sm:w-full mx-auto">
+              <div className="max-sm:mt-[5rem] lg:h-auto absolute inset-0 bg-[#ECECEC] rounded-tl-full rounded-tr-full border-[3px]  border-[#C01690] max-sm:border-none flex items-center justify-center max-sm:h-[19rem] pt-[3rem] pr-[3rem] pl-[3rem] pb-0 max-sm:ml-0">
                 <div className="w-full h-auto overflow-hidden rounded-tl-full rounded-tr-full border-[3px] border-[#B39797]">
                   <Carousel
                     showArrows={false}

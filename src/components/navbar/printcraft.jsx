@@ -50,7 +50,7 @@ function PrintCraft() {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   return (
-    <div className="bg-white py-[2rem]">
+    <div className="bg-white py-[2rem] max-sm:p-7">
       <div className="container mx-auto px-4 min-h-[550px] font-archivo">
         <h1 className="text-5xl font-semibold text-center mb-2">
           CURIOUS ABOUT OUR <span className="text-pink-600">CRAFT?</span>
@@ -75,20 +75,19 @@ function PrintCraft() {
           ))}
         </div>
 
-        <div className="flex justify-center items-center gap-7 mt-9">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-7 mt-9 overflow-x-auto">
           {imageData[activeCategory] &&
             imageData[activeCategory].map((image, index) => (
               <div
                 key={index}
                 className={`p-4 ${
-                  index === 1 ? "w-full " : "w-full "
-                  //  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
+                  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
                 }`}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-[auto]"
+                  className="w-full h-auto"
                 />
               </div>
             ))}
