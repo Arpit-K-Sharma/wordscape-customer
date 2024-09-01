@@ -59,7 +59,7 @@ function PrintCraft() {
           Enter Our Realm Of Printing Excellence
         </p>
 
-        <div className="flex justify-center space-x-8 mb-12 font-archivo">
+        <div className="flex justify-center space-x-10 mb-12 font-archivo">
           {categories.map((category) => (
             <button
               key={category}
@@ -75,13 +75,13 @@ function PrintCraft() {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-7 mt-9 overflow-x-auto">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-[4rem] mt-9 overflow-x-auto">
           {imageData[activeCategory] &&
             imageData[activeCategory].map((image, index) => (
               <div
                 key={index}
                 className={`p-4 ${
-                  index === 1 ? "w-full md:w-[30%]" : "w-full md:w-[23%]"
+                  index === 1 ? "w-full md:w-[29%]" : "w-full md:w-[23%]"
                 }`}
               >
                 <img
